@@ -61,8 +61,8 @@
                 <input type="text" id="searchInput" placeholder="Tarih, oyun, film veya kategori ara..." class="w-full bg-slate-900/90 border border-slate-800 rounded-full pl-10 pr-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-purple-500 transition-colors">
             </div>
 
-            <!-- Auth Button -->
-            <div class="flex items-center gap-3">
+            <!-- Auth / User Profile Area -->
+            <div class="flex items-center gap-3" id="authArea">
                 <button onclick="toggleModal('authModal')" class="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium px-5 py-2.5 rounded-full text-sm transition-all duration-300 shadow-lg shadow-purple-900/30">
                     <i data-lucide="user" class="w-4 h-4"></i>
                     <span>Giriş Yap / Kayıt Ol</span>
@@ -139,24 +139,50 @@
         </div>
     </div>
 
-    <!-- AUTH MODAL -->
+    <!-- AUTH MODAL (Giriş Yap / Kayıt Ol Sekmeli) -->
     <div id="authModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
             <button onclick="toggleModal('authModal')" class="absolute top-4 right-4 bg-slate-800/80 hover:bg-slate-700 text-slate-300 p-2 rounded-full transition-colors">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
-            <h3 class="heading-font text-2xl font-bold text-white mb-6 text-center">Hesabınıza Giriş Yapın</h3>
-            <form onsubmit="handleAuth(event)" class="space-y-4">
+            
+            <!-- Sekmeler -->
+            <div class="flex border-b border-slate-800 mb-6">
+                <button onclick="switchAuthTab('login')" id="loginTabBtn" class="flex-1 pb-3 text-sm font-semibold text-purple-400 border-b-2 border-purple-500 transition-colors">Giriş Yap</button>
+                <button onclick="switchAuthTab('register')" id="registerTabBtn" class="flex-1 pb-3 text-sm font-medium text-slate-400 border-b-2 border-transparent transition-colors">Kayıt Ol</button>
+            </div>
+
+            <!-- Giriş Yap Formu -->
+            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">E-Posta Adresi</label>
-                    <input type="email" required placeholder="ornek@domain.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500">
+                    <input type="email" id="loginEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500">
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">Şifre</label>
-                    <input type="password" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500">
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500">
                 </div>
                 <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-2.5 rounded-xl text-sm transition-all duration-300 mt-2">
                     Giriş Yap
+                </button>
+            </form>
+
+            <!-- Kayıt Ol Formu (Başlangıçta Gizli) -->
+            <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Ad Soyad</label>
+                    <input type="text" id="regName" required placeholder="Adınız Soyadınız" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">E-Posta Adresi</label>
+                    <input type="email" id="regEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Şifre</label>
+                    <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-2.5 rounded-xl text-sm transition-all duration-300 mt-2">
+                    Kayıt Ol
                 </button>
             </form>
         </div>
@@ -165,7 +191,7 @@
     <!-- Firebase SDK & Application Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
@@ -178,10 +204,37 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+
+        // Global olarak dışarı aktar
+        window.auth = auth;
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.signOut = signOut;
+
+        // Kullanıcı oturum durumunu takip et
+        onAuthStateChanged(auth, (user) => {
+            const authArea = document.getElementById('authArea');
+            if (user) {
+                authArea.innerHTML = `
+                    <div class="flex items-center gap-3 bg-slate-900 border border-slate-800 px-4 py-2 rounded-full">
+                        <span class="text-xs text-purple-400 font-medium">${user.email}</span>
+                        <button onclick="handleLogout()" class="text-xs text-slate-400 hover:text-red-400 transition-colors">Çıkış</button>
+                    </div>
+                `;
+            } else {
+                authArea.innerHTML = `
+                    <button onclick="toggleModal('authModal')" class="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium px-5 py-2.5 rounded-full text-sm transition-all duration-300 shadow-lg shadow-purple-900/30">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        <span>Giriş Yap / Kayıt Ol</span>
+                    </button>
+                `;
+                lucide.createIcons();
+            }
+        });
     </script>
 
     <script>
-        // İçerik Verileri (images_3.webp ve indir_3.webp entegre edilmiştir)
+        // İçerik Verileri
         const items = [
             {
                 id: 1,
@@ -242,94 +295,3 @@
 
         function renderCards(data) {
             const grid = document.getElementById('cardsGrid');
-            grid.innerHTML = data.map(item => `
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden group hover:border-purple-500/50 transition-all duration-300 neon-border flex flex-col justify-between">
-                    <div>
-                        <!-- Resme tıklandığında doğrudan video modal penceresini açar -->
-                        <div class="relative aspect-video overflow-hidden bg-slate-950 cursor-pointer" onclick="openDetail(${item.id})">
-                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md border border-slate-800 text-xs text-purple-400 font-semibold px-2.5 py-1 rounded-md">
-                                ${item.category}
-                            </span>
-                            <div class="absolute inset-0 bg-purple-900/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <span class="bg-purple-600 text-white text-xs px-3 py-1.5 rounded-full font-medium shadow-lg">Videoyu İzle</span>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
-                                <span>${item.year}</span>
-                                <span class="text-amber-400 font-semibold">★ ${item.rating}</span>
-                            </div>
-                            <h3 class="heading-font text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">${item.title}</h3>
-                            <p class="text-slate-400 text-xs line-clamp-2 leading-relaxed">${item.desc}</p>
-                        </div>
-                    </div>
-                    <div class="p-5 pt-0">
-                        <button onclick="openDetail(${item.id})" class="w-full bg-slate-800 hover:bg-purple-600 text-slate-200 hover:text-white text-xs font-semibold py-2.5 rounded-xl transition-colors">
-                            Detayları İncele
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-            lucide.createIcons();
-        }
-
-        function filterEra(era) {
-            document.querySelectorAll('.era-btn').forEach(btn => {
-                btn.classList.remove('bg-purple-600', 'text-white');
-                btn.classList.add('bg-slate-800', 'text-slate-300');
-            });
-            event.target.classList.remove('bg-slate-800', 'text-slate-300');
-            event.target.classList.add('bg-purple-600', 'text-white');
-
-            if (era === 'all') {
-                renderCards(items);
-            } else {
-                renderCards(items.filter(item => item.era === era));
-            }
-        }
-
-        document.getElementById('searchInput')?.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const filtered = items.filter(item => 
-                item.title.toLowerCase().includes(query) || 
-                item.category.toLowerCase().includes(query)
-            );
-            renderCards(filtered);
-        });
-
-        function openDetail(id) {
-            const item = items.find(i => i.id === id);
-            if (!item) return;
-
-            document.getElementById('modalTitle').textContent = item.title;
-            document.getElementById('modalCategory').textContent = item.category;
-            document.getElementById('modalYear').textContent = item.year;
-            document.getElementById('modalRating').textContent = `★ ${item.rating}`;
-            document.getElementById('modalDesc').textContent = item.desc;
-            document.getElementById('modalVideo').src = item.video;
-
-            toggleModal('detailModal');
-        }
-
-        function toggleModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.toggle('hidden');
-            if (modalId === 'detailModal' && modal.classList.contains('hidden')) {
-                document.getElementById('modalVideo').src = '';
-            }
-        }
-
-        function handleAuth(e) {
-            e.preventDefault();
-            alert('Giriş işlemi başarılı!');
-            toggleModal('authModal');
-        }
-
-        window.onload = () => {
-            renderCards(items);
-            lucide.createIcons();
-        };
-    </script>
-</body>
-</html>
