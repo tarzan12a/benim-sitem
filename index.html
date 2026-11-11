@@ -45,7 +45,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="min-h-screen flex flex-col justify-between relative">
 
     <!-- NAV BAR -->
     <header class="sticky top-0 z-40 bg-[#090d16]/90 backdrop-blur-md border-b border-slate-800/80">
@@ -103,6 +103,51 @@
             <!-- Dinamik Kartlar JS ile Yüklenecek -->
         </div>
     </main>
+
+    <!-- FLOATING AI ASSISTANT WIDGET -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <!-- Chat Toggle Button -->
+        <button onclick="toggleAiChat()" id="aiToggleBtn" class="flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white px-4 py-3 rounded-full shadow-2xl transition-all duration-300 border border-purple-400/30 group">
+            <i data-lucide="bot" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+            <span class="text-sm font-medium">Zaman Asistanı</span>
+        </button>
+
+        <!-- Chat Box Window -->
+        <div id="aiChatBox" class="hidden absolute bottom-16 right-0 w-80 sm:w-96 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[450px]">
+            <!-- Header -->
+            <div class="bg-slate-950 p-4 border-b border-slate-800 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+                    <span class="heading-font font-bold text-white text-sm">Zaman Asistanı (AI)</span>
+                </div>
+                <button onclick="toggleAiChat()" class="text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- Messages Area -->
+            <div id="aiMessages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
+                <div class="bg-slate-800/80 text-slate-200 p-3 rounded-xl rounded-tl-none max-w-[85%] leading-relaxed">
+                    Merhaba! Ben Zaman Tüneli Asistanı'yım. Sitedeki tarihi yapıtlar, Atatürk portreleri veya oyun ve filmler hakkında soru sorabilirsiniz!
+                </div>
+            </div>
+
+            <!-- Quick Suggestions -->
+            <div class="px-3 py-2 bg-slate-950/50 border-t border-slate-800 flex gap-1.5 overflow-x-auto text-[11px]">
+                <button onclick="sendQuickPrompt('Atatürk kimdir?')" class="bg-slate-800 hover:bg-purple-600/50 text-slate-300 px-2.5 py-1 rounded-full whitespace-nowrap transition-colors">Atatürk kimdir?</button>
+                <button onclick="sendQuickPrompt('Hangi videolar var?')" class="bg-slate-800 hover:bg-purple-600/50 text-slate-300 px-2.5 py-1 rounded-full whitespace-nowrap transition-colors">Videolar</button>
+                <button onclick="sendQuickPrompt('Retro oyunlar')" class="bg-slate-800 hover:bg-purple-600/50 text-slate-300 px-2.5 py-1 rounded-full whitespace-nowrap transition-colors">Retro Oyunlar</button>
+            </div>
+
+            <!-- Input Area -->
+            <div class="p-3 bg-slate-950 border-t border-slate-800 flex gap-2">
+                <input type="text" id="aiInput" placeholder="Asistana bir şey yazın..." onkeypress="handleAiKeyPress(event)" class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-purple-500">
+                <button onclick="sendAiMessage()" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-2 rounded-xl transition-colors flex items-center justify-center">
+                    <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- FOOTER -->
     <footer class="border-t border-slate-800/80 bg-[#06080e] py-8 mt-12">
@@ -193,7 +238,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Gerçek Firebase Yapılandırma Bilgileriniz Eklenmiştir
         const firebaseConfig = {
             apiKey: "AIzaSyCydVb8Mom_PpyTPne-jk2eQVBmQSlo0dM",
             authDomain: "zaman-tuneli-app-947b4.firebaseapp.com",
@@ -425,6 +469,88 @@
             } catch (error) {
                 console.error(error);
             }
+        }
+
+        // --- AI ASİSTAN VERCEL API ENTEGRASYONU ---
+        function toggleAiChat() {
+            const chatBox = document.getElementById('aiChatBox');
+            chatBox.classList.toggle('hidden');
+            lucide.createIcons();
+        }
+
+        function sendQuickPrompt(text) {
+            document.getElementById('aiInput').value = text;
+            sendAiMessage();
+        }
+
+        function handleAiKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendAiMessage();
+            }
+        }
+
+        async function sendAiMessage() {
+            const input = document.getElementById('aiInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const messagesContainer = document.getElementById('aiMessages');
+
+            // Kullanıcı mesajını ekrana bas
+            messagesContainer.innerHTML += `
+                <div class="bg-purple-600/90 text-white p-3 rounded-xl rounded-tr-none ml-auto max-w-[85%] leading-relaxed">
+                    ${escapeHtml(message)}
+                </div>
+            `;
+            input.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Yükleniyor bildirimi ekle
+            const loadingId = 'loading-' + Date.now();
+            messagesContainer.innerHTML += `
+                <div id="${loadingId}" class="bg-slate-800/80 text-slate-400 p-3 rounded-xl rounded-tl-none max-w-[85%] leading-relaxed italic">
+                    Zaman Asistanı yanıtlıyor...
+                </div>
+            `;
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            try {
+                // Vercel Serverless Function (/api/chat) uç noktasına istek atma
+                const response = await fetch("/api/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message })
+                });
+
+                const data = await response.json();
+                document.getElementById(loadingId)?.remove();
+
+                if (data.choices && data.choices.length > 0) {
+                    const aiReply = data.choices[0].message.content;
+                    messagesContainer.innerHTML += `
+                        <div class="bg-slate-800/80 text-slate-200 p-3 rounded-xl rounded-tl-none max-w-[85%] leading-relaxed">
+                            ${escapeHtml(aiReply)}
+                        </div>
+                    `;
+                } else {
+                    throw new Error("Yanıt alınamadı.");
+                }
+            } catch (error) {
+                document.getElementById(loadingId)?.remove();
+                messagesContainer.innerHTML += `
+                    <div class="bg-red-950/80 text-red-300 p-3 rounded-xl rounded-tl-none max-w-[85%] leading-relaxed">
+                        Üzgünüm, şu an yapay zeka servisine erişilemiyor. Lütfen Vercel ayarlarınızı ve API anahtarınızı kontrol edin.
+                    </div>
+                `;
+            }
+
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.innerText = text;
+            return div.innerHTML;
         }
 
         window.onload = () => {
