@@ -80,7 +80,7 @@
                     Nostaljiden Geleceğe İçerik Keşfi
                 </h1>
                 <p class="text-slate-400 text-base sm:text-lg mb-6">
-                    Tarihi dönüm noktalarından efsanevi retro oyunlara ve sinema yapımlarına kadar uzanan zaman tüneline hoş geldiniz.
+                    Tarihi dönüm noktalarından efsanevi retro oyunlara ve sinema yapımlarına kadar uzanan zaman tüneline hoş geldiniz. Resimlere tıklayarak doğrudan ilgili videolara ulaşabilirsiniz.
                 </p>
                 <div class="flex flex-wrap gap-3" id="eraFilters">
                     <button onclick="filterEra('all')" class="era-btn active bg-purple-600 text-white text-xs font-medium px-4 py-2 rounded-lg transition-colors">Tümü</button>
@@ -181,7 +181,7 @@
     </script>
 
     <script>
-        // İçerik Verileri (Tarihi Portreler ve Diğer Medya İçerikleri)
+        // İçerik Verileri (Verilen YouTube Linkleri Eklenmiştir)
         const items = [
             {
                 id: 1,
@@ -190,9 +190,9 @@
                 era: "history",
                 year: "1881-1938",
                 rating: "10.0",
-                image: "images.webp",
-                desc: "Milletinin bağımsızlığı uğruna cepheden cepheye koşan, Çanakkale'den Kurtuluş Savaşı'na uzanan dahi askerlik stratejisi ve kalpaklı kahraman.",
-                video: "https://www.youtube.com/embed/8X2kIfS6fb8"
+                image: "images_2.webp",
+                desc: "Milletinin bağımsızlığı uğruna cepheden cepheye koşan, Çanakkale'den Kurtuluş Savaşı'na uzanan dahi askerlik stratejisi ve kalpaklı kahraman. Resme tıklayarak ilgili videoyu izleyebilirsiniz.",
+                video: "https://www.youtube.com/embed/fKHyGINwmfI" // 1. Video Linki
             },
             {
                 id: 2,
@@ -201,9 +201,9 @@
                 era: "history",
                 year: "1923",
                 rating: "10.0",
-                image: "indir.webp",
-                desc: "Genç Türkiye Cumhuriyeti'ni muasır medeniyetler seviyesinin üzerine çıkarmak için devrimler gerçekleştiren vizyoner devlet adamı.",
-                video: "https://www.youtube.com/embed/vKQi3bBA1y8"
+                image: "indir_2.webp",
+                desc: "Genç Türkiye Cumhuriyeti'ni muasır medeniyetler seviyesinin üzerine çıkarmak için devrimler gerçekleştiren vizyoner devlet adamı. Resme tıklayarak ilgili videoyu izleyebilirsiniz.",
+                video: "https://www.youtube.com/embed/nYJF72itSsk" // 2. Video Linki
             },
             {
                 id: 3,
@@ -245,11 +245,15 @@
             grid.innerHTML = data.map(item => `
                 <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden group hover:border-purple-500/50 transition-all duration-300 neon-border flex flex-col justify-between">
                     <div>
-                        <div class="relative aspect-video overflow-hidden bg-slate-950">
+                        <!-- Resme tıklandığında doğrudan video modal penceresini açar -->
+                        <div class="relative aspect-video overflow-hidden bg-slate-950 cursor-pointer" onclick="openDetail(${item.id})">
                             <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md border border-slate-800 text-xs text-purple-400 font-semibold px-2.5 py-1 rounded-md">
                                 ${item.category}
                             </span>
+                            <div class="absolute inset-0 bg-purple-900/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-purple-600 text-white text-xs px-3 py-1.5 rounded-full font-medium shadow-lg">Videoyu İzle</span>
+                            </div>
                         </div>
                         <div class="p-5">
                             <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
