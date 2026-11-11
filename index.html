@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaman Tüneli - Oyun, Film & Medya Portalı</title>
+    <title>Zaman Tüneli - Tarih, Oyun, Film & Medya Portalı</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
@@ -58,7 +58,7 @@
             <!-- Search Bar -->
             <div class="flex-1 max-w-md relative hidden sm:block">
                 <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-                <input type="text" id="searchInput" placeholder="Oyun, film veya kategori ara..." class="w-full bg-slate-900/90 border border-slate-800 rounded-full pl-10 pr-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-purple-500 transition-colors">
+                <input type="text" id="searchInput" placeholder="Tarih, oyun, film veya kategori ara..." class="w-full bg-slate-900/90 border border-slate-800 rounded-full pl-10 pr-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-purple-500 transition-colors">
             </div>
 
             <!-- Auth Button -->
@@ -75,18 +75,18 @@
     <section class="relative py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div class="relative rounded-3xl overflow-hidden border border-slate-800 bg-gradient-to-r from-purple-950/40 via-slate-900 to-slate-950 p-8 sm:p-12">
             <div class="max-w-2xl relative z-10">
-                <span class="inline-block bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-4">Medya & Oyun Zaman Makinesi</span>
+                <span class="inline-block bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-4">Tarih & Medya Zaman Makinesi</span>
                 <h1 class="heading-font text-4xl sm:text-6xl font-bold tracking-tight text-white mb-4">
                     Nostaljiden Geleceğe İçerik Keşfi
                 </h1>
                 <p class="text-slate-400 text-base sm:text-lg mb-6">
-                    80'lerin efsanevi retro oyunlarından günümüzün dev bütçeli sinema yapımlarına kadar uzanan zaman tüneline hoş geldiniz.
+                    Tarihi dönüm noktalarından efsanevi retro oyunlara ve sinema yapımlarına kadar uzanan zaman tüneline hoş geldiniz.
                 </p>
                 <div class="flex flex-wrap gap-3" id="eraFilters">
                     <button onclick="filterEra('all')" class="era-btn active bg-purple-600 text-white text-xs font-medium px-4 py-2 rounded-lg transition-colors">Tümü</button>
+                    <button onclick="filterEra('history')" class="era-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium px-4 py-2 rounded-lg transition-colors">Tarihi Miras</button>
                     <button onclick="filterEra('80s')" class="era-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium px-4 py-2 rounded-lg transition-colors">80'ler</button>
                     <button onclick="filterEra('90s')" class="era-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium px-4 py-2 rounded-lg transition-colors">90'lar</button>
-                    <button onclick="filterEra('2000s')" class="era-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium px-4 py-2 rounded-lg transition-colors">2000'ler</button>
                     <button onclick="filterEra('modern')" class="era-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium px-4 py-2 rounded-lg transition-colors">Günümüz</button>
                 </div>
             </div>
@@ -96,7 +96,7 @@
     <!-- CONTENT GRID -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         <div class="flex items-center justify-between mb-8">
-            <h2 class="heading-font text-2xl sm:text-3xl font-bold text-white tracking-wide">Öne Çıkan Yapımlar</h2>
+            <h2 class="heading-font text-2xl sm:text-3xl font-bold text-white tracking-wide">Öne Çıkan Yapımlar ve Anılar</h2>
         </div>
 
         <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -167,7 +167,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Firebase Yapılandırma Bilgileri
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_AUTH_DOMAIN",
@@ -182,10 +181,32 @@
     </script>
 
     <script>
-        // İçerik Verileri
+        // İçerik Verileri (Tarihi Portreler ve Diğer Medya İçerikleri)
         const items = [
             {
                 id: 1,
+                title: "Gazi Mustafa Kemal Atatürk (Askeri Lider)",
+                category: "Tarihi Miras",
+                era: "history",
+                year: "1881-1938",
+                rating: "10.0",
+                image: "images.webp",
+                desc: "Milletinin bağımsızlığı uğruna cepheden cepheye koşan, Çanakkale'den Kurtuluş Savaşı'na uzanan dahi askerlik stratejisi ve kalpaklı kahraman.",
+                video: "https://www.youtube.com/embed/8X2kIfS6fb8"
+            },
+            {
+                id: 2,
+                title: "Gazi Mustafa Kemal Atatürk (Cumhurbaşkanı)",
+                category: "Tarihi Miras",
+                era: "history",
+                year: "1923",
+                rating: "10.0",
+                image: "indir.webp",
+                desc: "Genç Türkiye Cumhuriyeti'ni muasır medeniyetler seviyesinin üzerine çıkarmak için devrimler gerçekleştiren vizyoner devlet adamı.",
+                video: "https://www.youtube.com/embed/vKQi3bBA1y8"
+            },
+            {
+                id: 3,
                 title: "Cyberpunk 2077",
                 category: "Oyun",
                 era: "modern",
@@ -196,7 +217,7 @@
                 video: "https://www.youtube.com/embed/8X2kIfS6fb8"
             },
             {
-                id: 2,
+                id: 4,
                 title: "The Matrix",
                 category: "Sinema",
                 era: "90s",
@@ -207,7 +228,7 @@
                 video: "https://www.youtube.com/embed/vKQi3bBA1y8"
             },
             {
-                id: 3,
+                id: 5,
                 title: "Pac-Man Arcade",
                 category: "Retro Oyun",
                 era: "80s",
@@ -224,7 +245,7 @@
             grid.innerHTML = data.map(item => `
                 <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden group hover:border-purple-500/50 transition-all duration-300 neon-border flex flex-col justify-between">
                     <div>
-                        <div class="relative aspect-video overflow-hidden">
+                        <div class="relative aspect-video overflow-hidden bg-slate-950">
                             <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md border border-slate-800 text-xs text-purple-400 font-semibold px-2.5 py-1 rounded-md">
                                 ${item.category}
@@ -301,7 +322,6 @@
             toggleModal('authModal');
         }
 
-        // Sayfa yüklendiğinde simgeleri ve kartları çalıştır
         window.onload = () => {
             renderCards(items);
             lucide.createIcons();
