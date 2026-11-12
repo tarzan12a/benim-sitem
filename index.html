@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaman Tüneli - Modern YKS & MSÜ Akademi Portalı</title>
+    <title>Zaman Tüneli - Ultra Gelişmiş YKS & MSÜ Akademi</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -27,66 +27,66 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .heading-font { font-family: 'Outfit', sans-serif; }
-        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); }
-        .dark .glass-card { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); }
-        .modern-shadow { box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05); }
-        .dark .modern-shadow { box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); }
+        .glass-panel { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(16px); }
+        .dark .glass-panel { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); }
+        .pro-shadow { box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05); }
+        .dark .pro-shadow { box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">
 
     <!-- ÜYELİK KİLİT EKRANI -->
-    <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xl flex items-center justify-center p-4">
-        <div class="glass-card border border-slate-200 dark:border-slate-800 rounded-[2.5rem] max-w-md w-full p-8 relative modern-shadow space-y-6">
+    <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-2xl flex items-center justify-center p-4">
+        <div class="glass-panel border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] max-w-md w-full p-8 relative pro-shadow space-y-6">
             <div class="text-center space-y-2">
-                <div class="inline-flex bg-red-500/10 text-red-600 p-4 rounded-2xl mb-2">
-                    <i data-lucide="shield-check" class="w-8 h-8"></i>
+                <div class="inline-flex bg-red-500/10 text-red-600 p-4 rounded-3xl mb-1">
+                    <i data-lucide="shield-alert" class="w-8 h-8"></i>
                 </div>
                 <h2 class="heading-font text-3xl font-extrabold tracking-tight">Zaman Tüneli</h2>
                 <p class="text-slate-500 dark:text-slate-400 text-xs">Akademi paneline erişmek için lütfen hesabına giriş yap.</p>
             </div>
 
-            <div class="flex bg-slate-100 dark:bg-slate-800/50 p-1 rounded-2xl">
+            <div class="flex bg-slate-100 dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200/60 dark:border-slate-800">
                 <button onclick="switchAuthTab('login')" id="loginTabBtn" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white dark:bg-slate-800 text-red-600 shadow-sm transition-all">Giriş Yap</button>
                 <button onclick="switchAuthTab('register')" id="registerTabBtn" class="flex-1 py-2.5 text-xs font-medium text-slate-500 rounded-xl transition-all">Kayıt Ol</button>
             </div>
 
             <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">E-Posta</label>
-                    <input type="email" id="loginEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition-all">
+                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">E-Posta</label>
+                    <input type="email" id="loginEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-3 text-xs focus:outline-none focus:border-red-500 transition-all">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Şifre</label>
-                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition-all">
+                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Şifre</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-3 text-xs focus:outline-none focus:border-red-500 transition-all">
                 </div>
-                <button type="submit" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-red-500/25">Giriş Yap</button>
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-2xl text-xs transition-all shadow-lg shadow-red-500/25">Giriş Yap ve Başla</button>
             </form>
 
             <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-4 hidden">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Ad Soyad</label>
-                    <input type="text" id="regName" required placeholder="Adın Soyadın" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition-all">
+                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Ad Soyad</label>
+                    <input type="text" id="regName" required placeholder="Adın Soyadın" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-3 text-xs focus:outline-none focus:border-red-500 transition-all">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">E-Posta</label>
-                    <input type="email" id="regEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition-all">
+                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">E-Posta</label>
+                    <input type="email" id="regEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-3 text-xs focus:outline-none focus:border-red-500 transition-all">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Şifre</label>
-                    <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition-all">
+                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Şifre</label>
+                    <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-3 text-xs focus:outline-none focus:border-red-500 transition-all">
                 </div>
-                <button type="submit" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-red-500/25">Kayıt Ol</button>
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-2xl text-xs transition-all shadow-lg shadow-red-500/25">Kayıt Ol</button>
             </form>
         </div>
     </div>
 
     <!-- NAV BAR -->
-    <header class="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80">
+    <header class="sticky top-0 z-40 bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-800/60">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-2">
-                <div class="w-10 h-10 rounded-2xl bg-red-600 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-red-500/30">ZT</div>
-                <span class="heading-font text-xl font-extrabold tracking-tight">ZAMAN TÜNELİ</span>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-red-600 to-rose-500 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-red-500/30">ZT</div>
+                <span class="heading-font text-lg font-extrabold tracking-tight">ZAMAN TÜNELİ</span>
             </div>
             <div class="flex items-center gap-3" id="authArea"></div>
         </div>
@@ -96,25 +96,27 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
         
         <!-- ÜST MODERN SEKME MENÜSÜ -->
-        <div class="flex flex-wrap bg-slate-200/60 dark:bg-slate-900 p-2 rounded-2xl gap-1.5 border border-slate-200 dark:border-slate-800">
-            <button onclick="switchTab('denemeTracker')" id="tabDenemeTracker" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-red-600 text-white shadow-md transition-all flex items-center gap-2"><i data-lucide="line-chart" class="w-4 h-4"></i> Deneme & Grafik</button>
-            <button onclick="switchTab('calculator')" id="tabCalculator" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="calculator" class="w-4 h-4"></i> Net & Puan</button>
+        <div class="flex flex-wrap bg-slate-200/60 dark:bg-slate-900 p-2 rounded-2xl gap-1.5 border border-slate-200/80 dark:border-slate-800">
+            <button onclick="switchTab('denemeTracker')" id="tabDenemeTracker" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-red-600 text-white shadow-md transition-all flex items-center gap-2"><i data-lucide="line-chart" class="w-4 h-4"></i> Deneme & Grafik Paneli</button>
+            <button onclick="switchTab('calculator')" id="tabCalculator" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="calculator" class="w-4 h-4"></i> Net & Puan Simülatörü</button>
             <button onclick="switchTab('pomodoro')" id="tabPomodoro" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> Pomodoro</button>
-            <button onclick="switchTab('settings')" id="tabSettings" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="settings" class="w-4 h-4"></i> Ayarlar</button>
+            <button onclick="switchTab('settings')" id="tabSettings" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="settings" class="w-4 h-4"></i> Ayarlar & Tema</button>
         </div>
 
-        <!-- 1. DENEME TAKİP & GRAFİK & PDF -->
+        <!-- 1. DENEME TAKİP & GELİŞMİŞ GRAFİK & HEDEF & PDF -->
         <div id="denemeTrackerView" class="space-y-6">
-            <div id="pdfReportArea" class="glass-card border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-6 sm:p-8 modern-shadow space-y-6">
+            <div id="pdfReportArea" class="glass-panel border border-slate-200/80 dark:border-slate-800 rounded-[2.5rem] p-6 sm:p-8 pro-shadow space-y-6">
+                
+                <!-- Başlık ve Butonlar -->
                 <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
                     <div>
-                        <span class="bg-red-500/10 text-red-600 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Performans Analizi</span>
-                        <h3 class="heading-font text-2xl font-bold mt-2">Deneme Sınavı Takip Sistemi</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Çözdüğün denemeleri kaydet, grafiksel olarak görselleştir ve PDF çıktısı al.</p>
+                        <span class="bg-red-500/10 text-red-600 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Performans ve İstatistik</span>
+                        <h3 class="heading-font text-2xl font-extrabold mt-2">Deneme Takip Sistemi</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Netlerini kaydet, grafiksel olarak gelişmini izle ve PDF raporu oluştur.</p>
                     </div>
-                    <div class="flex items-center gap-2.5">
-                        <button onclick="exportToPDF()" class="flex items-center gap-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white text-xs font-bold px-4.5 py-3 rounded-2xl transition-all shadow-sm">
-                            <i data-lucide="download" class="w-4 h-4"></i> PDF İndir
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <button onclick="exportToPDF()" class="flex items-center gap-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white text-xs font-bold px-4.5 py-3 rounded-2xl transition-all shadow-sm">
+                            <i data-lucide="download" class="w-4 h-4"></i> PDF Rapor Al
                         </button>
                         <button onclick="toggleModal('addDenemeModal')" class="flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-5 py-3 rounded-2xl transition-all shadow-lg shadow-red-500/25">
                             <i data-lucide="plus-circle" class="w-4 h-4"></i> Yeni Deneme Ekle
@@ -123,89 +125,98 @@
                 </div>
 
                 <!-- İstatistik Kartları -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div class="bg-slate-100/60 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-700/60 p-6 rounded-3xl">
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                    <div class="bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 p-5 rounded-3xl">
                         <span class="text-xs text-slate-500 dark:text-slate-400 font-semibold block mb-1">Toplam Deneme</span>
-                        <span id="statTotalCount" class="heading-font text-4xl font-extrabold">0</span>
+                        <span id="statTotalCount" class="heading-font text-3xl font-extrabold">0</span>
                     </div>
-                    <div class="bg-slate-100/60 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-700/60 p-6 rounded-3xl">
+                    <div class="bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 p-5 rounded-3xl">
                         <span class="text-xs text-slate-500 dark:text-slate-400 font-semibold block mb-1">En Yüksek TYT Neti</span>
-                        <span id="statMaxTyt" class="heading-font text-4xl font-extrabold text-red-600">0.00</span>
+                        <span id="statMaxTyt" class="heading-font text-3xl font-extrabold text-red-600">0.00</span>
                     </div>
-                    <div class="bg-slate-100/60 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-700/60 p-6 rounded-3xl">
+                    <div class="bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 p-5 rounded-3xl">
                         <span class="text-xs text-slate-500 dark:text-slate-400 font-semibold block mb-1">En Yüksek AYT Neti</span>
-                        <span id="statMaxAyt" class="heading-font text-4xl font-extrabold">0.00</span>
+                        <span id="statMaxAyt" class="heading-font text-3xl font-extrabold">0.00</span>
+                    </div>
+                    <div class="bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 p-5 rounded-3xl">
+                        <span class="text-xs text-slate-500 dark:text-slate-400 font-semibold block mb-1">Ortalama Net</span>
+                        <span id="statAvgNet" class="heading-font text-3xl font-extrabold">0.00</span>
                     </div>
                 </div>
 
-                <!-- Grafik Alanı -->
-                <div class="bg-slate-100/60 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-700/60 p-6 rounded-3xl space-y-4">
-                    <h4 class="font-bold text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400">Net Değişim Grafiği</h4>
-                    <div id="netVisualChart" class="flex items-end gap-3 h-44 pt-6 overflow-x-auto pb-2 border-b border-slate-200 dark:border-slate-700">
-                        <span class="text-xs text-slate-400 italic m-auto">Henüz veri yok.</span>
+                <!-- GELİŞMİŞ GÖRSEL GRAFİK ALANI -->
+                <div class="bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 p-6 rounded-3xl space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-2">
+                            <i data-lucide="trending-up" class="w-4 h-4 text-red-600"></i> Net İlerleme Çizelgesi
+                        </h4>
+                        <span class="text-[10px] bg-red-500/10 text-red-600 font-bold px-2.5 py-1 rounded-full">Son Sınavlar</span>
+                    </div>
+                    <div id="netVisualChart" class="flex items-end gap-3 h-48 pt-8 overflow-x-auto pb-2 border-b border-slate-200 dark:border-slate-800">
+                        <span class="text-xs text-slate-400 italic m-auto">Grafik oluşturmak için deneme ekleyin.</span>
                     </div>
                 </div>
 
                 <!-- Tablo -->
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 uppercase font-bold tracking-wider">
+                        <thead class="bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 uppercase font-bold tracking-wider">
                             <tr>
-                                <th class="p-3.5 rounded-l-2xl">Deneme Adı</th>
-                                <th class="p-3.5">Tür</th>
-                                <th class="p-3.5">Tarih</th>
-                                <th class="p-3.5">Türkçe/Edb</th>
-                                <th class="p-3.5">Sosyal</th>
-                                <th class="p-3.5">Matematik</th>
-                                <th class="p-3.5">Fen/Diğer</th>
-                                <th class="p-3.5">Toplam Net</th>
-                                <th class="p-3.5 rounded-r-2xl text-center">İşlem</th>
+                                <th class="p-4 rounded-l-2xl">Deneme Adı</th>
+                                <th class="p-4">Tür</th>
+                                <th class="p-4">Tarih</th>
+                                <th class="p-4">Türkçe/Edb</th>
+                                <th class="p-4">Sosyal</th>
+                                <th class="p-4">Matematik</th>
+                                <th class="p-4">Fen</th>
+                                <th class="p-4">Toplam Net</th>
+                                <th class="p-4 rounded-r-2xl text-center">İşlem</th>
                             </tr>
                         </thead>
-                        <tbody id="denemeTableBody" class="divide-y divide-slate-200 dark:divide-slate-800/60"></tbody>
+                        <tbody id="denemeTableBody" class="divide-y divide-slate-200 dark:divide-slate-800/80"></tbody>
                     </table>
                     <div id="noDenemeMessage" class="text-center py-12 text-slate-400 text-xs font-medium">
-                        Kayıtlı deneme bulunmuyor. Yeni deneme ekleyerek başla!
+                        Kayıtlı deneme bulunmuyor. Yeni deneme ekleyerek hemen başla!
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 2. NET & PUAN HESAPLAYICI -->
+        <!-- 2. NET & PUAN SİMÜLATÖRÜ -->
         <div id="calculatorView" class="hidden space-y-6">
-            <div class="glass-card border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-6 sm:p-8 modern-shadow space-y-6">
+            <div class="glass-panel border border-slate-200/80 dark:border-slate-800 rounded-[2.5rem] p-6 sm:p-8 pro-shadow space-y-6">
                 <div class="text-center max-w-xl mx-auto">
                     <h3 class="heading-font text-3xl font-extrabold mb-2">Net ve Puan Simülatörü</h3>
-                    <p class="text-slate-500 dark:text-slate-400 text-xs">Doğru ve yanlışlarını gir, ÖSYM tabanlı tahmini puanını öğren.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Doğru ve yanlışlarını gir, ÖSYM tabanlı tahmini puanını anında hesapla.</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="bg-slate-100/60 dark:bg-slate-800/40 p-5 rounded-3xl border border-slate-200/80 dark:border-slate-700/60">
+                    <div class="bg-slate-100/60 dark:bg-slate-900/60 p-5 rounded-3xl border border-slate-200/80 dark:border-slate-800">
                         <div class="flex justify-between items-center mb-3"><span class="text-xs font-bold">TYT Türkçe (40 S)</span><span class="text-xs text-red-600 font-extrabold" id="net-t-turkce">Net: 0.00</span></div>
                         <div class="flex gap-2.5">
-                            <input type="number" id="c-t-turkce" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
-                            <input type="number" id="y-t-turkce" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
+                            <input type="number" id="c-t-turkce" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-t-turkce" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
                         </div>
                     </div>
-                    <div class="bg-slate-100/60 dark:bg-slate-800/40 p-5 rounded-3xl border border-slate-200/80 dark:border-slate-700/60">
+                    <div class="bg-slate-100/60 dark:bg-slate-900/60 p-5 rounded-3xl border border-slate-200/80 dark:border-slate-800">
                         <div class="flex justify-between items-center mb-3"><span class="text-xs font-bold">TYT Matematik (40 S)</span><span class="text-xs text-red-600 font-extrabold" id="net-t-mat">Net: 0.00</span></div>
                         <div class="flex gap-2.5">
-                            <input type="number" id="c-t-mat" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
-                            <input type="number" id="y-t-mat" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
+                            <input type="number" id="c-t-mat" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-t-mat" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
                         </div>
                     </div>
-                    <div class="bg-slate-100/60 dark:bg-slate-800/40 p-5 rounded-3xl border border-slate-200/80 dark:border-slate-700/60">
+                    <div class="bg-slate-100/60 dark:bg-slate-900/60 p-5 rounded-3xl border border-slate-200/80 dark:border-slate-800">
                         <div class="flex justify-between items-center mb-3"><span class="text-xs font-bold">TYT Sosyal (20 S)</span><span class="text-xs text-red-600 font-extrabold" id="net-t-sosyal">Net: 0.00</span></div>
                         <div class="flex gap-2.5">
-                            <input type="number" id="c-t-sosyal" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
-                            <input type="number" id="y-t-sosyal" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
+                            <input type="number" id="c-t-sosyal" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-t-sosyal" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
                         </div>
                     </div>
-                    <div class="bg-slate-100/60 dark:bg-slate-800/40 p-5 rounded-3xl border border-slate-200/80 dark:border-slate-700/60">
+                    <div class="bg-slate-100/60 dark:bg-slate-900/60 p-5 rounded-3xl border border-slate-200/80 dark:border-slate-800">
                         <div class="flex justify-between items-center mb-3"><span class="text-xs font-bold">TYT Fen (20 S)</span><span class="text-xs text-red-600 font-extrabold" id="net-t-fen">Net: 0.00</span></div>
                         <div class="flex gap-2.5">
-                            <input type="number" id="c-t-fen" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
-                            <input type="number" id="y-t-fen" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
+                            <input type="number" id="c-t-fen" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-t-fen" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:border-red-500">
                         </div>
                     </div>
                 </div>
@@ -229,7 +240,7 @@
 
         <!-- 3. POMODORO -->
         <div id="pomodoroView" class="hidden space-y-6">
-            <div class="max-w-xl mx-auto glass-card border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-8 modern-shadow text-center space-y-6">
+            <div class="max-w-xl mx-auto glass-panel border border-slate-200/80 dark:border-slate-800 rounded-[2.5rem] p-8 pro-shadow text-center space-y-6">
                 <h3 class="heading-font text-3xl font-extrabold">Odaklanma Asistanı</h3>
                 <div class="text-7xl font-black heading-font text-red-600 tracking-wider" id="pomodoroTimer">25:00</div>
                 <div class="flex justify-center gap-3">
@@ -242,14 +253,14 @@
 
         <!-- 4. AYARLAR -->
         <div id="settingsView" class="hidden space-y-6">
-            <div class="max-w-xl mx-auto glass-card border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-8 modern-shadow space-y-6">
+            <div class="max-w-xl mx-auto glass-panel border border-slate-200/80 dark:border-slate-800 rounded-[2.5rem] p-8 pro-shadow space-y-6">
                 <h3 class="heading-font text-3xl font-extrabold">Tema Tercihleri</h3>
                 <div class="space-y-4 text-xs">
                     <div>
                         <label class="block font-semibold text-slate-500 dark:text-slate-400 mb-3">Görünüm Modu</label>
                         <div class="grid grid-cols-3 gap-3">
-                            <button onclick="setTheme('light')" class="p-4 rounded-2xl border border-slate-200 dark:border-slate-700 font-bold hover:border-red-500 transition-all">Açık Tema</button>
-                            <button onclick="setTheme('dark')" class="p-4 rounded-2xl border border-slate-200 dark:border-slate-700 font-bold hover:border-red-500 transition-all">Koyu Tema</button>
+                            <button onclick="setTheme('light')" class="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 font-bold hover:border-red-500 transition-all">Açık Tema</button>
+                            <button onclick="setTheme('dark')" class="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 font-bold hover:border-red-500 transition-all">Koyu Tema</button>
                             <button onclick="setTheme('neon')" class="p-4 rounded-2xl border border-red-500 bg-red-500/10 text-red-600 font-bold">Neon Kırmızı</button>
                         </div>
                     </div>
@@ -260,8 +271,8 @@
     </main>
 
     <!-- YENİ DENEME MODALI -->
-    <div id="addDenemeModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xl hidden flex items-center justify-center p-4">
-        <div class="glass-card border border-slate-200 dark:border-slate-800 rounded-[2.5rem] max-w-lg w-full p-8 modern-shadow space-y-6">
+    <div id="addDenemeModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-2xl hidden flex items-center justify-center p-4">
+        <div class="glass-panel border border-slate-200/80 dark:border-slate-800 rounded-[2.5rem] max-w-lg w-full p-8 pro-shadow space-y-6">
             <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
                 <h3 class="heading-font text-2xl font-bold">Yeni Deneme Kaydı</h3>
                 <button onclick="toggleModal('addDenemeModal')" class="text-slate-400 hover:text-red-600"><i data-lucide="x" class="w-6 h-6"></i></button>
@@ -270,12 +281,12 @@
             <form onsubmit="handleSaveDeneme(event)" class="space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Deneme Adı</label>
-                        <input type="text" id="denemeName" required placeholder="Örn: 3D TYT-1" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs focus:outline-none">
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5">Deneme Adı</label>
+                        <input type="text" id="denemeName" required placeholder="Örn: 3D TYT-1" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-3 text-xs focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Sınav Türü</label>
-                        <select id="denemeType" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs focus:outline-none">
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5">Sınav Türü</label>
+                        <select id="denemeType" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-3 text-xs focus:outline-none">
                             <option value="TYT">TYT</option>
                             <option value="AYT">AYT</option>
                         </select>
@@ -284,24 +295,24 @@
 
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
                     <div>
-                        <label class="block font-bold mb-1 text-[11px]">Türkçe/Edb</label>
-                        <input type="number" id="dTurkceC" placeholder="Doğru" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 mb-1.5 text-xs">
-                        <input type="number" id="dTurkceY" placeholder="Yanlış" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
+                        <label class="block font-bold mb-1.5 text-[11px]">Türkçe/Edb</label>
+                        <input type="number" id="dTurkceC" placeholder="Doğru" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mb-1.5 text-xs">
+                        <input type="number" id="dTurkceY" placeholder="Yanlış" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs">
                     </div>
                     <div>
-                        <label class="block font-bold mb-1 text-[11px]">Sosyal</label>
-                        <input type="number" id="dSosyalC" placeholder="Doğru" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 mb-1.5 text-xs">
-                        <input type="number" id="dSosyalY" placeholder="Yanlış" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
+                        <label class="block font-bold mb-1.5 text-[11px]">Sosyal</label>
+                        <input type="number" id="dSosyalC" placeholder="Doğru" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mb-1.5 text-xs">
+                        <input type="number" id="dSosyalY" placeholder="Yanlış" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs">
                     </div>
                     <div>
-                        <label class="block font-bold mb-1 text-[11px]">Matematik</label>
-                        <input type="number" id="dMatC" placeholder="Doğru" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 mb-1.5 text-xs">
-                        <input type="number" id="dMatY" placeholder="Yanlış" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
+                        <label class="block font-bold mb-1.5 text-[11px]">Matematik</label>
+                        <input type="number" id="dMatC" placeholder="Doğru" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mb-1.5 text-xs">
+                        <input type="number" id="dMatY" placeholder="Yanlış" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs">
                     </div>
                     <div>
-                        <label class="block font-bold mb-1 text-[11px]">Fen</label>
-                        <input type="number" id="dFenC" placeholder="Doğru" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 mb-1.5 text-xs">
-                        <input type="number" id="dFenY" placeholder="Yanlış" class="w-full bg-slate-100/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
+                        <label class="block font-bold mb-1.5 text-[11px]">Fen</label>
+                        <input type="number" id="dFenC" placeholder="Doğru" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 mb-1.5 text-xs">
+                        <input type="number" id="dFenY" placeholder="Yanlış" class="w-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs">
                     </div>
                 </div>
 
@@ -337,7 +348,7 @@
             if (user) {
                 authLockScreen.classList.add('hidden');
                 authArea.innerHTML = `
-                    <div class="flex items-center gap-3 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-2xl text-xs shadow-sm">
+                    <div class="flex items-center gap-3 bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 px-4 py-2 rounded-2xl text-xs shadow-sm">
                         <span class="text-red-600 font-bold">${user.email}</span>
                         <button onclick="handleLogout()" class="text-slate-400 hover:text-red-600 font-extrabold ml-1">Çıkış</button>
                     </div>
@@ -396,42 +407,46 @@
                 chartArea.innerHTML = '<span class="text-xs text-slate-400 italic m-auto">Henüz veri yok.</span>';
                 document.getElementById('statMaxTyt').textContent = '0.00';
                 document.getElementById('statMaxAyt').textContent = '0.00';
+                document.getElementById('statAvgNet').textContent = '0.00';
                 return;
             }
 
             noMsg.classList.add('hidden');
-            let maxTyt = 0, maxAyt = 0;
+            let maxTyt = 0, maxAyt = 0, sumNet = 0;
+
             denemeler.forEach(d => {
                 const n = parseFloat(d.totalNet);
+                sumNet += n;
                 if (d.type === 'TYT' && n > maxTyt) maxTyt = n;
                 if (d.type === 'AYT' && n > maxAyt) maxAyt = n;
             });
 
             document.getElementById('statMaxTyt').textContent = maxTyt.toFixed(2);
             document.getElementById('statMaxAyt').textContent = maxAyt.toFixed(2);
+            document.getElementById('statAvgNet').textContent = (sumNet / denemeler.length).toFixed(2);
 
             chartArea.innerHTML = denemeler.map(d => {
-                const h = Math.min(100, Math.max(10, (parseFloat(d.totalNet) / 120) * 100));
+                const h = Math.min(100, Math.max(12, (parseFloat(d.totalNet) / 120) * 100));
                 return `
                     <div class="flex flex-col items-center gap-1.5 h-full justify-end group">
                         <span class="text-[10px] font-bold text-red-600">${d.totalNet}</span>
-                        <div style="height: ${h}%;" class="w-9 bg-red-600 hover:bg-red-500 rounded-t-xl transition-all shadow-md shadow-red-500/20"></div>
+                        <div style="height: ${h}%;" class="w-9 bg-gradient-to-t from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 rounded-t-xl transition-all shadow-md shadow-red-500/20"></div>
                         <span class="text-[10px] text-slate-400 truncate max-w-[60px] font-semibold">${d.name}</span>
                     </div>
                 `;
             }).join('');
 
             tbody.innerHTML = denemeler.map(d => `
-                <tr class="hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td class="p-3.5 font-bold">${d.name}</td>
-                    <td class="p-3.5"><span class="bg-red-500/10 text-red-600 px-2.5 py-1 rounded-full font-extrabold text-[10px]">${d.type}</span></td>
-                    <td class="p-3.5 text-slate-400 font-medium">${d.date}</td>
-                    <td class="p-3.5">${d.tNet}</td>
-                    <td class="p-3.5">${d.sNet}</td>
-                    <td class="p-3.5">${d.mNet}</td>
-                    <td class="p-3.5">${d.fNet}</td>
-                    <td class="p-3.5 font-extrabold text-red-600">${d.totalNet}</td>
-                    <td class="p-3.5 text-center">
+                <tr class="hover:bg-slate-100/60 dark:hover:bg-slate-900/60 transition-colors">
+                    <td class="p-4 font-bold">${d.name}</td>
+                    <td class="p-4"><span class="bg-red-500/10 text-red-600 px-3 py-1 rounded-full font-extrabold text-[10px]">${d.type}</span></td>
+                    <td class="p-4 text-slate-400 font-medium">${d.date}</td>
+                    <td class="p-4">${d.tNet}</td>
+                    <td class="p-4">${d.sNet}</td>
+                    <td class="p-4">${d.mNet}</td>
+                    <td class="p-4">${d.fNet}</td>
+                    <td class="p-4 font-extrabold text-red-600">${d.totalNet}</td>
+                    <td class="p-4 text-center">
                         <button onclick="deleteDeneme(${d.id})" class="text-slate-400 hover:text-red-600 transition-colors"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                     </td>
                 </tr>
@@ -440,7 +455,7 @@
         }
 
         function exportToPDF() {
-            html2pdf().from(document.getElementById('pdfReportArea')).set({ margin: 10, filename: 'Deneme_Raporu.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } }).save();
+            html2pdf().from(document.getElementById('pdfReportArea')).set({ margin: 10, filename: 'ZamanTuneli_Deneme_Raporu.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } }).save();
         }
 
         function calcPuan() {
@@ -468,7 +483,7 @@
                 }, 1000);
             }
         }
-        function pausePomodoro() { clearInterval(pomoInterval); isPormoRunning = false; }
+        function pausePomodoro() { clearInterval(pomoInterval); isPomoRunning = false; }
         function resetPomodoro() { clearInterval(pomoInterval); isPomoRunning = false; pomoTime = 25 * 60; document.getElementById('pomodoroTimer').textContent = "25:00"; }
 
         function switchTab(tab) {
