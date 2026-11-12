@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaman Tüneli - Tarih, Medya & İngilizce Akademi Portalı</title>
+    <title>Zaman Tüneli - YKS & Kimya Akademi Portalı</title>
     
     <!-- Google AdSense Doğrulama Kodu -->
     <meta name="google-adsense-account" content="ca-pub-5903431933111991">
@@ -27,12 +27,12 @@
             font-family: 'Rajdhani', sans-serif;
         }
 
-        .neon-border {
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+        .red-neon-border {
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
         }
 
-        .neon-border:hover {
-            box-shadow: 0 0 25px rgba(139, 92, 246, 0.6);
+        .red-neon-border:hover {
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.6);
         }
 
         /* Custom Scrollbar */
@@ -47,7 +47,7 @@
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #8b5cf6;
+            background: #ef4444;
         }
     </style>
 </head>
@@ -58,18 +58,20 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
             <!-- Logo -->
             <a href="#" class="flex items-center gap-3 shrink-0">
-                <img src="logo.png" alt="Zaman Tüneli" class="h-12 w-auto object-contain hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x50/090d16/8b5cf6?text=Zaman+T%C3%BCneli';">
+                <img src="logo.png" alt="Zaman Tüneli" class="h-12 w-auto object-contain hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x50/090d16/ef4444?text=YKS+AKADEMİ';">
             </a>
 
-            <!-- Search Bar -->
-            <div class="flex-1 max-w-md relative hidden sm:block">
-                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-                <input type="text" id="searchInput" placeholder="Tarih, oyun, film veya kelime ara..." class="w-full bg-slate-900/90 border border-slate-800 rounded-full pl-10 pr-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-purple-500 transition-colors">
-            </div>
+            <!-- Nav Links -->
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="#mainContent" class="text-slate-300 hover:text-red-500 transition-colors">Ana Sayfa</a>
+                <a href="#yksHub" class="text-red-400 font-semibold flex items-center gap-1.5">
+                    <i data-lucide="flame" class="w-4 h-4"></i> YKS & Kimya Akademi
+                </a>
+            </nav>
 
-            <!-- Auth / User Profile Area (Avatarlı) -->
+            <!-- Auth / User Profile Area -->
             <div class="flex items-center gap-3" id="authArea">
-                <button onclick="toggleModal('authModal')" class="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium px-5 py-2.5 rounded-full text-sm transition-all duration-300 shadow-lg shadow-purple-900/30">
+                <button onclick="toggleModal('authModal')" class="flex items-center gap-2 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-medium px-5 py-2.5 rounded-full text-sm transition-all duration-300 shadow-lg shadow-red-950/50">
                     <i data-lucide="user" class="w-4 h-4"></i>
                     <span>Giriş Yap / Kayıt Ol</span>
                 </button>
@@ -77,161 +79,170 @@
         </div>
     </header>
 
-    <!-- HERO / BANNER -->
+    <!-- HERO / YKS GÜN SAYACI BANNER -->
     <section class="relative py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div class="relative rounded-3xl overflow-hidden border border-slate-800 bg-gradient-to-r from-purple-950/40 via-slate-900 to-slate-950 p-8 sm:p-12">
-            <div class="max-w-2xl relative z-10">
-                <span class="inline-block bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-4">Tarih, Medya & Akademi Portalı</span>
-                <h1 class="heading-font text-4xl sm:text-6xl font-bold tracking-tight text-white mb-4">
-                    Nostaljiden Geleceğe & İngilizce Eğitimi
-                </h1>
-                <p class="text-slate-400 text-base sm:text-lg mb-6">
-                    Zaman tüneli içeriklerini keşfetmek ve aşağıda yer alan A1'den C2'ye İngilizce Akademi modülünü kullanmak için giriş yapmış olmanız gerekir.
-                </p>
-                <div class="flex flex-wrap gap-3" id="eraFilters">
-                    <button onclick="filterEra('all')" class="era-btn active bg-purple-600 text-white text-xs font-medium px-4 py-2 rounded-lg transition-colors">Tümü</button>
-                    <button onclick="filterEra('history')" class="era-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium px-4 py-2 rounded-lg transition-colors">Tarihi Miras & Kültür</button>
-                    <button onclick="filterEra('80s')" class="era-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium px-4 py-2 rounded-lg transition-colors">80'ler</button>
-                    <button onclick="filterEra('90s')" class="era-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium px-4 py-2 rounded-lg transition-colors">90'lar</button>
-                    <button onclick="filterEra('modern')" class="era-btn bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium px-4 py-2 rounded-lg transition-colors">Günümüz</button>
+        <div class="relative rounded-3xl overflow-hidden border border-red-500/30 bg-gradient-to-r from-red-950/40 via-slate-900 to-slate-950 p-8 sm:p-12 shadow-2xl">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
+                <div class="max-w-xl">
+                    <span class="inline-block bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-4">YKS 2026 Özel Portalı</span>
+                    <h1 class="heading-font text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4">
+                        Hedefine Odaklan, Kimyayı Fethede!
+                    </h1>
+                    <p class="text-slate-400 text-sm sm:text-base leading-relaxed mb-6">
+                        TYT ve AYT Kimya özel konu kartları, Pomodoro odaklanma sistemi ve YKS net hesaplayıcı ile sınav hazırlığını zirveye taşı.
+                    </p>
+                </div>
+
+                <!-- Geri Sayım Kutusu -->
+                <div class="bg-slate-950/80 border border-red-500/30 p-6 rounded-2xl backdrop-blur-md text-center shrink-0 w-full sm:w-auto red-neon-border">
+                    <span class="text-xs uppercase tracking-widest text-red-400 font-bold block mb-3">YKS 2026'ya Kalan Süre</span>
+                    <div id="countdown" class="flex gap-4 justify-center text-white">
+                        <div class="flex flex-col"><span id="days" class="text-3xl font-bold heading-font text-red-500">00</span><span class="text-[10px] text-slate-400">Gün</span></div>
+                        <div class="text-2xl font-bold text-slate-600">:</div>
+                        <div class="flex flex-col"><span id="hours" class="text-3xl font-bold heading-font text-white">00</span><span class="text-[10px] text-slate-400">Saat</span></div>
+                        <div class="text-2xl font-bold text-slate-600">:</div>
+                        <div class="flex flex-col"><span id="minutes" class="text-3xl font-bold heading-font text-white">00</span><span class="text-[10px] text-slate-400">Dakika</span></div>
+                        <div class="text-2xl font-bold text-slate-600">:</div>
+                        <div class="flex flex-col"><span id="seconds" class="text-3xl font-bold heading-font text-red-400">00</span><span class="text-[10px] text-slate-400">Saniye</span></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CONTENT GRID -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    <!-- YKS & TYT-AYT KİMYA AKADEMİ SEKMESİ -->
+    <section id="yksHub" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 border-b border-slate-800 pb-4">
+            <div>
+                <span class="inline-block bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-1">Özel Ders & Çalışma Alanı</span>
+                <h2 class="heading-font text-3xl sm:text-4xl font-bold text-white tracking-wide">TYT & AYT Kimya Akademi</h2>
+            </div>
+            
+            <!-- Alt Sekme Butonları -->
+            <div class="flex bg-slate-900 p-1.5 rounded-2xl border border-slate-800">
+                <button onclick="switchYksTab('chemistry')" id="tabChemistry" class="px-5 py-2.5 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50">Kimya Kartları</button>
+                <button onclick="switchYksTab('pomodoro')" id="tabPomodoro" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all">Pomodoro Sayaç</button>
+                <button onclick="switchYksTab('calculator')" id="tabCalculator" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all">YKS Net Hesapla</button>
+            </div>
+        </div>
+
+        <!-- 1. KİMYA KARTLARI GÖRÜNÜMÜ -->
+        <div id="chemistryView" class="space-y-6">
+            <div class="flex flex-wrap gap-2 mb-4">
+                <button onclick="filterChemistry('all')" class="chem-filter-btn active bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors">Tüm Konular</button>
+                <button onclick="filterChemistry('tyt')" class="chem-filter-btn bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-800">TYT Kimya</button>
+                <button onclick="filterChemistry('ayt')" class="chem-filter-btn bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-800">AYT Kimya</button>
+            </div>
+            <div id="chemCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- JS ile dolacak -->
+            </div>
+        </div>
+
+        <!-- 2. POMODORO SİSTEMİ GÖRÜNÜMÜ -->
+        <div id="pomodoroView" class="hidden max-w-xl mx-auto bg-slate-900 border border-red-500/30 rounded-3xl p-8 shadow-2xl text-center red-neon-border">
+            <h3 class="heading-font text-2xl font-bold text-white mb-2">Pomodoro Odaklanma Asistanı</h3>
+            <p class="text-slate-400 text-xs mb-6">25 dakika çalış, 5 dakika mola ver! Verimliliğini doruğa çıkar.</p>
+            
+            <div class="text-6xl sm:text-7xl font-bold heading-font text-red-500 mb-8 tracking-widest" id="pomodoroTimer">25:00</div>
+            
+            <div class="flex justify-center gap-4">
+                <button onclick="startPomodoro()" id="pomoStartBtn" class="bg-red-600 hover:bg-red-500 text-white font-semibold px-8 py-3 rounded-2xl text-sm transition-all shadow-lg shadow-red-950/50">Başlat</button>
+                <button onclick="pausePomodoro()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-6 py-3 rounded-2xl text-sm transition-all">Duraklat</button>
+                <button onclick="resetPomodoro()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-6 py-3 rounded-2xl text-sm transition-all">Sıfırla</button>
+            </div>
+        </div>
+
+        <!-- 3. YKS NET HESAPLAYICI GÖRÜNÜMÜ -->
+        <div id="calculatorView" class="hidden max-w-2xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+            <h3 class="heading-font text-2xl font-bold text-white mb-2">YKS Net ve Puan Hesaplayıcı</h3>
+            <p class="text-slate-400 text-xs mb-6">Doğru ve yanlış sayılarını girerek netlerini anında hesapla (4 yanlış 1 doğruyu götürür).</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <label class="block text-xs font-semibold text-red-400 mb-2">TYT Kimya (5 Soru)</label>
+                    <div class="flex gap-2">
+                        <input type="number" id="tytCorrect" placeholder="Doğru" min="0" max="5" oninput="calculateNet()" class="w-1/2 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-red-500">
+                        <input type="number" id="tytWrong" placeholder="Yanlış" min="0" max="5" oninput="calculateNet()" class="w-1/2 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-red-500">
+                    </div>
+                    <div class="mt-2 text-xs text-slate-400">Net: <span id="tytNetResult" class="text-white font-bold">0.00</span></div>
+                </div>
+
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <label class="block text-xs font-semibold text-red-400 mb-2">AYT Kimya (13 Soru)</label>
+                    <div class="flex gap-2">
+                        <input type="number" id="aytCorrect" placeholder="Doğru" min="0" max="13" oninput="calculateNet()" class="w-1/2 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-red-500">
+                        <input type="number" id="aytWrong" placeholder="Yanlış" min="0" max="13" oninput="calculateNet()" class="w-1/2 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-red-500">
+                    </div>
+                    <div class="mt-2 text-xs text-slate-400">Net: <span id="aytNetResult" class="text-white font-bold">0.00</span></div>
+                </div>
+            </div>
+
+            <div class="bg-red-950/30 border border-red-500/30 p-4 rounded-2xl text-center">
+                <span class="text-xs text-red-400 font-semibold block mb-1">Toplam Kimya Netiniz</span>
+                <span id="totalChemNet" class="text-3xl font-bold heading-font text-white">0.00</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENT GRID (Anı ve Medya Alanı) -->
+    <main id="mainContent" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full border-t border-slate-800/80">
         <div class="flex items-center justify-between mb-8">
-            <h2 class="heading-font text-2xl sm:text-3xl font-bold text-white tracking-wide">Öne Çıkan Yapımlar ve Anılar</h2>
+            <h2 class="heading-font text-2xl sm:text-3xl font-bold text-white tracking-wide">Zaman Tüneli Arşivi</h2>
         </div>
 
         <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Dinamik Kartlar JS ile Yüklenecek -->
-        </div>
-    </main>
-
-    <!-- İNGİLİZCE ÖĞRENME PLATFORMU BÖLÜMÜ (A1 - C2) -->
-    <section id="englishHub" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full border-t border-slate-800/80">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-            <div>
-                <span class="inline-block bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">Zaman Tüneli Akademi (A1 - C2)</span>
-                <h2 class="heading-font text-3xl sm:text-4xl font-bold text-white tracking-wide">İngilizce Öğrenme Platformu</h2>
-            </div>
-            
-            <!-- Mod ve Seviye Filtreleri -->
-            <div class="flex flex-wrap gap-2 items-center">
-                <select id="cefrFilter" onchange="filterEnglishByLevel(this.value)" class="bg-slate-900 border border-slate-800 text-slate-300 text-xs font-medium px-3 py-2 rounded-xl focus:outline-none focus:border-purple-500">
-                    <option value="all">Tüm Seviyeler (A1-C2)</option>
-                    <option value="A1">A1 - Başlangıç</option>
-                    <option value="A2">A2 - Temel</option>
-                    <option value="B1">B1 - Orta</option>
-                    <option value="B2">B2 - Orta Üstü</option>
-                    <option value="C1">C1 - İleri</option>
-                    <option value="C2">C2 - Ustalık</option>
-                </select>
-                <div class="flex bg-slate-900 p-1 rounded-xl border border-slate-800">
-                    <button onclick="switchEngTab('flashcards')" id="tabFlashcards" class="px-4 py-2 rounded-lg text-xs font-semibold bg-purple-600 text-white transition-all">Kelime Kartları</button>
-                    <button onclick="switchEngTab('quiz')" id="tabQuiz" class="px-4 py-2 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all">Mini Quiz</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 1. KELİME KARTLARI (FLASHCARDS) ALANI -->
-        <div id="engFlashcardsView" class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- JS ile dinamik dolacak -->
         </div>
-
-        <!-- 2. MİNİ QUİZ ALANI -->
-        <div id="engQuizView" class="hidden max-w-2xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
-            <div class="flex items-center justify-between text-xs text-slate-400 mb-6">
-                <span id="quizProgress">Soru 1 / 5</span>
-                <span class="text-purple-400 font-semibold">Puan: <span id="quizScore">0</span></span>
-            </div>
-            
-            <h3 id="quizQuestion" class="heading-font text-2xl font-bold text-white mb-6">Soru yükleniyor...</h3>
-            
-            <div id="quizOptions" class="space-y-3">
-                <!-- Seçenekler JS ile dolacak -->
-            </div>
-
-            <div id="quizFeedback" class="mt-6 text-sm font-medium hidden p-3 rounded-xl"></div>
-        </div>
-    </section>
+    </main>
 
     <!-- FOOTER -->
     <footer class="border-t border-slate-800/80 bg-[#06080e] py-8 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
             <p>&copy; 2026 zamantünelitr.store - Tüm hakları saklıdır.</p>
             <div class="flex gap-4">
-                <a href="#" class="hover:text-purple-400 transition-colors">Gizlilik Politikası</a>
-                <a href="#" class="hover:text-purple-400 transition-colors">Kullanım Şartları</a>
-                <a href="#" class="hover:text-purple-400 transition-colors">İletişim</a>
+                <a href="#" class="hover:text-red-400 transition-colors">Gizlilik Politikası</a>
+                <a href="#" class="hover:text-red-400 transition-colors">Kullanım Şartları</a>
+                <a href="#" class="hover:text-red-400 transition-colors">İletişim</a>
             </div>
         </div>
     </footer>
 
-    <!-- CONTENT DETAIL MODAL (Video veya Ses Destekli) -->
-    <div id="detailModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full overflow-hidden relative shadow-2xl">
-            <button onclick="toggleModal('detailModal')" class="absolute top-4 right-4 z-10 bg-slate-800/80 hover:bg-slate-700 text-slate-300 p-2 rounded-full transition-colors">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-            
-            <div id="modalMediaContainer" class="relative aspect-video w-full bg-slate-950 flex items-center justify-center">
-                <!-- Dinamik olarak video veya ses oynatıcı yüklenecek -->
-            </div>
-            
-            <div class="p-6">
-                <div class="flex items-center gap-3 mb-2">
-                    <span id="modalCategory" class="text-xs bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2.5 py-1 rounded-full font-medium"></span>
-                    <span id="modalYear" class="text-xs text-slate-400"></span>
-                    <span id="modalRating" class="text-xs text-amber-400 flex items-center gap-1 font-semibold ml-auto"></span>
-                </div>
-                <h3 id="modalTitle" class="heading-font text-2xl font-bold text-white mb-3"></h3>
-                <p id="modalDesc" class="text-slate-400 text-sm leading-relaxed mb-6"></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- AUTH MODAL (Üyelik Zorunluluğu) -->
+    <!-- AUTH MODAL (Üyelik) -->
     <div id="authModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
-            <!-- Sekmeler -->
             <div class="flex border-b border-slate-800 mb-6">
-                <button onclick="switchAuthTab('login')" id="loginTabBtn" class="flex-1 pb-3 text-sm font-semibold text-purple-400 border-b-2 border-purple-500 transition-colors">Giriş Yap</button>
+                <button onclick="switchAuthTab('login')" id="loginTabBtn" class="flex-1 pb-3 text-sm font-semibold text-red-400 border-b-2 border-red-500 transition-colors">Giriş Yap</button>
                 <button onclick="switchAuthTab('register')" id="registerTabBtn" class="flex-1 pb-3 text-sm font-medium text-slate-400 border-b-2 border-transparent transition-colors">Kayıt Ol</button>
             </div>
 
-            <!-- Giriş Yap Formu -->
             <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">E-Posta Adresi</label>
-                    <input type="email" id="loginEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500">
+                    <input type="email" id="loginEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-red-500">
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">Şifre</label>
-                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500">
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-red-500">
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-2.5 rounded-xl text-sm transition-all duration-300 mt-2">
+                <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-medium py-2.5 rounded-xl text-sm transition-all duration-300 mt-2">
                     Giriş Yap ve Siteye Gir
                 </button>
             </form>
 
-            <!-- Kayıt Ol Formu -->
             <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-4 hidden">
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">Ad Soyad</label>
-                    <input type="text" id="regName" required placeholder="Adınız Soyadınız" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500">
+                    <input type="text" id="regName" required placeholder="Adınız Soyadınız" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-red-500">
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">E-Posta Adresi</label>
-                    <input type="email" id="regEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500">
+                    <input type="email" id="regEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-red-500">
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">Şifre</label>
-                    <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500">
+                    <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-red-500">
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-2.5 rounded-xl text-sm transition-all duration-300 mt-2">
+                <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-medium py-2.5 rounded-xl text-sm transition-all duration-300 mt-2">
                     Kayıt Ol ve Başla
                 </button>
             </form>
@@ -261,7 +272,6 @@
         window.signInWithEmailAndPassword = signInWithEmailAndPassword;
         window.signOut = signOut;
 
-        // Oturum durumu kontrolü (Üyelik Zorunluluğu Mantığı)
         onAuthStateChanged(auth, (user) => {
             const authArea = document.getElementById('authArea');
             const authModal = document.getElementById('authModal');
@@ -271,15 +281,15 @@
                 const avatarUrl = `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(user.email)}`;
                 authArea.innerHTML = `
                     <div class="flex items-center gap-3 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-full shadow-md">
-                        <img src="${avatarUrl}" alt="Avatar" class="w-7 h-7 rounded-full bg-slate-800 border border-purple-500/50 p-0.5">
-                        <span class="text-xs text-purple-400 font-medium">${user.email}</span>
+                        <img src="${avatarUrl}" alt="Avatar" class="w-7 h-7 rounded-full bg-slate-800 border border-red-500/50 p-0.5">
+                        <span class="text-xs text-red-400 font-medium">${user.email}</span>
                         <button onclick="handleLogout()" class="text-xs text-slate-400 hover:text-red-400 transition-colors ml-1">Çıkış</button>
                     </div>
                 `;
             } else {
                 authModal.classList.remove('hidden');
                 authArea.innerHTML = `
-                    <button onclick="toggleModal('authModal')" class="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium px-5 py-2.5 rounded-full text-sm transition-all duration-300 shadow-lg shadow-purple-900/30">
+                    <button onclick="toggleModal('authModal')" class="flex items-center gap-2 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-medium px-5 py-2.5 rounded-full text-sm transition-all duration-300 shadow-lg shadow-red-950/50">
                         <i data-lucide="user" class="w-4 h-4"></i>
                         <span>Giriş Yap / Kayıt Ol</span>
                     </button>
@@ -290,388 +300,159 @@
     </script>
 
     <script>
-        const items = [
-            {
-                id: 1,
-                title: "Gazi Mustafa Kemal Atatürk (Askeri Lider)",
-                category: "Tarihi Miras",
-                era: "history",
-                year: "1881-1938",
-                rating: "10.0",
-                image: "images_3.webp",
-                desc: "Milletinin bağımsızlığı uğruna cepheden cepheye koşan, Çanakkale'den Kurtuluş Savaşı'na uzanan dahi askerlik stratejisi ve kalpaklı kahraman.",
-                video: "https://www.youtube.com/embed/fKHyGINwmfI"
-            },
-            {
-                id: 2,
-                title: "Gazi Mustafa Kemal Atatürk (Cumhurbaşkanı)",
-                category: "Tarihi Miras",
-                era: "history",
-                year: "1923",
-                rating: "10.0",
-                image: "indir_3.webp",
-                desc: "Genç Türkiye Cumhuriyeti'ni muasır medeniyetler seviyesinin üzerine çıkarmak için devrimler gerçekleştiren vizyoner devlet adamı.",
-                video: "https://www.youtube.com/embed/nYJF72itSsk"
-            },
-            {
-                id: 3,
-                title: "Cyberpunk 2077",
-                category: "Oyun",
-                era: "modern",
-                year: "2020",
-                rating: "8.6",
-                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
-                desc: "Night City'nin karanlık ve neon dünyasında geçen açık dünya aksiyon macerası.",
-                video: "https://www.youtube.com/embed/8X2kIfS6fb8"
-            },
-            {
-                id: 4,
-                title: "The Matrix",
-                category: "Sinema",
-                era: "90s",
-                year: "1999",
-                rating: "8.7",
-                image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
-                desc: "Gerçekliğin bir simülasyondan ibaret olduğunu keşfeden bir bilgisayar programcısının hikayesi.",
-                video: "https://www.youtube.com/embed/vKQi3bBA1y8"
-            },
-            {
-                id: 5,
-                title: "Pac-Man Arcade",
-                category: "Retro Oyun",
-                era: "80s",
-                year: "1980",
-                rating: "9.0",
-                image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80",
-                desc: "Atari salonlarının unutulmaz ikonu ve video oyun tarihinin dönüm noktası.",
-                video: "https://www.youtube.com/embed/dScq4P5gn4A"
-            },
-            {
-                id: 6,
-                title: "Bülbülüm Altın Kafeste",
-                category: "Müzik & Kültür",
-                era: "history",
-                year: "Klasik",
-                rating: "9.8",
-                image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80",
-                desc: "Unutulmaz Selanik türküsü 'Bülbülüm Altın Kafeste'. Türk kültür ve müzik mirasının nadide eseri.",
-                audio: "bulbulum.mp3"
+        // --- YKS GÜN SAYACI MANTIĞI ---
+        const yksDate = new Date('June 20, 2026 10:15:00').getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = yksDate - now;
+            
+            if (distance > 0) {
+                document.getElementById('days').textContent = Math.floor(distance / (1000 * 60 * 60 * 24));
+                document.getElementById('hours').textContent = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('minutes').textContent = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('seconds').textContent = Math.floor((distance % (1000 * 60)) / 1000);
             }
+        }, 1000);
+
+        // --- POMODORO SİSTEMİ MANTIĞI ---
+        let pomoTime = 25 * 60;
+        let pomoInterval = null;
+        let isPomoRunning = false;
+
+        function updatePomoDisplay() {
+            const mins = Math.floor(pomoTime / 60);
+            const secs = pomoTime % 60;
+            document.getElementById('pomodoroTimer').textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function startPomodoro() {
+            if (!isPomoRunning) {
+                isPomoRunning = true;
+                pomoInterval = setInterval(() => {
+                    if (pomoTime > 0) {
+                        pomoTime--;
+                        updatePomoDisplay();
+                    } else {
+                        clearInterval(pomoInterval);
+                        alert("Süre bitti! Harika odaklandın, şimdi mola verme zamanı.");
+                        isPomoRunning = false;
+                    }
+                }, 1000);
+            }
+        }
+
+        function pausePomodoro() {
+            clearInterval(pomoInterval);
+            isPomoRunning = false;
+        }
+
+        function resetPomodoro() {
+            clearInterval(pomoInterval);
+            isPomoRunning = false;
+            pomoTime = 25 * 60;
+            updatePomoDisplay();
+        }
+
+        // --- YKS NET HESAPLAYICI ---
+        function calculateNet() {
+            const tytC = parseFloat(document.getElementById('tytCorrect').value) || 0;
+            const tytW = parseFloat(document.getElementById('tytWrong').value) || 0;
+            const aytC = parseFloat(document.getElementById('aytCorrect').value) || 0;
+            const aytW = parseFloat(document.getElementById('aytWrong').value) || 0;
+
+            const tytNet = Math.max(0, tytC - (tytW / 4));
+            const aytNet = Math.max(0, aytC - (aytW / 4));
+
+            document.getElementById('tytNetResult').textContent = tytNet.toFixed(2);
+            document.getElementById('aytNetResult').textContent = aytNet.toFixed(2);
+            document.getElementById('totalChemNet').textContent = (tytNet + aytNet).toFixed(2);
+        }
+
+        // --- TYT - AYT KİMYA KARTLARI VERİLERİ ---
+        const chemistryCards = [
+            { id: 1, title: "Kimya Bilimi ve Simya", category: "TYT", desc: "Simyadan kimyaya geçiş, kimya disiplinleri ve güvenlik kuralları.", tag: "tyt" },
+            { id: 2, title: "Atom ve Periyodik Sistem", category: "TYT", desc: "Atom modelleri, periyodik özellikler ve katman elektron dağılımı.", tag: "tyt" },
+            { id: 3, title: "Kimyasal Türler Arası Etkileşimler", category: "TYT", desc: "İyonik, kovalent bağlar, moleküler geometri ve zayıf etkileşimler.", tag: "tyt" },
+            { id: 4, title: "Modern Atom Teorisi", category: "AYT", desc: "Kuantum sayıları, orbital türleri ve periyodik sistemde değişen özellikler.", tag: "ayt" },
+            { id: 5, title: "Kimyasal Tepkimelerde Hız", category: "AYT", desc: "Çarpışma teorisi, hız bağıntıları ve reaksiyona etki eden faktörler.", tag: "ayt" },
+            { id: 6, title: "Kimyasal Denge", category: "AYT", desc: "Denge sabiti (Kc, Kp), Le Chatelier prensibi ve sulu çözeltilerde denge.", tag: "ayt" }
         ];
 
-        // --- İNGİLİZCE AKADEMİ VERİLERİ (Görsellerdeki Kelimeler Eklendi) ---
-        const englishWords = [
-            // Yiyecekler (Food)
-            { en: "Watermelon", tr: "Karpuz", level: "A1", example: "We eat cold watermelon in summer." },
-            { en: "Milk", tr: "Süt", level: "A1", example: "I drink a glass of milk every morning." },
-            { en: "Chicken", tr: "Tavuk", level: "A1", example: "She likes eating chicken for dinner." },
-            { en: "Cucumber", tr: "Salatalık", level: "A1", example: "There are fresh cucumbers on the table." },
-            { en: "Olive", tr: "Zeytin", level: "A1", example: "We have black and green olives for breakfast." },
-            { en: "Cake", tr: "Kek / Pasta", level: "A1", example: "It is a delicious chocolate cake." },
-            { en: "Coffee", tr: "Kahve", level: "A1", example: "My dad drinks coffee in the afternoon." },
-            { en: "Grapes", tr: "Üzüm", level: "A1", example: "Grapes are sweet and healthy." },
-            { en: "Jam", tr: "Reçel", level: "A1", example: "Strawberry jam is my favorite." },
-            { en: "Meat", tr: "Et", level: "A1", example: "The meat is well-cooked." },
-            { en: "Pear", tr: "Armut", level: "A1", example: "A pear is a juicy fruit." },
-            { en: "Cheese", tr: "Peynir", level: "A1", example: "Cheese is made from milk." },
-            { en: "Lemon", tr: "Limon", level: "A1", example: "The lemon is very sour." },
-            { en: "Cherry", tr: "Kiraz", level: "A1", example: "Red cherries look beautiful." },
-            { en: "Strawberry", tr: "Çilek", level: "A1", example: "Strawberries grow in the garden." },
-            { en: "Peas", tr: "Bezelye", level: "A2", example: "Green peas are healthy vegetables." },
-            { en: "Pepper", tr: "Biber", level: "A1", example: "The red pepper is spicy." },
-            { en: "Lettuce", tr: "Marul", level: "A1", example: "We need fresh lettuce for the salad." },
-            { en: "Bananas", tr: "Muzlar", level: "A1", example: "Monkeys love eating bananas." },
-            { en: "Ice cream", tr: "Dondurma", level: "A1", example: "Children love eating ice cream in summer." },
-            { en: "Butter", tr: "Tereyağı", level: "A1", example: "Spread some butter on the bread." },
-            { en: "Pineapple", tr: "Ananas", level: "A2", example: "Pineapple is a tropical fruit." },
-            { en: "Honey", tr: "Bal", level: "A1", example: "Bees make sweet honey." },
-            { en: "Tea", tr: "Çay", level: "A1", example: "Turkish people drink a lot of tea." },
-            { en: "Fruit juice", tr: "Meyve suyu", level: "A1", example: "Orange fruit juice is refreshing." },
-            { en: "Rice", tr: "Pirinç / Pilav", level: "A1", example: "We eat rice with chicken." },
-            { en: "Fish", tr: "Balık", level: "A1", example: "Fish live in the sea." },
-            { en: "Carrot", tr: "Havuç", level: "A1", example: "Rabbits like eating carrots." },
-            { en: "French fries", tr: "Patates kızartması", level: "A1", example: "Children love French fries." },
-            { en: "Bread", tr: "Ekmek", level: "A1", example: "We buy fresh bread every morning." },
-            { en: "Parsley", tr: "Maydanoz", level: "A2", example: "Add some chopped parsley to the soup." },
-            { en: "Cabbage", tr: "Lahana", level: "A2", example: "Cabbage is good for salads." },
-            { en: "Egg", tr: "Yumurta", level: "A1", example: "I eat a boiled egg for breakfast." },
-            { en: "Eggplant", tr: "Patlıcan", level: "A2", example: "Eggplant is a purple vegetable." },
-            { en: "Peach", tr: "Şeftali", level: "A1", example: "Peaches are sweet summer fruits." },
-            { en: "Apple", tr: "Elma", level: "A1", example: "I eat an apple every day." },
-            { en: "Lemonade", tr: "Limonata", level: "A1", example: "Cold lemonade is great on hot days." },
+        function renderChemistryCards(filter) {
+            const grid = document.getElementById('chemCardsGrid');
+            const filtered = filter === 'all' ? chemistryCards : chemistryCards.filter(c => c.tag === filter);
+            
+            grid.innerHTML = filtered.map(card => `
+                <div class="bg-slate-900 border border-slate-800 hover:border-red-500/50 rounded-2xl p-6 transition-all duration-300 red-neon-border flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-red-500/10 text-red-400 border border-red-500/20 text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-3">${card.category} Kimya</span>
+                        <h3 class="heading-font text-xl font-bold text-white mb-2">${card.title}</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">${card.desc}</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+                        <span class="text-[11px] text-red-400 font-medium">YKS Çalışma Kartı</span>
+                        <button onclick="alert('${card.title} modülü seçildi!')" class="bg-red-600 hover:bg-red-500 text-white text-xs px-3.5 py-1.5 rounded-xl transition-colors font-semibold">Çalış</button>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-            // Mutfak Eşyaları (Kitchen Objects)
-            { en: "Spoon", tr: "Kaşık", level: "A1", example: "Eat your soup with a spoon." },
-            { en: "Cooker", tr: "Tencere / Ocak", level: "A1", example: "The soup is cooking on the cooker." },
-            { en: "Knife", tr: "Bıçak", level: "A1", example: "Be careful with the sharp knife." },
-            { en: "Plate", tr: "Tabak", level: "A1", example: "Put the food on the plate." },
-            { en: "Sauce pan", tr: "Sos tavası", level: "A2", example: "Heat the sauce in the sauce pan." },
-            { en: "Bowl", tr: "Kâse", level: "A1", example: "Pour the cereal into a bowl." },
-            { en: "Napkin", tr: "Peçete", level: "A1", example: "Use a napkin to clean your hands." },
-            { en: "Frying pan", tr: "Kızartma tavası", level: "A1", example: "Fry the eggs in the frying pan." },
-            { en: "Teapot", tr: "Çaydanlık", level: "A1", example: "The tea is ready in the teapot." },
-            { en: "Oven", tr: "Fırın", level: "A1", example: "Bake the cake in the oven." },
-            { en: "Grill", tr: "Izgara", level: "A2", example: "We are making chicken on the grill." },
-            { en: "Tap", tr: "Musluk", level: "A1", example: "Wash your hands under the tap." },
-            { en: "Drawer", tr: "Çekmece", level: "A1", example: "Put the spoons in the kitchen drawer." },
-            { en: "Oven glove", tr: "Fırın eldiveni", level: "A2", example: "Wear oven gloves to take the tray out." },
-            { en: "Chopping board", tr: "Doğrama tahtası", level: "A2", example: "Cut the vegetables on the chopping board." },
-            { en: "Grater", tr: "Rende", level: "A2", example: "Grate the cheese using a grater." },
-            { en: "Kettle", tr: "Su ısıtıcısı (Çaydanlık)", level: "A1", example: "Boil some water in the kettle." },
-            { en: "Cup", tr: "Fincan", level: "A1", example: "Drink your coffee from a cup." },
+        function filterChemistry(tag) {
+            document.querySelectorAll('.chem-filter-btn').forEach(btn => {
+                btn.className = "chem-filter-btn bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-800";
+            });
+            event.target.className = "chem-filter-btn active bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors";
+            renderChemistryCards(tag);
+        }
 
-            // Ev Eşyaları (Household Items)
-            { en: "Bed", tr: "Yatak", level: "A1", example: "Make your bed in the morning." },
-            { en: "Bookcase", tr: "Kitaplık", level: "A1", example: "Put your books on the bookcase." },
-            { en: "Chair", tr: "Sandalye", level: "A1", example: "Sit down on the chair." },
-            { en: "Lamp", tr: "Lamba", level: "A1", example: "Turn on the lamp to read a book." },
-            { en: "Microwave oven", tr: "Mikrodalga fırın", level: "A1", example: "Heat your meal in the microwave oven." },
-            { en: "Armchair", tr: "Koltuk", level: "A1", example: "Relax in the comfortable armchair." },
-            { en: "Bathtub", tr: "Küvet", level: "A1", example: "Take a warm bath in the bathtub." },
-            { en: "Mirror", tr: "Ayna", level: "A1", example: "Look at yourself in the mirror." },
-            { en: "Towel", tr: "Havlu", level: "A1", example: "Dry your hands with a clean towel." },
-            { en: "Shower", tr: "Duş", level: "A1", example: "Take a quick shower." },
-            { en: "Refrigerator", tr: "Buzdolabı", level: "A1", example: "Put the milk in the refrigerator." },
-            { en: "Sink", tr: "Lavabo", level: "A1", example: "Wash your face in the bathroom sink." },
-            { en: "Carpet", tr: "Halı", level: "A1", example: "The soft carpet is on the floor." },
-            { en: "Curtain", tr: "Perde", level: "A1", example: "Close the curtains at night." },
-            { en: "Sofa", tr: "Kanepe / Koltuk", level: "A1", example: "We sit on the sofa and watch TV." },
-            { en: "Pillow", tr: "Yastık", level: "A1", example: "Put your head on the soft pillow." },
-            { en: "Wardrobe", tr: "Gardırop", level: "A1", example: "Hang your clothes in the wardrobe." },
-            { en: "Blanket", tr: "Battaniye", level: "A1", example: "Cover yourself with a warm blanket." },
-            { en: "Dishwasher", tr: "Bulaşık makinesi", level: "A1", example: "Put the dirty plates in the dishwasher." },
-            { en: "Hairdryer", tr: "Saç kurutma makinesi", level: "A1", example: "Dry your hair with a hairdryer." }
+        function switchYksTab(tab) {
+            const chemView = document.getElementById('chemistryView');
+            const pomoView = document.getElementById('pomodoroView');
+            const calcView = document.getElementById('calculatorView');
+            
+            const btnChem = document.getElementById('tabChemistry');
+            const btnPomo = document.getElementById('tabPomodoro');
+            const btnCalc = document.getElementById('tabCalculator');
+
+            chemView.classList.add('hidden');
+            pomoView.classList.add('hidden');
+            calcView.classList.add('hidden');
+
+            btnChem.className = "px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all";
+            btnPomo.className = "px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all";
+            btnCalc.className = "px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all";
+
+            if (tab === 'chemistry') {
+                chemView.classList.remove('hidden');
+                btnChem.className = "px-5 py-2.5 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50";
+            } else if (tab === 'pomodoro') {
+                pomoView.classList.remove('hidden');
+                btnPomo.className = "px-5 py-2.5 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50";
+            } else if (tab === 'calculator') {
+                calcView.classList.remove('hidden');
+                btnCalc.className = "px-5 py-2.5 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50";
+            }
+        }
+
+        // Genel Arşiv Kartları
+        const items = [
+            { id: 1, title: "Gazi Mustafa Kemal Atatürk", category: "Tarihi Miras", year: "1881-1938", rating: "10.0", image: "images_3.webp", desc: "Milletinin bağımsızlığı uğruna cepheden cepheye koşan dahi lider.", video: "https://www.youtube.com/embed/fKHyGINwmfI" }
         ];
-
-        const quizQuestions = [
-            { q: "'Refrigerator' kelimesinin Türkçe karşılığı nedir?", options: ["Buzdolabı", "Çamaşır makinesi", "Fırın", "Bulaşık makinesi"], answer: 0, level: "A1" },
-            { q: "Boşluğu doldurun: 'Eat your soup with a _____.'", options: ["fork", "knife", "spoon", "plate"], answer: 2, level: "A1" },
-            { q: "'Chopping board' ne anlama gelir?", options: ["Doğrama tahtası", "Rende", "Fırın eldiveni", "Çatallık"], answer: 0, level: "A2" },
-            { q: "'Watermelon' kelimesi hangi anlama gelir?", options: ["Kavun", "Karpuz", "Çilek", "Elma"], answer: 0, level: "A1" }
-        ];
-
-        let currentQuizIndex = 0;
-        let quizScore = 0;
-        let activeLevelFilter = "all";
 
         function renderCards(data) {
             const grid = document.getElementById('cardsGrid');
             grid.innerHTML = data.map(item => `
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden group hover:border-purple-500/50 transition-all duration-300 neon-border flex flex-col justify-between">
-                    <div>
-                        <div class="relative aspect-video overflow-hidden bg-slate-950 cursor-pointer" onclick="openDetail(${item.id})">
-                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md border border-slate-800 text-xs text-purple-400 font-semibold px-2.5 py-1 rounded-md">
-                                ${item.category}
-                            </span>
-                            <div class="absolute inset-0 bg-purple-900/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <span class="bg-purple-600 text-white text-xs px-3 py-1.5 rounded-full font-medium shadow-lg">${item.audio ? 'Müziği Dinle' : 'Videoyu İzle'}</span>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
-                                <span>${item.year}</span>
-                                <span class="text-amber-400 font-semibold">★ ${item.rating}</span>
-                            </div>
-                            <h3 class="heading-font text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">${item.title}</h3>
-                            <p class="text-slate-400 text-xs line-clamp-2 leading-relaxed">${item.desc}</p>
-                        </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden group hover:border-red-500/50 transition-all duration-300">
+                    <div class="relative aspect-video overflow-hidden bg-slate-950">
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md border border-slate-800 text-xs text-red-400 font-semibold px-2.5 py-1 rounded-md">${item.category}</span>
                     </div>
-                    <div class="p-5 pt-0">
-                        <button onclick="openDetail(${item.id})" class="w-full bg-slate-800 hover:bg-purple-600 text-slate-200 hover:text-white text-xs font-semibold py-2.5 rounded-xl transition-colors">
-                            Detayları İncele
-                        </button>
+                    <div class="p-5">
+                        <h3 class="heading-font text-xl font-bold text-white mb-2">${item.title}</h3>
+                        <p class="text-slate-400 text-xs line-clamp-2 leading-relaxed">${item.desc}</p>
                     </div>
                 </div>
             `).join('');
-            lucide.createIcons();
-        }
-
-        function renderEnglishCards() {
-            const container = document.getElementById('engFlashcardsView');
-            if (!container) return;
-
-            const filteredWords = activeLevelFilter === 'all' 
-                ? englishWords 
-                : englishWords.filter(w => w.level === activeLevelFilter);
-
-            if(filteredWords.length === 0) {
-                container.innerHTML = `<p class="text-slate-400 text-xs col-span-3 text-center py-6">Bu seviyede henüz kelime kartı bulunmuyor.</p>`;
-                return;
-            }
-
-            container.innerHTML = filteredWords.map((word, index) => `
-                <div onclick="flipCard(${index})" class="bg-slate-900 border border-slate-800 hover:border-purple-500/50 rounded-2xl p-6 cursor-pointer transition-all duration-300 neon-border relative group">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-[11px] font-bold bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2.5 py-0.5 rounded-full">${word.level} Seviye</span>
-                        <button onclick="speakWord(event, '${word.en}')" class="p-2 bg-slate-800 hover:bg-purple-600 text-slate-300 hover:text-white rounded-full transition-colors" title="Sesli Dinle">
-                            <i data-lucide="volume-2" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    
-                    <div id="cardFront-${index}">
-                        <h3 class="heading-font text-2xl font-bold text-white mb-2">${word.en}</h3>
-                        <p class="text-slate-400 text-xs italic">"${word.example}"</p>
-                        <span class="inline-block mt-4 text-[11px] text-purple-400 group-hover:underline">Anlamını görmek için tıkla →</span>
-                    </div>
-
-                    <div id="cardBack-${index}" class="hidden">
-                        <h3 class="heading-font text-2xl font-bold text-emerald-400 mb-2">${word.tr}</h3>
-                        <p class="text-slate-300 text-xs">${word.en}</p>
-                        <span class="inline-block mt-4 text-[11px] text-slate-500">Geri dönmek için tıkla ↺</span>
-                    </div>
-                </div>
-            `).join('');
-            lucide.createIcons();
-        }
-
-        function flipCard(index) {
-            document.getElementById(`cardFront-${index}`).classList.toggle('hidden');
-            document.getElementById(`cardBack-${index}`).classList.toggle('hidden');
-        }
-
-        function speakWord(event, text) {
-            event.stopPropagation();
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            utterance.rate = 0.9;
-            window.speechSynthesis.speak(utterance);
-        }
-
-        function filterEnglishByLevel(level) {
-            activeLevelFilter = level;
-            renderEnglishCards();
-        }
-
-        function switchEngTab(tab) {
-            const flashView = document.getElementById('engFlashcardsView');
-            const quizView = document.getElementById('engQuizView');
-            const tabFlash = document.getElementById('tabFlashcards');
-            const tabQuiz = document.getElementById('tabQuiz');
-
-            if (tab === 'flashcards') {
-                flashView.classList.remove('hidden');
-                quizView.classList.add('hidden');
-                tabFlash.className = "px-4 py-2 rounded-lg text-xs font-semibold bg-purple-600 text-white transition-all";
-                tabQuiz.className = "px-4 py-2 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all";
-            } else {
-                flashView.classList.add('hidden');
-                quizView.classList.remove('hidden');
-                tabQuiz.className = "px-4 py-2 rounded-lg text-xs font-semibold bg-purple-600 text-white transition-all";
-                tabFlash.className = "px-4 py-2 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all";
-                currentQuizIndex = 0;
-                quizScore = 0;
-                loadQuizQuestion();
-            }
-        }
-
-        function loadQuizQuestion() {
-            const qData = quizQuestions[currentQuizIndex];
-            document.getElementById('quizProgress').textContent = `Soru ${currentQuizIndex + 1} / ${quizQuestions.length} (${qData.level})`;
-            document.getElementById('quizScore').textContent = quizScore;
-            document.getElementById('quizQuestion').textContent = qData.q;
-            document.getElementById('quizFeedback').classList.add('hidden');
-
-            const optionsContainer = document.getElementById('quizOptions');
-            optionsContainer.innerHTML = qData.options.map((opt, idx) => `
-                <button onclick="checkQuizAnswer(${idx})" class="w-full text-left bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-purple-500/50 text-slate-200 px-4 py-3 rounded-xl text-sm transition-all">
-                    ${opt}
-                </button>
-            `).join('');
-        }
-
-        function checkQuizAnswer(selectedIdx) {
-            const qData = quizQuestions[currentQuizIndex];
-            const feedback = document.getElementById('quizFeedback');
-            feedback.classList.remove('hidden', 'bg-emerald-950/80', 'text-emerald-300', 'bg-red-950/80', 'text-red-300');
-
-            if (selectedIdx === qData.answer) {
-                quizScore += 25;
-                document.getElementById('quizScore').textContent = quizScore;
-                feedback.textContent = "Harika! Doğru cevap.";
-                feedback.classList.add('bg-emerald-950/80', 'text-emerald-300');
-            } else {
-                feedback.textContent = `Yanlış cevap. Doğrusu: ${qData.options[qData.answer]}`;
-                feedback.classList.add('bg-red-950/80', 'text-red-300');
-            }
-
-            setTimeout(() => {
-                currentQuizIndex++;
-                if (currentQuizIndex < quizQuestions.length) {
-                    loadQuizQuestion();
-                } else {
-                    document.getElementById('quizQuestion').textContent = `Test Tamamlandı! Toplam Puanınız: ${quizScore} / 100`;
-                    document.getElementById('quizOptions').innerHTML = `
-                        <button onclick="switchEngTab('quiz')" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-medium py-3 rounded-xl text-sm transition-colors">
-                            Testi Tekrar Çöz
-                        </button>
-                    `;
-                    feedback.classList.add('hidden');
-                }
-            }, 1500);
-        }
-
-        function filterEra(era) {
-            document.querySelectorAll('.era-btn').forEach(btn => {
-                btn.classList.remove('bg-purple-600', 'text-white');
-                btn.classList.add('bg-slate-800', 'text-slate-300');
-            });
-            event.target.classList.remove('bg-slate-800', 'text-slate-300');
-            event.target.classList.add('bg-purple-600', 'text-white');
-
-            if (era === 'all') {
-                renderCards(items);
-            } else {
-                renderCards(items.filter(item => item.era === era));
-            }
-        }
-
-        document.getElementById('searchInput')?.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const filtered = items.filter(item => 
-                item.title.toLowerCase().includes(query) || 
-                item.category.toLowerCase().includes(query)
-            );
-            renderCards(filtered);
-        });
-
-        function openDetail(id) {
-            const item = items.find(i => i.id === id);
-            if (!item) return;
-
-            document.getElementById('modalTitle').textContent = item.title;
-            document.getElementById('modalCategory').textContent = item.category;
-            document.getElementById('modalYear').textContent = item.year;
-            document.getElementById('modalRating').textContent = `★ ${item.rating}`;
-            document.getElementById('modalDesc').textContent = item.desc;
-
-            const mediaContainer = document.getElementById('modalMediaContainer');
-            if (item.audio) {
-                mediaContainer.innerHTML = `
-                    <div class="w-full h-full flex flex-col items-center justify-center bg-slate-950 p-6">
-                        <i data-lucide="music" class="w-12 h-12 text-purple-400 mb-3 animate-bounce"></i>
-                        <audio controls autoplay class="w-full max-w-sm">
-                            <source src="${item.audio}" type="audio/mpeg">
-                            Tarayıcınız ses oynatıcıyı desteklemiyor.
-                        </audio>
-                    </div>
-                `;
-            } else {
-                mediaContainer.innerHTML = `
-                    <iframe class="w-full h-full" src="${item.video}" title="Media" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                `;
-            }
-
-            toggleModal('detailModal');
-            lucide.createIcons();
-        }
-
-        function toggleModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.toggle('hidden');
-            if (modalId === 'detailModal' && modal.classList.contains('hidden')) {
-                document.getElementById('modalMediaContainer').innerHTML = '';
-            }
         }
 
         function switchAuthTab(tab) {
@@ -683,12 +464,12 @@
             if (tab === 'login') {
                 loginForm.classList.remove('hidden');
                 registerForm.classList.add('hidden');
-                loginTabBtn.className = "flex-1 pb-3 text-sm font-semibold text-purple-400 border-b-2 border-purple-500 transition-colors";
+                loginTabBtn.className = "flex-1 pb-3 text-sm font-semibold text-red-400 border-b-2 border-red-500 transition-colors";
                 registerTabBtn.className = "flex-1 pb-3 text-sm font-medium text-slate-400 border-b-2 border-transparent transition-colors";
             } else {
                 registerForm.classList.remove('hidden');
                 loginForm.classList.add('hidden');
-                registerTabBtn.className = "flex-1 pb-3 text-sm font-semibold text-purple-400 border-b-2 border-purple-500 transition-colors";
+                registerTabBtn.className = "flex-1 pb-3 text-sm font-semibold text-red-400 border-b-2 border-red-500 transition-colors";
                 loginTabBtn.className = "flex-1 pb-3 text-sm font-medium text-slate-400 border-b-2 border-transparent transition-colors";
             }
         }
@@ -697,40 +478,31 @@
             e.preventDefault();
             const email = document.getElementById('regEmail').value;
             const password = document.getElementById('regPassword').value;
-
             try {
                 await window.createUserWithEmailAndPassword(window.auth, email, password);
-                alert('Kayıt işlemi başarılı ve giriş yapıldı!');
-            } catch (error) {
-                alert('Kayıt başarısız: ' + error.message);
-            }
+                alert('Kayıt başarılı!');
+            } catch (error) { alert('Hata: ' + error.message); }
         }
 
         async function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-
             try {
                 await window.signInWithEmailAndPassword(window.auth, email, password);
                 alert('Giriş başarılı!');
-            } catch (error) {
-                alert('Giriş başarısız: ' + error.message);
-            }
+            } catch (error) { alert('Hata: ' + error.message); }
         }
 
         async function handleLogout() {
-            try {
-                await window.signOut(window.auth);
-                alert('Oturum kapatıldı.');
-            } catch (error) {
-                console.error(error);
-            }
+            try { await window.signOut(window.auth); } catch (e) { console.error(e); }
         }
 
+        function toggleModal(id) { document.getElementById(id).classList.toggle('hidden'); }
+
         window.onload = () => {
+            renderChemistryCards('all');
             renderCards(items);
-            renderEnglishCards();
             lucide.createIcons();
         };
     </script>
