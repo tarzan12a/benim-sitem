@@ -161,54 +161,6 @@
         </div>
     </section>
 
-    <!-- FLOATING AI ASSISTANT WIDGET -->
-    <div class="fixed bottom-6 right-6 z-50">
-        <!-- Chat Toggle Button -->
-        <button onclick="toggleAiChat()" id="aiToggleBtn" class="flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white px-4 py-3 rounded-full shadow-2xl transition-all duration-300 border border-purple-400/30 group">
-            <i data-lucide="bot" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
-            <span class="text-sm font-medium">Zaman Asistanı & İngilizce Koçu</span>
-        </button>
-
-        <!-- Chat Box Window -->
-        <div id="aiChatBox" class="hidden absolute bottom-16 right-0 w-80 sm:w-96 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[480px]">
-            <!-- Header -->
-            <div class="bg-slate-950 p-4 border-b border-slate-800 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=ZamanAsistani&backgroundColor=8b5cf6" class="w-6 h-6 rounded-full bg-purple-950 border border-purple-500/50 p-0.5">
-                    <span class="heading-font font-bold text-white text-sm">Zaman Asistanı (AI)</span>
-                </div>
-                <button onclick="toggleAiChat()" class="text-slate-400 hover:text-white">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <!-- Messages Area (Avatarlı) -->
-            <div id="aiMessages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
-                <div class="flex items-start gap-2 mb-3">
-                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=ZamanAsistani&backgroundColor=8b5cf6" class="w-7 h-7 rounded-full bg-slate-800 border border-emerald-500/40 p-0.5 shrink-0">
-                    <div class="bg-slate-800/80 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[80%] leading-relaxed">
-                        Merhaba! Sitedeki içerikler veya A1-C2 İngilizce öğrenimi hakkında bana her şeyi sorabilirsiniz.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Suggestions -->
-            <div class="px-3 py-2 bg-slate-950/50 border-t border-slate-800 flex gap-1.5 overflow-x-auto text-[11px]">
-                <button onclick="sendQuickPrompt('Atatürk kimdir?')" class="bg-slate-800 hover:bg-purple-600/50 text-slate-300 px-2.5 py-1 rounded-full whitespace-nowrap transition-colors">Atatürk kimdir?</button>
-                <button onclick="sendQuickPrompt('B1 seviyesi İngilizce kelime ver')" class="bg-slate-800 hover:bg-purple-600/50 text-slate-300 px-2.5 py-1 rounded-full whitespace-nowrap transition-colors">B1 Kelime</button>
-                <button onclick="sendQuickPrompt('İngilizce gramer çalışalım')" class="bg-slate-800 hover:bg-purple-600/50 text-slate-300 px-2.5 py-1 rounded-full whitespace-nowrap transition-colors">Gramer Pratiği</button>
-            </div>
-
-            <!-- Input Area -->
-            <div class="p-3 bg-slate-950 border-t border-slate-800 flex gap-2">
-                <input type="text" id="aiInput" placeholder="Asistana bir şey yazın..." onkeypress="handleAiKeyPress(event)" class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-purple-500">
-                <button onclick="sendAiMessage()" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-2 rounded-xl transition-colors flex items-center justify-center">
-                    <i data-lucide="send" class="w-3.5 h-3.5"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- FOOTER -->
     <footer class="border-t border-slate-800/80 bg-[#06080e] py-8 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
@@ -589,10 +541,8 @@
         }
 
         function startAiEnglishPractice() {
-            const chatBox = document.getElementById('aiChatBox');
-            chatBox.classList.remove('hidden');
-            document.getElementById('aiInput').value = "Benimle A2-B1 seviyesinde İngilizce sohbet et ve hatalarımı düzelt.";
-            sendAiMessage();
+            // İsterseniz buraya Typebot'u tetikleyecek özel bir yönlendirme ekleyebilirsiniz
+            alert("Sağ alttaki Typebot asistanını kullanarak İngilizce pratik yapmaya başlayabilirsiniz!");
         }
 
         function filterEra(era) {
@@ -712,107 +662,21 @@
             }
         }
 
-        // --- AI ASİSTAN VERCEL API & AVATAR ENTEGRASYONU ---
-        function toggleAiChat() {
-            const chatBox = document.getElementById('aiChatBox');
-            chatBox.classList.toggle('hidden');
-            lucide.createIcons();
-        }
-
-        function sendQuickPrompt(text) {
-            document.getElementById('aiInput').value = text;
-            sendAiMessage();
-        }
-
-        function handleAiKeyPress(e) {
-            if (e.key === 'Enter') {
-                sendAiMessage();
-            }
-        }
-
-        async function sendAiMessage() {
-            const input = document.getElementById('aiInput');
-            const message = input.value.trim();
-            if (!message) return;
-
-            const messagesContainer = document.getElementById('aiMessages');
-
-            const currentUser = window.auth?.currentUser;
-            const userSeed = currentUser ? currentUser.email : 'guest';
-            const userAvatar = `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(userSeed)}`;
-            const aiAvatar = `https://api.dicebear.com/7.x/bottts/svg?seed=ZamanAsistani&backgroundColor=8b5cf6`;
-
-            messagesContainer.innerHTML += `
-                <div class="flex items-start gap-2 justify-end mb-3">
-                    <div class="bg-purple-600/90 text-white p-3 rounded-2xl rounded-tr-none max-w-[80%] leading-relaxed">
-                        ${escapeHtml(message)}
-                    </div>
-                    <img src="${userAvatar}" class="w-7 h-7 rounded-full bg-slate-800 border border-purple-400/40 p-0.5 shrink-0">
-                </div>
-            `;
-            input.value = '';
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-            const loadingId = 'loading-' + Date.now();
-            messagesContainer.innerHTML += `
-                <div id="${loadingId}" class="flex items-start gap-2 mb-3">
-                    <img src="${aiAvatar}" class="w-7 h-7 rounded-full bg-slate-800 border border-emerald-500/40 p-0.5 shrink-0">
-                    <div class="bg-slate-800/80 text-slate-400 p-3 rounded-2xl rounded-tl-none max-w-[80%] leading-relaxed italic">
-                        Zaman Asistanı düşünüyor...
-                    </div>
-                </div>
-            `;
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-            try {
-                const response = await fetch("/api/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message })
-                });
-
-                const data = await response.json();
-                document.getElementById(loadingId)?.remove();
-
-                if (data.choices && data.choices.length > 0) {
-                    const aiReply = data.choices[0].message.content;
-                    messagesContainer.innerHTML += `
-                        <div class="flex items-start gap-2 mb-3">
-                            <img src="${aiAvatar}" class="w-7 h-7 rounded-full bg-slate-800 border border-emerald-500/40 p-0.5 shrink-0">
-                            <div class="bg-slate-800/80 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[80%] leading-relaxed">
-                                ${escapeHtml(aiReply)}
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    throw new Error();
-                }
-            } catch (error) {
-                document.getElementById(loadingId)?.remove();
-                messagesContainer.innerHTML += `
-                    <div class="flex items-start gap-2 mb-3">
-                        <img src="${aiAvatar}" class="w-7 h-7 rounded-full bg-slate-800 border border-red-500/40 p-0.5 shrink-0">
-                        <div class="bg-red-950/80 text-red-300 p-3 rounded-2xl rounded-tl-none max-w-[80%] leading-relaxed">
-                            Bağlantı hatası oluştu. Lütfen Vercel ayarlarınızı kontrol edin.
-                        </div>
-                    </div>
-                `;
-            }
-
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.innerText = text;
-            return div.innerHTML;
-        }
-
         window.onload = () => {
             renderCards(items);
             renderEnglishCards();
             lucide.createIcons();
         };
     </script>
+
+    <!-- TYPEBOT SOHBET BALONU (Tüm sayfalarda sağ altta görünür) -->
+    <script type="module">
+      import { Typebot } from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0.3/dist/web.js'
+      
+      Typebot.initBubble({
+        typebot: "my-typebot-6vlntn1",
+      })
+    </script>
+
 </body>
 </html>
