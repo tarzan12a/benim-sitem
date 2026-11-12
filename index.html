@@ -541,8 +541,7 @@
         }
 
         function startAiEnglishPractice() {
-            // İsterseniz buraya Typebot'u tetikleyecek özel bir yönlendirme ekleyebilirsiniz
-            alert("Sağ alttaki Typebot asistanını kullanarak İngilizce pratik yapmaya başlayabilirsiniz!");
+            alert("Sağ alttaki asistanımız üzerinden İngilizce pratik yapmaya başlayabilirsiniz!");
         }
 
         function filterEra(era) {
@@ -669,14 +668,10 @@
         };
     </script>
 
-    <!-- TYPEBOT SOHBET BALONU (Tüm sayfalarda sağ altta görünür) -->
-    <script type="module">
-      import { Typebot } from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0.3/dist/web.js'
-      
-      Typebot.initBubble({
-        typebot: "my-typebot-6vlntn1",
-      })
-    </script>
+    <!-- TYPEBOT KESİN ÇÖZÜM IFRAME BALONU (Sağ altta sabit olarak görünür) -->
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; width: 400px; height: 600px; max-width: 90vw; max-height: 80vh; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+        <iframe src="https://typebot.co/my-typebot-6vlntn1" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
 
 </body>
 </html>
