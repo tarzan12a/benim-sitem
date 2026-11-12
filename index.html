@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaman Tüneli - YKS & Kimya Akademi Portalı</title>
+    <title>Zaman Tüneli - YKS & Edebiyat & Tarih Akademi Portalı</title>
     
     <!-- Google AdSense Doğrulama Kodu -->
     <meta name="google-adsense-account" content="ca-pub-5903431933111991">
@@ -65,7 +65,7 @@
             <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
                 <a href="#mainContent" class="text-slate-300 hover:text-red-500 transition-colors">Ana Sayfa</a>
                 <a href="#yksHub" class="text-red-400 font-semibold flex items-center gap-1.5">
-                    <i data-lucide="flame" class="w-4 h-4"></i> YKS & Kimya Akademi
+                    <i data-lucide="flame" class="w-4 h-4"></i> YKS Akademi Portalı
                 </a>
             </nav>
 
@@ -86,10 +86,10 @@
                 <div class="max-w-xl">
                     <span class="inline-block bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-4">YKS 2026 Özel Portalı</span>
                     <h1 class="heading-font text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4">
-                        Hedefine Odaklan, Kimyayı Fethede!
+                        Hedefine Odaklan, Sınavı Fethede!
                     </h1>
                     <p class="text-slate-400 text-sm sm:text-base leading-relaxed mb-6">
-                        TYT ve AYT Kimya özel konu kartları, Pomodoro odaklanma sistemi ve YKS net hesaplayıcı ile sınav hazırlığını zirveye taşı.
+                        Kimya, Türk Dili ve Edebiyatı, Tarih çalışma kartları, Pomodoro odaklanma sistemi, Yol Haritası Oluşturucu ve net hesaplayıcı ile hazırlığını zirveye taşı.
                     </p>
                 </div>
 
@@ -110,35 +110,89 @@
         </div>
     </section>
 
-    <!-- YKS & TYT-AYT KİMYA AKADEMİ SEKMESİ -->
+    <!-- YKS AKADEMİ & ÇALIŞMA ALANI -->
     <section id="yksHub" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 border-b border-slate-800 pb-4">
             <div>
-                <span class="inline-block bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-1">Özel Ders & Çalışma Alanı</span>
-                <h2 class="heading-font text-3xl sm:text-4xl font-bold text-white tracking-wide">TYT & AYT Kimya Akademi</h2>
+                <span class="inline-block bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-1">Kapsamlı Sınav Merkezi</span>
+                <h2 class="heading-font text-3xl sm:text-4xl font-bold text-white tracking-wide">YKS Akademi & Çalışma Modülleri</h2>
             </div>
             
-            <!-- Alt Sekme Butonları -->
-            <div class="flex bg-slate-900 p-1.5 rounded-2xl border border-slate-800">
-                <button onclick="switchYksTab('chemistry')" id="tabChemistry" class="px-5 py-2.5 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50">Kimya Kartları</button>
-                <button onclick="switchYksTab('pomodoro')" id="tabPomodoro" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all">Pomodoro Sayaç</button>
-                <button onclick="switchYksTab('calculator')" id="tabCalculator" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all">YKS Net Hesapla</button>
+            <!-- Ana Sekme Butonları -->
+            <div class="flex flex-wrap bg-slate-900 p-1.5 rounded-2xl border border-slate-800 gap-1">
+                <button onclick="switchYksTab('chemistry')" id="tabChemistry" class="px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50">Kimya</button>
+                <button onclick="switchYksTab('literature')" id="tabLiterature" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all">Edebiyat</button>
+                <button onclick="switchYksTab('history')" id="tabHistory" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all">Tarih</button>
+                <button onclick="switchYksTab('roadmap')" id="tabRoadmap" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-1"><i data-lucide="map" class="w-3.5 h-3.5"></i> Yol Haritası</button>
+                <button onclick="switchYksTab('pomodoro')" id="tabPomodoro" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all">Pomodoro</button>
+                <button onclick="switchYksTab('calculator')" id="tabCalculator" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all">Net Hesapla</button>
             </div>
         </div>
 
-        <!-- 1. KİMYA KARTLARI GÖRÜNÜMÜ -->
+        <!-- 1. KİMYA KARTLARI -->
         <div id="chemistryView" class="space-y-6">
             <div class="flex flex-wrap gap-2 mb-4">
-                <button onclick="filterChemistry('all')" class="chem-filter-btn active bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors">Tüm Konular</button>
+                <button onclick="filterChemistry('all')" class="chem-filter-btn active bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors">Tüm Kimya</button>
                 <button onclick="filterChemistry('tyt')" class="chem-filter-btn bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-800">TYT Kimya</button>
                 <button onclick="filterChemistry('ayt')" class="chem-filter-btn bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-800">AYT Kimya</button>
             </div>
-            <div id="chemCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- JS ile dolacak -->
+            <div id="chemCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+
+        <!-- 2. EDEBİYAT KARTLARI -->
+        <div id="literatureView" class="hidden space-y-6">
+            <div class="flex flex-wrap gap-2 mb-4">
+                <button onclick="filterLiterature('all')" class="lit-filter-btn active bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors">Tüm Edebiyat</button>
+                <button onclick="filterLiterature('siir')" class="lit-filter-btn bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-800">Şiir Bilgisi & Dönemler</button>
+                <button onclick="filterLiterature('roman')" class="lit-filter-btn bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-800">Yazarlar & Eserler</button>
+            </div>
+            <div id="litCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+
+        <!-- 3. TARİH KARTLARI -->
+        <div id="historyView" class="hidden space-y-6">
+            <div class="flex flex-wrap gap-2 mb-4">
+                <button onclick="filterHistory('all')" class="hist-filter-btn active bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors">Tüm Tarih</button>
+                <button onclick="filterHistory('tyt')" class="hist-filter-btn bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-800">TYT Tarih</button>
+                <button onclick="filterHistory('ayt')" class="hist-filter-btn bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-800">AYT Tarih</button>
+            </div>
+            <div id="histCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+
+        <!-- 4. YOL HARİTASI OLUŞTURUCU -->
+        <div id="roadmapView" class="hidden max-w-3xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+            <h3 class="heading-font text-2xl font-bold text-white mb-2">TYT-AYT Yol Haritası Oluşturucu</h3>
+            <p class="text-slate-400 text-xs mb-6">Hedeflediğin alanı seç ve sana özel haftalık çalışma stratejini anında oluştur.</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Alan Seçimi</label>
+                    <select id="targetField" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-red-500">
+                        <option value="sayisal">Sayısal (MF)</option>
+                        <option value="esitagirlik">Eşit Ağırlık (TM)</option>
+                        <option value="sozel">Sözel (TS)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Günlük Çalışma Süresi</label>
+                    <select id="studyHours" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-red-500">
+                        <option value="3">3 - 4 Saat (Tempolu)</option>
+                        <option value="5">5 - 6 Saat (Yoğun)</option>
+                        <option value="8">8+ Saat (Derece Hedefli)</option>
+                    </select>
+                </div>
+                <div class="flex items-end">
+                    <button onclick="generateRoadmap()" class="w-full bg-red-600 hover:bg-red-500 text-white font-semibold py-2.5 rounded-xl text-xs transition-all shadow-lg shadow-red-950/50">Harita Oluştur</button>
+                </div>
+            </div>
+
+            <div id="roadmapResult" class="hidden bg-slate-950 border border-red-500/30 p-6 rounded-2xl space-y-4">
+                <h4 class="heading-font font-bold text-red-400 text-lg border-b border-slate-800 pb-2">Sana Özel Haftalık Çalışma Stratejisi</h4>
+                <div id="roadmapContent" class="text-xs text-slate-300 space-y-2 leading-relaxed"></div>
             </div>
         </div>
 
-        <!-- 2. POMODORO SİSTEMİ GÖRÜNÜMÜ -->
+        <!-- 5. POMODORO SİSTEMİ -->
         <div id="pomodoroView" class="hidden max-w-xl mx-auto bg-slate-900 border border-red-500/30 rounded-3xl p-8 shadow-2xl text-center red-neon-border">
             <h3 class="heading-font text-2xl font-bold text-white mb-2">Pomodoro Odaklanma Asistanı</h3>
             <p class="text-slate-400 text-xs mb-6">25 dakika çalış, 5 dakika mola ver! Verimliliğini doruğa çıkar.</p>
@@ -146,13 +200,13 @@
             <div class="text-6xl sm:text-7xl font-bold heading-font text-red-500 mb-8 tracking-widest" id="pomodoroTimer">25:00</div>
             
             <div class="flex justify-center gap-4">
-                <button onclick="startPomodoro()" id="pomoStartBtn" class="bg-red-600 hover:bg-red-500 text-white font-semibold px-8 py-3 rounded-2xl text-sm transition-all shadow-lg shadow-red-950/50">Başlat</button>
+                <button onclick="startPomodoro()" class="bg-red-600 hover:bg-red-500 text-white font-semibold px-8 py-3 rounded-2xl text-sm transition-all shadow-lg shadow-red-950/50">Başlat</button>
                 <button onclick="pausePomodoro()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-6 py-3 rounded-2xl text-sm transition-all">Duraklat</button>
                 <button onclick="resetPomodoro()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-6 py-3 rounded-2xl text-sm transition-all">Sıfırla</button>
             </div>
         </div>
 
-        <!-- 3. YKS NET HESAPLAYICI GÖRÜNÜMÜ -->
+        <!-- 6. NET HESAPLAYICI -->
         <div id="calculatorView" class="hidden max-w-2xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
             <h3 class="heading-font text-2xl font-bold text-white mb-2">YKS Net ve Puan Hesaplayıcı</h3>
             <p class="text-slate-400 text-xs mb-6">Doğru ve yanlış sayılarını girerek netlerini anında hesapla (4 yanlış 1 doğruyu götürür).</p>
@@ -184,15 +238,12 @@
         </div>
     </section>
 
-    <!-- CONTENT GRID (Anı ve Medya Alanı) -->
+    <!-- CONTENT GRID (Arşiv) -->
     <main id="mainContent" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full border-t border-slate-800/80">
         <div class="flex items-center justify-between mb-8">
             <h2 class="heading-font text-2xl sm:text-3xl font-bold text-white tracking-wide">Zaman Tüneli Arşivi</h2>
         </div>
-
-        <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- JS ile dinamik dolacak -->
-        </div>
+        <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </main>
 
     <!-- FOOTER -->
@@ -207,7 +258,7 @@
         </div>
     </footer>
 
-    <!-- AUTH MODAL (Üyelik) -->
+    <!-- AUTH MODAL -->
     <div id="authModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
             <div class="flex border-b border-slate-800 mb-6">
@@ -224,9 +275,7 @@
                     <label class="block text-xs font-medium text-slate-400 mb-1">Şifre</label>
                     <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-red-500">
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-medium py-2.5 rounded-xl text-sm transition-all duration-300 mt-2">
-                    Giriş Yap ve Siteye Gir
-                </button>
+                <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-medium py-2.5 rounded-xl text-sm transition-all duration-300 mt-2">Giriş Yap ve Siteye Gir</button>
             </form>
 
             <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-4 hidden">
@@ -242,9 +291,7 @@
                     <label class="block text-xs font-medium text-slate-400 mb-1">Şifre</label>
                     <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-red-500">
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-medium py-2.5 rounded-xl text-sm transition-all duration-300 mt-2">
-                    Kayıt Ol ve Başla
-                </button>
+                <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-medium py-2.5 rounded-xl text-sm transition-all duration-300 mt-2">Kayıt Ol ve Başla</button>
             </form>
         </div>
     </div>
@@ -300,12 +347,11 @@
     </script>
 
     <script>
-        // --- YKS GÜN SAYACI MANTIĞI ---
+        // --- YKS GÜN SAYACI ---
         const yksDate = new Date('June 20, 2026 10:15:00').getTime();
         setInterval(() => {
             const now = new Date().getTime();
             const distance = yksDate - now;
-            
             if (distance > 0) {
                 document.getElementById('days').textContent = Math.floor(distance / (1000 * 60 * 60 * 24));
                 document.getElementById('hours').textContent = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -314,7 +360,7 @@
             }
         }, 1000);
 
-        // --- POMODORO SİSTEMİ MANTIĞI ---
+        // --- POMODORO SİSTEMİ ---
         let pomoTime = 25 * 60;
         let pomoInterval = null;
         let isPomoRunning = false;
@@ -341,17 +387,8 @@
             }
         }
 
-        function pausePomodoro() {
-            clearInterval(pomoInterval);
-            isPomoRunning = false;
-        }
-
-        function resetPomodoro() {
-            clearInterval(pomoInterval);
-            isPomoRunning = false;
-            pomoTime = 25 * 60;
-            updatePomoDisplay();
-        }
+        function pausePomodoro() { clearInterval(pomoInterval); isPomoRunning = false; }
+        function resetPomodoro() { clearInterval(pomoInterval); isPomoRunning = false; pomoTime = 25 * 60; updatePomoDisplay(); }
 
         // --- YKS NET HESAPLAYICI ---
         function calculateNet() {
@@ -368,20 +405,55 @@
             document.getElementById('totalChemNet').textContent = (tytNet + aytNet).toFixed(2);
         }
 
-        // --- TYT - AYT KİMYA KARTLARI VERİLERİ ---
+        // --- YOL HARİTASI OLUŞTURUCU ---
+        function generateRoadmap() {
+            const field = document.getElementById('targetField').value;
+            const hours = document.getElementById('studyHours').value;
+            const resultBox = document.getElementById('roadmapResult');
+            const contentBox = document.getElementById('roadmapContent');
+
+            resultBox.classList.remove('hidden');
+
+            let planText = "";
+            if (field === 'sayisal') {
+                planText = `
+                    <p><strong>Seçilen Alan:</strong> Sayısal (MF) | <strong>Günlük Çalışma:</strong> ${hours} Saat</p>
+                    <p>• <strong>Sabit Çalışma:</strong> Her gün güne 30 dk paragraf ve problem çözümü ile başla.</p>
+                    <p>• <strong>TYT Odaklı:</strong> Matematik ve Fen branş denemelerini haftada 2 kez uygula.</p>
+                    <p>• <strong>AYT Kimya & Fizik:</strong> Modern atom teorisi, orbital ve Newton hareket yasaları öncelikli konularındır.</p>
+                    <p>• <strong>Tavsiye:</strong> Günde en az ${hours} saatin ${parseInt(hours)*20}% kısmını AYT netlerini artırmaya ayır.</p>
+                `;
+            } else if (field === 'esitagirlik') {
+                planText = `
+                    <p><strong>Seçilen Alan:</strong> Eşit Ağırlık (TM) | <strong>Günlük Çalışma:</strong> ${hours} Saat</p>
+                    <p>• <strong>Sabit Çalışma:</strong> Düzenli Türkçe paragraf ve geometri pratiği şart.</p>
+                    <p>• <strong>Edebiyat & Tarih:</strong> İslamiyet öncesi Türk edebiyatı, Divan edebiyatı ve Osmanlı kültür medeniyeti konularına ağırlık ver.</p>
+                    <p>• <strong>Matematik:</strong> AYT Matematik temelini (Türev, İntegral, Limit) sıkı tut.</p>
+                    <p>• <strong>Tavsiye:</strong> Edebiyat özetlerini günlük tekrarlarla hafızada kalıcı hale getir.</p>
+                `;
+            } else {
+                planText = `
+                    <p><strong>Seçilen Alan:</strong> Sözel (TS) | <strong>Günlük Çalışma:</strong> ${hours} Saat</p>
+                    <p>• <strong>Edebiyat & Sosyal:</strong> Paragraf + Edebiyat ezberleri günlük rutinin olmalı.</p>
+                    <p>• <strong>Tarih & Coğrafya:</strong> Harita çalışmaları ve inkılap tarihi kronolojisi çok önemlidir.</p>
+                    <p>• <strong>Felsefe & Din:</strong> Kavram haritaları ile çalışarak soru kaçırma riskini sıfırla.</p>
+                    <p>• <strong>Tavsiye:</strong> Çıkmış soruları (ÖSYM) mutlaka analiz et.</p>
+                `;
+            }
+            contentBox.innerHTML = planText;
+        }
+
+        // --- KİMYA KARTLARI ---
         const chemistryCards = [
-            { id: 1, title: "Kimya Bilimi ve Simya", category: "TYT", desc: "Simyadan kimyaya geçiş, kimya disiplinleri ve güvenlik kuralları.", tag: "tyt" },
-            { id: 2, title: "Atom ve Periyodik Sistem", category: "TYT", desc: "Atom modelleri, periyodik özellikler ve katman elektron dağılımı.", tag: "tyt" },
-            { id: 3, title: "Kimyasal Türler Arası Etkileşimler", category: "TYT", desc: "İyonik, kovalent bağlar, moleküler geometri ve zayıf etkileşimler.", tag: "tyt" },
-            { id: 4, title: "Modern Atom Teorisi", category: "AYT", desc: "Kuantum sayıları, orbital türleri ve periyodik sistemde değişen özellikler.", tag: "ayt" },
-            { id: 5, title: "Kimyasal Tepkimelerde Hız", category: "AYT", desc: "Çarpışma teorisi, hız bağıntıları ve reaksiyona etki eden faktörler.", tag: "ayt" },
-            { id: 6, title: "Kimyasal Denge", category: "AYT", desc: "Denge sabiti (Kc, Kp), Le Chatelier prensibi ve sulu çözeltilerde denge.", tag: "ayt" }
+            { title: "Kimya Bilimi ve Simya", category: "TYT", desc: "Simyadan kimyaya geçiş, kimya disiplinleri ve güvenlik kuralları.", tag: "tyt" },
+            { title: "Atom ve Periyodik Sistem", category: "TYT", desc: "Atom modelleri, periyodik özellikler ve katman elektron dağılımı.", tag: "tyt" },
+            { title: "Modern Atom Teorisi", category: "AYT", desc: "Kuantum sayıları, orbital türleri ve periyodik sistemde değişen özellikler.", tag: "ayt" },
+            { title: "Kimyasal Denge", category: "AYT", desc: "Denge sabiti (Kc, Kp), Le Chatelier prensibi ve sulu çözeltilerde denge.", tag: "ayt" }
         ];
 
         function renderChemistryCards(filter) {
             const grid = document.getElementById('chemCardsGrid');
             const filtered = filter === 'all' ? chemistryCards : chemistryCards.filter(c => c.tag === filter);
-            
             grid.innerHTML = filtered.map(card => `
                 <div class="bg-slate-900 border border-slate-800 hover:border-red-500/50 rounded-2xl p-6 transition-all duration-300 red-neon-border flex flex-col justify-between">
                     <div>
@@ -390,58 +462,116 @@
                         <p class="text-slate-400 text-xs leading-relaxed">${card.desc}</p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
-                        <span class="text-[11px] text-red-400 font-medium">YKS Çalışma Kartı</span>
-                        <button onclick="alert('${card.title} modülü seçildi!')" class="bg-red-600 hover:bg-red-500 text-white text-xs px-3.5 py-1.5 rounded-xl transition-colors font-semibold">Çalış</button>
+                        <span class="text-[11px] text-red-400 font-medium">Çalışma Kartı</span>
+                        <button onclick="alert('${card.title} seçildi!')" class="bg-red-600 hover:bg-red-500 text-white text-xs px-3.5 py-1.5 rounded-xl transition-colors font-semibold">Çalış</button>
                     </div>
                 </div>
             `).join('');
         }
 
         function filterChemistry(tag) {
-            document.querySelectorAll('.chem-filter-btn').forEach(btn => {
-                btn.className = "chem-filter-btn bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-800";
-            });
+            document.querySelectorAll('.chem-filter-btn').forEach(btn => btn.className = "chem-filter-btn bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-800");
             event.target.className = "chem-filter-btn active bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors";
             renderChemistryCards(tag);
         }
 
+        // --- EDEBİYAT KARTLARI ---
+        const literatureCards = [
+            { title: "İslamiyet Öncesi Türk Edebiyatı", category: "Şiir & Dönem", desc: "Koşuk, sagu, sav, destanlar ve Orhun Kitabeleri.", tag: "siir" },
+            { title: "Divan Edebiyatı Nazım Şekilleri", category: "Şiir & Dönem", desc: "Gazel, kaside, mesnevi, rubai ve divan sanatçıları.", tag: "siir" },
+            { title: "Tanzimat ve Servet-i Fünun", category: "Yazarlar & Eserler", desc: "İlk romanlar, Batılılaşma süreci ve dönemin usta kalemleri.", tag: "roman" },
+            { title: "Millî Edebiyat ve Cumhuriyet Dönemi", category: "Yazarlar & Eserler", desc: "Beş Hececiler, Garip akımı, İkinci Yeni ve roman özetleri.", tag: "roman" }
+        ];
+
+        function renderLiteratureCards(filter) {
+            const grid = document.getElementById('litCardsGrid');
+            const filtered = filter === 'all' ? literatureCards : literatureCards.filter(c => c.tag === filter);
+            grid.innerHTML = filtered.map(card => `
+                <div class="bg-slate-900 border border-slate-800 hover:border-red-500/50 rounded-2xl p-6 transition-all duration-300 red-neon-border flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-red-500/10 text-red-400 border border-red-500/20 text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-3">${card.category}</span>
+                        <h3 class="heading-font text-xl font-bold text-white mb-2">${card.title}</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">${card.desc}</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+                        <span class="text-[11px] text-red-400 font-medium">Edebiyat Kartı</span>
+                        <button onclick="alert('${card.title} seçildi!')" class="bg-red-600 hover:bg-red-500 text-white text-xs px-3.5 py-1.5 rounded-xl transition-colors font-semibold">Çalış</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterLiterature(tag) {
+            document.querySelectorAll('.lit-filter-btn').forEach(btn => btn.className = "lit-filter-btn bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-800");
+            event.target.className = "lit-filter-btn active bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors";
+            renderLiteratureCards(tag);
+        }
+
+        // --- TARİH KARTLARI ---
+        const historyCards = [
+            { title: "İslamiyet Öncesi Türk Tarihi", category: "TYT Tarih", desc: "Orta Asya Türk devletleri, kültür ve medeniyet özellikleri.", tag: "tyt" },
+            { title: "Osmanlı Devleti Kuruluş ve Yükselme", category: "AYT Tarih", desc: "Beylikten cihan imparatorluğuna geçiş ve fetihler politikası.", tag: "ayt" },
+            { title: "Millî Mücadele Dönemi", category: "AYT Tarih", desc: "Cepheler, antlaşmalar ve Kurtuluş Savaşı'nın diplomatik aşamaları.", tag: "ayt" },
+            { title: "İlk ve Orta Çağlarda Türk Dünyası", category: "TYT Tarih", desc: "Türklerin göçebe yaşam tarzı ve komşu devletlerle ilişkileri.", tag: "tyt" }
+        ];
+
+        function renderHistoryCards(filter) {
+            const grid = document.getElementById('histCardsGrid');
+            const filtered = filter === 'all' ? historyCards : historyCards.filter(c => c.tag === filter);
+            grid.innerHTML = filtered.map(card => `
+                <div class="bg-slate-900 border border-slate-800 hover:border-red-500/50 rounded-2xl p-6 transition-all duration-300 red-neon-border flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-red-500/10 text-red-400 border border-red-500/20 text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-3">${card.category}</span>
+                        <h3 class="heading-font text-xl font-bold text-white mb-2">${card.title}</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">${card.desc}</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+                        <span class="text-[11px] text-red-400 font-medium">Tarih Kartı</span>
+                        <button onclick="alert('${card.title} seçildi!')" class="bg-red-600 hover:bg-red-500 text-white text-xs px-3.5 py-1.5 rounded-xl transition-colors font-semibold">Çalış</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterHistory(tag) {
+            document.querySelectorAll('.hist-filter-btn').forEach(btn => btn.className = "hist-filter-btn bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-800");
+            event.target.className = "hist-filter-btn active bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors";
+            renderHistoryCards(tag);
+        }
+
+        // --- SEKME YÖNETİMİ ---
         function switchYksTab(tab) {
-            const chemView = document.getElementById('chemistryView');
-            const pomoView = document.getElementById('pomodoroView');
-            const calcView = document.getElementById('calculatorView');
-            
-            const btnChem = document.getElementById('tabChemistry');
-            const btnPomo = document.getElementById('tabPomodoro');
-            const btnCalc = document.getElementById('tabCalculator');
+            const views = ['chemistryView', 'literatureView', 'historyView', 'roadmapView', 'pomodoroView', 'calculatorView'];
+            const buttons = ['tabChemistry', 'tabLiterature', 'tabHistory', 'tabRoadmap', 'tabPomodoro', 'tabCalculator'];
 
-            chemView.classList.add('hidden');
-            pomoView.classList.add('hidden');
-            calcView.classList.add('hidden');
-
-            btnChem.className = "px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all";
-            btnPomo.className = "px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all";
-            btnCalc.className = "px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all";
+            views.forEach(v => document.getElementById(v).classList.add('hidden'));
+            buttons.forEach(b => document.getElementById(b).className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all");
 
             if (tab === 'chemistry') {
-                chemView.classList.remove('hidden');
-                btnChem.className = "px-5 py-2.5 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50";
+                document.getElementById('chemistryView').classList.remove('hidden');
+                document.getElementById('tabChemistry').className = "px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50";
+            } else if (tab === 'literature') {
+                document.getElementById('literatureView').classList.remove('hidden');
+                document.getElementById('tabLiterature').className = "px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50";
+            } else if (tab === 'history') {
+                document.getElementById('historyView').classList.remove('hidden');
+                document.getElementById('tabHistory').className = "px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50";
+            } else if (tab === 'roadmap') {
+                document.getElementById('roadmapView').classList.remove('hidden');
+                document.getElementById('tabRoadmap').className = "px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50";
             } else if (tab === 'pomodoro') {
-                pomoView.classList.remove('hidden');
-                btnPomo.className = "px-5 py-2.5 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50";
+                document.getElementById('pomodoroView').classList.remove('hidden');
+                document.getElementById('tabPomodoro').className = "px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50";
             } else if (tab === 'calculator') {
-                calcView.classList.remove('hidden');
-                btnCalc.className = "px-5 py-2.5 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50";
+                document.getElementById('calculatorView').classList.remove('hidden');
+                document.getElementById('tabCalculator').className = "px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-lg shadow-red-950/50";
             }
         }
 
         // Genel Arşiv Kartları
-        const items = [
-            { id: 1, title: "Gazi Mustafa Kemal Atatürk", category: "Tarihi Miras", year: "1881-1938", rating: "10.0", image: "images_3.webp", desc: "Milletinin bağımsızlığı uğruna cepheden cepheye koşan dahi lider.", video: "https://www.youtube.com/embed/fKHyGINwmfI" }
-        ];
-
+        const items = [{ id: 1, title: "Gazi Mustafa Kemal Atatürk", category: "Tarihi Miras", year: "1881-1938", rating: "10.0", image: "images_3.webp", desc: "Milletinin bağımsızlığı uğruna cepheden cepheye koşan dahi lider." }];
         function renderCards(data) {
-            const grid = document.getElementById('cardsGrid');
-            grid.innerHTML = data.map(item => `
+            document.getElementById('cardsGrid').innerHTML = data.map(item => `
                 <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden group hover:border-red-500/50 transition-all duration-300">
                     <div class="relative aspect-video overflow-hidden bg-slate-950">
                         <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -456,19 +586,14 @@
         }
 
         function switchAuthTab(tab) {
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            const loginTabBtn = document.getElementById('loginTabBtn');
-            const registerTabBtn = document.getElementById('registerTabBtn');
-
+            const loginForm = document.getElementById('loginForm'), registerForm = document.getElementById('registerForm');
+            const loginTabBtn = document.getElementById('loginTabBtn'), registerTabBtn = document.getElementById('registerTabBtn');
             if (tab === 'login') {
-                loginForm.classList.remove('hidden');
-                registerForm.classList.add('hidden');
+                loginForm.classList.remove('hidden'); registerForm.classList.add('hidden');
                 loginTabBtn.className = "flex-1 pb-3 text-sm font-semibold text-red-400 border-b-2 border-red-500 transition-colors";
                 registerTabBtn.className = "flex-1 pb-3 text-sm font-medium text-slate-400 border-b-2 border-transparent transition-colors";
             } else {
-                registerForm.classList.remove('hidden');
-                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden'); loginForm.classList.add('hidden');
                 registerTabBtn.className = "flex-1 pb-3 text-sm font-semibold text-red-400 border-b-2 border-red-500 transition-colors";
                 loginTabBtn.className = "flex-1 pb-3 text-sm font-medium text-slate-400 border-b-2 border-transparent transition-colors";
             }
@@ -476,32 +601,19 @@
 
         async function handleRegister(e) {
             e.preventDefault();
-            const email = document.getElementById('regEmail').value;
-            const password = document.getElementById('regPassword').value;
-            try {
-                await window.createUserWithEmailAndPassword(window.auth, email, password);
-                alert('Kayıt başarılı!');
-            } catch (error) { alert('Hata: ' + error.message); }
+            try { await window.createUserWithEmailAndPassword(window.auth, document.getElementById('regEmail').value, document.getElementById('regPassword').value); alert('Kayıt başarılı!'); } catch (error) { alert('Hata: ' + error.message); }
         }
-
         async function handleLogin(e) {
             e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            try {
-                await window.signInWithEmailAndPassword(window.auth, email, password);
-                alert('Giriş başarılı!');
-            } catch (error) { alert('Hata: ' + error.message); }
+            try { await window.signInWithEmailAndPassword(window.auth, document.getElementById('loginEmail').value, document.getElementById('loginPassword').value); alert('Giriş başarılı!'); } catch (error) { alert('Hata: ' + error.message); }
         }
-
-        async function handleLogout() {
-            try { await window.signOut(window.auth); } catch (e) { console.error(e); }
-        }
-
+        async function handleLogout() { try { await window.signOut(window.auth); } catch (e) { console.error(e); } }
         function toggleModal(id) { document.getElementById(id).classList.toggle('hidden'); }
 
         window.onload = () => {
             renderChemistryCards('all');
+            renderLiteratureCards('all');
+            renderHistoryCards('all');
             renderCards(items);
             lucide.createIcons();
         };
