@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaman Tüneli - YKS, MSÜ, Edebiyat & Tarih Akademi Portalı</title>
+    <title>Zaman Tüneli - Tüm Dersler YKS & MSÜ Akademi Portalı</title>
     
     <!-- Google AdSense Doğrulama Kodu -->
     <meta name="google-adsense-account" content="ca-pub-5903431933111991">
-    <!-- Google AdSense Ana Script Kodu -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5903431933111991" crossorigin="anonymous"></script>
 
     <!-- Tailwind CSS CDN -->
@@ -35,7 +34,6 @@
             box-shadow: 0 15px 30px rgba(239, 68, 68, 0.25);
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -56,20 +54,17 @@
     <!-- NAV BAR -->
     <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-            <!-- Logo -->
             <a href="#" class="flex items-center gap-3 shrink-0">
-                <img src="logo.png" alt="Zaman Tüneli" class="h-12 w-auto object-contain hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x50/ffffff/ef4444?text=YKS+AKADEMİ';">
+                <img src="logo.png" alt="Zaman Tüneli" class="h-12 w-auto object-contain hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x50/ffffff/ef4444?text=TÜM+DERSLER';">
             </a>
 
-            <!-- Nav Links -->
             <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
                 <a href="#mainContent" class="text-slate-600 hover:text-red-600 transition-colors">Ana Sayfa</a>
                 <a href="#yksHub" class="text-red-600 font-semibold flex items-center gap-1.5">
-                    <i data-lucide="flame" class="w-4 h-4"></i> Akademi Portalı
+                    <i data-lucide="flame" class="w-4 h-4"></i> Tüm Dersler Portalı
                 </a>
             </nav>
 
-            <!-- Auth / User Profile Area -->
             <div class="flex items-center gap-3" id="authArea">
                 <button onclick="toggleModal('authModal')" class="flex items-center gap-2 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-medium px-5 py-2.5 rounded-full text-sm transition-all duration-300 shadow-md shadow-red-500/20">
                     <i data-lucide="user" class="w-4 h-4"></i>
@@ -79,7 +74,7 @@
         </div>
     </header>
 
-    <!-- ULTRA MODERN HERO & GİRİŞ ARAYÜZÜ -->
+    <!-- HERO SECTION -->
     <section class="relative py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div class="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
             <div class="absolute top-10 left-1/4 w-96 h-96 bg-red-400/10 rounded-full blur-3xl"></div>
@@ -90,15 +85,15 @@
             <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
                 <div class="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">
                     <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
-                    2026-2027 Eğitim ve Sınav Merkezi
+                    Tüm Dersler Sınav Hazırlık Merkezi
                 </div>
                 
                 <h1 class="heading-font text-4xl sm:text-6xl font-bold tracking-tight text-slate-900 leading-tight">
-                    Geleceğini Şekillendir, <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-600">Zirveyi Hedefle!</span>
+                    Tüm Derslerde Zirveyi Hedefle, <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-600">Sınavı Fethede!</span>
                 </h1>
                 
                 <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                    YKS, MSÜ çıkmış sorular, kapsamlı çalışma kartları, interaktif yol haritası oluşturucu ve pomodoro odaklanma sistemi ile sınav hazırlığını kusursuzlaştır.
+                    Türkçe, Matematik, Sosyal ve Fen bilimleri tüm dersler çıkmış sorular, konu özetleri, yol haritası ve pomodoro sistemi ile hazırlığını kusursuzlaştır.
                 </p>
 
                 <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
@@ -111,27 +106,10 @@
                         <span>Yol Haritası Oluştur</span>
                     </a>
                 </div>
-
-                <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80 max-w-lg mx-auto lg:mx-0">
-                    <div>
-                        <div class="heading-font text-2xl sm:text-3xl font-bold text-slate-900">125+</div>
-                        <div class="text-[11px] text-slate-500 font-medium">MSÜ Soru Arşivi</div>
-                    </div>
-                    <div>
-                        <div class="heading-font text-2xl sm:text-3xl font-bold text-red-600">4</div>
-                        <div class="text-[11px] text-slate-500 font-medium">Temel Branş</div>
-                    </div>
-                    <div>
-                        <div class="heading-font text-2xl sm:text-3xl font-bold text-slate-900">%100</div>
-                        <div class="text-[11px] text-slate-500 font-medium">Ücretsiz Erişim</div>
-                    </div>
-                </div>
             </div>
 
             <div class="lg:col-span-5">
                 <div class="bg-white border border-red-200 p-6 sm:p-8 rounded-3xl shadow-xl red-neon-shadow relative overflow-hidden space-y-6">
-                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-red-50 rounded-full pointer-events-none"></div>
-                    
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <span class="text-xs uppercase tracking-widest text-red-600 font-bold">YKS 2027 Geri Sayım</span>
@@ -158,35 +136,27 @@
                             </button>
                         </div>
                     </div>
-
-                    <div class="pt-2">
-                        <button onclick="toggleModal('authModal')" class="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-medium py-3 rounded-xl text-xs transition-all shadow-md">
-                            <i data-lucide="user-check" class="w-4 h-4 text-red-400"></i>
-                            <span>Öğrenci Hesabına Giriş Yap</span>
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- YKS AKADEMİ & ÇALIŞMA ALANI -->
+    <!-- TÜM DERSLER AKADEMİ & ÇALIŞMA ALANI -->
     <section id="yksHub" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 border-b border-slate-200 pb-4">
             <div>
-                <span class="inline-block bg-red-100 border border-red-200 text-red-600 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-1">Kapsamlı Sınav Merkezi</span>
-                <h2 class="heading-font text-3xl sm:text-4xl font-bold text-slate-900 tracking-wide">YKS & MSÜ Çalışma Modülleri</h2>
+                <span class="inline-block bg-red-100 border border-red-200 text-red-600 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-1">Tüm Dersler Havuzu</span>
+                <h2 class="heading-font text-3xl sm:text-4xl font-bold text-slate-900 tracking-wide">Ders Çalışma Modülleri</h2>
             </div>
             
-            <!-- Ana Sekme Butonları -->
             <div class="flex flex-wrap bg-slate-200 p-1.5 rounded-2xl border border-slate-300 gap-1">
-                <button onclick="switchYksTab('chemistry')" id="tabChemistry" class="px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-md">Kimya</button>
-                <button onclick="switchYksTab('literature')" id="tabLiterature" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Edebiyat</button>
-                <button onclick="switchYksTab('history')" id="tabHistory" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Tarih</button>
-                <button onclick="switchYksTab('msu')" id="tabMsu" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> MSÜ Çıkmış Sorular</button>
-                <button onclick="switchYksTab('roadmap')" id="tabRoadmap" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1"><i data-lucide="map" class="w-3.5 h-3.5"></i> Yol Haritası</button>
-                <button onclick="switchYksTab('pomodoro')" id="tabPomodoro" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Pomodoro</button>
-                <button onclick="switchYksTab('calculator')" id="tabCalculator" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Net Hesapla</button>
+                <button onclick="switchYksTab('chemistry')" id="tabChemistry" class="px-3 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-md">Kimya</button>
+                <button onclick="switchYksTab('literature')" id="tabLiterature" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Edebiyat</button>
+                <button onclick="switchYksTab('history')" id="tabHistory" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Tarih</button>
+                <button onclick="switchYksTab('msu')" id="tabMsu" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> MSÜ Soru</button>
+                <button onclick="switchYksTab('roadmap')" id="tabRoadmap" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1"><i data-lucide="map" class="w-3.5 h-3.5"></i> Yol Haritası</button>
+                <button onclick="switchYksTab('pomodoro')" id="tabPomodoro" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Pomodoro</button>
+                <button onclick="switchYksTab('calculator')" id="tabCalculator" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Net Hesapla</button>
             </div>
         </div>
 
@@ -230,11 +200,11 @@
                     <div>
                         <div class="flex items-center gap-2 mb-1">
                             <span class="bg-red-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">ÖSYM Resmi Kitapçık</span>
-                            <span class="text-xs text-slate-500">1 Mart 2026 • 125 Soru</span>
+                            <span class="text-xs text-slate-500">1 Mart 2026 • 125 Soru[cite: 3]</span>
                         </div>
                         <h3 class="heading-font text-2xl font-bold text-slate-900">2026-MSÜ Askerî Öğrenci Aday Belirleme Sınavı</h3>
                         <p class="text-slate-600 text-xs mt-1 max-w-2xl leading-relaxed">
-                            Türkçe (40), Sosyal Bilimler (25), Temel Matematik (40) ve Fen Bilimleri (20) testlerini ve doğru cevap anahtarını içeren tam kitapçık PDF dosyası[cite: 3, 4, 19, 27, 39].
+                            Türkçe, Sosyal Bilimler, Temel Matematik ve Fen Bilimleri tüm dersler testlerini ve doğru cevap anahtarını içeren tam kitapçık PDF dosyası[cite: 3].
                         </p>
                     </div>
                 </div>
@@ -251,7 +221,7 @@
             <div>
                 <div class="flex items-center justify-between mb-4">
                     <div>
-                        <h3 class="heading-font text-2xl font-bold text-slate-900">2026-MSÜ Seçme Sorular & Çözüm Pratiği</h3>
+                        <h3 class="heading-font text-2xl font-bold text-slate-900">2026-MSÜ Tüm Derslerden Seçme Sorular</h3>
                         <p class="text-xs text-slate-500">Kitapçıktan derlenen örnek soruları çözerek kendini hemen test et.</p>
                     </div>
                     <span class="text-xs font-semibold bg-slate-200 text-slate-700 px-3 py-1 rounded-full">Cevap Anahtarlı</span>
@@ -262,8 +232,8 @@
 
         <!-- 5. YOL HARİTASI OLUŞTURUCU -->
         <div id="roadmapView" class="hidden max-w-3xl mx-auto bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl">
-            <h3 class="heading-font text-2xl font-bold text-slate-900 mb-2">TYT-AYT Yol Haritası Oluşturucu</h3>
-            <p class="text-slate-600 text-xs mb-6">Hedeflediğin alanı seç ve sana özel haftalık çalışma stratejini anında oluştur.</p>
+            <h3 class="heading-font text-2xl font-bold text-slate-900 mb-2">Tüm Dersler Yol Haritası Oluşturucu</h3>
+            <p class="text-slate-600 text-xs mb-6">Hedeflediğin alanı seç ve tüm dersler için sana özel haftalık çalışma stratejini anında oluştur.</p>
             
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                 <div>
@@ -288,7 +258,7 @@
             </div>
 
             <div id="roadmapResult" class="hidden bg-red-50/50 border border-red-200 p-6 rounded-2xl space-y-4">
-                <h4 class="heading-font font-bold text-red-600 text-lg border-b border-red-100 pb-2">Sana Özel Haftalık Çalışma Stratejisi</h4>
+                <h4 class="heading-font font-bold text-red-600 text-lg border-b border-red-100 pb-2">Sana Özel Tüm Dersler Çalışma Stratejisi</h4>
                 <div id="roadmapContent" class="text-xs text-slate-700 space-y-2 leading-relaxed"></div>
             </div>
         </div>
@@ -338,14 +308,6 @@
             </div>
         </div>
     </section>
-
-    <!-- CONTENT GRID (Arşiv) -->
-    <main id="mainContent" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full border-t border-slate-200">
-        <div class="flex items-center justify-between mb-8">
-            <h2 class="heading-font text-2xl sm:text-3xl font-bold text-slate-900 tracking-wide">Zaman Tüneli Arşivi</h2>
-        </div>
-        <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-    </main>
 
     <!-- FOOTER -->
     <footer class="border-t border-slate-200 bg-white py-8 mt-12">
@@ -515,26 +477,23 @@
             if (field === 'sayisal') {
                 planText = `
                     <p><strong>Seçilen Alan:</strong> Sayısal (MF) | <strong>Günlük Çalışma:</strong> ${hours} Saat</p>
-                    <p>• <strong>Sabit Çalışma:</strong> Her gün güne 30 dk paragraf ve problem çözümü ile başla.</p>
-                    <p>• <strong>TYT & MSÜ Odaklı:</strong> Matematik ve Fen branş denemelerini haftada 2 kez uygula.</p>
-                    <p>• <strong>AYT Kimya & Fizik:</strong> Modern atom teorisi, orbital ve Newton hareket yasaları öncelikli konularındır.</p>
-                    <p>• <strong>Tavsiye:</strong> Günde en az ${hours} saatin %${parseInt(hours)*10} kısmını AYT netlerini artırmaya ayır.</p>
+                    <p>• <strong>Türkçe & Matematik:</strong> Güne 30 dk paragraf ve temel matematik problemleriyle başla.</p>
+                    <p>• <strong>Fen Bilimleri (Fizik, Kimya, Biyoloji):</strong> Modern atom teorisi, hareket yasaları ve sistemler çalış.</p>
+                    <p>• <strong>Sosyal Bilimler:</strong> Haftada 2 kez branş denemesi çözerek eksiklerini kapat.</p>
                 `;
             } else if (field === 'esitagirlik') {
                 planText = `
                     <p><strong>Seçilen Alan:</strong> Eşit Ağırlık (TM) | <strong>Günlük Çalışma:</strong> ${hours} Saat</p>
-                    <p>• <strong>Sabit Çalışma:</strong> Düzenli Türkçe paragraf ve geometri pratiği şart.</p>
-                    <p>• <strong>Edebiyat & Tarih:</strong> İslamiyet öncesi Türk edebiyatı, Divan edebiyatı ve Osmanlı kültür medeniyeti konularına ağırlık ver.</p>
-                    <p>• <strong>Matematik:</strong> AYT Matematik temelini (Türev, İntegral, Limit) sıkı tut.</p>
-                    <p>• <strong>Tavsiye:</strong> Edebiyat özetlerini günlük tekrarlarla hafızada kalıcı hale getir.</p>
+                    <p>• <strong>Matematik & Türkçe:</strong> Temel kavramlar, paragraf ve geometri odaklı ilerle.</p>
+                    <p>• <strong>Edebiyat & Tarih:</strong> İslamiyet öncesi, Divan edebiyatı ve Osmanlı tarihi tekrarları yap.</p>
+                    <p>• <strong>Coğrafya:</strong> Harita çalışmaları ve coğrafi konum pratikleri gerçekleştir.</p>
                 `;
             } else {
                 planText = `
                     <p><strong>Seçilen Alan:</strong> Sözel (TS) | <strong>Günlük Çalışma:</strong> ${hours} Saat</p>
-                    <p>• <strong>Edebiyat & Sosyal:</strong> Paragraf + Edebiyat ezberleri günlük rutinin olmalı.</p>
-                    <p>• <strong>Tarih & Coğrafya:</strong> Harita çalışmaları ve inkılap tarihi kronolojisi çok önemlidir.</p>
-                    <p>• <strong>Felsefe & Din:</strong> Kavram haritaları ile çalışarak soru kaçırma riskini sıfırla.</p>
-                    <p>• <strong>Tavsiye:</strong> Çıkmış MSÜ ve YKS sorularını mutlaka analiz et.</p>
+                    <p>• <strong>Edebiyat & Türkçe:</strong> Paragraf ve eser-yazar ezberlerini günlük rutin yap.</p>
+                    <p>• <strong>Tarih & Coğrafya:</strong> Kronoloji ve bölge analizlerine ağırlık ver.</p>
+                    <p>• <strong>Felsefe & Din:</strong> Kavram haritalarıyla soru kaçırma riskini sıfırla.</p>
                 `;
             }
             contentBox.innerHTML = planText;
@@ -737,7 +696,7 @@
             const buttons = ['tabChemistry', 'tabLiterature', 'tabHistory', 'tabMsu', 'tabRoadmap', 'tabPomodoro', 'tabCalculator'];
 
             views.forEach(v => document.getElementById(v).classList.add('hidden'));
-            buttons.forEach(b => document.getElementById(b).className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1");
+            buttons.forEach(b => document.getElementById(b).className = "px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1");
 
             const activeBtnMap = {
                 chemistry: ['chemistryView', 'tabChemistry'],
@@ -751,24 +710,8 @@
 
             if (activeBtnMap[tab]) {
                 document.getElementById(activeBtnMap[tab][0]).classList.remove('hidden');
-                document.getElementById(activeBtnMap[tab][1]).className = "px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-md flex items-center gap-1";
+                document.getElementById(activeBtnMap[tab][1]).className = "px-3 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-md flex items-center gap-1";
             }
-        }
-
-        const items = [{ id: 1, title: "Gazi Mustafa Kemal Atatürk", category: "Tarihi Miras", year: "1881-1938", rating: "10.0", image: "images_3.webp", desc: "Milletinin bağımsızlığı uğruna cepheden cepheye koşan dahi lider." }];
-        function renderCards(data) {
-            document.getElementById('cardsGrid').innerHTML = data.map(item => `
-                <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden group hover:border-red-500/50 transition-all duration-300 shadow-sm hover:shadow-md">
-                    <div class="relative aspect-video overflow-hidden bg-slate-100">
-                        <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md border border-slate-200 text-xs text-red-600 font-semibold px-2.5 py-1 rounded-md shadow-sm">${item.category}</span>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="heading-font text-xl font-bold text-slate-900 mb-2">${item.title}</h3>
-                        <p class="text-slate-600 text-xs line-clamp-2 leading-relaxed">${item.desc}</p>
-                    </div>
-                </div>
-            `).join('');
         }
 
         function switchAuthTab(tab) {
@@ -801,7 +744,6 @@
             renderLiteratureCards('all');
             renderHistoryCards('all');
             renderMsuQuestions();
-            renderCards(items);
             lucide.createIcons();
         };
     </script>
