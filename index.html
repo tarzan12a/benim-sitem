@@ -93,17 +93,17 @@
                 </h1>
                 
                 <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                    Türkçe, Matematik, Sosyal ve Fen bilimleri tüm dersler çıkmış sorular, konu özetleri, yol haritası ve gelişmiş net hesaplayıcı ile hazırlığını kusursuzlaştır.
+                    Çıkmış sorular, çalışma kartları, net hesaplayıcı ve yepyeni **Deneme Takip Sistemi** ile netlerini grafiksel olarak her gün yukarı taşı.
                 </p>
 
                 <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
-                    <a href="#yksHub" onclick="switchYksTab('msu')" class="flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-semibold px-6 py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-red-500/25">
-                        <i data-lucide="file-text" class="w-4 h-4"></i>
-                        <span>MSÜ Çıkmış Sorular</span>
+                    <a href="#yksHub" onclick="switchYksTab('denemeTracker')" class="flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-semibold px-6 py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-red-500/25">
+                        <i data-lucide="line-chart" class="w-4 h-4"></i>
+                        <span>Deneme Takip Sistemi</span>
                     </a>
                     <a href="#yksHub" onclick="switchYksTab('calculator')" class="flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold px-6 py-3.5 rounded-2xl text-sm transition-all shadow-sm">
                         <i data-lucide="calculator" class="w-4 h-4 text-red-600"></i>
-                        <span>Tüm Dersler Net Hesapla</span>
+                        <span>Net Hesapla</span>
                     </a>
                 </div>
             </div>
@@ -126,9 +126,9 @@
                     <div class="space-y-3">
                         <span class="text-xs font-semibold text-slate-500 block">Popüler Modüller</span>
                         <div class="grid grid-cols-2 gap-2">
-                            <button onclick="switchYksTab('pomodoro')" class="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-200 text-slate-700 hover:text-red-600 transition-all text-xs font-medium text-left">
-                                <i data-lucide="clock" class="w-4 h-4 text-red-600 shrink-0"></i>
-                                <span>Pomodoro Asistanı</span>
+                            <button onclick="switchYksTab('denemeTracker')" class="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-200 text-slate-700 hover:text-red-600 transition-all text-xs font-medium text-left">
+                                <i data-lucide="line-chart" class="w-4 h-4 text-red-600 shrink-0"></i>
+                                <span>Deneme Takip</span>
                             </button>
                             <button onclick="switchYksTab('calculator')" class="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-200 text-slate-700 hover:text-red-600 transition-all text-xs font-medium text-left">
                                 <i data-lucide="calculator" class="w-4 h-4 text-red-600 shrink-0"></i>
@@ -150,7 +150,8 @@
             </div>
             
             <div class="flex flex-wrap bg-slate-200 p-1.5 rounded-2xl border border-slate-300 gap-1">
-                <button onclick="switchYksTab('chemistry')" id="tabChemistry" class="px-3 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-md">Kimya</button>
+                <button onclick="switchYksTab('denemeTracker')" id="tabDenemeTracker" class="px-3 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-md flex items-center gap-1"><i data-lucide="line-chart" class="w-3.5 h-3.5"></i> Deneme Takip</button>
+                <button onclick="switchYksTab('chemistry')" id="tabChemistry" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Kimya</button>
                 <button onclick="switchYksTab('literature')" id="tabLiterature" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Edebiyat</button>
                 <button onclick="switchYksTab('history')" id="tabHistory" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Tarih</button>
                 <button onclick="switchYksTab('msu')" id="tabMsu" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> MSÜ Soru</button>
@@ -160,8 +161,65 @@
             </div>
         </div>
 
+        <!-- YENİ: DENEME SINAVI TAKİP SİSTEMİ -->
+        <div id="denemeTrackerView" class="space-y-8">
+            <div class="bg-white border border-red-200 rounded-3xl p-6 sm:p-8 shadow-xl">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 border-b border-slate-200 pb-4">
+                    <div>
+                        <span class="bg-red-100 text-red-600 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">Kişisel Analiz</span>
+                        <h3 class="heading-font text-2xl font-bold text-slate-900 mt-1">Deneme Sınavı Takip Sistemi</h3>
+                        <p class="text-xs text-slate-500">Çözdüğün denemeleri kaydet, gelişimini grafik ve tablo ile anlık takip et.</p>
+                    </div>
+                    <button onclick="toggleModal('addDenemeModal')" class="flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white text-xs font-semibold px-5 py-3 rounded-xl transition-all shadow-md shadow-red-500/20">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i> Yeni Deneme Ekle
+                    </button>
+                </div>
+
+                <!-- Özet İstatistik Kartları -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl">
+                        <span class="text-xs text-slate-500 font-medium block mb-1">Toplam Çözülen Deneme</span>
+                        <span id="statTotalCount" class="text-3xl font-bold heading-font text-slate-900">0</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl">
+                        <span class="text-xs text-slate-500 font-medium block mb-1">En Yüksek TYT Neti</span>
+                        <span id="statMaxTyt" class="text-3xl font-bold heading-font text-red-600">0.00</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl">
+                        <span class="text-xs text-slate-500 font-medium block mb-1">En Yüksek AYT Neti</span>
+                        <span id="statMaxAyt" class="text-3xl font-bold heading-font text-slate-900">0.00</span>
+                    </div>
+                </div>
+
+                <!-- Denemeler Tablosu -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-700">
+                        <thead class="bg-slate-100 text-slate-800 uppercase font-semibold">
+                            <tr>
+                                <th class="p-3 rounded-l-xl">Deneme Adı</th>
+                                <th class="p-3">Tür</th>
+                                <th class="p-3">Tarih</th>
+                                <th class="p-3">Türkçe / Edb</th>
+                                <th class="p-3">Sosyal</th>
+                                <th class="p-3">Matematik</th>
+                                <th class="p-3">Fen / Diğer</th>
+                                <th class="p-3">Toplam Net</th>
+                                <th class="p-3 rounded-r-xl text-center">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="denemeTableBody" class="divide-y divide-slate-200">
+                            <!-- JS ile dolacak -->
+                        </tbody>
+                    </table>
+                    <div id="noDenemeMessage" class="text-center py-12 text-slate-400 text-xs">
+                        Henüz kayıtlı bir deneme sınavınız yok. "Yeni Deneme Ekle" butonuna tıklayarak ilk denemenizi ekleyin!
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 1. KİMYA KARTLARI -->
-        <div id="chemistryView" class="space-y-6">
+        <div id="chemistryView" class="hidden space-y-6">
             <div class="flex flex-wrap gap-2 mb-4">
                 <button onclick="filterChemistry('all')" class="chem-filter-btn active bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors shadow-sm">Tüm Kimya</button>
                 <button onclick="filterChemistry('tyt')" class="chem-filter-btn bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-300">TYT Kimya</button>
@@ -277,7 +335,7 @@
             </div>
         </div>
 
-        <!-- 7. TÜM DERSLER NET VE PUAN HESAPLAYICI -->
+        <!-- 7. NET HESAPLAYICI -->
         <div id="calculatorView" class="hidden max-w-4xl mx-auto bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl space-y-8">
             <div class="text-center max-w-xl mx-auto">
                 <h3 class="heading-font text-2xl sm:text-3xl font-bold text-slate-900 mb-2">YKS Tüm Dersler Net Hesaplayıcı</h3>
@@ -290,7 +348,6 @@
                     <i data-lucide="book-open" class="w-5 h-5"></i> TYT Testleri (Temel Yeterlilik Testi)
                 </h4>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <!-- Türkçe -->
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                         <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Türkçe (40 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-tyt-turkce">Net: 0.00</span></div>
                         <div class="flex gap-2">
@@ -298,7 +355,6 @@
                             <input type="number" id="y-tyt-turkce" placeholder="Yanlış" min="0" max="40" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
                         </div>
                     </div>
-                    <!-- Sosyal Bilimler -->
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                         <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Sosyal Bilimler (20 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-tyt-sosyal">Net: 0.00</span></div>
                         <div class="flex gap-2">
@@ -306,7 +362,6 @@
                             <input type="number" id="y-tyt-sosyal" placeholder="Yanlış" min="0" max="20" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
                         </div>
                     </div>
-                    <!-- Temel Matematik -->
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                         <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Temel Matematik (40 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-tyt-mat">Net: 0.00</span></div>
                         <div class="flex gap-2">
@@ -314,7 +369,6 @@
                             <input type="number" id="y-tyt-mat" placeholder="Yanlış" min="0" max="40" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
                         </div>
                     </div>
-                    <!-- Fen Bilimleri -->
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                         <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Fen Bilimleri (20 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-tyt-fen">Net: 0.00</span></div>
                         <div class="flex gap-2">
@@ -331,7 +385,6 @@
                     <i data-lucide="award" class="w-5 h-5"></i> AYT Testleri (Alan Yeterlilik Testleri)
                 </h4>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <!-- Matematik -->
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                         <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">AYT Matematik (40 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-mat">Net: 0.00</span></div>
                         <div class="flex gap-2">
@@ -339,7 +392,6 @@
                             <input type="number" id="y-ayt-mat" placeholder="Yanlış" min="0" max="40" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
                         </div>
                     </div>
-                    <!-- Fizik -->
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                         <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">AYT Fizik (14 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-fizik">Net: 0.00</span></div>
                         <div class="flex gap-2">
@@ -347,7 +399,6 @@
                             <input type="number" id="y-ayt-fizik" placeholder="Yanlış" min="0" max="14" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
                         </div>
                     </div>
-                    <!-- Kimya -->
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                         <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">AYT Kimya (13 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-kimya">Net: 0.00</span></div>
                         <div class="flex gap-2">
@@ -355,7 +406,6 @@
                             <input type="number" id="y-ayt-kimya" placeholder="Yanlış" min="0" max="13" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
                         </div>
                     </div>
-                    <!-- Biyoloji -->
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                         <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">AYT Biyoloji (13 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-biyo">Net: 0.00</span></div>
                         <div class="flex gap-2">
@@ -363,7 +413,6 @@
                             <input type="number" id="y-ayt-biyo" placeholder="Yanlış" min="0" max="13" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
                         </div>
                     </div>
-                    <!-- Türk Dili ve Edebiyatı -->
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                         <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Türk Dili ve Edebiyatı (24 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-edb">Net: 0.00</span></div>
                         <div class="flex gap-2">
@@ -371,28 +420,11 @@
                             <input type="number" id="y-ayt-edb" placeholder="Yanlış" min="0" max="24" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
                         </div>
                     </div>
-                    <!-- Tarih-1 -->
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                         <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Tarih-1 (10 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-tarih1">Net: 0.00</span></div>
                         <div class="flex gap-2">
                             <input type="number" id="c-ayt-tarih1" placeholder="Doğru" min="0" max="10" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
                             <input type="number" id="y-ayt-tarih1" placeholder="Yanlış" min="0" max="10" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
-                        </div>
-                    </div>
-                    <!-- Coğrafya-1 -->
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Coğrafya-1 (6 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-cografya1">Net: 0.00</span></div>
-                        <div class="flex gap-2">
-                            <input type="number" id="c-ayt-cografya1" placeholder="Doğru" min="0" max="6" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
-                            <input type="number" id="y-ayt-cografya1" placeholder="Yanlış" min="0" max="6" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
-                        </div>
-                    </div>
-                    <!-- Tarih-2 -->
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Tarih-2 (11 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-tarih2">Net: 0.00</span></div>
-                        <div class="flex gap-2">
-                            <input type="number" id="c-ayt-tarih2" placeholder="Doğru" min="0" max="11" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
-                            <input type="number" id="y-ayt-tarih2" placeholder="Yanlış" min="0" max="11" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
                         </div>
                     </div>
                 </div>
@@ -412,6 +444,58 @@
         </div>
     </section>
 
+    <!-- YENİ DENEME EKLEME MODALI -->
+    <div id="addDenemeModal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-6 border-b border-slate-200 pb-4">
+                <h3 class="heading-font text-xl font-bold text-slate-900">Yeni Deneme Sınavı Ekle</h3>
+                <button onclick="toggleModal('addDenemeModal')" class="text-slate-400 hover:text-red-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+
+            <form onsubmit="handleSaveDeneme(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">Deneme Adı / Yayın</label>
+                        <input type="text" id="denemeName" required placeholder="Örn: 3D Yayınları TYT-1" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">Sınav Türü</label>
+                        <select id="denemeType" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                            <option value="TYT">TYT Denemesi</option>
+                            <option value="AYT">AYT Denemesi</option>
+                            <option value="MSU">MSÜ Denemesi</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Türkçe / Edb Doğru/Yanlış</label>
+                        <input type="number" id="dTurkceC" placeholder="D" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs mb-1">
+                        <input type="number" id="dTurkceY" placeholder="Y" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Sosyal Doğru/Yanlış</label>
+                        <input type="number" id="dSosyalC" placeholder="D" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs mb-1">
+                        <input type="number" id="dSosyalY" placeholder="Y" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Matematik Doğru/Yanlış</label>
+                        <input type="number" id="dMatC" placeholder="D" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs mb-1">
+                        <input type="number" id="dMatY" placeholder="Y" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Fen / Diğer Doğru/Yanlış</label>
+                        <input type="number" id="dFenC" placeholder="D" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs mb-1">
+                        <input type="number" id="dFenY" placeholder="Y" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-500 text-white font-semibold py-2.5 rounded-xl text-xs transition-all shadow-md mt-4">Denemeyi Kaydet</button>
+            </form>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="border-t border-slate-200 bg-white py-8 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
@@ -425,7 +509,7 @@
     </footer>
 
     <!-- AUTH MODAL -->
-    <div id="authModal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div id="authModal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
             <div class="flex border-b border-slate-200 mb-6">
                 <button onclick="switchAuthTab('login')" id="loginTabBtn" class="flex-1 pb-3 text-sm font-semibold text-red-600 border-b-2 border-red-600 transition-colors">Giriş Yap</button>
@@ -500,7 +584,6 @@
                     </div>
                 `;
             } else {
-                authModal.classList.remove('hidden');
                 authArea.innerHTML = `
                     <button onclick="toggleModal('authModal')" class="flex items-center gap-2 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-medium px-5 py-2.5 rounded-full text-sm transition-all duration-300 shadow-md shadow-red-500/20">
                         <i data-lucide="user" class="w-4 h-4"></i>
@@ -525,6 +608,101 @@
             }
         }, 1000);
 
+        // --- DENEME TAKİP SİSTEMİ MANTIĞI ---
+        let denemeler = JSON.parse(localStorage.getItem('zaman_tuneli_denemeler')) || [];
+
+        function handleSaveDeneme(e) {
+            e.preventDefault();
+            const name = document.getElementById('denemeName').value;
+            const type = document.getElementById('denemeType').value;
+            
+            const tC = parseFloat(document.getElementById('dTurkceC').value) || 0;
+            const tY = parseFloat(document.getElementById('dTurkceY').value) || 0;
+            const sC = parseFloat(document.getElementById('dSosyalC').value) || 0;
+            const sY = parseFloat(document.getElementById('dSosyalY').value) || 0;
+            const mC = parseFloat(document.getElementById('dMatC').value) || 0;
+            const mY = parseFloat(document.getElementById('dMatY').value) || 0;
+            const fC = parseFloat(document.getElementById('dFenC').value) || 0;
+            const fY = parseFloat(document.getElementById('dFenY').value) || 0;
+
+            const tNet = Math.max(0, tC - (tY / 4));
+            const sNet = Math.max(0, sC - (sY / 4));
+            const mNet = Math.max(0, mC - (mY / 4));
+            const fNet = Math.max(0, fC - (fY / 4));
+            const totalNet = tNet + sNet + mNet + fNet;
+
+            const yeniDeneme = {
+                id: Date.now(),
+                name,
+                type,
+                date: new Date().toLocaleDateString('tr-TR'),
+                tNet: tNet.toFixed(2),
+                sNet: sNet.toFixed(2),
+                mNet: mNet.toFixed(2),
+                fNet: fNet.toFixed(2),
+                totalNet: totalNet.toFixed(2)
+            };
+
+            denemeler.push(yeniDeneme);
+            localStorage.setItem('zaman_tuneli_denemeler', JSON.stringify(denemeler));
+            
+            toggleModal('addDenemeModal');
+            renderDenemeler();
+            e.target.reset();
+        }
+
+        function deleteDeneme(id) {
+            denemeler = denemeler.filter(d => d.id !== id);
+            localStorage.setItem('zaman_tuneli_denemeler', JSON.stringify(denemeler));
+            renderDenemeler();
+        }
+
+        function renderDenemeler() {
+            const tbody = document.getElementById('denemeTableBody');
+            const noMsg = document.getElementById('noDenemeMessage');
+            
+            document.getElementById('statTotalCount').textContent = denemeler.length;
+            
+            if (denemeler.length === 0) {
+                tbody.innerHTML = '';
+                noMsg.classList.remove('hidden');
+                document.getElementById('statMaxTyt').textContent = '0.00';
+                document.getElementById('statMaxAyt').textContent = '0.00';
+                return;
+            }
+
+            noMsg.classList.add('hidden');
+            let maxTyt = 0;
+            let maxAyt = 0;
+
+            denemeler.forEach(d => {
+                const netNum = parseFloat(d.totalNet);
+                if (d.type === 'TYT' && netNum > maxTyt) maxTyt = netNum;
+                if (d.type === 'AYT' && netNum > maxAyt) maxAyt = netNum;
+            });
+
+            document.getElementById('statMaxTyt').textContent = maxTyt.toFixed(2);
+            document.getElementById('statMaxAyt').textContent = maxAyt.toFixed(2);
+
+            tbody.innerHTML = denemeler.map(d => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="p-3 font-semibold text-slate-900">${d.name}</td>
+                    <td class="p-3"><span class="bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded-full font-bold text-[10px]">${d.type}</span></td>
+                    <td class="p-3 text-slate-500">${d.date}</td>
+                    <td class="p-3">${d.tNet}</td>
+                    <td class="p-3">${d.sNet}</td>
+                    <td class="p-3">${d.mNet}</td>
+                    <td class="p-3">${d.fNet}</td>
+                    <td class="p-3 font-bold text-red-600">${d.totalNet}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="deleteDeneme(${d.id})" class="text-slate-400 hover:text-red-600 transition-colors"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // --- POMODORO SİSTEMİ ---
         let pomoTime = 25 * 60;
         let pomoInterval = null;
         let isPomoRunning = false;
@@ -554,25 +732,18 @@
         function pausePomodoro() { clearInterval(pomoInterval); isPomoRunning = false; }
         function resetPomodoro() { clearInterval(pomoInterval); isPomoRunning = false; pomoTime = 25 * 60; updatePomoDisplay(); }
 
-        // --- TÜM DERSLER NET HESAPLAMA MANTIĞI ---
+        // --- NET HESAPLAMA ---
         function calculateAllNets() {
             const subjects = ['tyt-turkce', 'tyt-sosyal', 'tyt-mat', 'tyt-fen', 'ayt-mat', 'ayt-fizik', 'ayt-kimya', 'ayt-biyo', 'ayt-edb', 'ayt-tarih1', 'ayt-cografya1', 'ayt-tarih2'];
-            
-            let totalTyt = 0;
-            let totalAyt = 0;
+            let totalTyt = 0, totalAyt = 0;
 
             subjects.forEach(sub => {
                 const c = parseFloat(document.getElementById(`c-${sub}`).value) || 0;
                 const w = parseFloat(document.getElementById(`y-${sub}`).value) || 0;
                 const net = Math.max(0, c - (w / 4));
-                
                 document.getElementById(`net-${sub}`).textContent = `Net: ${net.toFixed(2)}`;
-
-                if (sub.startsWith('tyt')) {
-                    totalTyt += net;
-                } else if (sub.startsWith('ayt')) {
-                    totalAyt += net;
-                }
+                if (sub.startsWith('tyt')) totalTyt += net;
+                else if (sub.startsWith('ayt')) totalAyt += net;
             });
 
             document.getElementById('totalTytNet').textContent = totalTyt.toFixed(2);
@@ -586,31 +757,11 @@
             const contentBox = document.getElementById('roadmapContent');
 
             resultBox.classList.remove('hidden');
-
-            let planText = "";
-            if (field === 'sayisal') {
-                planText = `
-                    <p><strong>Seçilen Alan:</strong> Sayısal (MF) | <strong>Günlük Çalışma:</strong> ${hours} Saat</p>
-                    <p>• <strong>Türkçe & Matematik:</strong> Güne 30 dk paragraf ve temel matematik problemleriyle başla.</p>
-                    <p>• <strong>Fen Bilimleri (Fizik, Kimya, Biyoloji):</strong> Modern atom teorisi, hareket yasaları ve sistemler çalış.</p>
-                    <p>• <strong>Sosyal Bilimler:</strong> Haftada 2 kez branş denemesi çözerek eksiklerini kapat.</p>
-                `;
-            } else if (field === 'esitagirlik') {
-                planText = `
-                    <p><strong>Seçilen Alan:</strong> Eşit Ağırlık (TM) | <strong>Günlük Çalışma:</strong> ${hours} Saat</p>
-                    <p>• <strong>Matematik & Türkçe:</strong> Temel kavramlar, paragraf ve geometri odaklı ilerle.</p>
-                    <p>• <strong>Edebiyat & Tarih:</strong> İslamiyet öncesi, Divan edebiyatı ve Osmanlı tarihi tekrarları yap.</p>
-                    <p>• <strong>Coğrafya:</strong> Harita çalışmaları ve coğrafi konum pratikleri gerçekleştir.</p>
-                `;
-            } else {
-                planText = `
-                    <p><strong>Seçilen Alan:</strong> Sözel (TS) | <strong>Günlük Çalışma:</strong> ${hours} Saat</p>
-                    <p>• <strong>Edebiyat & Türkçe:</strong> Paragraf ve eser-yazar ezberlerini günlük rutin yap.</p>
-                    <p>• <strong>Tarih & Coğrafya:</strong> Kronoloji ve bölge analizlerine ağırlık ver.</p>
-                    <p>• <strong>Felsefe & Din:</strong> Kavram haritalarıyla soru kaçırma riskini sıfırla.</p>
-                `;
-            }
-            contentBox.innerHTML = planText;
+            contentBox.innerHTML = `
+                <p><strong>Seçilen Alan:</strong> ${field.toUpperCase()} | <strong>Günlük Çalışma:</strong> ${hours} Saat</p>
+                <p>• Güne 30 dk paragraf ve temel matematik problemleriyle başla.</p>
+                <p>• Haftada en az 2 kez detaylı deneme analizi yap.</p>
+            `;
         }
 
         const msuQuestions = [
@@ -626,193 +777,80 @@
                     "E) Deneyimler, kişiye bilginin sağladığından daha fazla fayda verir."
                 ],
                 correct: 0
-            },
-            {
-                id: 2,
-                subject: "2026-MSÜ / Sosyal Bilimler - Tarih (4. Soru)",
-                question: "İsmet Paşa'nın, Mustafa Kemal Paşa'ya \"Adana'yı ve Antep'i kurtarmak esastır. Ondan sonra kurtarılabilecek olanları kurtarıp antlaşmayı yapmamız ve Fransız cephesini boşaltmamız lazım. Oradaki kuvvetlere ihtiyacımız var.\" şeklinde yaptığı açıklamada belirtilen bölgelerle ilgili, 1921 yılında TBMM Hükümeti ile Fransa arasında aşağıdaki antlaşmalardan hangisi imzalanmıştır?",
-                options: [
-                    "A) Moskova Antlaşması",
-                    "B) Brest-Litowsk Antlaşması",
-                    "C) Kars Antlaşması",
-                    "D) Gümrü Antlaşması",
-                    "E) Ankara Antlaşması"
-                ],
-                correct: 4
-            },
-            {
-                id: 3,
-                subject: "2026-MSÜ / Temel Matematik (10. Soru)",
-                question: "A, B, C ve D kümeleri A = {1, 2}, B = {2, 3}, C = {3, 4} ve D = {1, 4} olarak veriliyor. Bu kümelerden farklı ikisi seçilip seçilen bu iki kümenin ya kesişimi ya da birleşimi alınarak yeni bir küme elde ediliyor.<br><br><strong>Buna göre aşağıdaki kümelerden hangisi elde edilen bu yeni küme olamaz?</strong>",
-                options: [
-                    "A) ∅",
-                    "B) {1}",
-                    "C) {1, 2}",
-                    "D) {1, 2, 3}",
-                    "E) {1, 2, 3, 4}"
-                ],
-                correct: 2
-            },
-            {
-                id: 4,
-                subject: "2026-MSÜ / Fen Bilimleri - Kimya (14. Soru)",
-                question: "K, L ve M metallerinin asitlerle tepkimeye girme durumları:<br>• K metali: HCl ile tepkimeye girmez, H₂SO₄ ile tepkimeye girer.<br>• L metali: HCl ve H₂SO₄ ile tepkimeye girmez.<br>• M metali: HCl ve H₂SO₄ ile tepkimeye girer.<br><br><strong>Buna göre K, L ve M metallerinin sınıflandırılması hangisinde doğru verilmiştir?</strong>",
-                options: [
-                    "A) K: Soy metal | L: Soy metal | M: Aktif metal",
-                    "B) K: Yarı soy metal | L: Yarı soy metal | M: Yarı soy metal",
-                    "C) K: Yarı soy metal | L: Soy metal | M: Aktif metal",
-                    "D) K: Aktif metal | L: Yarı soy metal | M: Aktif metal",
-                    "E) K: Aktif metal | L: Soy metal | M: Yarı soy metal"
-                ],
-                correct: 2
             }
         ];
 
         function renderMsuQuestions() {
             const grid = document.getElementById('msuQuestionsGrid');
             grid.innerHTML = msuQuestions.map((q, qIdx) => `
-                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <span class="inline-block bg-red-50 text-red-600 border border-red-200 text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-3">${q.subject}</span>
-                        <p class="text-slate-800 text-xs leading-relaxed mb-4">${q.question}</p>
-                        <div class="space-y-2" id="msu-options-${qIdx}">
-                            ${q.options.map((opt, oIdx) => `
-                                <button onclick="checkMsuAnswer(${qIdx}, ${oIdx}, this)" class="w-full text-left bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 px-3.5 py-2.5 rounded-xl text-xs transition-all">
-                                    ${opt}
-                                </button>
-                            `).join('')}
-                        </div>
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                    <span class="inline-block bg-red-50 text-red-600 border border-red-200 text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-3">${q.subject}</span>
+                    <p class="text-slate-800 text-xs leading-relaxed mb-4">${q.question}</p>
+                    <div class="space-y-2">
+                        ${q.options.map((opt, oIdx) => `
+                            <button onclick="alert('${oIdx === q.correct ? "Doğru!" : "Yanlış!"}')" class="w-full text-left bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 px-3.5 py-2.5 rounded-xl text-xs transition-all">
+                                ${opt}
+                            </button>
+                        `).join('')}
                     </div>
-                    <div id="msu-feedback-${qIdx}" class="hidden mt-4 text-xs font-semibold p-2.5 rounded-xl"></div>
                 </div>
             `).join('');
         }
 
-        function checkMsuAnswer(qIdx, selectedIdx, btnElement) {
-            const q = msuQuestions[qIdx];
-            const feedback = document.getElementById(`msu-feedback-${qIdx}`);
-            const buttons = document.getElementById(`msu-options-${qIdx}`).querySelectorAll('button');
-            
-            buttons.forEach((b, i) => {
-                b.disabled = true;
-                if (i === q.correct) {
-                    b.className = "w-full text-left bg-emerald-50 border border-emerald-500 text-emerald-800 font-semibold px-3.5 py-2.5 rounded-xl text-xs";
-                } else if (i === selectedIdx && selectedIdx !== q.correct) {
-                    b.className = "w-full text-left bg-red-50 border border-red-500 text-red-800 px-3.5 py-2.5 rounded-xl text-xs";
-                }
-            });
-
-            feedback.classList.remove('hidden');
-            if (selectedIdx === q.correct) {
-                feedback.textContent = "Doğru cevap! Tebrikler.";
-                feedback.className = "mt-4 text-xs font-semibold p-2.5 rounded-xl bg-emerald-100 text-emerald-800";
-            } else {
-                feedback.textContent = `Yanlış cevap. Doğru seçenek: ${q.options[q.correct].substring(0, 2)}`;
-                feedback.className = "mt-4 text-xs font-semibold p-2.5 rounded-xl bg-red-100 text-red-800";
-            }
-        }
-
         const chemistryCards = [
             { title: "Kimya Bilimi ve Simya", category: "TYT", desc: "Simyadan kimyaya geçiş, kimya disiplinleri ve güvenlik kuralları.", tag: "tyt" },
-            { title: "Atom ve Periyodik Sistem", category: "TYT", desc: "Atom modelleri, periyodik özellikler ve katman elektron dağılımı.", tag: "tyt" },
-            { title: "Modern Atom Teorisi", category: "AYT", desc: "Kuantum sayıları, orbital türleri ve periyodik sistemde değişen özellikler.", tag: "ayt" },
-            { title: "Kimyasal Denge", category: "AYT", desc: "Denge sabiti (Kc, Kp), Le Chatelier prensibi ve sulu çözeltilerde denge.", tag: "ayt" }
+            { title: "Modern Atom Teorisi", category: "AYT", desc: "Kuantum sayıları, orbital türleri ve periyodik sistemde değişen özellikler.", tag: "ayt" }
         ];
 
         function renderChemistryCards(filter) {
             const grid = document.getElementById('chemCardsGrid');
             const filtered = filter === 'all' ? chemistryCards : chemistryCards.filter(c => c.tag === filter);
             grid.innerHTML = filtered.map(card => `
-                <div class="bg-white border border-slate-200 hover:border-red-500/50 rounded-2xl p-6 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between">
-                    <div>
-                        <span class="inline-block bg-red-50 text-red-600 border border-red-200 text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-3">${card.category} Kimya</span>
-                        <h3 class="heading-font text-xl font-bold text-slate-900 mb-2">${card.title}</h3>
-                        <p class="text-slate-600 text-xs leading-relaxed">${card.desc}</p>
-                    </div>
-                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="text-[11px] text-red-600 font-medium">Çalışma Kartı</span>
-                        <button onclick="alert('${card.title} seçildi!')" class="bg-red-600 hover:bg-red-500 text-white text-xs px-3.5 py-1.5 rounded-xl transition-colors font-semibold">Çalış</button>
-                    </div>
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                    <span class="inline-block bg-red-50 text-red-600 text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-3">${card.category} Kimya</span>
+                    <h3 class="heading-font text-xl font-bold text-slate-900 mb-2">${card.title}</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">${card.desc}</p>
                 </div>
             `).join('');
         }
+        function filterChemistry(tag) { renderChemistryCards(tag); }
 
-        function filterChemistry(tag) {
-            document.querySelectorAll('.chem-filter-btn').forEach(btn => btn.className = "chem-filter-btn bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-300");
-            event.target.className = "chem-filter-btn active bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors shadow-sm";
-            renderChemistryCards(tag);
-        }
-
-        const literatureCards = [
-            { title: "İslamiyet Öncesi Türk Edebiyatı", category: "Şiir & Dönem", desc: "Koşuk, sagu, sav, destanlar ve Orhun Kitabeleri.", tag: "siir" },
-            { title: "Divan Edebiyatı Nazım Şekilleri", category: "Şiir & Dönem", desc: "Gazel, kaside, mesnevi, rubai ve divan sanatçıları.", tag: "siir" },
-            { title: "Tanzimat ve Servet-i Fünun", category: "Yazarlar & Eserler", desc: "İlk romanlar, Batılılaşma süreci ve dönemin usta kalemleri.", tag: "roman" },
-            { title: "Millî Edebiyat ve Cumhuriyet Dönemi", category: "Yazarlar & Eserler", desc: "Beş Hececiler, Garip akımı, İkinci Yeni ve roman özetleri.", tag: "roman" }
-        ];
-
+        const literatureCards = [{ title: "İslamiyet Öncesi Türk Edebiyatı", category: "Şiir & Dönem", desc: "Koşuk, sagu, sav, destanlar ve Orhun Kitabeleri.", tag: "siir" }];
         function renderLiteratureCards(filter) {
-            const grid = document.getElementById('litCardsGrid');
-            const filtered = filter === 'all' ? literatureCards : literatureCards.filter(c => c.tag === filter);
-            grid.innerHTML = filtered.map(card => `
-                <div class="bg-white border border-slate-200 hover:border-red-500/50 rounded-2xl p-6 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between">
-                    <div>
-                        <span class="inline-block bg-red-50 text-red-600 border border-red-200 text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-3">${card.category}</span>
-                        <h3 class="heading-font text-xl font-bold text-slate-900 mb-2">${card.title}</h3>
-                        <p class="text-slate-600 text-xs leading-relaxed">${card.desc}</p>
-                    </div>
-                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="text-[11px] text-red-600 font-medium">Edebiyat Kartı</span>
-                        <button onclick="alert('${card.title} seçildi!')" class="bg-red-600 hover:bg-red-500 text-white text-xs px-3.5 py-1.5 rounded-xl transition-colors font-semibold">Çalış</button>
-                    </div>
+            document.getElementById('litCardsGrid').innerHTML = literatureCards.map(c => `
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                    <span class="inline-block bg-red-50 text-red-600 text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-3">${c.category}</span>
+                    <h3 class="heading-font text-xl font-bold text-slate-900 mb-2">${c.title}</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">${c.desc}</p>
                 </div>
             `).join('');
         }
+        function filterLiterature(tag) { renderLiteratureCards(tag); }
 
-        function filterLiterature(tag) {
-            document.querySelectorAll('.lit-filter-btn').forEach(btn => btn.className = "lit-filter-btn bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-300");
-            event.target.className = "lit-filter-btn active bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors shadow-sm";
-            renderLiteratureCards(tag);
-        }
-
-        const historyCards = [
-            { title: "İslamiyet Öncesi Türk Tarihi", category: "TYT Tarih", desc: "Orta Asya Türk devletleri, kültür ve medeniyet özellikleri.", tag: "tyt" },
-            { title: "Osmanlı Devleti Kuruluş ve Yükselme", category: "AYT Tarih", desc: "Beylikten cihan imparatorluğuna geçiş ve fetihler politikası.", tag: "ayt" },
-            { title: "Millî Mücadele Dönemi", category: "AYT Tarih", desc: "Cepheler, antlaşmalar ve Kurtuluş Savaşı'nın diplomatik aşamaları.", tag: "ayt" },
-            { title: "İlk ve Orta Çağlarda Türk Dünyası", category: "TYT Tarih", desc: "Türklerin göçebe yaşam tarzı ve komşu devletlerle ilişkileri.", tag: "tyt" }
-        ];
-
+        const historyCards = [{ title: "İslamiyet Öncesi Türk Tarihi", category: "TYT Tarih", desc: "Orta Asya Türk devletleri, kültür ve medeniyet özellikleri.", tag: "tyt" }];
         function renderHistoryCards(filter) {
-            const grid = document.getElementById('histCardsGrid');
-            const filtered = filter === 'all' ? historyCards : historyCards.filter(c => c.tag === filter);
-            grid.innerHTML = filtered.map(card => `
-                <div class="bg-white border border-slate-200 hover:border-red-500/50 rounded-2xl p-6 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between">
-                    <div>
-                        <span class="inline-block bg-red-50 text-red-600 border border-red-200 text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-3">${card.category}</span>
-                        <h3 class="heading-font text-xl font-bold text-slate-900 mb-2">${card.title}</h3>
-                        <p class="text-slate-600 text-xs leading-relaxed">${card.desc}</p>
-                    </div>
-                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="text-[11px] text-red-600 font-medium">Tarih Kartı</span>
-                        <button onclick="alert('${card.title} seçildi!')" class="bg-red-600 hover:bg-red-500 text-white text-xs px-3.5 py-1.5 rounded-xl transition-colors font-semibold">Çalış</button>
-                    </div>
+            document.getElementById('histCardsGrid').innerHTML = historyCards.map(c => `
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                    <span class="inline-block bg-red-50 text-red-600 text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-3">${c.category}</span>
+                    <h3 class="heading-font text-xl font-bold text-slate-900 mb-2">${c.title}</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">${c.desc}</p>
                 </div>
             `).join('');
         }
-
-        function filterHistory(tag) {
-            document.querySelectorAll('.hist-filter-btn').forEach(btn => btn.className = "hist-filter-btn bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-slate-300");
-            event.target.className = "hist-filter-btn active bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors shadow-sm";
-            renderHistoryCards(tag);
-        }
+        function filterHistory(tag) { renderHistoryCards(tag); }
 
         function switchYksTab(tab) {
-            const views = ['chemistryView', 'literatureView', 'historyView', 'msuView', 'roadmapView', 'pomodoroView', 'calculatorView'];
-            const buttons = ['tabChemistry', 'tabLiterature', 'tabHistory', 'tabMsu', 'tabRoadmap', 'tabPomodoro', 'tabCalculator'];
+            const views = ['denemeTrackerView', 'chemistryView', 'literatureView', 'historyView', 'msuView', 'roadmapView', 'pomodoroView', 'calculatorView'];
+            const buttons = ['tabDenemeTracker', 'tabChemistry', 'tabLiterature', 'tabHistory', 'tabMsu', 'tabRoadmap', 'tabPomodoro', 'tabCalculator'];
 
             views.forEach(v => document.getElementById(v).classList.add('hidden'));
-            buttons.forEach(b => document.getElementById(b).className = "px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1");
+            buttons.forEach(b => {
+                const el = document.getElementById(b);
+                if(el) el.className = "px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1";
+            });
 
             const activeBtnMap = {
+                denemeTracker: ['denemeTrackerView', 'tabDenemeTracker'],
                 chemistry: ['chemistryView', 'tabChemistry'],
                 literature: ['literatureView', 'tabLiterature'],
                 history: ['historyView', 'tabHistory'],
@@ -824,7 +862,8 @@
 
             if (activeBtnMap[tab]) {
                 document.getElementById(activeBtnMap[tab][0]).classList.remove('hidden');
-                document.getElementById(activeBtnMap[tab][1]).className = "px-3 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-md flex items-center gap-1";
+                const btn = document.getElementById(activeBtnMap[tab][1]);
+                if(btn) btn.className = "px-3 py-2 rounded-xl text-xs font-semibold bg-red-600 text-white transition-all shadow-md flex items-center gap-1";
             }
         }
 
@@ -854,6 +893,7 @@
         function toggleModal(id) { document.getElementById(id).classList.toggle('hidden'); }
 
         window.onload = () => {
+            renderDenemeler();
             renderChemistryCards('all');
             renderLiteratureCards('all');
             renderHistoryCards('all');
