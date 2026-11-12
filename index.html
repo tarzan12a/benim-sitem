@@ -132,9 +132,6 @@
                 <div class="flex bg-slate-900 p-1 rounded-xl border border-slate-800">
                     <button onclick="switchEngTab('flashcards')" id="tabFlashcards" class="px-4 py-2 rounded-lg text-xs font-semibold bg-purple-600 text-white transition-all">Kelime Kartları</button>
                     <button onclick="switchEngTab('quiz')" id="tabQuiz" class="px-4 py-2 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all">Mini Quiz</button>
-                    <button onclick="startAiEnglishPractice()" class="px-4 py-2 rounded-lg text-xs font-semibold text-emerald-400 hover:bg-slate-800 transition-all flex items-center gap-1.5">
-                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> AI Pratik
-                    </button>
                 </div>
             </div>
         </div>
@@ -362,21 +359,95 @@
             }
         ];
 
-        // --- İNGİLİZCE AKADEMİ VERİLERİ (A1 - C2) ---
+        // --- İNGİLİZCE AKADEMİ VERİLERİ (Görsellerdeki Kelimeler Eklendi) ---
         const englishWords = [
+            // Yiyecekler (Food)
+            { en: "Watermelon", tr: "Karpuz", level: "A1", example: "We eat cold watermelon in summer." },
+            { en: "Milk", tr: "Süt", level: "A1", example: "I drink a glass of milk every morning." },
+            { en: "Chicken", tr: "Tavuk", level: "A1", example: "She likes eating chicken for dinner." },
+            { en: "Cucumber", tr: "Salatalık", level: "A1", example: "There are fresh cucumbers on the table." },
+            { en: "Olive", tr: "Zeytin", level: "A1", example: "We have black and green olives for breakfast." },
+            { en: "Cake", tr: "Kek / Pasta", level: "A1", example: "It is a delicious chocolate cake." },
+            { en: "Coffee", tr: "Kahve", level: "A1", example: "My dad drinks coffee in the afternoon." },
+            { en: "Grapes", tr: "Üzüm", level: "A1", example: "Grapes are sweet and healthy." },
+            { en: "Jam", tr: "Reçel", level: "A1", example: "Strawberry jam is my favorite." },
+            { en: "Meat", tr: "Et", level: "A1", example: "The meat is well-cooked." },
+            { en: "Pear", tr: "Armut", level: "A1", example: "A pear is a juicy fruit." },
+            { en: "Cheese", tr: "Peynir", level: "A1", example: "Cheese is made from milk." },
+            { en: "Lemon", tr: "Limon", level: "A1", example: "The lemon is very sour." },
+            { en: "Cherry", tr: "Kiraz", level: "A1", example: "Red cherries look beautiful." },
+            { en: "Strawberry", tr: "Çilek", level: "A1", example: "Strawberries grow in the garden." },
+            { en: "Peas", tr: "Bezelye", level: "A2", example: "Green peas are healthy vegetables." },
+            { en: "Pepper", tr: "Biber", level: "A1", example: "The red pepper is spicy." },
+            { en: "Lettuce", tr: "Marul", level: "A1", example: "We need fresh lettuce for the salad." },
+            { en: "Bananas", tr: "Muzlar", level: "A1", example: "Monkeys love eating bananas." },
+            { en: "Ice cream", tr: "Dondurma", level: "A1", example: "Children love eating ice cream in summer." },
+            { en: "Butter", tr: "Tereyağı", level: "A1", example: "Spread some butter on the bread." },
+            { en: "Pineapple", tr: "Ananas", level: "A2", example: "Pineapple is a tropical fruit." },
+            { en: "Honey", tr: "Bal", level: "A1", example: "Bees make sweet honey." },
+            { en: "Tea", tr: "Çay", level: "A1", example: "Turkish people drink a lot of tea." },
+            { en: "Fruit juice", tr: "Meyve suyu", level: "A1", example: "Orange fruit juice is refreshing." },
+            { en: "Rice", tr: "Pirinç / Pilav", level: "A1", example: "We eat rice with chicken." },
+            { en: "Fish", tr: "Balık", level: "A1", example: "Fish live in the sea." },
+            { en: "Carrot", tr: "Havuç", level: "A1", example: "Rabbits like eating carrots." },
+            { en: "French fries", tr: "Patates kızartması", level: "A1", example: "Children love French fries." },
+            { en: "Bread", tr: "Ekmek", level: "A1", example: "We buy fresh bread every morning." },
+            { en: "Parsley", tr: "Maydanoz", level: "A2", example: "Add some chopped parsley to the soup." },
+            { en: "Cabbage", tr: "Lahana", level: "A2", example: "Cabbage is good for salads." },
+            { en: "Egg", tr: "Yumurta", level: "A1", example: "I eat a boiled egg for breakfast." },
+            { en: "Eggplant", tr: "Patlıcan", level: "A2", example: "Eggplant is a purple vegetable." },
+            { en: "Peach", tr: "Şeftali", level: "A1", example: "Peaches are sweet summer fruits." },
             { en: "Apple", tr: "Elma", level: "A1", example: "I eat an apple every day." },
-            { en: "Travel", tr: "Seyahat etmek", level: "A2", example: "She likes to travel around the world." },
-            { en: "Heritage", tr: "Kültürel Miras", level: "B1", example: "We must protect our historical heritage." },
-            { en: "Nostalgia", tr: "Geçmişe Özlem / Nostalji", level: "B2", example: "Playing old games gives me nostalgia." },
-            { en: "Breakthrough", tr: "Çığır Açan Buluş", level: "C1", example: "The internet was a major technological breakthrough." },
-            { en: "Proficiency", tr: "Ustalık / Yetkinlik", level: "C2", example: "C2 level requires language proficiency." }
+            { en: "Lemonade", tr: "Limonata", level: "A1", example: "Cold lemonade is great on hot days." },
+
+            // Mutfak Eşyaları (Kitchen Objects)
+            { en: "Spoon", tr: "Kaşık", level: "A1", example: "Eat your soup with a spoon." },
+            { en: "Cooker", tr: "Tencere / Ocak", level: "A1", example: "The soup is cooking on the cooker." },
+            { en: "Knife", tr: "Bıçak", level: "A1", example: "Be careful with the sharp knife." },
+            { en: "Plate", tr: "Tabak", level: "A1", example: "Put the food on the plate." },
+            { en: "Sauce pan", tr: "Sos tavası", level: "A2", example: "Heat the sauce in the sauce pan." },
+            { en: "Bowl", tr: "Kâse", level: "A1", example: "Pour the cereal into a bowl." },
+            { en: "Napkin", tr: "Peçete", level: "A1", example: "Use a napkin to clean your hands." },
+            { en: "Frying pan", tr: "Kızartma tavası", level: "A1", example: "Fry the eggs in the frying pan." },
+            { en: "Teapot", tr: "Çaydanlık", level: "A1", example: "The tea is ready in the teapot." },
+            { en: "Oven", tr: "Fırın", level: "A1", example: "Bake the cake in the oven." },
+            { en: "Grill", tr: "Izgara", level: "A2", example: "We are making chicken on the grill." },
+            { en: "Tap", tr: "Musluk", level: "A1", example: "Wash your hands under the tap." },
+            { en: "Drawer", tr: "Çekmece", level: "A1", example: "Put the spoons in the kitchen drawer." },
+            { en: "Oven glove", tr: "Fırın eldiveni", level: "A2", example: "Wear oven gloves to take the tray out." },
+            { en: "Chopping board", tr: "Doğrama tahtası", level: "A2", example: "Cut the vegetables on the chopping board." },
+            { en: "Grater", tr: "Rende", level: "A2", example: "Grate the cheese using a grater." },
+            { en: "Kettle", tr: "Su ısıtıcısı (Çaydanlık)", level: "A1", example: "Boil some water in the kettle." },
+            { en: "Cup", tr: "Fincan", level: "A1", example: "Drink your coffee from a cup." },
+
+            // Ev Eşyaları (Household Items)
+            { en: "Bed", tr: "Yatak", level: "A1", example: "Make your bed in the morning." },
+            { en: "Bookcase", tr: "Kitaplık", level: "A1", example: "Put your books on the bookcase." },
+            { en: "Chair", tr: "Sandalye", level: "A1", example: "Sit down on the chair." },
+            { en: "Lamp", tr: "Lamba", level: "A1", example: "Turn on the lamp to read a book." },
+            { en: "Microwave oven", tr: "Mikrodalga fırın", level: "A1", example: "Heat your meal in the microwave oven." },
+            { en: "Armchair", tr: "Koltuk", level: "A1", example: "Relax in the comfortable armchair." },
+            { en: "Bathtub", tr: "Küvet", level: "A1", example: "Take a warm bath in the bathtub." },
+            { en: "Mirror", tr: "Ayna", level: "A1", example: "Look at yourself in the mirror." },
+            { en: "Towel", tr: "Havlu", level: "A1", example: "Dry your hands with a clean towel." },
+            { en: "Shower", tr: "Duş", level: "A1", example: "Take a quick shower." },
+            { en: "Refrigerator", tr: "Buzdolabı", level: "A1", example: "Put the milk in the refrigerator." },
+            { en: "Sink", tr: "Lavabo", level: "A1", example: "Wash your face in the bathroom sink." },
+            { en: "Carpet", tr: "Halı", level: "A1", example: "The soft carpet is on the floor." },
+            { en: "Curtain", tr: "Perde", level: "A1", example: "Close the curtains at night." },
+            { en: "Sofa", tr: "Kanepe / Koltuk", level: "A1", example: "We sit on the sofa and watch TV." },
+            { en: "Pillow", tr: "Yastık", level: "A1", example: "Put your head on the soft pillow." },
+            { en: "Wardrobe", tr: "Gardırop", level: "A1", example: "Hang your clothes in the wardrobe." },
+            { en: "Blanket", tr: "Battaniye", level: "A1", example: "Cover yourself with a warm blanket." },
+            { en: "Dishwasher", tr: "Bulaşık makinesi", level: "A1", example: "Put the dirty plates in the dishwasher." },
+            { en: "Hairdryer", tr: "Saç kurutma makinesi", level: "A1", example: "Dry your hair with a hairdryer." }
         ];
 
         const quizQuestions = [
-            { q: "'Heritage' kelimesinin Türkçe karşılığı nedir?", options: ["Gelecek", "Kültürel Miras", "Bilim Kurgu", "Macera"], answer: 1, level: "B1" },
-            { q: "Boşluğu doldurun: 'I _____ playing retro games yesterday.'", options: ["was", "were", "am", "will"], answer: 0, level: "A2" },
-            { q: "'Breakthrough' ne anlama gelir?", options: ["Kırılmak", "Çığır açan buluş", "Geri dönmek", "Unutmak"], answer: 1, level: "C1" },
-            { q: "'Proficiency' kelimesi hangi anlama gelir?", options: ["Ustalık / Yetkinlik", "Başlangıç", "Zayıflık", "Tesadüf"], answer: 0, level: "C2" }
+            { q: "'Refrigerator' kelimesinin Türkçe karşılığı nedir?", options: ["Buzdolabı", "Çamaşır makinesi", "Fırın", "Bulaşık makinesi"], answer: 0, level: "A1" },
+            { q: "Boşluğu doldurun: 'Eat your soup with a _____.'", options: ["fork", "knife", "spoon", "plate"], answer: 2, level: "A1" },
+            { q: "'Chopping board' ne anlama gelir?", options: ["Doğrama tahtası", "Rende", "Fırın eldiveni", "Çatallık"], answer: 0, level: "A2" },
+            { q: "'Watermelon' kelimesi hangi anlama gelir?", options: ["Kavun", "Karpuz", "Çilek", "Elma"], answer: 0, level: "A1" }
         ];
 
         let currentQuizIndex = 0;
@@ -540,10 +611,6 @@
             }, 1500);
         }
 
-        function startAiEnglishPractice() {
-            alert("Sağ alttaki asistanımız üzerinden İngilizce pratik yapmaya başlayabilirsiniz!");
-        }
-
         function filterEra(era) {
             document.querySelectorAll('.era-btn').forEach(btn => {
                 btn.classList.remove('bg-purple-600', 'text-white');
@@ -667,11 +734,5 @@
             lucide.createIcons();
         };
     </script>
-
-    <!-- TYPEBOT KESİN ÇÖZÜM IFRAME BALONU (Sağ altta sabit olarak görünür) -->
-    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; width: 400px; height: 600px; max-width: 90vw; max-height: 80vh; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
-        <iframe src="https://typebot.co/my-typebot-6vlntn1" style="width: 100%; height: 100%; border: none;"></iframe>
-    </div>
-
 </body>
 </html>
