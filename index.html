@@ -93,7 +93,7 @@
                 </h1>
                 
                 <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                    Türkçe, Matematik, Sosyal ve Fen bilimleri tüm dersler çıkmış sorular, konu özetleri, yol haritası ve pomodoro sistemi ile hazırlığını kusursuzlaştır.
+                    Türkçe, Matematik, Sosyal ve Fen bilimleri tüm dersler çıkmış sorular, konu özetleri, yol haritası ve gelişmiş net hesaplayıcı ile hazırlığını kusursuzlaştır.
                 </p>
 
                 <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
@@ -101,9 +101,9 @@
                         <i data-lucide="file-text" class="w-4 h-4"></i>
                         <span>MSÜ Çıkmış Sorular</span>
                     </a>
-                    <a href="#yksHub" onclick="switchYksTab('roadmap')" class="flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold px-6 py-3.5 rounded-2xl text-sm transition-all shadow-sm">
-                        <i data-lucide="map" class="w-4 h-4 text-red-600"></i>
-                        <span>Yol Haritası Oluştur</span>
+                    <a href="#yksHub" onclick="switchYksTab('calculator')" class="flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold px-6 py-3.5 rounded-2xl text-sm transition-all shadow-sm">
+                        <i data-lucide="calculator" class="w-4 h-4 text-red-600"></i>
+                        <span>Tüm Dersler Net Hesapla</span>
                     </a>
                 </div>
             </div>
@@ -277,34 +277,137 @@
             </div>
         </div>
 
-        <!-- 7. NET HESAPLAYICI -->
-        <div id="calculatorView" class="hidden max-w-2xl mx-auto bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl">
-            <h3 class="heading-font text-2xl font-bold text-slate-900 mb-2">YKS Net ve Puan Hesaplayıcı</h3>
-            <p class="text-slate-600 text-xs mb-6">Doğru ve yanlış sayılarını girerek netlerini anında hesapla (4 yanlış 1 doğruyu götürür).</p>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                    <label class="block text-xs font-semibold text-red-600 mb-2">TYT Kimya (5 Soru)</label>
-                    <div class="flex gap-2">
-                        <input type="number" id="tytCorrect" placeholder="Doğru" min="0" max="5" oninput="calculateNet()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
-                        <input type="number" id="tytWrong" placeholder="Yanlış" min="0" max="5" oninput="calculateNet()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
-                    </div>
-                    <div class="mt-2 text-xs text-slate-500">Net: <span id="tytNetResult" class="text-slate-900 font-bold">0.00</span></div>
-                </div>
+        <!-- 7. TÜM DERSLER NET VE PUAN HESAPLAYICI -->
+        <div id="calculatorView" class="hidden max-w-4xl mx-auto bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl space-y-8">
+            <div class="text-center max-w-xl mx-auto">
+                <h3 class="heading-font text-2xl sm:text-3xl font-bold text-slate-900 mb-2">YKS Tüm Dersler Net Hesaplayıcı</h3>
+                <p class="text-slate-600 text-xs">TYT ve AYT dersleri için doğru ve yanlış sayılarınızı girin (4 yanlış 1 doğruyu götürür).</p>
+            </div>
 
-                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                    <label class="block text-xs font-semibold text-red-600 mb-2">AYT Kimya (13 Soru)</label>
-                    <div class="flex gap-2">
-                        <input type="number" id="aytCorrect" placeholder="Doğru" min="0" max="13" oninput="calculateNet()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
-                        <input type="number" id="aytWrong" placeholder="Yanlış" min="0" max="13" oninput="calculateNet()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+            <!-- TYT BÖLÜMÜ -->
+            <div class="space-y-4">
+                <h4 class="heading-font font-bold text-red-600 text-lg border-b border-slate-200 pb-2 flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-5 h-5"></i> TYT Testleri (Temel Yeterlilik Testi)
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Türkçe -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Türkçe (40 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-tyt-turkce">Net: 0.00</span></div>
+                        <div class="flex gap-2">
+                            <input type="number" id="c-tyt-turkce" placeholder="Doğru" min="0" max="40" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-tyt-turkce" placeholder="Yanlış" min="0" max="40" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                        </div>
                     </div>
-                    <div class="mt-2 text-xs text-slate-500">Net: <span id="aytNetResult" class="text-slate-900 font-bold">0.00</span></div>
+                    <!-- Sosyal Bilimler -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Sosyal Bilimler (20 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-tyt-sosyal">Net: 0.00</span></div>
+                        <div class="flex gap-2">
+                            <input type="number" id="c-tyt-sosyal" placeholder="Doğru" min="0" max="20" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-tyt-sosyal" placeholder="Yanlış" min="0" max="20" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+                    <!-- Temel Matematik -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Temel Matematik (40 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-tyt-mat">Net: 0.00</span></div>
+                        <div class="flex gap-2">
+                            <input type="number" id="c-tyt-mat" placeholder="Doğru" min="0" max="40" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-tyt-mat" placeholder="Yanlış" min="0" max="40" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+                    <!-- Fen Bilimleri -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Fen Bilimleri (20 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-tyt-fen">Net: 0.00</span></div>
+                        <div class="flex gap-2">
+                            <input type="number" id="c-tyt-fen" placeholder="Doğru" min="0" max="20" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-tyt-fen" placeholder="Yanlış" min="0" max="20" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="bg-red-50 border border-red-200 p-4 rounded-2xl text-center">
-                <span class="text-xs text-red-600 font-semibold block mb-1">Toplam Kimya Netiniz</span>
-                <span id="totalChemNet" class="text-3xl font-bold heading-font text-slate-900">0.00</span>
+            <!-- AYT BÖLÜMÜ -->
+            <div class="space-y-4">
+                <h4 class="heading-font font-bold text-red-600 text-lg border-b border-slate-200 pb-2 flex items-center gap-2">
+                    <i data-lucide="award" class="w-5 h-5"></i> AYT Testleri (Alan Yeterlilik Testleri)
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Matematik -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">AYT Matematik (40 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-mat">Net: 0.00</span></div>
+                        <div class="flex gap-2">
+                            <input type="number" id="c-ayt-mat" placeholder="Doğru" min="0" max="40" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-ayt-mat" placeholder="Yanlış" min="0" max="40" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+                    <!-- Fizik -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">AYT Fizik (14 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-fizik">Net: 0.00</span></div>
+                        <div class="flex gap-2">
+                            <input type="number" id="c-ayt-fizik" placeholder="Doğru" min="0" max="14" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-ayt-fizik" placeholder="Yanlış" min="0" max="14" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+                    <!-- Kimya -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">AYT Kimya (13 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-kimya">Net: 0.00</span></div>
+                        <div class="flex gap-2">
+                            <input type="number" id="c-ayt-kimya" placeholder="Doğru" min="0" max="13" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-ayt-kimya" placeholder="Yanlış" min="0" max="13" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+                    <!-- Biyoloji -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">AYT Biyoloji (13 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-biyo">Net: 0.00</span></div>
+                        <div class="flex gap-2">
+                            <input type="number" id="c-ayt-biyo" placeholder="Doğru" min="0" max="13" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-ayt-biyo" placeholder="Yanlış" min="0" max="13" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+                    <!-- Türk Dili ve Edebiyatı -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Türk Dili ve Edebiyatı (24 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-edb">Net: 0.00</span></div>
+                        <div class="flex gap-2">
+                            <input type="number" id="c-ayt-edb" placeholder="Doğru" min="0" max="24" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-ayt-edb" placeholder="Yanlış" min="0" max="24" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+                    <!-- Tarih-1 -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Tarih-1 (10 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-tarih1">Net: 0.00</span></div>
+                        <div class="flex gap-2">
+                            <input type="number" id="c-ayt-tarih1" placeholder="Doğru" min="0" max="10" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-ayt-tarih1" placeholder="Yanlış" min="0" max="10" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+                    <!-- Coğrafya-1 -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Coğrafya-1 (6 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-cografya1">Net: 0.00</span></div>
+                        <div class="flex gap-2">
+                            <input type="number" id="c-ayt-cografya1" placeholder="Doğru" min="0" max="6" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-ayt-cografya1" placeholder="Yanlış" min="0" max="6" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+                    <!-- Tarih-2 -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-800">Tarih-2 (11 Soru)</span><span class="text-[11px] text-red-600 font-bold" id="net-ayt-tarih2">Net: 0.00</span></div>
+                        <div class="flex gap-2">
+                            <input type="number" id="c-ayt-tarih2" placeholder="Doğru" min="0" max="11" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                            <input type="number" id="y-ayt-tarih2" placeholder="Yanlış" min="0" max="11" oninput="calculateAllNets()" class="w-1/2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SONUÇ ÖZET KUTUSU -->
+            <div class="bg-red-50 border border-red-200 p-6 rounded-2xl grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+                <div>
+                    <span class="text-xs text-red-600 font-semibold block mb-1">Toplam TYT Neti</span>
+                    <span id="totalTytNet" class="text-3xl font-bold heading-font text-slate-900">0.00</span>
+                </div>
+                <div>
+                    <span class="text-xs text-red-600 font-semibold block mb-1">Toplam AYT Neti</span>
+                    <span id="totalAytNet" class="text-3xl font-bold heading-font text-slate-900">0.00</span>
+                </div>
             </div>
         </div>
     </section>
@@ -451,18 +554,29 @@
         function pausePomodoro() { clearInterval(pomoInterval); isPomoRunning = false; }
         function resetPomodoro() { clearInterval(pomoInterval); isPomoRunning = false; pomoTime = 25 * 60; updatePomoDisplay(); }
 
-        function calculateNet() {
-            const tytC = parseFloat(document.getElementById('tytCorrect').value) || 0;
-            const tytW = parseFloat(document.getElementById('tytWrong').value) || 0;
-            const aytC = parseFloat(document.getElementById('aytCorrect').value) || 0;
-            const aytW = parseFloat(document.getElementById('aytWrong').value) || 0;
+        // --- TÜM DERSLER NET HESAPLAMA MANTIĞI ---
+        function calculateAllNets() {
+            const subjects = ['tyt-turkce', 'tyt-sosyal', 'tyt-mat', 'tyt-fen', 'ayt-mat', 'ayt-fizik', 'ayt-kimya', 'ayt-biyo', 'ayt-edb', 'ayt-tarih1', 'ayt-cografya1', 'ayt-tarih2'];
+            
+            let totalTyt = 0;
+            let totalAyt = 0;
 
-            const tytNet = Math.max(0, tytC - (tytW / 4));
-            const aytNet = Math.max(0, aytC - (aytW / 4));
+            subjects.forEach(sub => {
+                const c = parseFloat(document.getElementById(`c-${sub}`).value) || 0;
+                const w = parseFloat(document.getElementById(`y-${sub}`).value) || 0;
+                const net = Math.max(0, c - (w / 4));
+                
+                document.getElementById(`net-${sub}`).textContent = `Net: ${net.toFixed(2)}`;
 
-            document.getElementById('tytNetResult').textContent = tytNet.toFixed(2);
-            document.getElementById('aytNetResult').textContent = aytNet.toFixed(2);
-            document.getElementById('totalChemNet').textContent = (tytNet + aytNet).toFixed(2);
+                if (sub.startsWith('tyt')) {
+                    totalTyt += net;
+                } else if (sub.startsWith('ayt')) {
+                    totalAyt += net;
+                }
+            });
+
+            document.getElementById('totalTytNet').textContent = totalTyt.toFixed(2);
+            document.getElementById('totalAytNet').textContent = totalAyt.toFixed(2);
         }
 
         function generateRoadmap() {
