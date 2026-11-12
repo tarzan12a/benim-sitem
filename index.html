@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaman Tüneli - Pro YKS & MSÜ Akademi Portalı</title>
+    <title>Zaman Tüneli - Ultra Modern Akademi Portalı</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -27,10 +27,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .heading-font { font-family: 'Outfit', sans-serif; }
-        .glass-panel { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); }
-        .dark .glass-panel { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(20px); }
-        .pro-shadow { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); }
-        .dark .pro-shadow { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); }
+        .glass-panel { background: rgba(255, 255, 255, 0.82); backdrop-filter: blur(24px); }
+        .dark .glass-panel { background: rgba(15, 23, 42, 0.82); backdrop-filter: blur(24px); }
+        .pro-shadow { box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07); }
+        .dark .pro-shadow { box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">
@@ -97,11 +97,13 @@
         
         <!-- ÜST SEKME MENÜSÜ -->
         <div class="flex flex-wrap bg-slate-200/60 dark:bg-slate-900 p-2 rounded-2xl gap-1.5 border border-slate-200 dark:border-slate-800">
-            <button onclick="switchTab('denemeTracker')" id="tabDenemeTracker" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-red-600 text-white shadow-md transition-all flex items-center gap-2"><i data-lucide="line-chart" class="w-4 h-4"></i> Deneme & Grafik Paneli</button>
-            <button onclick="switchTab('calculator')" id="tabCalculator" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="calculator" class="w-4 h-4"></i> Puan Simülatörü</button>
-            <button onclick="switchTab('notes')" id="tabNotes" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="book-open" class="w-4 h-4"></i> Çalışma Günlüğü</button>
-            <button onclick="switchTab('pomodoro')" id="tabPomodoro" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> Pomodoro</button>
-            <button onclick="switchTab('settings')" id="tabSettings" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="settings" class="w-4 h-4"></i> Ayarlar</button>
+            <button onclick="switchTab('denemeTracker')" id="tabDenemeTracker" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-red-600 text-white shadow-md transition-all flex items-center gap-2"><i data-lucide="line-chart" class="w-4 h-4"></i> Deneme & Grafik</button>
+            <button onclick="switchTab('calculator')" id="tabCalculator" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="calculator" class="w-4 h-4"></i> Puan Simülatörü</button>
+            <button onclick="switchTab('program')" id="tabProgram" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i> Haftalık Program</button>
+            <button onclick="switchTab('topics')" id="tabTopics" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="check-square" class="w-4 h-4"></i> Eksik Konular</button>
+            <button onclick="switchTab('notes')" id="tabNotes" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="book-open" class="w-4 h-4"></i> Günlük Not</button>
+            <button onclick="switchTab('pomodoro')" id="tabPomodoro" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> Pomodoro</button>
+            <button onclick="switchTab('settings')" id="tabSettings" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"><i data-lucide="settings" class="w-4 h-4"></i> Ayarlar</button>
         </div>
 
         <!-- 1. DENEME TAKİP & GRAFİK & PDF -->
@@ -110,13 +112,13 @@
                 
                 <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
                     <div>
-                        <span class="bg-red-500/10 text-red-600 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">İleri Düzey Analiz</span>
+                        <span class="bg-red-500/10 text-red-600 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Performans ve Grafik</span>
                         <h3 class="heading-font text-2xl font-extrabold mt-2">Deneme Sınavı Takip Sistemi</h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400">Çözdüğün denemeleri kaydet, grafiksel analiz yap ve PDF raporu al.</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2.5">
                         <button onclick="exportToPDF()" class="flex items-center gap-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white text-xs font-bold px-4.5 py-3 rounded-2xl transition-all shadow-sm">
-                            <i data-lucide="download" class="w-4 h-4"></i> PDF Rapor İndir
+                            <i data-lucide="download" class="w-4 h-4"></i> PDF Raporu İndir
                         </button>
                         <button onclick="toggleModal('addDenemeModal')" class="flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-5 py-3 rounded-2xl transition-all shadow-lg shadow-red-500/25">
                             <i data-lucide="plus-circle" class="w-4 h-4"></i> Yeni Deneme Ekle
@@ -237,20 +239,61 @@
             </div>
         </div>
 
-        <!-- 3. ÇALIŞMA GÜNLÜĞÜ (NOTLAR) -->
-        <div id="notesView" class="hidden space-y-6">
-            <div class="max-w-2xl mx-auto glass-panel border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-8 pro-shadow space-y-6">
-                <h3 class="heading-font text-2xl font-extrabold">Günlük Çalışma & Hedef Günlüğü</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Bugün hangi konuları çalıştın veya hangi konularda eksiksin? Buraya not et.</p>
-                <textarea id="studyNoteInput" rows="5" placeholder="Örn: Limit ve türev testleri çözüldü, kimya denge konusu tekrar edilecek..." class="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-xs focus:outline-none focus:border-red-500"></textarea>
-                <button onclick="saveStudyNote()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-2xl text-xs transition-all shadow-lg shadow-red-500/25">Notu Kaydet</button>
-                <div id="savedNoteDisplay" class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl text-xs text-slate-600 dark:text-slate-300 italic">
-                    Henüz kayıtlı bir not bulunmuyor.
+        <!-- 3. HAFTALIK DERS ÇALIŞMA PROGRAMI (YENİ) -->
+        <div id="programView" class="hidden space-y-6">
+            <div class="glass-panel border border-slate-200/80 dark:border-slate-800 rounded-[2.5rem] p-6 sm:p-8 pro-shadow space-y-6">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+                    <div>
+                        <span class="bg-red-500/10 text-red-600 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Haftalık Plan</span>
+                        <h3 class="heading-font text-2xl font-extrabold mt-2">Ders Çalışma Programı</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Haftalık ders hedeflerini belirle, tamamladıkça tik at.</p>
+                    </div>
+                    <button onclick="toggleModal('addProgramModal')" class="flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-5 py-3 rounded-2xl transition-all shadow-lg shadow-red-500/25">
+                        <i data-lucide="plus" class="w-4 h-4"></i> Görev Ekle
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="programCardsGrid">
+                    <!-- Dinamik Program Kartları Buraya Gelecek -->
                 </div>
             </div>
         </div>
 
-        <!-- 4. POMODORO -->
+        <!-- 4. EKSİK KONU TAKİP PANELİ (YENİ) -->
+        <div id="topicsView" class="hidden space-y-6">
+            <div class="glass-panel border border-slate-200/80 dark:border-slate-800 rounded-[2.5rem] p-6 sm:p-8 pro-shadow space-y-6">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+                    <div>
+                        <span class="bg-red-500/10 text-red-600 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Eksik Analizi</span>
+                        <h3 class="heading-font text-2xl font-extrabold mt-2">Öncelikli Tekrar Edilecek Konular</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Yanlış yaptığın veya unuttuğun konuları buraya ekleyerek çalış.</p>
+                    </div>
+                    <div class="flex gap-2 w-full md:w-auto">
+                        <input type="text" id="newTopicInput" placeholder="Örn: Fizik - Elektrik Alanı" class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-2.5 text-xs focus:outline-none flex-1">
+                        <button onclick="addTopic()" class="bg-red-600 hover:bg-red-500 text-white font-bold px-5 py-2.5 rounded-2xl text-xs transition-all shrink-0">Ekle</button>
+                    </div>
+                </div>
+
+                <div id="topicsListContainer" class="space-y-3">
+                    <!-- Eksik Konular Listesi -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. ÇALIŞMA GÜNLÜĞÜ (NOTLAR) -->
+        <div id="notesView" class="hidden space-y-6">
+            <div class="max-w-2xl mx-auto glass-panel border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-8 pro-shadow space-y-6">
+                <h3 class="heading-font text-2xl font-extrabold">Günlük Çalışma Günlüğü</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Bugün hangi konuları çalıştın? Buraya not et.</p>
+                <textarea id="studyNoteInput" rows="5" placeholder="Örn: Limit ve türev testleri çözüldü..." class="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-xs focus:outline-none"></textarea>
+                <button onclick="saveStudyNote()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-2xl text-xs transition-all shadow-lg shadow-red-500/25">Notu Kaydet</button>
+                <div id="savedNoteDisplay" class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl text-xs text-slate-600 dark:text-slate-300 italic">
+                    Henüz kayıtlı not yok.
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. POMODORO -->
         <div id="pomodoroView" class="hidden space-y-6">
             <div class="max-w-xl mx-auto glass-panel border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-8 pro-shadow text-center space-y-6">
                 <h3 class="heading-font text-3xl font-extrabold">Odaklanma Asistanı</h3>
@@ -263,7 +306,7 @@
             </div>
         </div>
 
-        <!-- 5. AYARLAR -->
+        <!-- 7. AYARLAR -->
         <div id="settingsView" class="hidden space-y-6">
             <div class="max-w-xl mx-auto glass-panel border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-8 pro-shadow space-y-6">
                 <h3 class="heading-font text-3xl font-extrabold">Tema Tercihleri</h3>
@@ -333,6 +376,35 @@
         </div>
     </div>
 
+    <!-- PROGRAM GÖREV EKLEME MODALI -->
+    <div id="addProgramModal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-2xl hidden flex items-center justify-center p-4">
+        <div class="glass-panel border border-slate-200 dark:border-slate-800 rounded-[2.5rem] max-w-md w-full p-8 pro-shadow space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+                <h3 class="heading-font text-xl font-bold">Haftalık Görev Ekle</h3>
+                <button onclick="toggleModal('addProgramModal')" class="text-slate-400 hover:text-red-600"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+            <form onsubmit="handleSaveProgramTask(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Gün Seçimi</label>
+                    <select id="progDay" class="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-3 text-xs">
+                        <option value="Pazartesi">Pazartesi</option>
+                        <option value="Salı">Salı</option>
+                        <option value="Çarşamba">Çarşamba</option>
+                        <option value="Perşembe">Perşembe</option>
+                        <option value="Cuma">Cuma</option>
+                        <option value="Cumartesi">Cumartesi</option>
+                        <option value="Pazar">Pazar</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Görev / Ders Konusu</label>
+                    <input type="text" id="progTask" required placeholder="Örn: 50 Paragraf Sorusu & TYT Mat" class="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-3 text-xs">
+                </div>
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-2xl text-xs shadow-lg shadow-red-500/25">Görevi Kaydet</button>
+            </form>
+        </div>
+    </div>
+
     <!-- FIREBASE & UYGULAMA SCRIPTS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -381,6 +453,7 @@
             else { root.className = 'light'; localStorage.setItem('theme', 'light'); }
         }
 
+        // --- DENEME TAKİBİ ---
         let denemeler = JSON.parse(localStorage.getItem('zt_denemeler')) || [];
 
         function handleSaveDeneme(e) {
@@ -482,15 +555,117 @@
             document.getElementById('resSiralama').textContent = Math.max(1000, Math.round(1500000 - (toplamTytNet * 12000))).toLocaleString('tr-TR');
         }
 
-        // Çalışma Günlüğü Notları
-        function saveStudyNote() {
-            const noteText = document.getElementById('studyNoteInput').value;
-            if(!noteText.trim()) return alert("Lütfen boş bir not girmeyin.");
-            localStorage.setItem('zt_study_note', noteText);
-            document.getElementById('savedNoteDisplay').textContent = "Son Kaydedilen Not: " + noteText;
-            alert("Not başarıyla kaydedildi!");
+        // --- HAFTALIK PROGRAM SİSTEMİ ---
+        let programTasks = JSON.parse(localStorage.getItem('zt_program')) || [
+            { id: 1, day: 'Pazartesi', task: 'TYT Türkçe Paragraf & Problemler', completed: false },
+            { id: 2, day: 'Salı', task: 'AYT Matematik Fonksiyonlar', completed: true },
+        ];
+
+        function handleSaveProgramTask(e) {
+            e.preventDefault();
+            const day = document.getElementById('progDay').value;
+            const task = document.getElementById('progTask').value;
+            programTasks.push({ id: Date.now(), day, task, completed: false });
+            localStorage.setItem('zt_program', JSON.stringify(programTasks));
+            toggleModal('addProgramModal');
+            renderProgram();
+            e.target.reset();
         }
 
+        function toggleProgramTask(id) {
+            programTasks = programTasks.map(p => p.id === id ? { ...p, completed: !p.completed } : p);
+            localStorage.setItem('zt_program', JSON.stringify(programTasks));
+            renderProgram();
+        }
+
+        function deleteProgramTask(id) {
+            programTasks = programTasks.filter(p => p.id !== id);
+            localStorage.setItem('zt_program', JSON.stringify(programTasks));
+            renderProgram();
+        }
+
+        function renderProgram() {
+            const grid = document.getElementById('programCardsGrid');
+            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            
+            grid.innerHTML = days.map(day => {
+                const dayTasks = programTasks.filter(p => p.day === day);
+                return `
+                    <div class="bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl space-y-3">
+                        <h4 class="font-bold text-sm text-red-600 border-b border-slate-200 dark:border-slate-800 pb-2">${day}</h4>
+                        <div class="space-y-2">
+                            ${dayTasks.length === 0 ? '<p class="text-[11px] text-slate-400 italic">Görev yok.</p>' : ''}
+                            ${dayTasks.map(t => `
+                                <div class="flex items-center justify-between bg-white dark:bg-slate-950 p-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 text-xs">
+                                    <label class="flex items-center gap-2 cursor-pointer ${t.completed ? 'line-through text-slate-400' : ''}">
+                                        <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleProgramTask(${t.id})" class="rounded text-red-600">
+                                        <span>${t.task}</span>
+                                    </label>
+                                    <button onclick="deleteProgramTask(${t.id})" class="text-slate-400 hover:text-red-600"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        // --- EKSİK KONU TAKİP SİSTEMİ ---
+        let topics = JSON.parse(localStorage.getItem('zt_topics')) || [
+            { id: 1, name: 'Fizik - Düzgün Doğrusal Hareket', status: false },
+            { id: 2, name: 'Kimya - Kimyasal Denge', status: true }
+        ];
+
+        function addTopic() {
+            const input = document.getElementById('newTopicInput');
+            if(!input.value.trim()) return;
+            topics.push({ id: Date.now(), name: input.value, status: false });
+            localStorage.setItem('zt_topics', JSON.stringify(topics));
+            input.value = '';
+            renderTopics();
+        }
+
+        function toggleTopic(id) {
+            topics = topics.map(t => t.id === id ? { ...t, status: !t.status } : t);
+            localStorage.setItem('zt_topics', JSON.stringify(topics));
+            renderTopics();
+        }
+
+        function deleteTopic(id) {
+            topics = topics.filter(t => t.id !== id);
+            localStorage.setItem('zt_topics', JSON.stringify(topics));
+            renderTopics();
+        }
+
+        function renderTopics() {
+            const container = document.getElementById('topicsListContainer');
+            if(topics.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-400 italic text-center py-6">Kayıtlı eksik konu bulunmuyor.</p>';
+                return;
+            }
+            container.innerHTML = topics.map(t => `
+                <div class="flex items-center justify-between bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl text-xs">
+                    <label class="flex items-center gap-3 cursor-pointer ${t.status ? 'line-through text-slate-400' : 'font-semibold'}">
+                        <input type="checkbox" ${t.status ? 'checked' : ''} onchange="toggleTopic(${t.id})" class="w-4 h-4 rounded text-red-600">
+                        <span>${t.name}</span>
+                    </label>
+                    <button onclick="deleteTopic(${t.id})" class="text-slate-400 hover:text-red-600"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // --- GÜNLÜK NOTLAR ---
+        function saveStudyNote() {
+            const noteText = document.getElementById('studyNoteInput').value;
+            if(!noteText.trim()) return alert("Lütfen boş not girmeyin.");
+            localStorage.setItem('zt_study_note', noteText);
+            document.getElementById('savedNoteDisplay').textContent = "Son Kaydedilen Not: " + noteText;
+            alert("Not kaydedildi!");
+        }
+
+        // --- POMODORO ---
         let pomoTime = 25 * 60, pomoInterval = null, isPomoRunning = false;
         function startPomodoro() {
             if (!isPomoRunning) {
@@ -507,13 +682,14 @@
         function pausePomodoro() { clearInterval(pomoInterval); isPomoRunning = false; }
         function resetPomodoro() { clearInterval(pomoInterval); isPomoRunning = false; pomoTime = 25 * 60; document.getElementById('pomodoroTimer').textContent = "25:00"; }
 
+        // --- SEKME YÖNETİMİ ---
         function switchTab(tab) {
-            ['denemeTrackerView', 'calculatorView', 'notesView', 'pomodoroView', 'settingsView'].forEach(v => document.getElementById(v).classList.add('hidden'));
-            ['tabDenemeTracker', 'tabCalculator', 'tabNotes', 'tabPomodoro', 'tabSettings'].forEach(b => document.getElementById(b).className = "px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 transition-all");
+            ['denemeTrackerView', 'calculatorView', 'programView', 'topicsView', 'notesView', 'pomodoroView', 'settingsView'].forEach(v => document.getElementById(v).classList.add('hidden'));
+            ['tabDenemeTracker', 'tabCalculator', 'tabProgram', 'tabTopics', 'tabNotes', 'tabPomodoro', 'tabSettings'].forEach(b => document.getElementById(b).className = "px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 transition-all");
 
-            const map = { denemeTracker: ['denemeTrackerView', 'tabDenemeTracker'], calculator: ['calculatorView', 'tabCalculator'], notes: ['notesView', 'tabNotes'], pomodoro: ['pomodoroView', 'tabPomodoro'], settings: ['settingsView', 'tabSettings'] };
+            const map = { denemeTracker: ['denemeTrackerView', 'tabDenemeTracker'], calculator: ['calculatorView', 'tabCalculator'], program: ['programView', 'tabProgram'], topics: ['topicsView', 'tabTopics'], notes: ['notesView', 'tabNotes'], pomodoro: ['pomodoroView', 'tabPomodoro'], settings: ['settingsView', 'tabSettings'] };
             document.getElementById(map[tab][0]).classList.remove('hidden');
-            document.getElementById(map[tab][1]).className = "px-5 py-2.5 rounded-xl text-xs font-bold bg-red-600 text-white shadow-md transition-all";
+            document.getElementById(map[tab][1]).className = "px-4 py-2.5 rounded-xl text-xs font-bold bg-red-600 text-white shadow-md transition-all";
         }
 
         function switchAuthTab(tab) {
@@ -535,6 +711,8 @@
 
         window.onload = () => { 
             renderDenemeler(); 
+            renderProgram();
+            renderTopics();
             const savedNote = localStorage.getItem('zt_study_note');
             if(savedNote) document.getElementById('savedNoteDisplay').textContent = "Son Kaydedilen Not: " + savedNote;
             lucide.createIcons(); 
