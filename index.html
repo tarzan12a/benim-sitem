@@ -81,7 +81,7 @@
             <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-3">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta veya Kullanıcı Adı</label>
-                    <input type="text" id="loginEmail" required placeholder="ornek@uzemportal.com veya ogrenci123" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
+                    <input type="text" id="loginEmail" required placeholder="ornek@uzemportal.com veya ogr_ahmet" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre</label>
@@ -164,11 +164,6 @@
                 <button onclick="switchTab('pdrDashboard')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-bold bg-emerald-700 text-white flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5"></i> PDR Şifre & Öğrenci Yönetimi</button>
             </div>
         </div>
-
-        <!-- İDARE / DİĞER NAVIGASYON -->
-        <div id="idareNavWrapper" class="hidden space-y-2"></div>
-        <div id="muhasebeNavWrapper" class="hidden space-y-2"></div>
-        <div id="adminNavWrapper" class="hidden space-y-2"></div>
 
         <!-- ================= PDR ÖĞRENCİ & ŞİFRE YÖNETİMİ ================= -->
         <div id="pdrDashboardView" class="hidden space-y-4">
@@ -275,29 +270,36 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
-                document.getElementById('splashScreen').classList.add('fade-out');
+                const splash = document.getElementById('splashScreen');
+                if (splash) splash.classList.add('fade-out');
+                
                 const session = JSON.parse(localStorage.getItem('zt_local_session'));
-                if (session) applyUserSessionUI(session.email, session.role);
-                else document.getElementById('authLockScreen').classList.remove('hidden');
+                if (session) {
+                    applyUserSessionUI(session.email, session.role);
+                } else {
+                    const lockScreen = document.getElementById('authLockScreen');
+                    if (lockScreen) lockScreen.classList.remove('hidden');
+                }
                 lucide.createIcons();
             }, 500);
         });
 
         function onRoleSelectChange(role) {
             selectedAuthRole = role;
-            if (role === 'pdr' || role === 'matematik' || role === 'edebiyat') {
-                authModeTabs.classList.remove('hidden');
-            } else {
-                authModeTabs.classList.remove('hidden');
-            }
+            const authModeTabs = document.getElementById('authModeTabs');
+            if (authModeTabs) authModeTabs.classList.remove('hidden');
         }
 
         function updateYksCountdown() {
             const diff = new Date('June 19, 2027 10:15:00').getTime() - new Date().getTime();
-            if (diff > 0) {
-                yksDays.textContent = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(3, '0');
-                yksHours.textContent = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-                yksMins.textContent = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            const daysEl = document.getElementById('yksDays');
+            const hoursEl = document.getElementById('yksHours');
+            const minsEl = document.getElementById('yksMins');
+
+            if (diff > 0 && daysEl && hoursEl && minsEl) {
+                daysEl.textContent = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(3, '0');
+                hoursEl.textContent = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                minsEl.textContent = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
             }
         }
         setInterval(updateYksCountdown, 1000);
@@ -310,11 +312,18 @@
 
         function handleRegister(e) {
             e.preventDefault();
-            if (!document.getElementById('regKvkkCheck').checked) return alert("KVKK onayını işaretlemelisiniz.");
-            const name = regName.value, email = regEmail.value, role = selectedAuthRole;
+            const kvkkCheck = document.getElementById('regKvkkCheck');
+            if (kvkkCheck && !kvkkCheck.checked) return alert("KVKK onayını işaretlemelisiniz.");
+            
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const role = selectedAuthRole;
+            
             if (systemUsers.some(u => u.email === email)) return alert("Bu e-posta kayıtlı.");
+            
             const username = email.split('@')[0];
-            const password = regPassword.value;
+            const password = document.getElementById('regPassword').value;
+            
             systemUsers.push({ id: Date.now(), name, email, username, password, role, sinif: '12-B', kvkk: true });
             localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
             alert("Kayıt başarılı. Kullanıcı adınız: " + username);
@@ -323,46 +332,62 @@
 
         function handleLogin(e) {
             e.preventDefault();
-            const inputVal = loginEmail.value, pass = loginPassword.value;
+            const inputVal = document.getElementById('loginEmail').value;
+            const pass = document.getElementById('loginPassword').value;
+            
             let user = systemUsers.find(u => (u.email === inputVal || u.username === inputVal) && u.password === pass);
             if (!user) {
                 user = systemUsers.find(u => u.email === inputVal || u.username === inputVal);
             }
             if (!user) return alert("Hatalı kullanıcı adı veya şifre!");
+            
             localStorage.setItem('zt_local_session', JSON.stringify({ email: user.email, role: user.role }));
             applyUserSessionUI(user.email, user.role);
         }
 
         function applyUserSessionUI(email, role) {
-            document.getElementById('authLockScreen').classList.add('hidden');
-            studentNavWrapper.classList.add('hidden');
-            teacherNavWrapper.classList.add('hidden');
+            const lockScreen = document.getElementById('authLockScreen');
+            const studentNav = document.getElementById('studentNavWrapper');
+            const teacherNav = document.getElementById('teacherNavWrapper');
+            
+            if (lockScreen) lockScreen.classList.add('hidden');
+            if (studentNav) studentNav.classList.add('hidden');
+            if (teacherNav) teacherNav.classList.add('hidden');
 
             if (role === 'pdr') {
-                teacherNavWrapper.classList.remove('hidden');
+                if (teacherNav) teacherNav.classList.remove('hidden');
                 switchTab('pdrDashboard');
             } else {
-                studentNavWrapper.classList.remove('hidden');
+                if (studentNav) studentNav.classList.remove('hidden');
                 switchTab('denemeTracker');
             }
 
             const authHTML = `<div class="flex items-center gap-2 bg-uzem-700 px-3 py-1.5 rounded-lg text-xs"><span class="font-bold">${email}</span><button onclick="localStorage.removeItem('zt_local_session');location.reload();" class="text-rose-300 font-bold ml-1">Çıkış</button></div>`;
-            authArea.innerHTML = authHTML;
-            mobileAuthArea.innerHTML = authHTML;
+            
+            const authArea = document.getElementById('authArea');
+            const mobileAuthArea = document.getElementById('mobileAuthArea');
+            if (authArea) authArea.innerHTML = authHTML;
+            if (mobileAuthArea) mobileAuthArea.innerHTML = authHTML;
+            
             lucide.createIcons();
         }
 
         function switchAuthTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const loginTabBtn = document.getElementById('loginTabBtn');
+            const registerTabBtn = document.getElementById('registerTabBtn');
+
             if (tab === 'login') {
-                loginForm.classList.remove('hidden');
-                registerForm.classList.add('hidden');
-                loginTabBtn.className = "flex-1 pb-2 text-xs font-bold text-uzem-600 border-b-2 border-uzem-600";
-                registerTabBtn.className = "flex-1 pb-2 text-xs font-medium text-slate-400 border-b-2 border-transparent";
+                if (loginForm) loginForm.classList.remove('hidden');
+                if (registerForm) registerForm.classList.add('hidden');
+                if (loginTabBtn) loginTabBtn.className = "flex-1 pb-2 text-xs font-bold text-uzem-600 border-b-2 border-uzem-600";
+                if (registerTabBtn) registerTabBtn.className = "flex-1 pb-2 text-xs font-medium text-slate-400 border-b-2 border-transparent";
             } else {
-                registerForm.classList.remove('hidden');
-                loginForm.classList.add('hidden');
-                registerTabBtn.className = "flex-1 pb-2 text-xs font-bold text-uzem-600 border-b-2 border-uzem-600";
-                loginTabBtn.className = "flex-1 pb-2 text-xs font-medium text-slate-400 border-b-2 border-transparent";
+                if (registerForm) registerForm.classList.remove('hidden');
+                if (loginForm) loginForm.classList.add('hidden');
+                if (registerTabBtn) registerTabBtn.className = "flex-1 pb-2 text-xs font-bold text-uzem-600 border-b-2 border-uzem-600";
+                if (loginTabBtn) loginTabBtn.className = "flex-1 pb-2 text-xs font-medium text-slate-400 border-b-2 border-transparent";
             }
         }
 
@@ -379,11 +404,12 @@
 
         function handlePdrAddStudent(e) {
             e.preventDefault();
-            if (!document.getElementById('kvkkConsentCheck').checked) return alert("KVKK onayını işaretlemelisiniz.");
+            const kvkk = document.getElementById('kvkkConsentCheck');
+            if (kvkk && !kvkk.checked) return alert("KVKK onayını işaretlemelisiniz.");
             
-            const name = pdrStuName.value;
-            const email = pdrStuEmail.value;
-            const sinif = pdrStuClass.value;
+            const name = document.getElementById('pdrStuName').value;
+            const email = document.getElementById('pdrStuEmail').value;
+            const sinif = document.getElementById('pdrStuClass').value;
             
             const cleanName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
             const randomNum = Math.floor(1000 + Math.random() * 9000);
@@ -408,8 +434,10 @@
         }
 
         function renderPdrStudents() {
+            const tbody = document.getElementById('pdrStudentTableBody');
+            if (!tbody) return;
             const students = systemUsers.filter(u => u.role === 'ogrenci');
-            pdrStudentTableBody.innerHTML = students.length === 0 ? '<tr><td colspan="6" class="p-3 text-center text-slate-400">Kayıtlı öğrenci yok.</td></tr>' : students.map(s => `
+            tbody.innerHTML = students.length === 0 ? '<tr><td colspan="6" class="p-3 text-center text-slate-400">Kayıtlı öğrenci yok.</td></tr>' : students.map(s => `
                 <tr class="hover:bg-slate-50">
                     <td class="p-2.5 font-semibold">${s.name}</td>
                     <td class="p-2.5 font-semibold text-emerald-700">${s.sinif || '12-A'}</td>
@@ -428,7 +456,8 @@
         }
 
         function toggleModal(id) {
-            document.getElementById(id).classList.toggle('hidden');
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.toggle('hidden');
         }
     </script>
 </body>
