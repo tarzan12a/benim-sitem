@@ -1,6 +1,7 @@
-<!-- SİTE ÇALIŞMA / GEÇİCİ KAPALI UYARI BANDI -->
-<div id="siteMaintenanceBanner" class="bg-amber-500 text-slate-950 px-4 py-2 text-center text-xs font-extrabold shadow-md flex items-center justify-center gap-2 relative z-50">
-    <i data-lucide="wrench" class="w-4 h-4 animate-spin"></i>
-    <span>SİTETE GÜNCELLEME VE ÇALIŞMA VARDIR! Sistem şu an geçici olarak bakım amaçlı kısıtlıdır.</span>
-    <button onclick="document.getElementById('siteMaintenanceBanner').style.display='none'" class="ml-4 bg-slate-950 text-white px-2 py-0.5 rounded text-[10px] hover:bg-slate-800">Kapat</button>
+<!-- Site Bakımda Banner Başlangıcı -->
+<div id="bakimBanner" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #ffffff; padding: 12px 20px; text-align: center; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; z-index: 9999; display: flex; align-items: center; justify-content: center; gap: 10px;">
+    <span style="font-size: 16px;">🛠️</span>
+    <span><strong>Sitede Çalışma Var:</strong> Sistemimiz şu anda geçici olarak bakım veya güncelleme aşamasındadır. En kısa sürede tekrar yayında olacağız!</span>
+    <button onclick="document.getElementById('bakimBanner').style.display='none'" style="background: rgba(255, 255, 255, 0.2); border: none; color: white; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 11px; margin-left: 15px; font-weight: bold;">Kapat</button>
 </div>
+<!-- Site Bakımda Banner Bitişi -->
