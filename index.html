@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaman Tüneli - Öğrenci, Öğretmen, Admin Portalı & Toplantı Sistemi</title>
+    <title>Zaman Tüneli - Branş Öğretmenleri & YKS 2027 Portalı</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -37,7 +37,7 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-    <!-- 3 ROLLÜ (ÖĞRENCİ / ÖĞRETMEN / ADMİN) GİRİŞ EKRANI -->
+    <!-- GİRİŞ VE KAYIT EKRANI -->
     <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-8 shadow-2xl space-y-5">
             <div class="text-center space-y-1.5">
@@ -49,10 +49,11 @@
             </div>
 
             <!-- ROL SEÇİM SEKMELERİ -->
-            <div class="grid grid-cols-3 bg-slate-100 p-1 rounded-xl gap-1">
-                <button type="button" onclick="selectLoginRole('ogrenci')" id="roleBtnOgrenci" class="py-2 text-xs font-bold rounded-lg bg-white text-ogm-600 shadow-sm transition-all">Öğrenci</button>
-                <button type="button" onclick="selectLoginRole('ogretmen')" id="roleBtnOgretmen" class="py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-800 transition-all">Öğretmen</button>
-                <button type="button" onclick="selectLoginRole('admin')" id="roleBtnAdmin" class="py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-800 transition-all">Admin</button>
+            <div class="grid grid-cols-4 bg-slate-100 p-1 rounded-xl gap-1 text-[11px]">
+                <button type="button" onclick="selectLoginRole('ogrenci')" id="roleBtnOgrenci" class="py-2 font-bold rounded-lg bg-white text-ogm-600 shadow-sm transition-all">Öğrenci</button>
+                <button type="button" onclick="selectLoginRole('matematik')" id="roleBtnMatematik" class="py-2 font-semibold rounded-lg text-slate-500 hover:text-slate-800 transition-all">Mat. Öğrt.</button>
+                <button type="button" onclick="selectLoginRole('edebiyat')" id="roleBtnEdebiyat" class="py-2 font-semibold rounded-lg text-slate-500 hover:text-slate-800 transition-all">Ed. Öğrt.</button>
+                <button type="button" onclick="selectLoginRole('admin')" id="roleBtnAdmin" class="py-2 font-semibold rounded-lg text-slate-500 hover:text-slate-800 transition-all">Admin</button>
             </div>
 
             <!-- GİRİŞ / KAYIT ALT SEKMELERİ -->
@@ -75,35 +76,36 @@
                     <label class="block text-xs font-semibold text-rose-600 mb-1">Admin Güvenlik Anahtarı</label>
                     <input type="password" id="adminSecretKey" placeholder="Varsayılan: admin123" class="w-full bg-rose-50 border border-rose-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-rose-500">
                 </div>
-                <button type="submit" id="loginSubmitBtn" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-3 rounded-xl text-xs transition-all shadow-sm">Öğrenci Girişi Yap</button>
+                <button type="submit" id="loginSubmitBtn" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-3 rounded-xl text-xs transition-all shadow-sm">Giriş Yap</button>
             </form>
 
             <!-- KAYIT FORMU -->
             <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-3 hidden">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Ad Soyad</label>
-                    <input type="text" id="regName" required placeholder="Adınız Soyadınız" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-ogm-600">
+                    <input type="text" id="regName" required placeholder="Adınız Soyadınız" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta Adresi</label>
-                    <input type="email" id="regEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-ogm-600">
+                    <input type="email" id="regEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre</label>
-                    <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-ogm-600">
+                    <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs focus:outline-none">
                 </div>
-                <div id="teacherBranchField" class="hidden">
-                    <label class="block text-xs font-semibold text-emerald-700 mb-1">Branş / Alan</label>
-                    <input type="text" id="regBranch" placeholder="Örn: PDR / Rehberlik, Tarih..." class="w-full bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-emerald-600">
+                <div id="teacherDocField" class="hidden space-y-1">
+                    <label class="block text-xs font-semibold text-emerald-700 mb-1">Öğretmen Belgesi / Diploma Yükle (Zorunlu)</label>
+                    <input type="file" id="regTeacherDoc" accept=".pdf,.jpg,.png" class="w-full bg-emerald-50 border border-emerald-200 rounded-xl p-2 text-xs text-emerald-800">
+                    <p class="text-[10px] text-slate-400">Admin onayından sonra hesabınız aktifleşecektir.</p>
                 </div>
-                <button type="submit" id="regSubmitBtn" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-3 rounded-xl text-xs transition-all shadow-sm">Öğrenci Kaydı Oluştur</button>
+                <button type="submit" id="regSubmitBtn" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-3 rounded-xl text-xs transition-all shadow-sm">Kayıt Ol</button>
             </form>
         </div>
     </div>
 
     <!-- HEADER -->
     <header class="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3 flex items-center justify-between gap-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div class="flex items-center gap-3">
                 <div id="headerBrandIcon" class="bg-ogm-600 text-white p-2.5 rounded-xl flex items-center justify-center font-bold text-sm">
                     <i data-lucide="book-open-check" class="w-5 h-5"></i>
@@ -113,6 +115,21 @@
                     <p id="portalRoleBadge" class="text-[10px] text-ogm-600 font-semibold tracking-wider uppercase">Öğrenci Portalı</p>
                 </div>
             </div>
+
+            <!-- YKS 2027 SAYACI HEADER ALANI -->
+            <div class="bg-slate-50 border border-slate-200 px-4 py-1.5 rounded-xl flex items-center gap-3 text-center">
+                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider hidden md:inline">YKS 2027 Sayaç:</span>
+                <div class="flex items-center gap-2 text-xs font-bold text-ogm-600">
+                    <div><span id="yksDays" class="text-sm font-extrabold text-slate-900">000</span> <span class="text-[9px] text-slate-400">GÜN</span></div>
+                    <div>:</div>
+                    <div><span id="yksHours" class="text-sm font-extrabold text-slate-900">00</span> <span class="text-[9px] text-slate-400">SAAT</span></div>
+                    <div>:</div>
+                    <div><span id="yksMins" class="text-sm font-extrabold text-slate-900">00</span> <span class="text-[9px] text-slate-400">DK</span></div>
+                    <div>:</div>
+                    <div><span id="yksSecs" class="text-sm font-extrabold text-slate-900">00</span> <span class="text-[9px] text-slate-400">SN</span></div>
+                </div>
+            </div>
+
             <div class="flex items-center gap-3" id="authArea"></div>
         </div>
     </header>
@@ -123,147 +140,89 @@
         <!-- ÖĞRENCİ NAVIGASYON -->
         <div id="studentNavWrapper" class="space-y-2">
             <div class="flex flex-wrap bg-white border border-slate-200 p-2 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="selectMainCategory('student', 'olcme')" id="cat-student-olcme" class="px-4 py-2 rounded-xl text-xs font-bold bg-ogm-600 text-white transition-all flex items-center gap-1.5">
-                    <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Ölçme & Sınav Analizi
-                </button>
-                <button onclick="selectMainCategory('student', 'planlama')" id="cat-student-planlama" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5">
-                    <i data-lucide="calendar-check" class="w-4 h-4"></i> Planlama & Çalışma Araçları
-                </button>
-                <button onclick="selectMainCategory('student', 'etkilesim')" id="cat-student-etkilesim" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5">
-                    <i data-lucide="video" class="w-4 h-4"></i> Canlı Dersler & Oyun
-                </button>
+                <button onclick="selectMainCategory('student', 'olcme')" id="cat-student-olcme" class="px-4 py-2 rounded-xl text-xs font-bold bg-ogm-600 text-white transition-all flex items-center gap-1.5"><i data-lucide="bar-chart-2" class="w-4 h-4"></i> Ölçme & Sınav</button>
+                <button onclick="selectMainCategory('student', 'planlama')" id="cat-student-planlama" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="calendar-check" class="w-4 h-4"></i> Planlama</button>
+                <button onclick="selectMainCategory('student', 'etkilesim')" id="cat-student-etkilesim" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4"></i> Canlı Dersler & Oyun</button>
             </div>
-
             <div id="subnav-student-olcme" class="flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('denemeTracker')" id="tabDenemeTracker" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-ogm-600 shadow-sm transition-all flex items-center gap-1.5"><i data-lucide="line-chart" class="w-3.5 h-3.5"></i> Deneme & Grafik</button>
-                <button onclick="switchTab('calculator')" id="tabCalculator" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5"><i data-lucide="calculator" class="w-3.5 h-3.5"></i> Net & Puan Hesapla</button>
+                <button onclick="switchTab('denemeTracker')" id="tabDenemeTracker" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-ogm-600 shadow-sm transition-all flex items-center gap-1.5">Deneme & Grafik</button>
+                <button onclick="switchTab('calculator')" id="tabCalculator" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Net & Puan Hesapla</button>
             </div>
-
             <div id="subnav-student-planlama" class="hidden flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('program')" id="tabProgram" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> Haftalık Program</button>
-                <button onclick="switchTab('topics')" id="tabTopics" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5"><i data-lucide="check-square" class="w-3.5 h-3.5"></i> Eksik Konular</button>
-                <button onclick="switchTab('notes')" id="tabNotes" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5"><i data-lucide="book" class="w-3.5 h-3.5"></i> Çalışma Günlüğü</button>
-                <button onclick="switchTab('pomodoro')" id="tabPomodoro" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5"><i data-lucide="timer" class="w-3.5 h-3.5"></i> Pomodoro Sayacı</button>
+                <button onclick="switchTab('program')" id="tabProgram" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Haftalık Program</button>
+                <button onclick="switchTab('topics')" id="tabTopics" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Eksik Konular</button>
+                <button onclick="switchTab('notes')" id="tabNotes" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Çalışma Günlüğü</button>
+                <button onclick="switchTab('pomodoro')" id="tabPomodoro" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Pomodoro</button>
             </div>
-
             <div id="subnav-student-etkilesim" class="hidden flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('studentMeetings')" id="tabStudentMeetings" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-ogm-600 shadow-sm transition-all flex items-center gap-1.5"><i data-lucide="video" class="w-3.5 h-3.5"></i> Canlı Toplantılar & Takvim</button>
-                <button onclick="switchTab('tarihOyunu')" id="tabTarihOyunu" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5"><i data-lucide="gamepad-2" class="w-3.5 h-3.5"></i> Tarih Zaman Oyunu</button>
-                <button onclick="switchTab('studentAnnouncements')" id="tabStudentAnnouncements" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5"><i data-lucide="megaphone" class="w-3.5 h-3.5"></i> Duyurular</button>
+                <button onclick="switchTab('studentMeetings')" id="tabStudentMeetings" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-ogm-600 shadow-sm transition-all flex items-center gap-1.5">Canlı Toplantılar</button>
+                <button onclick="switchTab('tarihOyunu')" id="tabTarihOyunu" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Tarih Oyunu</button>
+                <button onclick="switchTab('studentAnnouncements')" id="tabStudentAnnouncements" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Duyurular</button>
             </div>
         </div>
 
-        <!-- ÖĞRETMEN NAVIGASYON -->
+        <!-- ÖĞRETMEN (MATEMATİK / EDEBİYAT) NAVIGASYON -->
         <div id="teacherNavWrapper" class="hidden space-y-2">
             <div class="flex flex-wrap bg-white border border-slate-200 p-2 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="selectMainCategory('teacher', 'takip')" id="cat-teacher-takip" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white transition-all flex items-center gap-1.5">
-                    <i data-lucide="users" class="w-4 h-4"></i> Öğrenci Takip & Analiz
-                </button>
-                <button onclick="selectMainCategory('teacher', 'rehberlik')" id="cat-teacher-rehberlik" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5">
-                    <i data-lucide="video" class="w-4 h-4"></i> Canlı Toplantı & Görüşme
-                </button>
+                <button onclick="selectMainCategory('teacher', 'takip')" id="cat-teacher-takip" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white transition-all flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> Branş & Öğrenci Takibi</button>
+                <button onclick="selectMainCategory('teacher', 'rehberlik')" id="cat-teacher-rehberlik" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4"></i> Canlı Ders & Notlar</button>
             </div>
-
             <div id="subnav-teacher-takip" class="flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('pdrDashboard')" id="tabPdrDashboard" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm transition-all flex items-center gap-1.5"><i data-lucide="user-check" class="w-3.5 h-3.5"></i> Kayıtlı Öğrenci Listesi</button>
-                <button onclick="switchTab('teacherClassStats')" id="tabTeacherClassStats" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5"><i data-lucide="pie-chart" class="w-3.5 h-3.5"></i> Sınıf Net Ortalamaları</button>
+                <button onclick="switchTab('pdrDashboard')" id="tabPdrDashboard" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm transition-all">Öğrenci Listesi</button>
+                <button onclick="switchTab('teacherClassStats')" id="tabTeacherClassStats" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Branş Sınav Ortalamaları</button>
             </div>
-
             <div id="subnav-teacher-rehberlik" class="hidden flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('teacherMeetings')" id="tabTeacherMeetings" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm transition-all flex items-center gap-1.5"><i data-lucide="video" class="w-3.5 h-3.5"></i> Toplantı & Canlı Ders Oluştur</button>
-                <button onclick="switchTab('pdrConsult')" id="tabPdrConsult" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> Bireysel Görüşme Notları</button>
-                <button onclick="switchTab('pdrTarget')" id="tabPdrTarget" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5"><i data-lucide="megaphone" class="w-3.5 h-3.5"></i> Duyuru Yayınla</button>
+                <button onclick="switchTab('teacherMeetings')" id="tabTeacherMeetings" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm transition-all">Canlı Ders Oluştur</button>
+                <button onclick="switchTab('pdrConsult')" id="tabPdrConsult" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Görüşme Notları</button>
+                <button onclick="switchTab('pdrTarget')" id="tabPdrTarget" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Öğrencilere Duyuru</button>
             </div>
         </div>
 
         <!-- ADMİN NAVIGASYON -->
         <div id="adminNavWrapper" class="hidden space-y-2">
             <div class="flex flex-wrap bg-white border border-slate-200 p-2 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="selectMainCategory('admin', 'sistem')" id="cat-admin-sistem" class="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 text-white transition-all flex items-center gap-1.5">
-                    <i data-lucide="shield-alert" class="w-4 h-4"></i> Sistem & Kullanıcı Yönetimi
-                </button>
-                <button onclick="selectMainCategory('admin', 'icerik')" id="cat-admin-icerik" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5">
-                    <i data-lucide="video" class="w-4 h-4"></i> Toplantılar & Oyun Yönetimi
-                </button>
+                <button onclick="selectMainCategory('admin', 'sistem')" id="cat-admin-sistem" class="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 text-white transition-all flex items-center gap-1.5"><i data-lucide="shield-alert" class="w-4 h-4"></i> Sistem & Öğretmen Onayları</button>
+                <button onclick="selectMainCategory('admin', 'icerik')" id="cat-admin-icerik" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4"></i> Toplantılar & Oyun</button>
             </div>
-
             <div id="subnav-admin-sistem" class="flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('adminUsers')" id="tabAdminUsers" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-rose-600 shadow-sm transition-all flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5"></i> Kullanıcı & Rol Kontrolü</button>
-                <button onclick="switchTab('adminLogs')" id="tabAdminLogs" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5"><i data-lucide="activity" class="w-3.5 h-3.5"></i> Sistem İstatistikleri</button>
+                <button onclick="switchTab('adminTeacherApprovals')" id="tabAdminTeacherApprovals" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-rose-600 shadow-sm transition-all">Öğretmen Belge Onayları (<span id="pendingCountBadge">0</span>)</button>
+                <button onclick="switchTab('adminUsers')" id="tabAdminUsers" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Tüm Kullanıcılar</button>
+                <button onclick="switchTab('adminLogs')" id="tabAdminLogs" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">İstatistikler</button>
             </div>
-
             <div id="subnav-admin-icerik" class="hidden flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('adminMeetings')" id="tabAdminMeetings" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-rose-600 shadow-sm transition-all flex items-center gap-1.5"><i data-lucide="video" class="w-3.5 h-3.5"></i> Toplantı / Canlı Ders Planla</button>
-                <button onclick="switchTab('adminGameEditor')" id="tabAdminGameEditor" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5"><i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Tarih Oyunu Soru Bankası</button>
-                <button onclick="switchTab('adminAnnouncements')" id="tabAdminAnnouncements" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5"><i data-lucide="bell" class="w-3.5 h-3.5"></i> Duyuruları Yönet</button>
+                <button onclick="switchTab('adminMeetings')" id="tabAdminMeetings" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-rose-600 shadow-sm transition-all">Toplantı Planla</button>
+                <button onclick="switchTab('adminGameEditor')" id="tabAdminGameEditor" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Tarih Oyunu Soru Bankası</button>
+                <button onclick="switchTab('adminAnnouncements')" id="tabAdminAnnouncements" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Duyuruları Yönet</button>
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- ÖĞRENCİ MODÜLLERİ                           -->
-        <!-- ========================================== -->
-
-        <!-- 1. DENEME TAKİP -->
+        <!-- ================= ÖĞRENCİ GÖRÜNÜMLERİ ================= -->
         <div id="denemeTrackerView" class="space-y-6">
             <div id="pdfReportArea" class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
                 <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-100 pb-5">
                     <div>
                         <span class="bg-ogm-50 text-ogm-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Ölçme Değerlendirme</span>
                         <h3 class="text-xl font-bold text-slate-900 mt-1">Deneme Sınavı Takip Paneli</h3>
-                        <p class="text-xs text-slate-500">Çözdüğünüz denemeleri sisteme işleyin, grafiksel gelişiminizi takip edin.</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
-                        <button onclick="exportToPDF()" class="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-4 py-2.5 rounded-xl transition-all border border-slate-300">
-                            <i data-lucide="download" class="w-4 h-4 text-slate-500"></i> PDF Raporu İndir
-                        </button>
-                        <button onclick="toggleModal('addDenemeModal')" class="flex items-center gap-1.5 bg-ogm-600 hover:bg-ogm-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-all shadow-sm">
-                            <i data-lucide="plus-circle" class="w-4 h-4"></i> Yeni Deneme Ekle
-                        </button>
+                        <button onclick="exportToPDF()" class="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-4 py-2.5 rounded-xl border border-slate-300"><i data-lucide="download" class="w-4 h-4 text-slate-500"></i> PDF Raporu</button>
+                        <button onclick="toggleModal('addDenemeModal')" class="flex items-center gap-1.5 bg-ogm-600 hover:bg-ogm-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-sm"><i data-lucide="plus-circle" class="w-4 h-4"></i> Yeni Deneme Ekle</button>
                     </div>
                 </div>
-
                 <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
-                        <span class="text-xs text-slate-500 font-medium block mb-1">Toplam Deneme</span>
-                        <span id="statTotalCount" class="text-2xl font-bold text-slate-900">0</span>
-                    </div>
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
-                        <span class="text-xs text-slate-500 font-medium block mb-1">En Yüksek TYT Neti</span>
-                        <span id="statMaxTyt" class="text-2xl font-bold text-ogm-600">0.00</span>
-                    </div>
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
-                        <span class="text-xs text-slate-500 font-medium block mb-1">En Yüksek AYT Neti</span>
-                        <span id="statMaxAyt" class="text-2xl font-bold text-slate-900">0.00</span>
-                    </div>
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
-                        <span class="text-xs text-slate-500 font-medium block mb-1">Genel Ortalama Net</span>
-                        <span id="statAvgNet" class="text-2xl font-bold text-slate-900">0.00</span>
-                    </div>
+                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block mb-1">Toplam Deneme</span><span id="statTotalCount" class="text-2xl font-bold text-slate-900">0</span></div>
+                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block mb-1">En Yüksek TYT Neti</span><span id="statMaxTyt" class="text-2xl font-bold text-ogm-600">0.00</span></div>
+                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block mb-1">En Yüksek AYT Neti</span><span id="statMaxAyt" class="text-2xl font-bold text-slate-900">0.00</span></div>
+                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block mb-1">Genel Ortalama</span><span id="statAvgNet" class="text-2xl font-bold text-slate-900">0.00</span></div>
                 </div>
-
                 <div class="bg-slate-50 border border-slate-200 p-5 rounded-xl space-y-3">
-                    <h4 class="font-bold text-xs uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                        <i data-lucide="bar-chart-2" class="w-4 h-4 text-ogm-600"></i> Net İlerleme Çizelgesi
-                    </h4>
-                    <div id="netVisualChart" class="flex items-end gap-3 h-44 pt-6 overflow-x-auto pb-2 border-b border-slate-200">
-                        <span class="text-xs text-slate-400 italic m-auto">Henüz kayıtlı grafik verisi yok.</span>
-                    </div>
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-slate-700 flex items-center gap-1.5"><i data-lucide="bar-chart-2" class="w-4 h-4 text-ogm-600"></i> Net İlerleme Grafiği</h4>
+                    <div id="netVisualChart" class="flex items-end gap-3 h-44 pt-6 overflow-x-auto pb-2 border-b border-slate-200"><span class="text-xs text-slate-400 italic m-auto">Henüz veri yok.</span></div>
                 </div>
-
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
                         <thead class="bg-slate-100 text-slate-700 uppercase font-semibold">
-                            <tr>
-                                <th class="p-3 rounded-l-xl">Deneme Adı</th>
-                                <th class="p-3">Tür</th>
-                                <th class="p-3">Tarih</th>
-                                <th class="p-3">Türkçe/Edb</th>
-                                <th class="p-3">Sosyal</th>
-                                <th class="p-3">Matematik</th>
-                                <th class="p-3">Fen</th>
-                                <th class="p-3">Toplam Net</th>
-                                <th class="p-3 rounded-r-xl text-center">İşlem</th>
-                            </tr>
+                            <tr><th class="p-3 rounded-l-xl">Deneme Adı</th><th class="p-3">Tür</th><th class="p-3">Tarih</th><th class="p-3">Türkçe/Edb</th><th class="p-3">Sosyal</th><th class="p-3">Matematik</th><th class="p-3">Fen</th><th class="p-3">Toplam Net</th><th class="p-3 rounded-r-xl text-center">İşlem</th></tr>
                         </thead>
                         <tbody id="denemeTableBody" class="divide-y divide-slate-100"></tbody>
                     </table>
@@ -272,599 +231,320 @@
             </div>
         </div>
 
-        <!-- 2. PUAN HESAPLAYICI -->
         <div id="calculatorView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
-                <div class="text-center max-w-xl mx-auto">
-                    <h3 class="text-xl font-bold text-slate-900 mb-1">Net ve Puan Hesaplama Aracı</h3>
-                    <p class="text-slate-500 text-xs">Doğru ve yanlış sayılarınızı girerek ÖSYM kriterlerine uygun netlerinizi hesaplayın.</p>
-                </div>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-2xl mx-auto">
+                <div class="text-center"><h3 class="text-xl font-bold text-slate-900 mb-1">Net ve Puan Hesaplama</h3><p class="text-slate-500 text-xs">ÖSYM kriterlerine göre netlerinizi hesaplayın.</p></div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-700">Türkçe (40 Soru)</span><span class="text-xs text-ogm-600 font-bold" id="net-t-turkce">Net: 0.00</span></div>
-                        <div class="flex gap-2">
-                            <input type="number" id="c-t-turkce" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs">
-                            <input type="number" id="y-t-turkce" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs">
-                        </div>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-700">Matematik (40 Soru)</span><span class="text-xs text-ogm-600 font-bold" id="net-t-mat">Net: 0.00</span></div>
-                        <div class="flex gap-2">
-                            <input type="number" id="c-t-mat" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs">
-                            <input type="number" id="y-t-mat" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs">
-                        </div>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-700">Sosyal Bilimler (20 Soru)</span><span class="text-xs text-ogm-600 font-bold" id="net-t-sosyal">Net: 0.00</span></div>
-                        <div class="flex gap-2">
-                            <input type="number" id="c-t-sosyal" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs">
-                            <input type="number" id="y-t-sosyal" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs">
-                        </div>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold text-slate-700">Fen Bilimleri (20 Soru)</span><span class="text-xs text-ogm-600 font-bold" id="net-t-fen">Net: 0.00</span></div>
-                        <div class="flex gap-2">
-                            <input type="number" id="c-t-fen" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs">
-                            <input type="number" id="y-t-fen" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs">
-                        </div>
-                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border"><div class="flex justify-between mb-2"><span class="text-xs font-semibold">Türkçe</span><span class="text-xs text-ogm-600 font-bold" id="net-t-turkce">Net: 0.00</span></div><div class="flex gap-2"><input type="number" id="c-t-turkce" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white border rounded-lg px-3 py-2 text-xs"><input type="number" id="y-t-turkce" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white border rounded-lg px-3 py-2 text-xs"></div></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border"><div class="flex justify-between mb-2"><span class="text-xs font-semibold">Matematik</span><span class="text-xs text-ogm-600 font-bold" id="net-t-mat">Net: 0.00</span></div><div class="flex gap-2"><input type="number" id="c-t-mat" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white border rounded-lg px-3 py-2 text-xs"><input type="number" id="y-t-mat" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white border rounded-lg px-3 py-2 text-xs"></div></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border"><div class="flex justify-between mb-2"><span class="text-xs font-semibold">Sosyal</span><span class="text-xs text-ogm-600 font-bold" id="net-t-sosyal">Net: 0.00</span></div><div class="flex gap-2"><input type="number" id="c-t-sosyal" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white border rounded-lg px-3 py-2 text-xs"><input type="number" id="y-t-sosyal" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white border rounded-lg px-3 py-2 text-xs"></div></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border"><div class="flex justify-between mb-2"><span class="text-xs font-semibold">Fen</span><span class="text-xs text-ogm-600 font-bold" id="net-t-fen">Net: 0.00</span></div><div class="flex gap-2"><input type="number" id="c-t-fen" placeholder="Doğru" oninput="calcPuan()" class="w-1/2 bg-white border rounded-lg px-3 py-2 text-xs"><input type="number" id="y-t-fen" placeholder="Yanlış" oninput="calcPuan()" class="w-1/2 bg-white border rounded-lg px-3 py-2 text-xs"></div></div>
                 </div>
-                <div class="bg-ogm-50 border border-ogm-100 p-5 rounded-xl grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-                    <div><span class="text-xs text-ogm-700 font-semibold block mb-1">Toplam TYT Neti</span><span id="resTytNet" class="text-2xl font-bold text-slate-900">0.00</span></div>
-                    <div><span class="text-xs text-ogm-700 font-semibold block mb-1">Tahmini TYT Puanı</span><span id="resTytPuan" class="text-2xl font-bold text-ogm-600">100.00</span></div>
-                    <div><span class="text-xs text-ogm-700 font-semibold block mb-1">Tahmini Sıralama</span><span id="resSiralama" class="text-2xl font-bold text-slate-900">1.500.000</span></div>
+                <div class="bg-ogm-50 border p-5 rounded-xl grid grid-cols-3 text-center">
+                    <div><span class="text-xs text-ogm-700 block mb-1">Toplam Net</span><span id="resTytNet" class="text-xl font-bold">0.00</span></div>
+                    <div><span class="text-xs text-ogm-700 block mb-1">Tahmini Puan</span><span id="resTytPuan" class="text-xl font-bold text-ogm-600">100.00</span></div>
+                    <div><span class="text-xs text-ogm-700 block mb-1">Sıralama</span><span id="resSiralama" class="text-xl font-bold">1.500.000</span></div>
                 </div>
             </div>
         </div>
 
-        <!-- 3. HAFTALIK PROGRAM -->
         <div id="programView" class="hidden space-y-6">
             <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
-                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-100 pb-5">
-                    <div>
-                        <span class="bg-ogm-50 text-ogm-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Planlama</span>
-                        <h3 class="text-xl font-bold text-slate-900 mt-1">Haftalık Çalışma Programı</h3>
-                    </div>
-                    <button onclick="toggleModal('addProgramModal')" class="flex items-center gap-1.5 bg-ogm-600 hover:bg-ogm-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-all shadow-sm">
-                        <i data-lucide="plus" class="w-4 h-4"></i> Görev Ekle
-                    </button>
-                </div>
+                <div class="flex justify-between items-center border-b pb-4"><h3 class="text-xl font-bold">Haftalık Program</h3><button onclick="toggleModal('addProgramModal')" class="bg-ogm-600 text-white text-xs font-semibold px-4 py-2.5 rounded-xl">Görev Ekle</button></div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="programCardsGrid"></div>
             </div>
         </div>
 
-        <!-- 4. EKSİK KONULAR -->
         <div id="topicsView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
-                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-100 pb-5">
-                    <div>
-                        <span class="bg-ogm-50 text-ogm-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Eksik Analizi</span>
-                        <h3 class="text-xl font-bold text-slate-900 mt-1">Öncelikli Tekrar Edilecek Konular</h3>
-                    </div>
-                    <div class="flex gap-2 w-full md:w-auto">
-                        <input type="text" id="newTopicInput" placeholder="Örn: Fizik - Vektörler" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs focus:outline-none flex-1">
-                        <button onclick="addTopic()" class="bg-ogm-600 hover:bg-ogm-700 text-white font-semibold px-4 py-2 rounded-xl text-xs shrink-0">Ekle</button>
-                    </div>
-                </div>
-                <div id="topicsListContainer" class="space-y-2.5"></div>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-2xl mx-auto">
+                <div class="flex justify-between items-center border-b pb-4"><h3 class="text-xl font-bold">Eksik Konular</h3><div class="flex gap-2"><input type="text" id="newTopicInput" placeholder="Konu adı" class="border rounded-xl px-3 py-2 text-xs"><button onclick="addTopic()" class="bg-ogm-600 text-white px-4 py-2 rounded-xl text-xs">Ekle</button></div></div>
+                <div id="topicsListContainer" class="space-y-2"></div>
             </div>
         </div>
 
-        <!-- 5. ÖĞRENCİ: CANLI TOPLANTILAR & TAKVİM -->
         <div id="studentMeetingsView" class="hidden space-y-6">
             <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-4xl mx-auto">
-                <div class="border-b border-slate-100 pb-4">
-                    <span class="bg-ogm-50 text-ogm-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Takvim & Canlı Dersler</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Planlanan Canlı Toplantı ve Oturumlar</h3>
-                    <p class="text-xs text-slate-500">Öğretmenlerinizin ve yöneticilerin oluşturduğu toplantılara aşağıdan katılım sağlayabilirsiniz.</p>
-                </div>
+                <div class="border-b pb-4"><h3 class="text-xl font-bold">Canlı Toplantılar & Takvim</h3><p class="text-xs text-slate-500">Matematik ve Edebiyat öğretmenlerinizin planladığı dersler.</p></div>
                 <div id="studentMeetingsList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
         </div>
 
-        <!-- 6. TARİH OYUNU MODÜLÜ -->
         <div id="tarihOyunuView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-2xl mx-auto">
-                <div class="text-center border-b border-slate-100 pb-4">
-                    <span class="bg-ogm-50 text-ogm-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Tarih Bilgi Yarışması</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Zaman Tüneli Tarih Oyunu</h3>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-2xl mx-auto text-center">
+                <h3 class="text-xl font-bold mb-1">Tarih Zaman Oyunu</h3>
+                <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
+                    <div class="flex justify-between text-xs font-semibold"><span>Soru: <span id="gameQuestionNum">1</span> / <span id="gameTotalQ">3</span></span><span class="text-ogm-600">Puan: <span id="gameScore">0</span></span></div>
+                    <h4 id="gameEventText" class="font-bold text-sm">Yükleniyor...</h4>
+                    <div id="gameOptions" class="grid grid-cols-2 gap-3 pt-2"></div>
                 </div>
-                <div id="gameContainer" class="space-y-4 text-center">
-                    <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs font-semibold">
-                        <span>Soru: <span id="gameQuestionNum">1</span> / <span id="gameTotalQ">5</span></span>
-                        <span class="text-ogm-600">Puan: <span id="gameScore">0</span></span>
-                    </div>
-                    <div id="gameCard" class="bg-ogm-50 border border-ogm-100 p-6 rounded-2xl space-y-3">
-                        <h4 id="gameEventText" class="font-bold text-sm text-slate-800">Yükleniyor...</h4>
-                        <div id="gameOptions" class="grid grid-cols-2 gap-3 pt-2"></div>
-                    </div>
-                    <div id="gameResultBox" class="hidden space-y-3">
-                        <h4 id="gameResultTitle" class="font-bold text-base text-slate-900">Oyun Bitti!</h4>
-                        <p id="gameFinalScore" class="text-xs text-slate-600"></p>
-                        <button onclick="restartTarihGame()" class="bg-ogm-600 hover:bg-ogm-700 text-white font-semibold px-6 py-2.5 rounded-xl text-xs">Yeniden Başla</button>
-                    </div>
-                </div>
+                <div id="gameResultBox" class="hidden space-y-3"><h4 class="font-bold text-base">Oyun Bitti!</h4><p id="gameFinalScore" class="text-xs"></p><button onclick="restartTarihGame()" class="bg-ogm-600 text-white px-6 py-2 rounded-xl text-xs">Yeniden Başla</button></div>
             </div>
         </div>
 
-        <!-- ÖĞRENCİ DUYURULAR GÖRÜNÜMÜ -->
         <div id="studentAnnouncementsView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-4 max-w-3xl mx-auto">
-                <div class="border-b border-slate-100 pb-4">
-                    <span class="bg-ogm-50 text-ogm-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Bildirimler</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Sistem Duyuruları</h3>
-                </div>
-                <div id="studentAnnouncementsList" class="space-y-3"></div>
-            </div>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-4 max-w-3xl mx-auto"><h3 class="text-xl font-bold">Sistem Duyuruları</h3><div id="studentAnnouncementsList" class="space-y-3"></div></div>
         </div>
 
-        <!-- GÜNLÜK NOTLAR -->
         <div id="notesView" class="hidden space-y-6">
-            <div class="max-w-xl mx-auto ogm-card rounded-2xl p-6 sm:p-8 space-y-4">
-                <h3 class="text-xl font-bold text-slate-900">Çalışma Günlüğü</h3>
-                <textarea id="studyNoteInput" rows="4" placeholder="Notunuzu buraya yazın..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs focus:outline-none"></textarea>
-                <button onclick="saveStudyNote()" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-2.5 rounded-xl text-xs transition-all">Notu Kaydet</button>
-                <div id="savedNoteDisplay" class="bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs text-slate-600 italic">Kayıtlı not bulunmuyor.</div>
-            </div>
+            <div class="max-w-xl mx-auto ogm-card rounded-2xl p-6 space-y-4"><h3 class="text-xl font-bold">Çalışma Günlüğü</h3><textarea id="studyNoteInput" rows="4" placeholder="Notunuz..." class="w-full border rounded-xl p-3 text-xs"></textarea><button onclick="saveStudyNote()" class="w-full bg-ogm-600 text-white py-2.5 rounded-xl text-xs">Kaydet</button><div id="savedNoteDisplay" class="bg-slate-50 border p-3 rounded-xl text-xs italic">Kayıt yok.</div></div>
         </div>
 
-        <!-- POMODORO -->
         <div id="pomodoroView" class="hidden space-y-6">
-            <div class="max-w-md mx-auto ogm-card rounded-2xl p-8 text-center space-y-6">
-                <h3 class="text-xl font-bold text-slate-900">Odaklanma Süresi (Pomodoro)</h3>
-                <div class="text-6xl font-bold text-ogm-600 tracking-wider" id="pomodoroTimer">25:00</div>
-                <div class="flex justify-center gap-3">
-                    <button onclick="startPomodoro()" class="bg-ogm-600 hover:bg-ogm-700 text-white font-semibold px-6 py-2.5 rounded-xl text-xs shadow-sm">Başlat</button>
-                    <button onclick="pausePomodoro()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-5 py-2.5 rounded-xl text-xs border border-slate-300">Duraklat</button>
-                    <button onclick="resetPomodoro()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-5 py-2.5 rounded-xl text-xs border border-slate-300">Sıfırla</button>
-                </div>
-            </div>
+            <div class="max-w-md mx-auto ogm-card rounded-2xl p-8 text-center space-y-6"><h3 class="text-xl font-bold">Pomodoro Sayacı</h3><div class="text-6xl font-bold text-ogm-600" id="pomodoroTimer">25:00</div><div class="flex justify-center gap-3"><button onclick="startPomodoro()" class="bg-ogm-600 text-white px-6 py-2.5 rounded-xl text-xs">Başlat</button><button onclick="pausePomodoro()" class="bg-slate-100 border px-5 py-2.5 rounded-xl text-xs">Duraklat</button><button onclick="resetPomodoro()" class="bg-slate-100 border px-5 py-2.5 rounded-xl text-xs">Sıfırla</button></div></div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- ÖĞRETMEN MODÜLLERİ                          -->
-        <!-- ========================================== -->
-
+        <!-- ================= ÖĞRETMEN & ADMİN GÖRÜNÜMLERİ ================= -->
         <div id="pdrDashboardView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
-                <div class="border-b border-slate-100 pb-4">
-                    <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Öğretmen & Rehberlik Paneli</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Öğrenci Performans & Takip Listesi</h3>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-100 text-slate-700 uppercase font-semibold">
-                            <tr>
-                                <th class="p-3 rounded-l-xl">Öğrenci Adı / E-posta</th>
-                                <th class="p-3">Kayıtlı Deneme</th>
-                                <th class="p-3">En Yüksek Net</th>
-                                <th class="p-3 rounded-r-xl">Durum</th>
-                            </tr>
-                        </thead>
-                        <tbody id="pdrStudentTableBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6"><h3 class="text-xl font-bold">Öğrenci Listesi & Performans</h3><div class="overflow-x-auto"><table class="w-full text-left text-xs"><thead class="bg-slate-100"><tr><th class="p-3">Ad Soyad</th><th class="p-3">Deneme</th><th class="p-3">En Yüksek Net</th></tr></thead><tbody id="pdrStudentTableBody" class="divide-y"></tbody></table></div></div>
         </div>
 
         <div id="teacherClassStatsView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
-                <div class="border-b border-slate-100 pb-4">
-                    <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Sınıf Analizi</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Ders Bazlı Genel Başarı Özeti</h3>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block">Türkçe Ort.</span><span class="text-xl font-bold text-emerald-600">28.40 Net</span></div>
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block">Matematik Ort.</span><span class="text-xl font-bold text-emerald-600">22.15 Net</span></div>
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block">Sosyal Ort.</span><span class="text-xl font-bold text-emerald-600">14.80 Net</span></div>
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block">Fen Ort.</span><span class="text-xl font-bold text-emerald-600">11.90 Net</span></div>
-                </div>
-            </div>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6"><h3 class="text-xl font-bold">Branş Sınav Ortalamaları</h3><div class="grid grid-cols-2 gap-4"><div class="bg-slate-50 border p-4 rounded-xl"><span>Matematik Sınıf Ort.</span><p class="text-xl font-bold text-emerald-600">22.15 Net</p></div><div class="bg-slate-50 border p-4 rounded-xl"><span>Edebiyat Sınıf Ort.</span><p class="text-xl font-bold text-emerald-600">28.40 Net</p></div></div></div>
         </div>
 
-        <!-- ÖĞRETMEN & ADMİN ORTAK TOPLANTI OLUŞTURMA PANELİ -->
         <div id="teacherMeetingsView" class="hidden space-y-6">
             <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-3xl mx-auto">
-                <div class="border-b border-slate-100 pb-4">
-                    <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Canlı Oturum & Takvim</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Yeni Toplantı / Canlı Ders Planla</h3>
-                    <p class="text-xs text-slate-500">Öğrencilerin takviminde görünecek çevrimiçi toplantı bağlantısı oluşturun.</p>
-                </div>
-                <form onsubmit="handleCreateMeeting(event, 'Öğretmen')" class="space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Toplantı / Ders Başlığı</label>
-                            <input type="text" id="meetTitle" required placeholder="Örn: YKS Matematik Soru Çözümü" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tarih ve Saat</label>
-                            <input type="datetime-local" id="meetDate" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Toplantı Bağlantısı (Zoom, Google Meet vb.)</label>
-                        <input type="url" id="meetLink" required placeholder="https://meet.google.com/abc-defg-hij" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Açıklama / Notlar</label>
-                        <textarea id="meetDesc" rows="2" placeholder="Öğrenciler için hazırlık notları..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl text-xs shadow-sm">Toplantıyı Takvime Ekle & Yayınla</button>
+                <h3 class="text-xl font-bold">Canlı Ders / Toplantı Oluştur</h3>
+                <form onsubmit="handleCreateMeeting(event)" class="space-y-4">
+                    <input type="text" id="meetTitle" required placeholder="Ders Başlığı (Örn: Fonksiyonlar Soru Çözümü)" class="w-full border rounded-xl px-3 py-2 text-xs">
+                    <input type="datetime-local" id="meetDate" required class="w-full border rounded-xl px-3 py-2 text-xs">
+                    <input type="url" id="meetLink" required placeholder="Toplantı Linki (Zoom / Meet)" class="w-full border rounded-xl px-3 py-2 text-xs">
+                    <textarea id="meetDesc" rows="2" placeholder="Açıklama" class="w-full border rounded-xl p-3 text-xs"></textarea>
+                    <button type="submit" class="w-full bg-emerald-600 text-white py-3 rounded-xl text-xs font-semibold">Toplantıyı Yayınla</button>
                 </form>
-
-                <div class="pt-4 border-t border-slate-100 space-y-3">
-                    <h4 class="font-bold text-xs text-slate-800">Planlanan Toplantı Arşivi</h4>
-                    <div id="teacherMeetingsList" class="space-y-2"></div>
-                </div>
+                <div id="teacherMeetingsList" class="space-y-2 pt-4 border-t"></div>
             </div>
         </div>
 
         <div id="pdrConsultView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
-                <div class="border-b border-slate-100 pb-4">
-                    <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Rehberlik Araçları</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Bireysel Görüşme & Randevu Notları</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <h4 class="font-bold text-xs text-slate-800">Yeni Görüşme Notu Ekle</h4>
-                        <input type="text" id="pdrStudentName" placeholder="Öğrenci Ad Soyad" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                        <textarea id="pdrConsultNote" rows="3" placeholder="Görüşme detayları ve tavsiyeler..." class="w-full bg-white border border-slate-300 rounded-xl p-3 text-xs"></textarea>
-                        <button onclick="savePdrNote()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-xl text-xs">Notu Kaydet</button>
-                    </div>
-                    <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <h4 class="font-bold text-xs text-slate-800">Kayıtlı Görüşme Arşivi</h4>
-                        <div id="pdrNotesList" class="space-y-2 max-h-48 overflow-y-auto"></div>
-                    </div>
-                </div>
-            </div>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-xl mx-auto"><h3 class="text-xl font-bold">Görüşme Notları</h3><input type="text" id="pdrStudentName" placeholder="Öğrenci Adı" class="w-full border rounded-xl px-3 py-2 text-xs"><textarea id="pdrConsultNote" rows="3" placeholder="Notlar..." class="w-full border rounded-xl p-3 text-xs"></textarea><button onclick="savePdrNote()" class="w-full bg-emerald-600 text-white py-2.5 rounded-xl text-xs">Kaydet</button><div id="pdrNotesList" class="space-y-2"></div></div>
         </div>
 
         <div id="pdrTargetView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-2xl mx-auto">
-                <div class="border-b border-slate-100 pb-4">
-                    <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">İletişim</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Öğrencilere Duyuru Yayınla</h3>
-                </div>
-                <div class="space-y-3">
-                    <input type="text" id="pdrAnnouncementTitle" placeholder="Duyuru Başlığı" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs">
-                    <textarea id="pdrAnnouncementText" rows="3" placeholder="Öğrencilere iletilecek mesaj..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs"></textarea>
-                    <button onclick="publishAnnouncement('Öğretmen')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2.5 rounded-xl text-xs">Duyuruyu Yayınla</button>
-                </div>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-xl mx-auto"><h3 class="text-xl font-bold">Öğrencilere Duyuru Yayınla</h3><input type="text" id="pdrAnnouncementTitle" placeholder="Başlık" class="w-full border rounded-xl px-3 py-2 text-xs"><textarea id="pdrAnnouncementText" rows="3" placeholder="Mesaj..." class="w-full border rounded-xl p-3 text-xs"></textarea><button onclick="publishAnnouncement('Öğretmen')" class="bg-emerald-600 text-white px-5 py-2.5 rounded-xl text-xs">Yayınla</button></div>
+        </div>
+
+        <!-- ADMİN ONAY EKRANI -->
+        <div id="adminTeacherApprovalsView" class="hidden space-y-6">
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
+                <div><h3 class="text-xl font-bold">Öğretmen Belge Onay Paneli</h3><p class="text-xs text-slate-500">Kayıt olan öğretmenlerin belgelerini inceleyerek sisteme erişim izni verin.</p></div>
+                <div class="overflow-x-auto"><table class="w-full text-left text-xs"><thead class="bg-slate-100"><tr><th class="p-3">Ad Soyad</th><th class="p-3">Branş</th><th class="p-3">E-Posta</th><th class="p-3">Belge</th><th class="p-3 text-center">İşlem</th></tr></thead><tbody id="adminPendingTeachersBody" class="divide-y"></tbody></table></div>
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- ADMİN MODÜLLERİ                             -->
-        <!-- ========================================== -->
-
         <div id="adminUsersView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
-                <div class="border-b border-slate-100 pb-4">
-                    <span class="bg-rose-50 text-rose-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Yönetici Kontrolü</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Kayıtlı Kullanıcılar & Rol Yönetimi</h3>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-100 text-slate-700 uppercase font-semibold">
-                            <tr>
-                                <th class="p-3 rounded-l-xl">Ad Soyad</th>
-                                <th class="p-3">E-Posta</th>
-                                <th class="p-3">Mevcut Rol</th>
-                                <th class="p-3">Kayıt Tarihi</th>
-                                <th class="p-3 rounded-r-xl text-center">Rol Değiştir / Sil</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminUsersTableBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6"><h3 class="text-xl font-bold">Tüm Kullanıcılar</h3><div class="overflow-x-auto"><table class="w-full text-left text-xs"><thead class="bg-slate-100"><tr><th class="p-3">Ad Soyad</th><th class="p-3">E-Posta</th><th class="p-3">Rol / Branş</th><th class="p-3 text-center">Sil</th></tr></thead><tbody id="adminUsersTableBody" class="divide-y"></tbody></table></div></div>
         </div>
 
         <div id="adminLogsView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
-                <div class="border-b border-slate-100 pb-4">
-                    <span class="bg-rose-50 text-rose-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Sistem Özeti</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Portal Genel İstatistikleri</h3>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block mb-1">Toplam Kullanıcı</span><span id="adminStatUsers" class="text-2xl font-bold text-slate-900">0</span></div>
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block mb-1">Oyun Soru Sayısı</span><span id="adminStatQuestions" class="text-2xl font-bold text-rose-600">5</span></div>
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block mb-1">Aktif Toplantı</span><span id="adminStatMeetings" class="text-2xl font-bold text-ogm-600">0</span></div>
-                </div>
-            </div>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6"><h3 class="text-xl font-bold">Sistem İstatistikleri</h3><div class="grid grid-cols-3 gap-4"><div class="bg-slate-50 border p-4 rounded-xl"><span>Toplam Kullanıcı</span><p id="adminStatUsers" class="text-2xl font-bold">0</p></div><div class="bg-slate-50 border p-4 rounded-xl"><span>Onay Bekleyen Öğrt.</span><p id="adminStatPending" class="text-2xl font-bold text-rose-600">0</p></div><div class="bg-slate-50 border p-4 rounded-xl"><span>Aktif Toplantı</span><p id="adminStatMeetings" class="text-2xl font-bold text-ogm-600">0</p></div></div></div>
         </div>
 
-        <!-- ADMİN: TOPLANTI PLANLAMA -->
         <div id="adminMeetingsView" class="hidden space-y-6">
             <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-3xl mx-auto">
-                <div class="border-b border-slate-100 pb-4">
-                    <span class="bg-rose-50 text-rose-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Yönetici Toplantı Paneli</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Okul Geneli Toplantı / Seminer Planla</h3>
-                </div>
-                <form onsubmit="handleCreateMeeting(event, 'Admin')" class="space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Toplantı Başlığı</label>
-                            <input type="text" id="adminMeetTitle" required placeholder="Örn: Veli / Öğrenci Bilgilendirme Semineri" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tarih ve Saat</label>
-                            <input type="datetime-local" id="adminMeetDate" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Toplantı Bağlantısı</label>
-                        <input type="url" id="adminMeetLink" required placeholder="https://zoom.us/j/..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Açıklama</label>
-                        <textarea id="adminMeetDesc" rows="2" placeholder="Seminer detayları..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-3 rounded-xl text-xs shadow-sm">Toplantıyı Takvime Ekle</button>
+                <h3 class="text-xl font-bold">Admin Toplantı Planla</h3>
+                <form onsubmit="handleCreateMeeting(event)" class="space-y-4">
+                    <input type="text" id="adminMeetTitle" required placeholder="Başlık" class="w-full border rounded-xl px-3 py-2 text-xs">
+                    <input type="datetime-local" id="adminMeetDate" required class="w-full border rounded-xl px-3 py-2 text-xs">
+                    <input type="url" id="adminMeetLink" required placeholder="Link" class="w-full border rounded-xl px-3 py-2 text-xs">
+                    <textarea id="adminMeetDesc" rows="2" placeholder="Açıklama" class="w-full border rounded-xl p-3 text-xs"></textarea>
+                    <button type="submit" class="w-full bg-rose-600 text-white py-3 rounded-xl text-xs font-semibold">Yayınla</button>
                 </form>
             </div>
         </div>
 
         <div id="adminGameEditorView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
-                <div class="border-b border-slate-100 pb-4">
-                    <span class="bg-rose-50 text-rose-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">İçerik Editörü</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Tarih Zaman Oyunu Soru Bankası</h3>
-                </div>
-                <form onsubmit="addGameQuestion(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                    <input type="text" id="newQText" required placeholder="Soru..." class="md:col-span-2 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                    <input type="text" id="newQCorrect" required placeholder="Doğru Yıl" class="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                    <input type="text" id="newQOpt1" required placeholder="Yanlış Şık 1" class="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                    <input type="text" id="newQOpt2" required placeholder="Yanlış Şık 2" class="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                    <input type="text" id="newQOpt3" required placeholder="Yanlış Şık 3" class="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                    <button type="submit" class="md:col-span-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2.5 rounded-xl text-xs">Soruyu Ekle</button>
-                </form>
-                <div id="adminQuestionsList" class="space-y-2"></div>
-            </div>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6"><h3 class="text-xl font-bold">Tarih Oyunu Soru Bankası</h3><div id="adminQuestionsList" class="space-y-2"></div></div>
         </div>
 
         <div id="adminAnnouncementsView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
-                <div class="border-b border-slate-100 pb-4">
-                    <span class="bg-rose-50 text-rose-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Duyuru Kontrolü</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Sistem Genel Duyurusu Oluştur</h3>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-2">
-                    <input type="text" id="adminAnnTitle" placeholder="Duyuru Başlığı" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs flex-1">
-                    <input type="text" id="adminAnnText" placeholder="Açıklama" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs flex-[2]">
-                    <button onclick="publishAdminAnnouncement()" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold px-4 py-2 rounded-xl text-xs shrink-0">Yayınla</button>
-                </div>
-                <div id="adminAnnouncementsList" class="space-y-2"></div>
-            </div>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6"><h3 class="text-xl font-bold">Duyuruları Yönet</h3><div class="flex gap-2"><input type="text" id="adminAnnTitle" placeholder="Başlık" class="border px-3 py-2 text-xs flex-1"><input type="text" id="adminAnnText" placeholder="Açıklama" class="border px-3 py-2 text-xs flex-[2]"><button onclick="publishAdminAnnouncement()" class="bg-rose-600 text-white px-4 py-2 rounded-xl text-xs">Yayınla</button></div><div id="adminAnnouncementsList" class="space-y-2 pt-4"></div></div>
         </div>
-
     </main>
 
-    <!-- YENİ DENEME MODALI -->
+    <!-- MODALLAR -->
     <div id="addDenemeModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 class="text-base font-bold text-slate-900">Yeni Deneme Kaydı Ekle</h3>
-                <button onclick="toggleModal('addDenemeModal')" class="text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
-            </div>
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <h3 class="text-base font-bold">Yeni Deneme Ekle</h3>
             <form onsubmit="handleSaveDeneme(event)" class="space-y-3">
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Deneme Adı</label>
-                        <input type="text" id="denemeName" required placeholder="Örn: 3D TYT-1" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Sınav Türü</label>
-                        <select id="denemeType" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                            <option value="TYT">TYT</option>
-                            <option value="AYT">AYT</option>
-                        </select>
-                    </div>
+                <div class="grid grid-cols-2 gap-3"><input type="text" id="denemeName" required placeholder="Deneme Adı" class="border rounded-xl px-3 py-2 text-xs"><select id="denemeType" class="border rounded-xl px-3 py-2 text-xs"><option value="TYT">TYT</option><option value="AYT">AYT</option></select></div>
+                <div class="grid grid-cols-4 gap-2 text-xs">
+                    <input type="number" id="dTurkceC" placeholder="Türkçe D" class="border rounded p-1"><input type="number" id="dTurkceY" placeholder="Y" class="border rounded p-1">
+                    <input type="number" id="dSosyalC" placeholder="Sosyal D" class="border rounded p-1"><input type="number" id="dSosyalY" placeholder="Y" class="border rounded p-1">
+                    <input type="number" id="dMatC" placeholder="Mat D" class="border rounded p-1"><input type="number" id="dMatY" placeholder="Y" class="border rounded p-1">
+                    <input type="number" id="dFenC" placeholder="Fen D" class="border rounded p-1"><input type="number" id="dFenY" placeholder="Y" class="border rounded p-1">
                 </div>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                    <div>
-                        <label class="block font-semibold mb-1 text-[11px]">Türkçe</label>
-                        <input type="number" id="dTurkceC" placeholder="Doğru" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 mb-1 text-xs">
-                        <input type="number" id="dTurkceY" placeholder="Yanlış" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs">
-                    </div>
-                    <div>
-                        <label class="block font-semibold mb-1 text-[11px]">Sosyal</label>
-                        <input type="number" id="dSosyalC" placeholder="Doğru" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 mb-1 text-xs">
-                        <input type="number" id="dSosyalY" placeholder="Yanlış" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs">
-                    </div>
-                    <div>
-                        <label class="block font-semibold mb-1 text-[11px]">Matematik</label>
-                        <input type="number" id="dMatC" placeholder="Doğru" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 mb-1 text-xs">
-                        <input type="number" id="dMatY" placeholder="Yanlış" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs">
-                    </div>
-                    <div>
-                        <label class="block font-semibold mb-1 text-[11px]">Fen</label>
-                        <input type="number" id="dFenC" placeholder="Doğru" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 mb-1 text-xs">
-                        <input type="number" id="dFenY" placeholder="Yanlış" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2 py-1.5 text-xs">
-                    </div>
-                </div>
-                <button type="submit" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-2.5 rounded-xl text-xs shadow-sm mt-2">Denemeyi Kaydet</button>
+                <button type="submit" class="w-full bg-ogm-600 text-white py-2.5 rounded-xl text-xs">Kaydet</button>
             </form>
         </div>
     </div>
 
-    <!-- PROGRAM MODALI -->
     <div id="addProgramModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white border border-slate-200 rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 class="text-base font-bold text-slate-900">Görev Ekle</h3>
-                <button onclick="toggleModal('addProgramModal')" class="text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
-            </div>
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4">
+            <h3 class="text-base font-bold">Görev Ekle</h3>
             <form onsubmit="handleSaveProgramTask(event)" class="space-y-3">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Gün</label>
-                    <select id="progDay" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                        <option value="Pazartesi">Pazartesi</option>
-                        <option value="Salı">Salı</option>
-                        <option value="Çarşamba">Çarşamba</option>
-                        <option value="Perşembe">Perşembe</option>
-                        <option value="Cuma">Cuma</option>
-                        <option value="Cumartesi">Cumartesi</option>
-                        <option value="Pazar">Pazar</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Görev / Konu</label>
-                    <input type="text" id="progTask" required placeholder="Örn: Paragraf Çözümü" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs">
-                </div>
-                <button type="submit" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-2.5 rounded-xl text-xs shadow-sm">Kaydet</button>
+                <select id="progDay" class="w-full border rounded-xl px-3 py-2 text-xs"><option value="Pazartesi">Pazartesi</option><option value="Salı">Salı</option><option value="Çarşamba">Çarşamba</option><option value="Perşembe">Perşembe</option><option value="Cuma">Cuma</option><option value="Cumartesi">Cumartesi</option><option value="Pazar">Pazar</option></select>
+                <input type="text" id="progTask" required placeholder="Görev" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <button type="submit" class="w-full bg-ogm-600 text-white py-2.5 rounded-xl text-xs">Kaydet</button>
             </form>
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
-        <p>Zaman Tüneli - Öğrenci, Öğretmen & Admin Akademi Portalı &copy; 2026</p>
-    </footer>
-
-    <!-- FIREBASE & UYGULAMA SCRIPTS -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCydVb8Mom_PpyTPne-jk2eQVBmQSlo0dM",
-            authDomain: "zaman-tuneli-app-947b4.firebaseapp.com",
-            projectId: "zaman-tuneli-app-947b4",
-            storageBucket: "zaman-tuneli-app-947b4.firebasestorage.app",
-            messagingSenderId: "136991116124",
-            appId: "1:136991116124:web:ed9813d808270676e50f99"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        window.auth = auth;
-        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-        window.signOut = signOut;
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const role = localStorage.getItem('zt_user_role') || 'ogrenci';
-                applyUserSessionUI(user.email, role);
-            } else {
-                const localSession = JSON.parse(localStorage.getItem('zt_local_session'));
-                if (localSession) {
-                    applyUserSessionUI(localSession.email, localSession.role);
-                } else {
-                    document.getElementById('authLockScreen').classList.remove('hidden');
-                    document.getElementById('authArea').innerHTML = '';
-                }
-            }
-            lucide.createIcons();
-        });
-    </script>
-
+    <!-- SCRIPT -->
     <script>
         let selectedAuthRole = 'ogrenci';
 
         function selectLoginRole(role) {
             selectedAuthRole = role;
-            const btns = {
-                ogrenci: document.getElementById('roleBtnOgrenci'),
-                ogretmen: document.getElementById('roleBtnOgretmen'),
-                admin: document.getElementById('roleBtnAdmin')
-            };
+            const btns = { ogrenci: roleBtnOgrenci, matematik: roleBtnMatematik, edebiyat: roleBtnEdebiyat, admin: roleBtnAdmin };
+            Object.values(btns).forEach(b => b.className = "py-2 font-semibold rounded-lg text-slate-500 hover:text-slate-800 transition-all text-[11px]");
 
-            Object.values(btns).forEach(b => {
-                b.className = "py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-800 transition-all";
-            });
+            const activeBtn = document.getElementById('roleBtn' + role.charAt(0).toUpperCase() + role.slice(1));
+            activeBtn.className = "py-2 font-bold rounded-lg bg-white text-ogm-600 shadow-sm transition-all text-[11px]";
 
-            const iconBox = document.getElementById('roleIconBox');
-            const subtitle = document.getElementById('roleSubtitle');
-            const loginBtn = document.getElementById('loginSubmitBtn');
-            const regBtn = document.getElementById('regSubmitBtn');
+            const docField = document.getElementById('teacherDocField');
             const adminField = document.getElementById('adminKeyField');
-            const branchField = document.getElementById('teacherBranchField');
-            const authModeTabs = document.getElementById('authModeTabs');
+            const authTabs = document.getElementById('authModeTabs');
 
-            if (role === 'ogrenci') {
-                btns.ogrenci.className = "py-2 text-xs font-bold rounded-lg bg-white text-ogm-600 shadow-sm transition-all";
-                iconBox.className = "inline-flex bg-ogm-50 text-ogm-600 p-3 rounded-xl mb-1";
-                iconBox.innerHTML = '<i data-lucide="graduation-cap" class="w-8 h-8"></i>';
-                subtitle.textContent = "Öğrenci hesabınızla oturum açın veya kayıt olun.";
-                loginBtn.className = "w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-3 rounded-xl text-xs transition-all shadow-sm";
-                loginBtn.textContent = "Öğrenci Girişi Yap";
-                regBtn.textContent = "Öğrenci Kaydı Oluştur";
+            if (role === 'matematik' || role === 'edebiyat') {
+                docField.classList.remove('hidden');
                 adminField.classList.add('hidden');
-                branchField.classList.add('hidden');
-                authModeTabs.classList.remove('hidden');
-            } else if (role === 'ogretmen') {
-                btns.ogretmen.className = "py-2 text-xs font-bold rounded-lg bg-white text-emerald-600 shadow-sm transition-all";
-                iconBox.className = "inline-flex bg-emerald-50 text-emerald-600 p-3 rounded-xl mb-1";
-                iconBox.innerHTML = '<i data-lucide="book-user" class="w-8 h-8"></i>';
-                subtitle.textContent = "Öğretmen / Rehberlik paneline giriş yapın veya kayıt olun.";
-                loginBtn.className = "w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl text-xs transition-all shadow-sm";
-                loginBtn.textContent = "Öğretmen Girişi Yap";
-                regBtn.className = "w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl text-xs transition-all shadow-sm";
-                regBtn.textContent = "Öğretmen Kaydı Oluştur";
-                adminField.classList.add('hidden');
-                branchField.classList.remove('hidden');
-                authModeTabs.classList.remove('hidden');
+                authTabs.classList.remove('hidden');
             } else if (role === 'admin') {
-                btns.admin.className = "py-2 text-xs font-bold rounded-lg bg-white text-rose-600 shadow-sm transition-all";
-                iconBox.className = "inline-flex bg-rose-50 text-rose-600 p-3 rounded-xl mb-1";
-                iconBox.innerHTML = '<i data-lucide="shield-check" class="w-8 h-8"></i>';
-                subtitle.textContent = "Sistem yöneticisi (Admin) yetkisiyle giriş yapın.";
-                loginBtn.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-3 rounded-xl text-xs transition-all shadow-sm";
-                loginBtn.textContent = "Admin Girişi Yap";
+                docField.classList.add('hidden');
                 adminField.classList.remove('hidden');
-                branchField.classList.add('hidden');
                 switchAuthTab('login');
-                authModeTabs.classList.add('hidden');
+                authTabs.classList.add('hidden');
+            } else {
+                docField.classList.add('hidden');
+                adminField.classList.add('hidden');
+                authTabs.classList.remove('hidden');
             }
-            lucide.createIcons();
+        }
+
+        // YKS 2027 GERİ SAYIM SAYACI
+        function updateYksCountdown() {
+            const yksDate = new Date('June 19, 2027 10:15:00').getTime();
+            const now = new Date().getTime();
+            const diff = yksDate - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('yksDays').textContent = String(days).padStart(3, '0');
+                document.getElementById('yksHours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('yksMins').textContent = String(mins).padStart(2, '0');
+                document.getElementById('yksSecs').textContent = String(secs).padStart(2, '0');
+            }
+        }
+        setInterval(updateYksCountdown, 1000);
+
+        // KULLANICI & OTURUM SİSTEMİ
+        let systemUsers = JSON.parse(localStorage.getItem('zt_system_users')) || [
+            { id: 1, name: 'Sistem Yöneticisi', email: 'admin@zamantuneli.com', role: 'admin', status: 'approved' },
+            { id: 2, name: 'Ahmet Hoca (Matematik)', email: 'mat@ogretmen.com', role: 'matematik', status: 'approved' },
+            { id: 3, name: 'Zeynep Hoca (Edebiyat)', email: 'edebiyat@ogretmen.com', role: 'edebiyat', status: 'approved' },
+            { id: 4, name: 'Mehmet Demir', email: 'mehmet@ogrenci.com', role: 'ogrenci', status: 'approved' }
+        ];
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const role = selectedAuthRole;
+
+            if (role === 'matematik' || role === 'edebiyat') {
+                const docInput = document.getElementById('regTeacherDoc');
+                if (!docInput.files || docInput.files.length === 0) {
+                    return alert("Öğretmen olarak kayıt olmak için lütfen diploma/belge yükleyin!");
+                }
+            }
+
+            const status = (role === 'matematik' || role === 'edebiyat') ? 'pending' : 'approved';
+            if (systemUsers.some(u => u.email === email)) return alert("Bu e-posta zaten kayıtlı.");
+
+            systemUsers.push({ id: Date.now(), name, email, role, status });
+            localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
+
+            if (status === 'pending') {
+                alert("Kayıt talebiniz alındı! Admin onayından sonra giriş yapabilirsiniz.");
+                switchAuthTab('login');
+            } else {
+                localStorage.setItem('zt_local_session', JSON.stringify({ email, role }));
+                applyUserSessionUI(email, role);
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const role = selectedAuthRole;
+
+            if (role === 'admin' && document.getElementById('adminSecretKey').value !== 'admin123') {
+                return alert("Hatalı Admin Şifresi! (Varsayılan: admin123)");
+            }
+
+            const user = systemUsers.find(u => u.email === email && u.role === role);
+            if (!user) {
+                // Yeni giriş ise otomatik ekle
+                systemUsers.push({ id: Date.now(), name: email.split('@')[0], email, role, status: role === 'ogrenci' || role === 'admin' ? 'approved' : 'pending' });
+                localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
+            }
+
+            const currentUser = systemUsers.find(u => u.email === email);
+            if (currentUser && currentUser.status === 'pending') {
+                return alert("Hesabınız henüz Admin tarafından onaylanmamıştır!");
+            }
+
+            localStorage.setItem('zt_local_session', JSON.stringify({ email, role }));
+            applyUserSessionUI(email, role);
         }
 
         function applyUserSessionUI(email, role) {
             document.getElementById('authLockScreen').classList.add('hidden');
-            const studentNav = document.getElementById('studentNavWrapper');
-            const teacherNav = document.getElementById('teacherNavWrapper');
-            const adminNav = document.getElementById('adminNavWrapper');
-            const roleBadge = document.getElementById('portalRoleBadge');
-            const headerIcon = document.getElementById('headerBrandIcon');
+            document.getElementById('studentNavWrapper').classList.add('hidden');
+            document.getElementById('teacherNavWrapper').classList.add('hidden');
+            document.getElementById('adminNavWrapper').classList.add('hidden');
 
-            studentNav.classList.add('hidden');
-            teacherNav.classList.add('hidden');
-            adminNav.classList.add('hidden');
-
-            let badgeLabel = "ÖĞRENCİ", badgeColor = "text-ogm-600";
-
+            let badge = "ÖĞRENCİ", color = "text-ogm-600";
             if (role === 'admin') {
-                roleBadge.textContent = "Admin Yönetim Paneli";
-                roleBadge.className = "text-[10px] text-rose-600 font-bold tracking-wider uppercase";
-                headerIcon.className = "bg-rose-600 text-white p-2.5 rounded-xl flex items-center justify-center font-bold text-sm";
-                adminNav.classList.remove('hidden');
-                badgeLabel = "ADMİN"; badgeColor = "text-rose-600";
+                document.getElementById('adminNavWrapper').classList.remove('hidden');
+                badge = "ADMİN"; color = "text-rose-600";
                 selectMainCategory('admin', 'sistem');
-            } else if (role === 'ogretmen') {
-                roleBadge.textContent = "Öğretmen & Rehberlik Paneli";
-                roleBadge.className = "text-[10px] text-emerald-600 font-bold tracking-wider uppercase";
-                headerIcon.className = "bg-emerald-600 text-white p-2.5 rounded-xl flex items-center justify-center font-bold text-sm";
-                teacherNav.classList.remove('hidden');
-                badgeLabel = "ÖĞRETMEN"; badgeColor = "text-emerald-600";
+            } else if (role === 'matematik' || role === 'edebiyat') {
+                document.getElementById('teacherNavWrapper').classList.remove('hidden');
+                badge = role === 'matematik' ? "MATEMATİK ÖĞRETMENİ" : "EDEBİYAT ÖĞRETMENİ";
+                color = "text-emerald-600";
                 selectMainCategory('teacher', 'takip');
             } else {
-                roleBadge.textContent = "Öğrenci Akademi Portalı";
-                roleBadge.className = "text-[10px] text-ogm-600 font-semibold tracking-wider uppercase";
-                headerIcon.className = "bg-ogm-600 text-white p-2.5 rounded-xl flex items-center justify-center font-bold text-sm";
-                studentNav.classList.remove('hidden');
+                document.getElementById('studentNavWrapper').classList.remove('hidden');
                 selectMainCategory('student', 'olcme');
             }
 
-            document.getElementById('authArea').innerHTML = `
-                <div class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl text-xs">
-                    <span class="${badgeColor} font-bold">${email} [${badgeLabel}]</span>
-                    <button onclick="handleLogout()" class="text-slate-400 hover:text-rose-600 font-bold ml-1">Çıkış</button>
-                </div>
-            `;
+            document.getElementById('portalRoleBadge').textContent = badge;
+            document.getElementById('portalRoleBadge').className = `text-[10px] ${color} font-bold tracking-wider uppercase`;
+            document.getElementById('authArea').innerHTML = `<div class="flex items-center gap-2 bg-slate-50 border px-3 py-1.5 rounded-xl text-xs"><span class="${color} font-bold">${email}</span><button onclick="handleLogout()" class="text-slate-400 hover:text-rose-600 font-bold ml-1">Çıkış</button></div>`;
             lucide.createIcons();
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('zt_local_session');
+            location.reload();
+        }
+
+        function switchAuthTab(tab) {
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden'); registerForm.classList.add('hidden');
+                loginTabBtn.className = "flex-1 pb-2.5 text-xs font-bold text-ogm-600 border-b-2 border-ogm-600";
+                registerTabBtn.className = "flex-1 pb-2.5 text-xs font-medium text-slate-400 border-b-2 border-transparent";
+            } else {
+                registerForm.classList.remove('hidden'); loginForm.classList.add('hidden');
+                registerTabBtn.className = "flex-1 pb-2.5 text-xs font-bold text-ogm-600 border-b-2 border-ogm-600";
+                loginTabBtn.className = "flex-1 pb-2.5 text-xs font-medium text-slate-400 border-b-2 border-transparent";
+            }
         }
 
         function selectMainCategory(role, category) {
@@ -875,9 +555,7 @@
                 });
                 document.getElementById(`cat-student-${category}`).className = "px-4 py-2 rounded-xl text-xs font-bold bg-ogm-600 text-white transition-all flex items-center gap-1.5";
                 document.getElementById(`subnav-student-${category}`).classList.remove('hidden');
-
-                const defaultTabs = { olcme: 'denemeTracker', planlama: 'program', etkilesim: 'studentMeetings' };
-                switchTab(defaultTabs[category]);
+                switchTab({ olcme: 'denemeTracker', planlama: 'program', etkilesim: 'studentMeetings' }[category]);
             } else if (role === 'teacher') {
                 ['takip', 'rehberlik'].forEach(c => {
                     document.getElementById(`cat-teacher-${c}`).className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5";
@@ -885,9 +563,7 @@
                 });
                 document.getElementById(`cat-teacher-${category}`).className = "px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white transition-all flex items-center gap-1.5";
                 document.getElementById(`subnav-teacher-${category}`).classList.remove('hidden');
-
-                const defaultTabs = { takip: 'pdrDashboard', rehberlik: 'teacherMeetings' };
-                switchTab(defaultTabs[category]);
+                switchTab({ takip: 'pdrDashboard', rehberlik: 'teacherMeetings' }[category]);
             } else if (role === 'admin') {
                 ['sistem', 'icerik'].forEach(c => {
                     document.getElementById(`cat-admin-${c}`).className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5";
@@ -895,9 +571,7 @@
                 });
                 document.getElementById(`cat-admin-${category}`).className = "px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 text-white transition-all flex items-center gap-1.5";
                 document.getElementById(`subnav-admin-${category}`).classList.remove('hidden');
-
-                const defaultTabs = { sistem: 'adminUsers', icerik: 'adminMeetings' };
-                switchTab(defaultTabs[category]);
+                switchTab({ sistem: 'adminTeacherApprovals', icerik: 'adminMeetings' }[category]);
             }
         }
 
@@ -905,375 +579,140 @@
             const allViews = [
                 'denemeTrackerView', 'calculatorView', 'programView', 'topicsView', 'studentMeetingsView', 'tarihOyunuView', 'studentAnnouncementsView', 'notesView', 'pomodoroView',
                 'pdrDashboardView', 'teacherClassStatsView', 'teacherMeetingsView', 'pdrConsultView', 'pdrTargetView',
-                'adminUsersView', 'adminLogsView', 'adminMeetingsView', 'adminGameEditorView', 'adminAnnouncementsView'
+                'adminTeacherApprovalsView', 'adminUsersView', 'adminLogsView', 'adminMeetingsView', 'adminGameEditorView', 'adminAnnouncementsView'
             ];
-            
-            allViews.forEach(v => { const el = document.getElementById(v); if (el) el.classList.add('hidden'); });
+            allViews.forEach(v => document.getElementById(v).classList.add('hidden'));
+            const target = document.getElementById(tab + 'View');
+            if (target) target.classList.remove('hidden');
 
-            const target = document.getElementById(tab + 'View') || document.getElementById(tab.replace('tab','')) || document.getElementById(tab);
-            if(target) target.classList.remove('hidden');
-
-            if (tab === 'tarihOyunu') initTarihGame();
+            if (tab === 'adminTeacherApprovals') renderAdminApprovals();
             if (tab === 'studentMeetings' || tab === 'teacherMeetings' || tab === 'adminMeetings') renderMeetings();
-            if (tab === 'studentAnnouncements') renderAnnouncements();
-            if (tab === 'adminUsers') renderAdminUsers();
-            if (tab === 'adminGameEditor') renderAdminQuestions();
-            if (tab === 'adminAnnouncements') renderAnnouncements();
-            if (tab === 'pdrDashboard') renderTeacherStudents();
+            if (tab === 'tarihOyunu') initTarihGame();
             lucide.createIcons();
         }
 
-        // KULLANICI KAYIT / GİRİŞ
-        let systemUsers = JSON.parse(localStorage.getItem('zt_system_users')) || [
-            { id: 1, name: 'Sistem Yöneticisi', email: 'admin@zamantuneli.com', role: 'admin', date: '01.09.2026' },
-            { id: 2, name: 'Ayşe Yılmaz (PDR)', email: 'rehberlik@zamantuneli.com', role: 'ogretmen', date: '10.09.2026' },
-            { id: 3, name: 'Mehmet Demir', email: 'mehmet@ogrenci.com', role: 'ogrenci', date: '15.09.2026' }
-        ];
+        // --- ADMİN ONAY İŞLEMLERİ ---
+        function renderAdminApprovals() {
+            const pending = systemUsers.filter(u => u.status === 'pending');
+            document.getElementById('pendingCountBadge').textContent = pending.length;
+            document.getElementById('adminStatPending').textContent = pending.length;
+            document.getElementById('adminStatUsers').textContent = systemUsers.length;
 
-        function registerUserRecord(name, email, role) {
-            if (!systemUsers.some(u => u.email === email)) {
-                systemUsers.push({ id: Date.now(), name: name || email.split('@')[0], email, role, date: new Date().toLocaleDateString('tr-TR') });
-                localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
-            }
+            const tbody = document.getElementById('adminPendingTeachersBody');
+            tbody.innerHTML = pending.length === 0 ? '<tr><td colspan="5" class="p-4 text-center text-slate-400">Onay bekleyen öğretmen yok.</td></tr>' : pending.map(u => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 font-semibold">${u.name}</td>
+                    <td class="p-3 uppercase text-emerald-600 font-bold">${u.role}</td>
+                    <td class="p-3 text-slate-500">${u.email}</td>
+                    <td class="p-3 text-indigo-600 font-semibold">Diploma_Belge.pdf</td>
+                    <td class="p-3 text-center space-x-2">
+                        <button onclick="approveTeacher(${u.id})" class="bg-emerald-600 text-white px-3 py-1 rounded font-semibold">Onayla</button>
+                        <button onclick="rejectTeacher(${u.id})" class="bg-rose-600 text-white px-3 py-1 rounded font-semibold">Reddet</button>
+                    </td>
+                </tr>
+            `).join('');
         }
 
-        async function handleRegister(e) {
+        function approveTeacher(id) {
+            systemUsers = systemUsers.map(u => u.id === id ? { ...u, status: 'approved' } : u);
+            localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
+            renderAdminApprovals();
+            alert("Öğretmen hesabı onaylandı!");
+        }
+
+        function rejectTeacher(id) {
+            systemUsers = systemUsers.filter(u => u.id !== id);
+            localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
+            renderAdminApprovals();
+            alert("Öğretmen başvurusu reddedildi.");
+        }
+
+        // --- TOPLANTILAR ---
+        let meetingsList = JSON.parse(localStorage.getItem('zt_meetings_list')) || [];
+        function handleCreateMeeting(e) {
             e.preventDefault();
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const pass = document.getElementById('regPassword').value;
-            const role = selectedAuthRole;
-            localStorage.setItem('zt_user_role', role);
-            registerUserRecord(name, email, role);
-            try { await window.createUserWithEmailAndPassword(window.auth, email, pass); }
-            catch (err) {
-                localStorage.setItem('zt_local_session', JSON.stringify({ email, role }));
-                applyUserSessionUI(email, role);
-            }
-        }
+            const title = document.getElementById('meetTitle')?.value || document.getElementById('adminMeetTitle')?.value;
+            const date = document.getElementById('meetDate')?.value || document.getElementById('adminMeetDate')?.value;
+            const link = document.getElementById('meetLink')?.value || document.getElementById('adminMeetLink')?.value;
+            const desc = document.getElementById('meetDesc')?.value || document.getElementById('adminMeetDesc')?.value;
 
-        async function handleLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const pass = document.getElementById('loginPassword').value;
-            const role = selectedAuthRole;
-            if (role === 'admin' && document.getElementById('adminSecretKey').value !== 'admin123') {
-                return alert("Hatalı Admin Güvenlik Anahtarı! (Varsayılan: admin123)");
-            }
-            localStorage.setItem('zt_user_role', role);
-            registerUserRecord(email.split('@')[0], email, role);
-            try { await window.signInWithEmailAndPassword(window.auth, email, pass); }
-            catch (err) {
-                localStorage.setItem('zt_local_session', JSON.stringify({ email, role }));
-                applyUserSessionUI(email, role);
-            }
-        }
-
-        async function handleLogout() {
-            localStorage.removeItem('zt_user_role');
-            localStorage.removeItem('zt_local_session');
-            try { await window.signOut(window.auth); } catch (err) {}
-            document.getElementById('authLockScreen').classList.remove('hidden');
-            document.getElementById('authArea').innerHTML = '';
-        }
-
-        function switchAuthTab(tab) {
-            if (tab === 'login') {
-                document.getElementById('loginForm').classList.remove('hidden');
-                document.getElementById('registerForm').classList.add('hidden');
-                document.getElementById('loginTabBtn').className = "flex-1 pb-2.5 text-xs font-bold text-ogm-600 border-b-2 border-ogm-600";
-                document.getElementById('registerTabBtn').className = "flex-1 pb-2.5 text-xs font-medium text-slate-400 border-b-2 border-transparent";
-            } else {
-                document.getElementById('registerForm').classList.remove('hidden');
-                document.getElementById('loginForm').classList.add('hidden');
-                document.getElementById('registerTabBtn').className = "flex-1 pb-2.5 text-xs font-bold text-ogm-600 border-b-2 border-ogm-600";
-                document.getElementById('loginTabBtn').className = "flex-1 pb-2.5 text-xs font-medium text-slate-400 border-b-2 border-transparent";
-            }
-        }
-
-        // --- TOPLANTI & TAKVİM SİSTEMİ ---
-        let meetingsList = JSON.parse(localStorage.getItem('zt_meetings_list')) || [
-            { id: 1, title: 'TYT Genel Soru Çözüm Kampı', date: '2026-06-15T14:00', link: 'https://meet.google.com/abc-defg-hij', desc: 'Tüm öğrencilerin katılımı zorunludur.', author: 'Admin' }
-        ];
-
-        function handleCreateMeeting(e, authorRole) {
-            e.preventDefault();
-            const title = document.getElementById(authorRole === 'Admin' ? 'adminMeetTitle' : 'meetTitle').value;
-            const date = document.getElementById(authorRole === 'Admin' ? 'adminMeetDate' : 'meetDate').value;
-            const link = document.getElementById(authorRole === 'Admin' ? 'adminMeetLink' : 'meetLink').value;
-            const desc = document.getElementById(authorRole === 'Admin' ? 'adminMeetDesc' : 'meetDesc').value;
-
-            meetingsList.push({ id: Date.now(), title, date, link, desc, author: authorRole });
+            meetingsList.push({ id: Date.now(), title, date, link, desc });
             localStorage.setItem('zt_meetings_list', JSON.stringify(meetingsList));
-            alert("Toplantı başarıyla oluşturuldu ve öğrencilerin takvimine eklendi!");
             e.target.reset();
             renderMeetings();
+            alert("Toplantı yayınlandı!");
         }
-
-        function deleteMeeting(id) {
-            meetingsList = meetingsList.filter(m => m.id !== id);
-            localStorage.setItem('zt_meetings_list', JSON.stringify(meetingsList));
-            renderMeetings();
-        }
-
         function renderMeetings() {
-            const stContainer = document.getElementById('studentMeetingsList');
-            const tchContainer = document.getElementById('teacherMeetingsList');
-            
-            const htmlCards = meetingsList.length === 0 ? '<p class="text-xs text-slate-400 italic col-span-2">Planlanmış aktif toplantı bulunmuyor.</p>' : meetingsList.map(m => `
-                <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-2">
-                    <div class="flex justify-between items-start">
-                        <span class="font-bold text-xs text-slate-900">${m.title}</span>
-                        <span class="bg-ogm-50 text-ogm-600 border border-ogm-100 px-2 py-0.5 rounded text-[10px] font-bold">${m.author}</span>
-                    </div>
-                    <p class="text-xs text-slate-500 flex items-center gap-1"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> ${new Date(m.date).toLocaleString('tr-TR')}</p>
-                    <p class="text-xs text-slate-600">${m.desc || 'Açıklama girilmedi.'}</p>
-                    <div class="pt-2 flex justify-between items-center">
-                        <a href="${m.link}" target="_blank" class="bg-ogm-600 hover:bg-ogm-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 shadow-sm">
-                            <i data-lucide="video" class="w-3.5 h-3.5"></i> Toplantıya Katıl
-                        </a>
-                        ${localStorage.getItem('zt_user_role') !== 'ogrenci' ? `<button onclick="deleteMeeting(${m.id})" class="text-rose-600 text-xs font-semibold hover:underline">Kaldır</button>` : ''}
-                    </div>
+            const html = meetingsList.length === 0 ? '<p class="text-xs text-slate-400 italic">Toplantı yok.</p>' : meetingsList.map(m => `
+                <div class="bg-slate-50 border p-4 rounded-xl space-y-1">
+                    <h4 class="font-bold text-xs">${m.title}</h4>
+                    <p class="text-[11px] text-slate-500">${new Date(m.date).toLocaleString('tr-TR')}</p>
+                    <a href="${m.link}" target="_blank" class="inline-block bg-ogm-600 text-white px-3 py-1 rounded text-xs mt-1">Katıl</a>
                 </div>
             `).join('');
-
-            if(stContainer) stContainer.innerHTML = htmlCards;
-            if(tchContainer) tchContainer.innerHTML = htmlCards;
-            document.getElementById('adminStatMeetings').textContent = meetingsList.length;
-            lucide.createIcons();
+            if(studentMeetingsList) studentMeetingsList.innerHTML = html;
+            if(teacherMeetingsList) teacherMeetingsList.innerHTML = html;
         }
 
-        // --- DENEME TAKİP ---
+        // --- DİĞER MODÜL FONKSİYONLARI ---
         let denemeler = JSON.parse(localStorage.getItem('zt_denemeler')) || [];
         function handleSaveDeneme(e) {
             e.preventDefault();
             const name = document.getElementById('denemeName').value;
             const type = document.getElementById('denemeType').value;
-            const tN = Math.max(0, (parseFloat(document.getElementById('dTurkceC').value)||0) - ((parseFloat(document.getElementById('dTurkceY').value)||0)/4));
-            const sN = Math.max(0, (parseFloat(document.getElementById('dSosyalC').value)||0) - ((parseFloat(document.getElementById('dSosyalY').value)||0)/4));
-            const mN = Math.max(0, (parseFloat(document.getElementById('dMatC').value)||0) - ((parseFloat(document.getElementById('dMatY').value)||0)/4));
-            const fN = Math.max(0, (parseFloat(document.getElementById('dFenC').value)||0) - ((parseFloat(document.getElementById('dFenY').value)||0)/4));
-            const totalNet = (tN + sN + mN + fN).toFixed(2);
-
-            denemeler.push({ id: Date.now(), name, type, date: new Date().toLocaleDateString('tr-TR'), tNet: tN.toFixed(2), sNet: sN.toFixed(2), mNet: mN.toFixed(2), fNet: fN.toFixed(2), totalNet });
+            const tN = Math.max(0, (parseFloat(dTurkceC.value)||0) - ((parseFloat(dTurkceY.value)||0)/4));
+            const sN = Math.max(0, (parseFloat(dSosyalC.value)||0) - ((parseFloat(dSosyalY.value)||0)/4));
+            const mN = Math.max(0, (parseFloat(dMatC.value)||0) - ((parseFloat(dMatY.value)||0)/4));
+            const fN = Math.max(0, (parseFloat(dFenC.value)||0) - ((parseFloat(dFenY.value)||0)/4));
+            denemeler.push({ id: Date.now(), name, type, date: new Date().toLocaleDateString('tr-TR'), tNet: tN.toFixed(2), sNet: sN.toFixed(2), mNet: mN.toFixed(2), fNet: fN.toFixed(2), totalNet: (tN+sN+mN+fN).toFixed(2) });
             localStorage.setItem('zt_denemeler', JSON.stringify(denemeler));
             toggleModal('addDenemeModal');
             renderDenemeler();
             e.target.reset();
         }
-        function deleteDeneme(id) { denemeler = denemeler.filter(d => d.id !== id); localStorage.setItem('zt_denemeler', JSON.stringify(denemeler)); renderDenemeler(); }
         function renderDenemeler() {
-            const tbody = document.getElementById('denemeTableBody'), noMsg = document.getElementById('noDenemeMessage'), chartArea = document.getElementById('netVisualChart');
-            document.getElementById('statTotalCount').textContent = denemeler.length;
-            if (denemeler.length === 0) {
-                tbody.innerHTML = ''; noMsg.classList.remove('hidden');
-                chartArea.innerHTML = '<span class="text-xs text-slate-400 italic m-auto">Henüz veri yok.</span>';
-                document.getElementById('statMaxTyt').textContent = '0.00'; document.getElementById('statMaxAyt').textContent = '0.00'; document.getElementById('statAvgNet').textContent = '0.00';
-                return;
-            }
-            noMsg.classList.add('hidden');
-            let maxTyt = 0, maxAyt = 0, sumNet = 0;
-            denemeler.forEach(d => {
-                const n = parseFloat(d.totalNet); sumNet += n;
-                if (d.type === 'TYT' && n > maxTyt) maxTyt = n;
-                if (d.type === 'AYT' && n > maxAyt) maxAyt = n;
-            });
-            document.getElementById('statMaxTyt').textContent = maxTyt.toFixed(2);
-            document.getElementById('statMaxAyt').textContent = maxAyt.toFixed(2);
-            document.getElementById('statAvgNet').textContent = (sumNet / denemeler.length).toFixed(2);
-            chartArea.innerHTML = denemeler.map(d => {
-                const h = Math.min(100, Math.max(12, (parseFloat(d.totalNet) / 120) * 100));
-                return `<div class="flex flex-col items-center gap-1.5 h-full justify-end group"><span class="text-[10px] font-bold text-ogm-600">${d.totalNet}</span><div style="height: ${h}%;" class="w-8 bg-ogm-600 rounded-t-lg transition-all shadow-sm"></div><span class="text-[10px] text-slate-400 truncate max-w-[50px] font-medium">${d.name}</span></div>`;
-            }).join('');
-            tbody.innerHTML = denemeler.map(d => `
-                <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="p-3 font-semibold text-slate-900">${d.name}</td>
-                    <td class="p-3"><span class="bg-ogm-50 text-ogm-600 border border-ogm-100 px-2.5 py-0.5 rounded-md font-bold text-[10px]">${d.type}</span></td>
-                    <td class="p-3 text-slate-400">${d.date}</td>
-                    <td class="p-3">${d.tNet}</td><td class="p-3">${d.sNet}</td><td class="p-3">${d.mNet}</td><td class="p-3">${d.fNet}</td>
-                    <td class="p-3 font-bold text-ogm-600">${d.totalNet}</td>
-                    <td class="p-3 text-center"><button onclick="deleteDeneme(${d.id})" class="text-slate-400 hover:text-red-600"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td>
-                </tr>
-            `).join('');
-            lucide.createIcons();
+            statTotalCount.textContent = denemeler.length;
+            noDenemeMessage.classList.toggle('hidden', denemeler.length > 0);
+            denemeTableBody.innerHTML = denemeler.map(d => `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold">${d.name}</td><td class="p-3">${d.type}</td><td class="p-3">${d.date}</td><td class="p-3">${d.tNet}</td><td class="p-3">${d.sNet}</td><td class="p-3">${d.mNet}</td><td class="p-3">${d.fNet}</td><td class="p-3 font-bold text-ogm-600">${d.totalNet}</td><td class="p-3 text-center"><button onclick="denemeler=denemeler.filter(x=>x.id!==${d.id});renderDenemeler()" class="text-red-500">Sil</button></td></tr>`).join('');
         }
-        function exportToPDF() { html2pdf().from(document.getElementById('pdfReportArea')).set({ margin: 10, filename: 'ZamanTuneli_Rapor.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } }).save(); }
-
-        // --- PUAN HESAPLAYICI ---
         function calcPuan() {
-            const tT = Math.max(0, (parseFloat(document.getElementById('c-t-turkce').value)||0) - ((parseFloat(document.getElementById('y-t-turkce').value)||0)/4));
-            const tM = Math.max(0, (parseFloat(document.getElementById('c-t-mat').value)||0) - ((parseFloat(document.getElementById('y-t-mat').value)||0)/4));
-            const tS = Math.max(0, (parseFloat(document.getElementById('c-t-sosyal').value)||0) - ((parseFloat(document.getElementById('y-t-sosyal').value)||0)/4));
-            const tF = Math.max(0, (parseFloat(document.getElementById('c-t-fen').value)||0) - ((parseFloat(document.getElementById('y-t-fen').value)||0)/4));
-            document.getElementById('net-t-turkce').textContent = `Net: ${tT.toFixed(2)}`;
-            document.getElementById('net-t-mat').textContent = `Net: ${tM.toFixed(2)}`;
-            document.getElementById('net-t-sosyal').textContent = `Net: ${tS.toFixed(2)}`;
-            document.getElementById('net-t-fen').textContent = `Net: ${tF.toFixed(2)}`;
-            const toplamTytNet = tT + tM + tS + tF;
-            document.getElementById('resTytNet').textContent = toplamTytNet.toFixed(2);
-            document.getElementById('resTytPuan').textContent = (100 + (toplamTytNet * 3.25)).toFixed(2);
-            document.getElementById('resSiralama').textContent = Math.max(1000, Math.round(1500000 - (toplamTytNet * 12000))).toLocaleString('tr-TR');
+            const t = Math.max(0, (parseFloat(document.getElementById('c-t-turkce').value)||0) - ((parseFloat(document.getElementById('y-t-turkce').value)||0)/4));
+            const m = Math.max(0, (parseFloat(document.getElementById('c-t-mat').value)||0) - ((parseFloat(document.getElementById('y-t-mat').value)||0)/4));
+            const s = Math.max(0, (parseFloat(document.getElementById('c-t-sosyal').value)||0) - ((parseFloat(document.getElementById('y-t-sosyal').value)||0)/4));
+            const f = Math.max(0, (parseFloat(document.getElementById('c-t-fen').value)||0) - ((parseFloat(document.getElementById('y-t-fen').value)||0)/4));
+            const net = t + m + s + f;
+            resTytNet.textContent = net.toFixed(2);
+            resTytPuan.textContent = (100 + (net * 3.25)).toFixed(2);
         }
 
-        // --- PROGRAM & KONULAR & NOTLAR ---
-        let programTasks = JSON.parse(localStorage.getItem('zt_program')) || [];
-        function handleSaveProgramTask(e) {
-            e.preventDefault();
-            programTasks.push({ id: Date.now(), day: document.getElementById('progDay').value, task: document.getElementById('progTask').value, completed: false });
-            localStorage.setItem('zt_program', JSON.stringify(programTasks));
-            toggleModal('addProgramModal'); renderProgram(); e.target.reset();
+        let tarihSorulari = [{ id: 1, soru: "İstanbul'un Fethi?", cevap: "1453", secenekler: ["1299", "1453", "1516", "1923"] }];
+        let curQ = 0, score = 0;
+        function initTarihGame() { curQ = 0; score = 0; loadGameQ(); }
+        function loadGameQ() {
+            if(curQ >= tarihSorulari.length) { gameCard.classList.add('hidden'); gameResultBox.classList.remove('hidden'); gameFinalScore.textContent = `Puan: ${score}`; return; }
+            const q = tarihSorulari[curQ];
+            gameQuestionNum.textContent = curQ + 1;
+            gameEventText.textContent = q.soru;
+            gameOptions.innerHTML = q.secenekler.map(s => `<button onclick="if('${s}'==='${q.cevap}')score+=20; curQ++; loadGameQ();" class="bg-white border py-2 rounded text-xs">${s}</button>`).join('');
         }
-        function toggleProgramTask(id) { programTasks = programTasks.map(p => p.id === id ? { ...p, completed: !p.completed } : p); localStorage.setItem('zt_program', JSON.stringify(programTasks)); renderProgram(); }
-        function deleteProgramTask(id) { programTasks = programTasks.filter(p => p.id !== id); localStorage.setItem('zt_program', JSON.stringify(programTasks)); renderProgram(); }
-        function renderProgram() {
-            const grid = document.getElementById('programCardsGrid'), days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
-            grid.innerHTML = days.map(day => {
-                const dayTasks = programTasks.filter(p => p.day === day);
-                return `<div class="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-2"><h4 class="font-bold text-xs text-ogm-600 border-b border-slate-200 pb-1.5">${day}</h4><div class="space-y-1.5">${dayTasks.length === 0 ? '<p class="text-[11px] text-slate-400 italic">Görev yok.</p>' : ''}${dayTasks.map(t => `<div class="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200 text-xs"><label class="flex items-center gap-2 cursor-pointer ${t.completed ? 'line-through text-slate-400' : ''}"><input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleProgramTask(${t.id})" class="rounded text-ogm-600"><span>${t.task}</span></label><button onclick="deleteProgramTask(${t.id})" class="text-slate-400 hover:text-red-600"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></div>`).join('')}</div></div>`;
-            }).join('');
-            lucide.createIcons();
-        }
+        function restartTarihGame() { gameCard.classList.remove('hidden'); gameResultBox.classList.add('hidden'); initTarihGame(); }
 
-        let topics = JSON.parse(localStorage.getItem('zt_topics')) || [];
-        function addTopic() {
-            const input = document.getElementById('newTopicInput');
-            if (!input.value.trim()) return;
-            topics.push({ id: Date.now(), name: input.value, status: false });
-            localStorage.setItem('zt_topics', JSON.stringify(topics));
-            input.value = ''; renderTopics();
-        }
-        function toggleTopic(id) { topics = topics.map(t => t.id === id ? { ...t, status: !t.status } : t); localStorage.setItem('zt_topics', JSON.stringify(topics)); renderTopics(); }
-        function deleteTopic(id) { topics = topics.filter(t => t.id !== id); localStorage.setItem('zt_topics', JSON.stringify(topics)); renderTopics(); }
-        function renderTopics() {
-            const container = document.getElementById('topicsListContainer');
-            if (topics.length === 0) { container.innerHTML = '<p class="text-xs text-slate-400 italic text-center py-6">Kayıtlı eksik konu bulunmuyor.</p>'; return; }
-            container.innerHTML = topics.map(t => `<div class="flex items-center justify-between bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs"><label class="flex items-center gap-2.5 cursor-pointer ${t.status ? 'line-through text-slate-400' : 'font-medium text-slate-800'}"><input type="checkbox" ${t.status ? 'checked' : ''} onchange="toggleTopic(${t.id})" class="w-4 h-4 rounded text-ogm-600"><span>${t.name}</span></label><button onclick="deleteTopic(${t.id})" class="text-slate-400 hover:text-red-600"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div>`).join('');
-            lucide.createIcons();
-        }
-        function saveStudyNote() {
-            const noteText = document.getElementById('studyNoteInput').value;
-            if (!noteText.trim()) return alert("Lütfen boş not girmeyin.");
-            localStorage.setItem('zt_study_note', noteText);
-            document.getElementById('savedNoteDisplay').textContent = "Kayıtlı Not: " + noteText;
-            alert("Not kaydedildi!");
-        }
-
-        // --- TARİH OYUNU ---
-        let tarihSorulari = JSON.parse(localStorage.getItem('zt_tarih_questions')) || [
-            { id: 1, soru: "İstanbul'un Fethi hangi yılda gerçekleşmiştir?", cevap: "1453", secenekler: ["1299", "1453", "1516", "1923"] },
-            { id: 2, soru: "Malazgirt Savaşı hangi yılda yapılmıştır?", cevap: "1071", secenekler: ["1071", "1176", "1243", "1402"] },
-            { id: 3, soru: "Cumhuriyet hangi yılda ilan edilmiştir?", cevap: "1923", secenekler: ["1919", "1920", "1922", "1923"] }
-        ];
-        let currentGameIndex = 0, gameScore = 0;
-        function initTarihGame() {
-            currentGameIndex = 0; gameScore = 0;
-            document.getElementById('gameTotalQ').textContent = tarihSorulari.length;
-            document.getElementById('gameCard').classList.remove('hidden');
-            document.getElementById('gameResultBox').classList.add('hidden');
-            loadGameQuestion();
-        }
-        function loadGameQuestion() {
-            if (currentGameIndex >= tarihSorulari.length) {
-                document.getElementById('gameCard').classList.add('hidden');
-                document.getElementById('gameResultBox').classList.remove('hidden');
-                document.getElementById('gameFinalScore').textContent = `Toplam Puanınız: ${gameScore} / ${tarihSorulari.length * 20}`;
-                return;
-            }
-            const q = tarihSorulari[currentGameIndex];
-            document.getElementById('gameQuestionNum').textContent = currentGameIndex + 1;
-            document.getElementById('gameScore').textContent = gameScore;
-            document.getElementById('gameEventText').textContent = q.soru;
-            document.getElementById('gameOptions').innerHTML = q.secenekler.map(sec => `<button onclick="checkGameAnswer('${sec}', '${q.cevap}')" class="bg-white hover:bg-ogm-600 hover:text-white border border-slate-200 py-2.5 rounded-xl text-xs font-semibold transition-all shadow-sm">${sec}</button>`).join('');
-        }
-        function checkGameAnswer(selected, correct) { if (selected === correct) gameScore += 20; currentGameIndex++; loadGameQuestion(); }
-        function restartTarihGame() { initTarihGame(); }
-
-        // --- DUYURULAR & PDR & ADMİN ---
-        let announcements = JSON.parse(localStorage.getItem('zt_announcements_list')) || [
-            { id: 1, author: 'Rehberlik Servisi', title: 'TYT Deneme Takvimi', text: 'Bu hafta Cuma günü genel TYT denemesi uygulanacaktır.', date: '12.11.2026' }
-        ];
-        function publishAnnouncement(author) {
-            const title = document.getElementById('pdrAnnouncementTitle').value, text = document.getElementById('pdrAnnouncementText').value;
-            if (!title || !text) return alert("Başlık ve metin girin.");
-            announcements.unshift({ id: Date.now(), author, title, text, date: new Date().toLocaleDateString('tr-TR') });
-            localStorage.setItem('zt_announcements_list', JSON.stringify(announcements));
-            document.getElementById('pdrAnnouncementTitle').value = ''; document.getElementById('pdrAnnouncementText').value = '';
-            alert("Duyuru yayınlandı!");
-        }
+        let announcements = [{ id: 1, author: 'Admin', title: 'Hoş Geldiniz', text: 'YKS 2027 portalı yayında!' }];
         function publishAdminAnnouncement() {
-            const title = document.getElementById('adminAnnTitle').value, text = document.getElementById('adminAnnText').value;
-            if (!title || !text) return alert("Başlık ve açıklama girin.");
-            announcements.unshift({ id: Date.now(), author: 'Admin', title, text, date: new Date().toLocaleDateString('tr-TR') });
-            localStorage.setItem('zt_announcements_list', JSON.stringify(announcements));
-            document.getElementById('adminAnnTitle').value = ''; document.getElementById('adminAnnText').value = '';
+            announcements.unshift({ id: Date.now(), author: 'Admin', title: adminAnnTitle.value, text: adminAnnText.value });
             renderAnnouncements();
         }
         function renderAnnouncements() {
-            const stList = document.getElementById('studentAnnouncementsList'), adList = document.getElementById('adminAnnouncementsList');
-            if (stList) stList.innerHTML = announcements.map(a => `<div class="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-1"><div class="flex justify-between items-center"><span class="font-bold text-xs text-ogm-600">${a.title}</span><span class="text-[10px] text-slate-400">${a.author} • ${a.date}</span></div><p class="text-xs text-slate-700">${a.text}</p></div>`).join('');
-            if (adList) adList.innerHTML = announcements.map(a => `<div class="flex items-center justify-between bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs"><div><span class="font-bold">${a.title}</span> - ${a.text}</div></div>`).join('');
+            if(studentAnnouncementsList) studentAnnouncementsList.innerHTML = announcements.map(a => `<div class="bg-slate-50 border p-3 rounded"><h4 class="font-bold">${a.title}</h4><p class="text-xs">${a.text}</p></div>`).join('');
+            if(adminAnnouncementsList) adminAnnouncementsList.innerHTML = announcements.map(a => `<div class="border p-2 rounded text-xs">${a.title} - ${a.text}</div>`).join('');
         }
 
-        let pdrNotes = JSON.parse(localStorage.getItem('zt_pdr_notes')) || [];
-        function savePdrNote() {
-            const name = document.getElementById('pdrStudentName').value, note = document.getElementById('pdrConsultNote').value;
-            if (!name || !note) return alert("İsim ve not giriniz.");
-            pdrNotes.push({ id: Date.now(), name, note, date: new Date().toLocaleDateString('tr-TR') });
-            localStorage.setItem('zt_pdr_notes', JSON.stringify(pdrNotes));
-            document.getElementById('pdrStudentName').value = ''; document.getElementById('pdrConsultNote').value = '';
-            renderPdrNotes();
-        }
-        function renderPdrNotes() {
-            const container = document.getElementById('pdrNotesList');
-            if(container) container.innerHTML = pdrNotes.map(n => `<div class="bg-white p-3 rounded-xl border border-slate-200 text-xs space-y-1"><div class="flex justify-between font-bold text-slate-800"><span>${n.name}</span><span class="text-[10px] text-slate-400">${n.date}</span></div><p class="text-slate-600">${n.note}</p></div>`).join('');
-        }
-        function renderTeacherStudents() {
-            const students = systemUsers.filter(u => u.role === 'ogrenci'), tbody = document.getElementById('pdrStudentTableBody');
-            if(tbody) tbody.innerHTML = students.map(s => `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold text-slate-800">${s.name} <span class="text-slate-400 font-normal">(${s.email})</span></td><td class="p-3">${denemeler.length} Deneme</td><td class="p-3 font-bold text-emerald-600">${denemeler.length > 0 ? Math.max(...denemeler.map(d => parseFloat(d.totalNet))).toFixed(2) : '0.00'} Net</td><td class="p-3"><span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-bold">Aktif</span></td></tr>`).join('');
-        }
-
-        function renderAdminUsers() {
-            const tbody = document.getElementById('adminUsersTableBody');
-            document.getElementById('adminStatUsers').textContent = systemUsers.length;
-            if(tbody) tbody.innerHTML = systemUsers.map(u => `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold text-slate-900">${u.name}</td><td class="p-3 text-slate-600">${u.email}</td><td class="p-3"><span class="px-2.5 py-0.5 rounded-md font-bold text-[10px] uppercase ${u.role === 'admin' ? 'bg-rose-50 text-rose-600' : u.role === 'ogretmen' ? 'bg-emerald-50 text-emerald-600' : 'bg-ogm-50 text-ogm-600'}">${u.role}</span></td><td class="p-3 text-slate-400">${u.date}</td><td class="p-3 text-center"><select onchange="changeUserRole(${u.id}, this.value)" class="bg-slate-50 border border-slate-300 rounded-lg px-2 py-1 text-[11px]"><option value="ogrenci" ${u.role==='ogrenci'?'selected':''}>Öğrenci</option><option value="ogretmen" ${u.role==='ogretmen'?'selected':''}>Öğretmen</option><option value="admin" ${u.role==='admin'?'selected':''}>Admin</option></select></td></tr>`).join('');
-        }
-        function changeUserRole(id, newRole) {
-            systemUsers = systemUsers.map(u => u.id === id ? { ...u, role: newRole } : u);
-            localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
-            renderAdminUsers();
-        }
-        function addGameQuestion(e) {
-            e.preventDefault();
-            const soru = document.getElementById('newQText').value, cevap = document.getElementById('newQCorrect').value.trim();
-            const secenekler = [cevap, document.getElementById('newQOpt1').value.trim(), document.getElementById('newQOpt2').value.trim(), document.getElementById('newQOpt3').value.trim()].sort(() => Math.random() - 0.5);
-            tarihSorulari.push({ id: Date.now(), soru, cevap, secenekler });
-            localStorage.setItem('zt_tarih_questions', JSON.stringify(tarihSorulari));
-            e.target.reset(); renderAdminQuestions();
-        }
-        function renderAdminQuestions() {
-            const list = document.getElementById('adminQuestionsList');
-            document.getElementById('adminStatQuestions').textContent = tarihSorulari.length;
-            if(list) list.innerHTML = tarihSorulari.map(q => `<div class="flex items-center justify-between bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs"><span class="font-bold">${q.soru} [Cevap: ${q.cevap}]</span></div>`).join('');
-        }
-
-        let pomoTime = 25 * 60, pomoInterval = null, isPomoRunning = false;
-        function startPomodoro() {
-            if (!isPomoRunning) {
-                isPomoRunning = true;
-                pomoInterval = setInterval(() => {
-                    if (pomoTime > 0) { pomoTime--; const m = Math.floor(pomoTime / 60), s = pomoTime % 60; document.getElementById('pomodoroTimer').textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`; }
-                    else { clearInterval(pomoInterval); alert("Süre bitti!"); isPomoRunning = false; }
-                }, 1000);
-            }
-        }
-        function pausePomodoro() { clearInterval(pomoInterval); isPomoRunning = false; }
-        function resetPomodoro() { clearInterval(pomoInterval); isPomoRunning = false; pomoTime = 25 * 60; document.getElementById('pomodoroTimer').textContent = "25:00"; }
         function toggleModal(id) { document.getElementById(id).classList.toggle('hidden'); }
 
         window.onload = () => {
-            renderDenemeler(); renderProgram(); renderTopics(); renderPdrNotes(); renderAnnouncements(); renderAdminQuestions(); renderMeetings();
-            const savedNote = localStorage.getItem('zt_study_note');
-            if (savedNote) document.getElementById('savedNoteDisplay').textContent = "Kayıtlı Not: " + savedNote;
+            renderDenemeler(); renderAnnouncements(); renderMeetings();
+            const session = JSON.parse(localStorage.getItem('zt_local_session'));
+            if(session) applyUserSessionUI(session.email, session.role);
             lucide.createIcons();
         };
     </script>
