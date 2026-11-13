@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Zaman Tüneli - ÖSYM & Portal</title>
+    <title>Zaman Tüneli - PDR & ÖSYM Portalı</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -32,16 +32,11 @@
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; -webkit-tap-highlight-color: transparent; }
         .ogm-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); }
         
-        /* Düzeltilmiş ve kararlı buton animasyonları */
         button, a { 
             transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease; 
         }
-        button:hover, a:hover { 
-            transform: translateY(-1px); 
-        }
-        button:active, a:active { 
-            transform: translateY(0) scale(0.98); 
-        }
+        button:hover, a:hover { transform: translateY(-1px); }
+        button:active, a:active { transform: translateY(0) scale(0.98); }
 
         #splashScreen { transition: opacity 0.6s ease-out, visibility 0.6s ease-out; }
         #splashScreen.fade-out { opacity: 0; visibility: hidden; }
@@ -61,7 +56,7 @@
         </div>
         <div class="text-center space-y-1">
             <h1 class="text-xl font-bold tracking-wider">ZAMAN TÜNELİ</h1>
-            <p class="text-xs text-slate-400">Portal Yükleniyor...</p>
+            <p class="text-xs text-slate-400">PDR Takip Modülü Yükleniyor...</p>
         </div>
         <div class="w-36 h-1 bg-slate-800 rounded-full overflow-hidden mt-4">
             <div id="splashBar" class="bg-ogm-500 h-full w-0 transition-all duration-700"></div>
@@ -199,14 +194,15 @@
             </div>
         </div>
 
-        <!-- ÖĞRETMEN NAVIGASYON -->
+        <!-- PDR / REHBERLİK ÖĞRETMENİ NAVIGASYON -->
         <div id="teacherNavWrapper" class="hidden space-y-2">
             <div class="flex overflow-x-auto bg-white border border-slate-200 p-2 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="selectMainCategory('teacher', 'takip')" id="cat-teacher-takip" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 text-white flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> Takip</button>
+                <button onclick="selectMainCategory('teacher', 'takip')" id="cat-teacher-takip" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 text-white flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> PDR & Öğrenci Takibi</button>
                 <button onclick="selectMainCategory('teacher', 'rehberlik')" id="cat-teacher-rehberlik" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4"></i> Zoom & İletişim</button>
             </div>
             <div id="subnav-teacher-takip" class="flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('pdrDashboard')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm">Öğrenci Listesi</button>
+                <button onclick="switchTab('pdrDashboard')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm">👥 Öğrenci Listesi & Ekle</button>
+                <button onclick="switchTab('pdrAttendance')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900">📋 Devamsızlık & Takip Fişi</button>
             </div>
             <div id="subnav-teacher-rehberlik" class="hidden flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
                 <button onclick="switchTab('teacherMeetings')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm">📹 Zoom Planla</button>
@@ -250,6 +246,60 @@
             <div id="subnav-admin-icerik" class="hidden flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
                 <button onclick="switchTab('teacherMeetings')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-rose-600 shadow-sm">📹 Zoom Planla</button>
                 <button onclick="switchTab('smsWhatsappHub')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900">📱 SMS / WhatsApp</button>
+            </div>
+        </div>
+
+        <!-- ================= PDR ÖĞRENCİ EKLEME & LİSTESİ ================= -->
+        <div id="pdrDashboardView" class="hidden space-y-6">
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-5xl mx-auto">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <div>
+                        <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase">Rehberlik Servisi</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-1">PDR Öğrenci Kayıt ve Takip Paneli</h3>
+                    </div>
+                    <button onclick="toggleModal('addPdrStudentModal')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                        <i data-lucide="user-plus" class="w-4 h-4"></i> Yeni Öğrenci Ekle
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="p-3">Öğrenci Adı Soyadı</th>
+                                <th class="p-3">Sınıfı</th>
+                                <th class="p-3">E-Posta / İletişim</th>
+                                <th class="p-3">Rehberlik Notu</th>
+                                <th class="p-3 text-center">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pdrStudentTableBody" class="divide-y"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PDR DEVAMSIZLIK & ÖĞRENCİ TAKİP SİSTEMİ ================= -->
+        <div id="pdrAttendanceView" class="hidden space-y-6">
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-5xl mx-auto">
+                <div class="border-b pb-4">
+                    <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase">Takip Modülü</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1">Öğrenci Devamsızlık ve Gelişim Takip Fişi</h3>
+                    <p class="text-xs text-slate-500">Öğrencilerin günlük devamsızlık durumlarını ve akademik takibini buradan yönetebilirsiniz.</p>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="p-3">Öğrenci Adı</th>
+                                <th class="p-3">Özürlü Devamsızlık</th>
+                                <th class="p-3">Özürsüz Devamsızlık</th>
+                                <th class="p-3">Genel Durum / Takip</th>
+                                <th class="p-3 text-center">Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pdrAttendanceTableBody" class="divide-y"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -339,7 +389,6 @@
         <div id="tarihOyunuView" class="hidden space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">Tarih Oyunu</h3></div></div>
         <div id="notesView" class="hidden space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">Notlar</h3></div></div>
         <div id="pomodoroView" class="hidden space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">Pomodoro</h3></div></div>
-        <div id="pdrDashboardView" class="hidden space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">Öğrenci Listesi</h3><div id="pdrStudentTableBody"></div></div></div>
         <div id="teacherClassStatsView" class="hidden space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">İstatistik</h3></div></div>
         <div id="pdrConsultView" class="hidden space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">Görüşme Notları</h3></div></div>
         <div id="adminTeacherApprovalsView" class="hidden space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">Öğretmen Onayları</h3><div id="adminPendingTeachersBody"></div></div></div>
@@ -352,6 +401,20 @@
             <h3 id="alarmMeetingTitle" class="text-xl font-bold mb-2">Zoom Dersi Başlıyor!</h3>
             <a id="alarmMeetingLinkBtn" href="#" target="_blank" class="block bg-blue-600 text-white py-3 rounded-xl font-bold text-xs">Derse Katıl</a>
             <button onclick="closeAlarmModal()" class="mt-2 text-xs text-slate-500">Kapat</button>
+        </div>
+    </div>
+
+    <!-- PDR YENİ ÖĞRENCİ EKLEME MODALI -->
+    <div id="addPdrStudentModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4 shadow-2xl">
+            <h3 class="text-base font-bold">PDR Servisine Yeni Öğrenci Ekle</h3>
+            <form onsubmit="handlePdrAddStudent(event)" class="space-y-3">
+                <input type="text" id="pdrStuName" required placeholder="Öğrenci Adı Soyadı" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <input type="text" id="pdrStuClass" required placeholder="Sınıfı (Örn: 12-A)" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <input type="email" id="pdrStuEmail" required placeholder="E-Posta Adresi" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <textarea id="pdrStuNote" rows="2" placeholder="İlk Rehberlik Notu..." class="w-full border rounded-xl px-3 py-2 text-xs"></textarea>
+                <button type="submit" class="w-full bg-emerald-600 text-white py-2 rounded-xl text-xs font-bold">Öğrenciyi Kaydet</button>
+            </form>
         </div>
     </div>
 
@@ -415,7 +478,7 @@
 
         let systemUsers = JSON.parse(localStorage.getItem('zt_system_users')) || [
             { id: 1, name: 'Sistem Yöneticisi', email: 'admin@zamantuneli.com', role: 'admin', status: 'approved' },
-            { id: 2, name: 'Mehmet Demir', email: 'mehmet@ogrenci.com', role: 'ogrenci', status: 'approved' }
+            { id: 2, name: 'Mehmet Demir', email: 'mehmet@ogrenci.com', role: 'ogrenci', status: 'approved', sinif: '12-A', devamsizlikOzurlu: 2, devamsizlikOzursuz: 1, rehberlikNotu: 'Düzenli çalışıyor.' }
         ];
 
         function handleRegister(e) {
@@ -423,7 +486,7 @@
             const name = regName.value, email = regEmail.value, role = selectedAuthRole;
             if (systemUsers.some(u => u.email === email)) return alert("Bu e-posta kayıtlı.");
             const status = (role === 'matematik' || role === 'edebiyat') ? 'pending' : 'approved';
-            systemUsers.push({ id: Date.now(), name, email, role, status });
+            systemUsers.push({ id: Date.now(), name, email, role, status, sinif: '12-B', devamsizlikOzurlu: 0, devamsizlikOzursuz: 0, rehberlikNotu: 'Yeni kayıt.' });
             localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
             alert("Kayıt başarılı."); switchAuthTab('login');
         }
@@ -433,7 +496,7 @@
             const email = loginEmail.value, role = selectedAuthRole;
             if (role === 'admin' && adminSecretKey.value !== 'admin123') return alert("Hatalı Admin Şifresi!");
             let user = systemUsers.find(u => u.email === email);
-            if (!user) { user = { id: Date.now(), name: email.split('@')[0], email, role, status: 'approved' }; systemUsers.push(user); localStorage.setItem('zt_system_users', JSON.stringify(systemUsers)); }
+            if (!user) { user = { id: Date.now(), name: email.split('@')[0], email, role, status: 'approved', sinif: '12-B', devamsizlikOzurlu: 0, devamsizlikOzursuz: 0, rehberlikNotu: 'Yeni kayıt.' }; systemUsers.push(user); localStorage.setItem('zt_system_users', JSON.stringify(systemUsers)); }
             localStorage.setItem('zt_local_session', JSON.stringify({ email, role }));
             applyUserSessionUI(email, role);
         }
@@ -466,13 +529,78 @@
         }
 
         function switchTab(tab) {
-            ['osymPortalView', 'teacherMeetingsView', 'studentMeetingsView', 'smsWhatsappHubView', 'adminUserManagerView', 'muhasebePanelView', 'eyotekPortalView', 'idareOverviewView', 'chatRoomsView', 'denemeTrackerView', 'calculatorView', 'programView', 'topicsView', 'tarihOyunuView', 'notesView', 'pomodoroView', 'pdrDashboardView', 'adminTeacherApprovalsView'].forEach(v => {
+            ['osymPortalView', 'teacherMeetingsView', 'studentMeetingsView', 'smsWhatsappHubView', 'adminUserManagerView', 'muhasebePanelView', 'eyotekPortalView', 'idareOverviewView', 'chatRoomsView', 'denemeTrackerView', 'calculatorView', 'programView', 'topicsView', 'tarihOyunuView', 'notesView', 'pomodoroView', 'pdrDashboardView', 'pdrAttendanceView', 'adminTeacherApprovalsView'].forEach(v => {
                 const el = document.getElementById(v); if (el) el.classList.add('hidden');
             });
             const target = document.getElementById(tab + 'View');
             if (target) target.classList.remove('hidden');
             if (tab === 'adminUserManager') renderAdminUsers();
+            if (tab === 'pdrDashboard') renderPdrStudents();
+            if (tab === 'pdrAttendance') renderPdrAttendance();
             lucide.createIcons();
+        }
+
+        // --- PDR ÖĞRENCİ EKLEME VE TAKİP SİSTEMİ ---
+        function handlePdrAddStudent(e) {
+            e.preventDefault();
+            systemUsers.push({
+                id: Date.now(),
+                name: pdrStuName.value,
+                email: pdrStuEmail.value,
+                role: 'ogrenci',
+                sinif: pdrStuClass.value,
+                devamsizlikOzurlu: 0,
+                devamsizlikOzursuz: 0,
+                rehberlikNotu: pdrStuNote.value,
+                status: 'approved'
+            });
+            localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
+            toggleModal('addPdrStudentModal');
+            renderPdrStudents();
+            e.target.reset();
+            alert("Yeni öğrenci PDR listesine başarıyla eklendi!");
+        }
+
+        function renderPdrStudents() {
+            const students = systemUsers.filter(u => u.role === 'ogrenci');
+            pdrStudentTableBody.innerHTML = students.length === 0 ? '<tr><td colspan="5" class="p-4 text-center text-slate-400">Kayıtlı öğrenci yok.</td></tr>' : students.map(s => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 font-semibold">${s.name}</td>
+                    <td class="p-3 font-semibold text-emerald-600">${s.sinif || '12-A'}</td>
+                    <td class="p-3 text-slate-500">${s.email}</td>
+                    <td class="p-3 text-slate-600">${s.rehberlikNotu || 'Not girilmemiş'}</td>
+                    <td class="p-3 text-center"><button onclick="deleteStudent(${s.id})" class="text-rose-600 font-bold">Sil</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderPdrAttendance() {
+            const students = systemUsers.filter(u => u.role === 'ogrenci');
+            pdrAttendanceTableBody.innerHTML = students.length === 0 ? '<tr><td colspan="5" class="p-4 text-center text-slate-400">Öğrenci bulunamadı.</td></tr>' : students.map(s => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 font-semibold">${s.name} (${s.sinif || '12-A'})</td>
+                    <td class="p-3"><input type="number" id="ozurlu_${s.id}" value="${s.devamsizlikOzurlu || 0}" class="w-16 border rounded p-1 text-xs"> Gün</td>
+                    <td class="p-3"><input type="number" id="ozursuz_${s.id}" value="${s.devamsizlikOzursuz || 0}" class="w-16 border rounded p-1 text-xs"> Gün</td>
+                    <td class="p-3"><input type="text" id="not_${s.id}" value="${s.rehberlikNotu || ''}" class="w-full border rounded p-1 text-xs" placeholder="Gelişim notu..."></td>
+                    <td class="p-3 text-center"><button onclick="updateStudentAttendance(${s.id})" class="bg-emerald-600 text-white px-3 py-1 rounded text-xs font-bold">Kaydet</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function updateStudentAttendance(id) {
+            const ozurlu = parseInt(document.getElementById(`ozurlu_${id}`).value) || 0;
+            const ozursuz = parseInt(document.getElementById(`ozursuz_${id}`).value) || 0;
+            const notu = document.getElementById(`not_${id}`).value;
+
+            systemUsers = systemUsers.map(u => u.id === id ? { ...u, devamsizlikOzurlu: ozurlu, devamsizlikOzursuz: ozursuz, rehberlikNotu: notu } : u);
+            localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
+            alert("Öğrenci takip ve devamsızlık bilgileri güncellendi!");
+        }
+
+        function deleteStudent(id) {
+            systemUsers = systemUsers.filter(u => u.id !== id);
+            localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
+            renderPdrStudents();
         }
 
         function generateZoomLink() { meetLink.value = `https://zoom.us/j/${Math.floor(100000000 + Math.random() * 900000000)}`; }
