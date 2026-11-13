@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Zaman Tüneli - Toplantı & WhatsApp Düzeltilmiş Portalı</title>
+    <title>Zaman Tüneli - Zoom Entegrasyonlu Portalı</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,12 +31,38 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; -webkit-tap-highlight-color: transparent; }
         .ogm-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); }
+        
+        button, a { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        button:hover { transform: translateY(-1px); }
+        button:active { transform: translateY(1px) scale(0.98); }
+
+        #splashScreen { transition: opacity 0.6s ease-out, visibility 0.6s ease-out; }
+        #splashScreen.fade-out { opacity: 0; visibility: hidden; }
+        @keyframes pulse-logo {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.85; }
+        }
+        .animate-logo-pulse { animation: pulse-logo 2s infinite ease-in-out; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased relative">
 
+    <!-- GİRİŞ ANİMASYONU -->
+    <div id="splashScreen" class="fixed inset-0 z-[100] bg-slate-900 flex flex-col items-center justify-center text-white space-y-4">
+        <div class="bg-ogm-600 p-4 rounded-2xl shadow-2xl animate-logo-pulse">
+            <i data-lucide="book-open-check" class="w-12 h-12 text-white"></i>
+        </div>
+        <div class="text-center space-y-1">
+            <h1 class="text-xl font-bold tracking-wider">ZAMAN TÜNELİ</h1>
+            <p class="text-xs text-slate-400">Zoom Entegrasyonlu Portal Yükleniyor...</p>
+        </div>
+        <div class="w-36 h-1 bg-slate-800 rounded-full overflow-hidden mt-4">
+            <div id="splashBar" class="bg-ogm-500 h-full w-0 transition-all duration-700"></div>
+        </div>
+    </div>
+
     <!-- GİRİŞ VE KAYIT EKRANI -->
-    <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto hidden">
         <div class="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl space-y-5 my-auto">
             <div class="text-center space-y-1.5">
                 <div id="roleIconBox" class="inline-flex bg-ogm-50 text-ogm-600 p-3 rounded-xl mb-1 transition-colors">
@@ -146,7 +172,7 @@
             <div class="flex overflow-x-auto bg-white border border-slate-200 p-2 rounded-2xl gap-1.5 shadow-sm">
                 <button onclick="selectMainCategory('student', 'olcme')" id="cat-student-olcme" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-ogm-600 text-white transition-all flex items-center gap-1.5"><i data-lucide="bar-chart-2" class="w-4 h-4"></i> Ölçme & Sınav</button>
                 <button onclick="selectMainCategory('student', 'planlama')" id="cat-student-planlama" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="calendar-check" class="w-4 h-4"></i> Planlama</button>
-                <button onclick="selectMainCategory('student', 'etkilesim')" id="cat-student-etkilesim" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="message-square" class="w-4 h-4"></i> Chat, e-Yotek & Oyun</button>
+                <button onclick="selectMainCategory('student', 'etkilesim')" id="cat-student-etkilesim" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4"></i> Zoom Canlı Dersler & İletişim</button>
             </div>
             <div id="subnav-student-olcme" class="flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
                 <button onclick="switchTab('denemeTracker')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-ogm-600 shadow-sm transition-all">Deneme & Grafik</button>
@@ -159,9 +185,10 @@
                 <button onclick="switchTab('pomodoro')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Pomodoro</button>
             </div>
             <div id="subnav-student-etkilesim" class="hidden flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('chatRooms')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-ogm-600 shadow-sm transition-all">Canlı Chat & Gruplar</button>
-                <button onclick="switchTab('eyotekPortal')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">e-Yotek Karne & Yoklama</button>
-                <button onclick="switchTab('studentMeetings')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Canlı Toplantılar</button>
+                <button onclick="switchTab('studentMeetings')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-ogm-600 shadow-sm transition-all">📹 Zoom Canlı Dersler</button>
+                <button onclick="switchTab('chatRooms')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Canlı Chat Odaları</button>
+                <button onclick="switchTab('smsWhatsappHub')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">📱 WhatsApp & SMS Hub</button>
+                <button onclick="switchTab('eyotekPortal')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">e-Yotek Karne</button>
                 <button onclick="switchTab('tarihOyunu')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Tarih Oyunu</button>
             </div>
         </div>
@@ -170,17 +197,16 @@
         <div id="teacherNavWrapper" class="hidden space-y-2">
             <div class="flex overflow-x-auto bg-white border border-slate-200 p-2 rounded-2xl gap-1.5 shadow-sm">
                 <button onclick="selectMainCategory('teacher', 'takip')" id="cat-teacher-takip" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 text-white transition-all flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> Branş & Öğrenci Takibi</button>
-                <button onclick="selectMainCategory('teacher', 'rehberlik')" id="cat-teacher-rehberlik" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="message-square" class="w-4 h-4"></i> Chat, PDR & Toplantı</button>
+                <button onclick="selectMainCategory('teacher', 'rehberlik')" id="cat-teacher-rehberlik" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4"></i> Zoom Canlı Ders & İletişim</button>
             </div>
             <div id="subnav-teacher-takip" class="flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
                 <button onclick="switchTab('pdrDashboard')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm transition-all">Öğrenci Listesi</button>
                 <button onclick="switchTab('teacherClassStats')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Sınav Ortalamaları</button>
             </div>
             <div id="subnav-teacher-rehberlik" class="hidden flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('chatRooms')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm transition-all">Canlı Chat & Gruplar</button>
-                <button onclick="switchTab('pdrConsult')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">PDR Görüşme Notları</button>
-                <button onclick="switchTab('eyotekPortal')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">e-Yotek Yoklama</button>
-                <button onclick="switchTab('teacherMeetings')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Canlı Ders Planla</button>
+                <button onclick="switchTab('teacherMeetings')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm transition-all">📹 Zoom Ders Planla</button>
+                <button onclick="switchTab('chatRooms')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Canlı Chat</button>
+                <button onclick="switchTab('smsWhatsappHub')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">📱 WhatsApp & SMS Gönder</button>
             </div>
         </div>
 
@@ -188,15 +214,15 @@
         <div id="idareNavWrapper" class="hidden space-y-2">
             <div class="flex overflow-x-auto bg-white border border-slate-200 p-2 rounded-2xl gap-1.5 shadow-sm">
                 <button onclick="selectMainCategory('idare', 'yonetim')" id="cat-idare-yonetim" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 text-white transition-all flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4"></i> Okul & Kurum Yönetimi</button>
-                <button onclick="selectMainCategory('idare', 'takip')" id="cat-idare-takip" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> e-Yotek Kurum Raporları</button>
+                <button onclick="selectMainCategory('idare', 'takip')" id="cat-idare-takip" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4"></i> Zoom & SMS Merkezi</button>
             </div>
             <div id="subnav-idare-yonetim" class="flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
                 <button onclick="switchTab('idareOverview')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-indigo-700 shadow-sm transition-all">İdare Genel Durum</button>
                 <button onclick="switchTab('adminTeacherApprovals')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Öğretmen Onayları</button>
-                <button onclick="switchTab('teacherMeetings')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Toplantı Planla</button>
+                <button onclick="switchTab('teacherMeetings')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">📹 Zoom Planla</button>
             </div>
             <div id="subnav-idare-takip" class="hidden flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('pdrDashboard')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Tüm Öğrenciler</button>
+                <button onclick="switchTab('smsWhatsappHub')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-indigo-700 shadow-sm transition-all">📱 Veli/Öğrenciye SMS/WhatsApp</button>
                 <button onclick="switchTab('eyotekPortal')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">e-Yotek Karne Özeti</button>
             </div>
         </div>
@@ -204,7 +230,8 @@
         <!-- MUHASEBE NAVIGASYON -->
         <div id="muhasebeNavWrapper" class="hidden space-y-2">
             <div class="flex overflow-x-auto bg-white border border-slate-200 p-2 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="switchTab('muhasebePanel')" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-amber-600 text-white transition-all flex items-center gap-1.5"><i data-lucide="wallet" class="w-4 h-4"></i> Özel Kurum Muhasebe & Finans Paneli</button>
+                <button onclick="switchTab('muhasebePanel')" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-amber-600 text-white transition-all flex items-center gap-1.5"><i data-lucide="wallet" class="w-4 h-4"></i> Muhasebe Paneli</button>
+                <button onclick="switchTab('smsWhatsappHub')" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="message-square" class="w-4 h-4"></i> Aidat Hatırlatıcı (SMS/WhatsApp)</button>
             </div>
         </div>
 
@@ -212,27 +239,29 @@
         <div id="adminNavWrapper" class="hidden space-y-2">
             <div class="flex overflow-x-auto bg-white border border-slate-200 p-2 rounded-2xl gap-1.5 shadow-sm">
                 <button onclick="selectMainCategory('admin', 'sistem')" id="cat-admin-sistem" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-rose-600 text-white transition-all flex items-center gap-1.5"><i data-lucide="shield-alert" class="w-4 h-4"></i> Tam Yetkili Admin</button>
-                <button onclick="selectMainCategory('admin', 'icerik')" id="cat-admin-icerik" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="message-square" class="w-4 h-4"></i> Chat, Oyun & Toplantı</button>
+                <button onclick="selectMainCategory('admin', 'icerik')" id="cat-admin-icerik" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4"></i> Zoom, Chat & İletişim</button>
             </div>
             <div id="subnav-admin-sistem" class="flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
                 <button onclick="switchTab('adminTeacherApprovals')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-rose-600 shadow-sm transition-all">Öğretmen Onayları (<span id="pendingCountBadge">0</span>)</button>
-                <button onclick="switchTab('adminUserManager')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Kullanıcı Hesap & Sil/Dondur</button>
-                <button onclick="switchTab('muhasebePanel')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Muhasebe Kontrolü</button>
+                <button onclick="switchTab('adminUserManager')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Kullanıcı Yönetimi</button>
+                <button onclick="switchTab('muhasebePanel')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Muhasebe</button>
             </div>
             <div id="subnav-admin-icerik" class="hidden flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('chatRooms')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-rose-600 shadow-sm transition-all">Canlı Chat</button>
-                <button onclick="switchTab('teacherMeetings')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Toplantı / Ders Planla</button>
-                <button onclick="switchTab('eyotekPortal')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">e-Yotek Yönetimi</button>
-                <button onclick="switchTab('adminGameEditor')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Tarih Oyunu</button>
+                <button onclick="switchTab('teacherMeetings')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-rose-600 shadow-sm transition-all">📹 Zoom Ders Planla</button>
+                <button onclick="switchTab('smsWhatsappHub')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">📱 WhatsApp & SMS</button>
+                <button onclick="switchTab('chatRooms')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Canlı Chat</button>
             </div>
         </div>
 
-        <!-- ================= TOPLANTI / CANLI DERS PLANLAMA EKRANI ================= -->
+        <!-- ================= ZOOM CANLI DERS / TOPLANTI PLANLA ================= -->
         <div id="teacherMeetingsView" class="hidden space-y-6">
             <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-3xl mx-auto">
-                <div class="border-b pb-4">
-                    <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Canlı Eğitim</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Canlı Ders / Toplantı Planla</h3>
+                <div class="border-b pb-4 flex justify-between items-center">
+                    <div>
+                        <span class="bg-blue-50 text-blue-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Zoom Video Entegrasyonu</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-1">Zoom Canlı Ders / Toplantı Planla</h3>
+                    </div>
+                    <span class="text-xs text-blue-600 font-semibold bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200">📹 Zoom API Aktif</span>
                 </div>
                 <form onsubmit="handleCreateMeeting(event)" class="space-y-4">
                     <div>
@@ -244,31 +273,86 @@
                         <input type="datetime-local" id="meetDate" required class="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-ogm-600">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Toplantı Linki (Zoom, Meet, vb.)</label>
-                        <input type="url" id="meetLink" required placeholder="https://meet.google.com/..." class="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-ogm-600">
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="block text-xs font-semibold text-slate-600">Zoom Toplantı Linki (veya ID & Şifre)</label>
+                            <button type="button" onclick="generateZoomLink()" class="text-[11px] font-bold text-blue-600 hover:underline flex items-center gap-1">
+                                <i data-lucide="sparkles" class="w-3 h-3"></i> Otomatik Zoom Linki Oluştur
+                            </button>
+                        </div>
+                        <input type="url" id="meetLink" required placeholder="https://zoom.us/j/..." class="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-ogm-600">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Açıklama (İsteğe bağlı)</label>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Açıklama / Katılım Notu</label>
                         <textarea id="meetDesc" rows="2" placeholder="Öğrenciler için notlar..." class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:outline-none focus:border-ogm-600"></textarea>
                     </div>
-                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl text-xs font-semibold shadow-sm transition-all">Toplantıyı Yayınla</button>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl text-xs font-semibold shadow-sm transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="video" class="w-4 h-4"></i> Zoom Dersini Yayınla & Alarm Kur
+                    </button>
                 </form>
 
                 <div class="pt-4 border-t space-y-3">
-                    <h4 class="font-bold text-xs text-slate-700 uppercase">Aktif / Planlanan Toplantılar</h4>
+                    <h4 class="font-bold text-xs text-slate-700 uppercase">Aktif / Planlanan Zoom Dersleri</h4>
                     <div id="teacherMeetingsList" class="space-y-2"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Öğrenci Toplantı Görüntüleme Görünümü -->
+        <!-- Öğrenci Zoom Canlı Dersler Görünümü -->
         <div id="studentMeetingsView" class="hidden space-y-6">
             <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-4xl mx-auto">
-                <div class="border-b pb-4">
-                    <h3 class="text-xl font-bold">Canlı Toplantılar & Etkinlikler</h3>
-                    <p class="text-xs text-slate-500">Öğretmenlerinizin ve idarenizin planladığı canlı dersler.</p>
+                <div class="border-b pb-4 flex justify-between items-center">
+                    <div>
+                        <span class="bg-blue-50 text-blue-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Zoom Sınıfı</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-1">Canlı Zoom Dersleri & Toplantılar</h3>
+                        <p class="text-xs text-slate-500 mt-0.5">Ders saatine 5 dakika kala otomatik ekran alarmı alırsınız.</p>
+                    </div>
+                    <span class="text-xs text-blue-600 font-semibold bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200">🔔 Alarm Aktif</span>
                 </div>
                 <div id="studentMeetingsList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+        </div>
+
+        <!-- WHATSAPP & SMS HUB -->
+        <div id="smsWhatsappHubView" class="hidden space-y-6">
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-2xl mx-auto shadow-xl">
+                <div class="border-b pb-4 flex items-center justify-between">
+                    <div>
+                        <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">İletişim Modülü</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-1">Toplu veya Bireysel WhatsApp & SMS Gönder</h3>
+                    </div>
+                    <div class="bg-emerald-100 text-emerald-800 p-2 rounded-xl">
+                        <i data-lucide="send" class="w-6 h-6"></i>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Alıcı Telefon Numarası</label>
+                        <input type="text" id="comPhone" placeholder="Örn: 905555555555 (Başında 90 ile)" class="w-full border border-slate-300 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-ogm-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Hazır Şablon Seç (İsteğe Bağlı)</label>
+                        <select onchange="fillTemplate(this.value)" class="w-full border border-slate-300 rounded-xl px-4 py-3 text-xs bg-slate-50 focus:outline-none">
+                            <option value="">Şablon Seçiniz...</option>
+                            <option value="Merhaba, öğrencimizin deneme sınavı sonucu açıklanmıştır. Detaylar için portala giriş yapabilirsiniz.">📊 Deneme Sonucu Bildirimi</option>
+                            <option value="Sayın velimiz, aidat ödemenizin vadesi yaklaşmıştır. Bilgilerinize sunarız.">💰 Aidat Hatırlatması</option>
+                            <option value="Merhaba, bugün Zoom üzerinden canlı dersimiz olacaktır. Katılımınızı bekliyoruz.">🔔 Zoom Canlı Ders Hatırlatması</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Mesaj Metni</label>
+                        <textarea id="comMessage" rows="4" placeholder="Mesajınızı buraya yazın..." class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:outline-none focus:border-ogm-600"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                        <button type="button" onclick="sendViaWhatsApp()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3.5 rounded-xl text-xs shadow-md flex items-center justify-center gap-2">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp ile Gönder
+                        </button>
+                        <button type="button" onclick="sendViaSMS()" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-bold py-3.5 rounded-xl text-xs shadow-md flex items-center justify-center gap-2">
+                            <i data-lucide="smartphone" class="w-4 h-4"></i> SMS ile Gönder
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -437,7 +521,30 @@
         </div>
     </main>
 
-    <!-- WHATSAPP SABİT DESTEK BUTONU (Geliştirilmiş & Optimize) -->
+    <!-- OTOMATİK ZOOM BİLDİRİM MODALI -->
+    <div id="meetingAlarmModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl border-4 border-blue-500 text-center animate-pulse">
+            <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
+                <i data-lucide="video" class="w-8 h-8 animate-bounce"></i>
+            </div>
+            <div class="space-y-1">
+                <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">ZOOM CANLI DERS ALARMI</span>
+                <h3 id="alarmMeetingTitle" class="text-xl font-bold text-slate-900 mt-2">Zoom Dersi Başlıyor!</h3>
+                <p id="alarmMeetingTime" class="text-xs font-semibold text-ogm-600"></p>
+                <p class="text-xs text-slate-500 pt-1">Zoom canlı dersinizin başlamasına az kaldı. Katılmak için tıklayın.</p>
+            </div>
+            <div class="pt-2 flex flex-col gap-2">
+                <a id="alarmMeetingLinkBtn" href="#" target="_blank" rel="noopener noreferrer" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="video" class="w-4 h-4"></i> Zoom ile Derse Katıl
+                </a>
+                <button onclick="closeAlarmModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold py-2.5 rounded-xl text-xs transition-all">
+                    Kapat / Hatırlatıcıyı Sustur
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WHATSAPP SABİT DESTEK BUTONU -->
     <a href="https://wa.me/905555555555?text=Merhaba,%20Zaman%20Tüneli%20portalı%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="fixed bottom-5 right-5 z-50 bg-emerald-500 hover:bg-emerald-600 text-white p-3.5 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95" title="WhatsApp ile İletişime Geç">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
     </a>
@@ -479,6 +586,21 @@
     <script>
         let selectedAuthRole = 'ogrenci';
 
+        window.addEventListener('DOMContentLoaded', () => {
+            const bar = document.getElementById('splashBar');
+            setTimeout(() => { bar.style.width = '100%'; }, 100);
+            setTimeout(() => {
+                const splash = document.getElementById('splashScreen');
+                splash.classList.add('fade-out');
+                const session = JSON.parse(localStorage.getItem('zt_local_session'));
+                if (session) {
+                    applyUserSessionUI(session.email, session.role);
+                } else {
+                    document.getElementById('authLockScreen').classList.remove('hidden');
+                }
+            }, 900);
+        });
+
         function selectLoginRole(role) {
             selectedAuthRole = role;
             const roles = ['ogrenci', 'matematik', 'edebiyat', 'pdr', 'mudur', 'mudur_yardimcisi', 'muhasebe', 'admin'];
@@ -498,7 +620,6 @@
             }
         }
 
-        // YKS 2027 SAYACI
         function updateYksCountdown() {
             const diff = new Date('June 19, 2027 10:15:00').getTime() - new Date().getTime();
             if (diff > 0) {
@@ -510,7 +631,6 @@
         }
         setInterval(updateYksCountdown, 1000);
 
-        // KULLANICI SİSTEMİ
         let systemUsers = JSON.parse(localStorage.getItem('zt_system_users')) || [
             { id: 1, name: 'Sistem Yöneticisi', email: 'admin@zamantuneli.com', role: 'admin', status: 'approved' },
             { id: 2, name: 'Rehber Öğretmen (PDR)', email: 'pdr@zamantuneli.com', role: 'pdr', status: 'approved' },
@@ -582,22 +702,22 @@
                 ['olcme', 'planlama', 'etkilesim'].forEach(c => { document.getElementById(`cat-student-${c}`).className = "whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"; document.getElementById(`subnav-student-${c}`).classList.add('hidden'); });
                 document.getElementById(`cat-student-${category}`).className = "whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-ogm-600 text-white transition-all flex items-center gap-1.5";
                 document.getElementById(`subnav-student-${category}`).classList.remove('hidden');
-                switchTab({ olcme: 'denemeTracker', planlama: 'program', etkilesim: 'chatRooms' }[category]);
+                switchTab({ olcme: 'denemeTracker', planlama: 'program', etkilesim: 'studentMeetings' }[category]);
             } else if (role === 'teacher') {
                 ['takip', 'rehberlik'].forEach(c => { document.getElementById(`cat-teacher-${c}`).className = "whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"; document.getElementById(`subnav-teacher-${c}`).classList.add('hidden'); });
                 document.getElementById(`cat-teacher-${category}`).className = "whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 text-white transition-all flex items-center gap-1.5";
                 document.getElementById(`subnav-teacher-${category}`).classList.remove('hidden');
-                switchTab({ takip: 'pdrDashboard', rehberlik: 'chatRooms' }[category]);
+                switchTab({ takip: 'pdrDashboard', rehberlik: 'teacherMeetings' }[category]);
             } else if (role === 'idare') {
                 ['yonetim', 'takip'].forEach(c => { document.getElementById(`cat-idare-${c}`).className = "whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"; document.getElementById(`subnav-idare-${c}`).classList.add('hidden'); });
                 document.getElementById(`cat-idare-${category}`).className = "whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 text-white transition-all flex items-center gap-1.5";
                 document.getElementById(`subnav-idare-${category}`).classList.remove('hidden');
-                switchTab({ yonetim: 'idareOverview', takip: 'pdrDashboard' }[category]);
+                switchTab({ yonetim: 'idareOverview', takip: 'smsWhatsappHub' }[category]);
             } else if (role === 'admin') {
                 ['sistem', 'icerik'].forEach(c => { document.getElementById(`cat-admin-${c}`).className = "whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"; document.getElementById(`subnav-admin-${c}`).classList.add('hidden'); });
                 document.getElementById(`cat-admin-${category}`).className = "whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-rose-600 text-white transition-all flex items-center gap-1.5";
                 document.getElementById(`subnav-admin-${category}`).classList.remove('hidden');
-                switchTab({ sistem: 'adminTeacherApprovals', icerik: 'chatRooms' }[category]);
+                switchTab({ sistem: 'adminTeacherApprovals', icerik: 'teacherMeetings' }[category]);
             }
         }
 
@@ -606,7 +726,7 @@
                 'denemeTrackerView', 'calculatorView', 'programView', 'topicsView', 'studentMeetingsView', 'tarihOyunuView', 'studentAnnouncementsView', 'notesView', 'pomodoroView',
                 'pdrDashboardView', 'teacherClassStatsView', 'teacherMeetingsView', 'pdrConsultView',
                 'adminTeacherApprovalsView', 'adminUserManagerView', 'adminGameEditorView', 'chatRoomsView',
-                'muhasebePanelView', 'eyotekPortalView', 'idareOverviewView'
+                'muhasebePanelView', 'eyotekPortalView', 'idareOverviewView', 'smsWhatsappHubView'
             ];
             allViews.forEach(v => { const el = document.getElementById(v); if(el) el.classList.add('hidden'); });
             const target = document.getElementById(tab + 'View');
@@ -619,15 +739,41 @@
             if (tab === 'eyotekPortal') renderEyotek();
             if (tab === 'idareOverview') renderIdareOverview();
             if (tab === 'pdrDashboard') renderStudents();
-            if (tab === 'teacherMeetings') renderMeetings();
+            if (tab === 'teacherMeetings' || tab === 'studentMeetings') renderMeetings();
             if (tab === 'tarihOyunu') initTarihGame();
             lucide.createIcons();
         }
 
-        // --- TOPLANTI / CANLI DERS SİSTEMİ (DÜZELTİLDİ) ---
+        // --- ZOOM ÖZELLİĞİ ---
+        function generateZoomLink() {
+            const randomId = Math.floor(100000000 + Math.random() * 900000000);
+            const randomPwd = Math.random().toString(36).substring(2, 8);
+            const zoomUrl = `https://zoom.us/j/${randomId}?pwd=${randomPwd}`;
+            meetLink.value = zoomUrl;
+            alert("Otomatik Zoom toplantı linki oluşturuldu!");
+        }
+
+        // --- WHATSAPP & SMS GÖNDERME ---
+        function fillTemplate(text) { document.getElementById('comMessage').value = text; }
+        function sendViaWhatsApp() {
+            const phone = document.getElementById('comPhone').value.trim();
+            const message = encodeURIComponent(document.getElementById('comMessage').value);
+            if (!message) return alert("Lütfen gönderilecek mesajı yazınız.");
+            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        }
+        function sendViaSMS() {
+            const phone = document.getElementById('comPhone').value.trim();
+            const message = encodeURIComponent(document.getElementById('comMessage').value);
+            if (!message) return alert("Lütfen gönderilecek mesajı yazınız.");
+            window.location.href = `sms:${phone}?body=${message}`;
+        }
+
+        // --- TOPLANTI & ALARM SİSTEMİ ---
         let meetingsList = JSON.parse(localStorage.getItem('zt_meetings_list')) || [
-            { id: 1, title: 'Örnek Soru Çözüm Seansı', date: '2026-06-01T10:00', link: 'https://zoom.us', desc: 'Genel katılım.' }
+            { id: 1, title: 'Zoom Canlı YKS Soru Çözümü', date: '2026-06-01T10:00', link: 'https://zoom.us/j/123456789?pwd=ornek', desc: 'Genel katılım.' }
         ];
+
+        let alertedMeetings = JSON.parse(localStorage.getItem('zt_alerted_meetings')) || [];
 
         function handleCreateMeeting(e) {
             e.preventDefault();
@@ -640,30 +786,55 @@
             localStorage.setItem('zt_meetings_list', JSON.stringify(meetingsList));
             e.target.reset();
             renderMeetings();
-            alert("Canlı ders/toplantı başarıyla yayınlandı!");
+            alert("Zoom canlı dersi başarıyla yayınlandı!");
         }
 
         function renderMeetings() {
-            const html = meetingsList.length === 0 ? '<p class="text-xs text-slate-400 italic">Planlanmış toplantı yok.</p>' : meetingsList.map(m => `
+            const html = meetingsList.length === 0 ? '<p class="text-xs text-slate-400 italic">Planlanmış Zoom dersi yok.</p>' : meetingsList.map(m => `
                 <div class="bg-slate-50 border p-3.5 rounded-xl space-y-1.5">
                     <div class="flex justify-between items-start">
                         <h4 class="font-bold text-xs text-slate-800">${m.title}</h4>
                         <button onclick="meetingsList=meetingsList.filter(x=>x.id!==${m.id});localStorage.setItem('zt_meetings_list',JSON.stringify(meetingsList));renderMeetings()" class="text-rose-500 text-[10px] font-bold">Sil</button>
                     </div>
-                    <p class="text-[11px] text-slate-500">${new Date(m.date).toLocaleString('tr-TR')}</p>
+                    <p class="text-[11px] text-slate-500 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3 text-blue-600"></i> ${new Date(m.date).toLocaleString('tr-TR')}</p>
                     ${m.desc ? `<p class="text-[11px] text-slate-600">${m.desc}</p>` : ''}
-                    <a href="${m.link}" target="_blank" rel="noopener noreferrer" class="inline-block bg-ogm-600 text-white px-3 py-1 rounded text-[11px] font-semibold mt-1">Toplantıya Katıl</a>
+                    <a href="${m.link}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-[11px] font-semibold mt-1"><i data-lucide="video" class="w-3.5 h-3.5"></i> Zoom ile Katıl</a>
                 </div>
             `).join('');
 
             if (document.getElementById('teacherMeetingsList')) document.getElementById('teacherMeetingsList').innerHTML = html;
             if (document.getElementById('studentMeetingsList')) document.getElementById('studentMeetingsList').innerHTML = html;
+            lucide.createIcons();
         }
+
+        function checkMeetingAlarms() {
+            const now = new Date().getTime();
+            meetingsList.forEach(m => {
+                const meetTime = new Date(m.date).getTime();
+                const diffMinutes = (meetTime - now) / (1000 * 60);
+
+                if (diffMinutes >= 0 && diffMinutes <= 5 && !alertedMeetings.includes(m.id)) {
+                    triggerMeetingAlarm(m);
+                    alertedMeetings.push(m.id);
+                    localStorage.setItem('zt_alerted_meetings', JSON.stringify(alertedMeetings));
+                }
+            });
+        }
+        setInterval(checkMeetingAlarms, 10000);
+
+        function triggerMeetingAlarm(meeting) {
+            alarmMeetingTitle.textContent = meeting.title;
+            alarmMeetingTime.textContent = "Başlama Zamanı: " + new Date(meeting.date).toLocaleString('tr-TR');
+            alarmMeetingLinkBtn.href = meeting.link;
+            document.getElementById('meetingAlarmModal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeAlarmModal() { document.getElementById('meetingAlarmModal').classList.add('hidden'); }
 
         // --- MUHASEBE SİSTEMİ ---
         let muhasebeList = JSON.parse(localStorage.getItem('zt_muhasebe')) || [
-            { id: 1, ad: 'Ahmet Yılmaz (Aidat)', tur: 'Gelir', tutar: 4500, tarih: '10.05.2026', durum: 'Ödendi' },
-            { id: 2, ad: 'Kırtasiye Gideri', tur: 'Gider', tutar: 1200, tarih: '12.05.2026', durum: 'Ödendi' }
+            { id: 1, ad: 'Ahmet Yılmaz (Aidat)', tur: 'Gelir', tutar: 4500, tarih: '10.05.2026', durum: 'Ödendi' }
         ];
 
         function handleSaveMuhasebe(e) {
@@ -696,7 +867,6 @@
             `).join('');
         }
 
-        // --- e-YOTEK ---
         function renderEyotek() {
             const students = systemUsers.filter(u => u.role === 'ogrenci');
             eyotekAttendanceList.innerHTML = students.length === 0 ? '<p class="text-xs text-slate-400">Kayıtlı öğrenci yok.</p>' : students.map(s => `
@@ -719,7 +889,6 @@
             `).join('');
         }
 
-        // --- CHAT ---
         let chatRooms = [{ id: 'genel', name: 'Genel Soru Odası', type: 'room' }, { id: 'pdr', name: 'PDR Danışma Kanalı', type: 'group' }];
         let chatMessages = [{ room: 'genel', sender: 'Sistem', text: 'Zaman Tüneli Chat sistemine hoş geldiniz!', time: '10:00' }];
         let activeRoomId = 'genel';
@@ -747,7 +916,6 @@
             groupNameInput.value = ''; toggleModal('createGroupModal'); renderChatRooms();
         }
 
-        // --- ADMİN ONAYLARI ---
         function renderAdminApprovals() {
             const pending = systemUsers.filter(u => u.status === 'pending');
             if(pendingCountBadge) pendingCountBadge.textContent = pending.length;
@@ -768,13 +936,6 @@
         function initTarihGame() { gameEventText.textContent = tarihSorulari[0].soru; gameOptions.innerHTML = tarihSorulari[0].secenekler.map(s => `<button onclick="alert('Doğru!')" class="bg-white border py-2.5 rounded-xl text-xs font-semibold">${s}</button>`).join(''); }
 
         function toggleModal(id) { document.getElementById(id).classList.toggle('hidden'); }
-
-        window.onload = () => {
-            renderMeetings();
-            const session = JSON.parse(localStorage.getItem('zt_local_session'));
-            if(session) applyUserSessionUI(session.email, session.role);
-            lucide.createIcons();
-        };
     </script>
 </body>
 </html>
