@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Zaman Tüneli - MEB & EBA Tarzı Portal</title>
+    <title>Zaman Tüneli - UZEM & e-Yotek / MyExamy Portalı</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,13 +12,13 @@
             theme: {
                 extend: {
                     colors: {
-                        ebablue: {
+                        uzem: {
                             50: '#f0f4f8',
                             100: '#d9e2ec',
                             500: '#1976d2',
-                            600: '#1565c0',
-                            700: '#0d47a1',
-                            dark: '#0a192f'
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            dark: '#0f172a'
                         }
                     }
                 }
@@ -30,7 +30,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #1e293b; -webkit-tap-highlight-color: transparent; }
-        .eba-card { background: #ffffff; border: 1px solid #cbd5e1; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
+        .uzem-card { background: #ffffff; border: 1px solid #cbd5e1; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
         
         button, a { 
             transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease; 
@@ -45,33 +45,33 @@
 <body class="min-h-screen flex flex-col justify-between antialiased relative">
 
     <!-- AÇILIŞ EKRANI -->
-    <div id="splashScreen" class="fixed inset-0 z-[100] bg-ebablue-dark flex flex-col items-center justify-center text-white space-y-3">
-        <div class="bg-ebablue-500 p-4 rounded-xl shadow-lg">
-            <i data-lucide="graduation-cap" class="w-10 h-10 text-white"></i>
+    <div id="splashScreen" class="fixed inset-0 z-[100] bg-uzem-dark flex flex-col items-center justify-center text-white space-y-3">
+        <div class="bg-uzem-500 p-4 rounded-xl shadow-lg">
+            <i data-lucide="award" class="w-10 h-10 text-white"></i>
         </div>
-        <h1 class="text-lg font-bold tracking-wider">ZAMAN TÜNELİ - EBA SİSTEMİ</h1>
-        <p class="text-xs text-slate-400">Kurumsal Oturum Yükleniyor...</p>
+        <h1 class="text-lg font-bold tracking-wider">UZEM & e-Yotek / MyExamy Portalı</h1>
+        <p class="text-xs text-slate-400">Sistem ve Karne Modülü Yükleniyor...</p>
     </div>
 
     <!-- GİRİŞ EKRANI -->
     <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto hidden">
         <div class="bg-white border border-slate-300 rounded-2xl max-w-md w-full p-6 sm:p-7 shadow-xl space-y-4 my-auto">
             <div class="text-center space-y-1">
-                <div class="inline-flex bg-ebablue-50 text-ebablue-600 p-3 rounded-xl mb-1 border border-ebablue-100">
-                    <i data-lucide="shield" class="w-7 h-7"></i>
+                <div class="inline-flex bg-uzem-50 text-uzem-600 p-3 rounded-xl mb-1 border border-uzem-100">
+                    <i data-lucide="shield-check" class="w-7 h-7"></i>
                 </div>
-                <h2 class="text-xl font-bold text-slate-900">MEB / EBA Giriş Portalı</h2>
-                <p class="text-slate-500 text-xs">Lütfen rolünüzü seçerek kimlik doğrulama yapın.</p>
+                <h2 class="text-xl font-bold text-slate-900">UZEM & e-Yotek Giriş</h2>
+                <p class="text-slate-500 text-xs">Rolünüzü seçerek oturum açın.</p>
             </div>
 
             <div class="space-y-1">
                 <label class="block text-xs font-bold text-slate-700">Kullanıcı Rolü</label>
-                <select id="roleSelectDropdown" onchange="onRoleSelectChange(this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-ebablue-500">
+                <select id="roleSelectDropdown" onchange="onRoleSelectChange(this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-uzem-500">
                     <option value="ogrenci">Öğrenci</option>
                     <option value="matematik">Matematik Öğretmeni</option>
                     <option value="edebiyat">Edebiyat Öğretmeni</option>
                     <option value="pdr">PDR / Rehber Öğretmen</option>
-                    <option value="mudur">Okul Müdürü</option>
+                    <option value="mudur">Kurum Müdürü</option>
                     <option value="mudur_yardimcisi">Müdür Yardımcısı</option>
                     <option value="muhasebe">Muhasebe</option>
                     <option value="admin">Admin</option>
@@ -79,24 +79,24 @@
             </div>
 
             <div id="authModeTabs" class="flex border-b border-slate-200">
-                <button type="button" onclick="switchAuthTab('login')" id="loginTabBtn" class="flex-1 pb-2 text-xs font-bold text-ebablue-600 border-b-2 border-ebablue-600">Giriş Yap</button>
+                <button type="button" onclick="switchAuthTab('login')" id="loginTabBtn" class="flex-1 pb-2 text-xs font-bold text-uzem-600 border-b-2 border-uzem-600">Giriş Yap</button>
                 <button type="button" onclick="switchAuthTab('register')" id="registerTabBtn" class="flex-1 pb-2 text-xs font-medium text-slate-400 border-b-2 border-transparent">Kayıt Ol</button>
             </div>
 
             <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-3">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta / TC No</label>
-                    <input type="email" id="loginEmail" required placeholder="ornek@ebaders.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2.5 text-xs focus:outline-none focus:border-ebablue-500">
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta Adresi</label>
+                    <input type="email" id="loginEmail" required placeholder="ornek@uzemportal.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre</label>
-                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2.5 text-xs focus:outline-none focus:border-ebablue-500">
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
                 </div>
                 <div id="adminKeyField" class="hidden">
                     <label class="block text-xs font-semibold text-rose-600 mb-1">Admin Güvenlik Anahtarı</label>
                     <input type="password" id="adminSecretKey" placeholder="admin123" class="w-full bg-rose-50 border border-rose-200 rounded-lg px-3 py-2.5 text-xs focus:outline-none">
                 </div>
-                <button type="submit" class="w-full bg-ebablue-600 hover:bg-ebablue-700 text-white font-bold py-3 rounded-lg text-xs shadow-sm">Giriş Yap</button>
+                <button type="submit" class="w-full bg-uzem-600 hover:bg-uzem-700 text-white font-bold py-3 rounded-lg text-xs shadow-sm">Oturum Aç</button>
             </form>
 
             <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-3 hidden">
@@ -106,7 +106,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta</label>
-                    <input type="email" id="regEmail" required placeholder="ornek@ebaders.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2.5 text-xs">
+                    <input type="email" id="regEmail" required placeholder="ornek@uzemportal.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2.5 text-xs">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre</label>
@@ -116,29 +116,29 @@
                     <label class="block text-xs font-semibold text-emerald-700 mb-1">Öğretmen Diploması (Zorunlu)</label>
                     <input type="file" id="regTeacherDoc" accept=".pdf,.jpg,.png" class="w-full bg-emerald-50 border border-emerald-200 rounded-lg p-1.5 text-xs">
                 </div>
-                <button type="submit" class="w-full bg-ebablue-600 hover:bg-ebablue-700 text-white font-bold py-3 rounded-lg text-xs shadow-sm">Kayıt Ol</button>
+                <button type="submit" class="w-full bg-uzem-600 hover:bg-uzem-700 text-white font-bold py-3 rounded-lg text-xs shadow-sm">Kayıt Ol</button>
             </form>
         </div>
     </div>
 
-    <!-- HEADER (EBA & e-Okul Mavi Kurumsal Stil) -->
-    <header class="sticky top-0 z-40 bg-ebablue-dark text-white border-b border-ebablue-600 shadow-md">
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 bg-uzem-dark text-white border-b border-uzem-700 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
                 <div class="flex items-center gap-2.5">
-                    <div class="bg-ebablue-500 text-white p-2 rounded-lg flex items-center justify-center font-bold text-xs shadow">
-                        <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <div class="bg-uzem-500 text-white p-2 rounded-lg flex items-center justify-center font-bold text-xs shadow">
+                        <i data-lucide="graduation-cap" class="w-4 h-4"></i>
                     </div>
                     <div>
-                        <h1 class="font-bold text-xs tracking-wide">T.C. MİLLÎ EĞİTİM BAKANLIĞI</h1>
-                        <p id="portalRoleBadge" class="text-[10px] text-ebablue-100 font-medium">Zaman Tüneli / EBA Portalı</p>
+                        <h1 class="font-bold text-xs tracking-wide">UZEM & e-Yotek / MyExamy Portalı</h1>
+                        <p id="portalRoleBadge" class="text-[10px] text-uzem-100 font-medium">Uzaktan Eğitim & Sınav Analiz Merkezi</p>
                     </div>
                 </div>
                 <div id="mobileAuthArea" class="sm:hidden"></div>
             </div>
 
             <!-- YKS 2027 SAYACI -->
-            <div class="bg-ebablue-700 border border-ebablue-600 px-3 py-1 rounded-lg flex items-center gap-2 text-center text-white">
+            <div class="bg-uzem-700 border border-uzem-600 px-3 py-1 rounded-lg flex items-center gap-2 text-center text-white">
                 <span class="text-[10px] font-bold uppercase tracking-wider hidden md:inline">YKS 2027 Sayaç:</span>
                 <div class="flex items-center gap-1.5 text-xs font-bold">
                     <div><span id="yksDays" class="text-sm font-extrabold text-white">000</span>G</div>
@@ -159,21 +159,21 @@
         <!-- ÖĞRENCİ NAVIGASYON -->
         <div id="studentNavWrapper" class="space-y-2">
             <div class="flex overflow-x-auto bg-white border border-slate-300 p-1.5 rounded-xl gap-1 shadow-sm">
-                <button onclick="selectMainCategory('student', 'olcme')" id="cat-student-olcme" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-bold bg-ebablue-600 text-white flex items-center gap-1.5"><i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i> Dersler & ÖSYM</button>
+                <button onclick="selectMainCategory('student', 'olcme')" id="cat-student-olcme" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-bold bg-uzem-600 text-white flex items-center gap-1.5"><i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i> Sınavlar & Karneler</button>
                 <button onclick="selectMainCategory('student', 'planlama')" id="cat-student-planlama" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-100 flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> Planlama</button>
                 <button onclick="selectMainCategory('student', 'etkilesim')" id="cat-student-etkilesim" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-100 flex items-center gap-1.5"><i data-lucide="video" class="w-3.5 h-3.5"></i> Canlı Ders & İletişim</button>
             </div>
             <div id="subnav-student-olcme" class="flex overflow-x-auto bg-slate-200 border border-slate-300 p-1 rounded-lg gap-1">
-                <button onclick="switchTab('denemeTracker')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-semibold bg-white text-ebablue-700 shadow-sm">Deneme Takip</button>
-                <button onclick="switchTab('studentAttendanceView')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">📊 e-Okul Devamsızlık Durumum</button>
-                <button onclick="switchTab('osymPortal')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">🏛️ ÖSYM Merkezi</button>
+                <button onclick="switchTab('denemeTracker')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-semibold bg-white text-uzem-700 shadow-sm">Deneme Takip</button>
+                <button onclick="switchTab('eyotekKarneView')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">📊 e-Yotek / MyExamy Karne</button>
+                <button onclick="switchTab('studentAttendanceView')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">📋 Devamsızlık Durumum</button>
             </div>
             <div id="subnav-student-planlama" class="hidden flex overflow-x-auto bg-slate-200 border border-slate-300 p-1 rounded-lg gap-1">
                 <button onclick="switchTab('program')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">Haftalık Program</button>
                 <button onclick="switchTab('topics')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">Eksik Konular</button>
             </div>
             <div id="subnav-student-etkilesim" class="hidden flex overflow-x-auto bg-slate-200 border border-slate-300 p-1 rounded-lg gap-1">
-                <button onclick="switchTab('studentMeetings')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-semibold bg-white text-ebablue-700 shadow-sm">📹 EBA Canlı Dersler</button>
+                <button onclick="switchTab('studentMeetings')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-semibold bg-white text-uzem-700 shadow-sm">📹 UZEM Canlı Dersler</button>
                 <button onclick="switchTab('chatRooms')" class="whitespace-nowrap px-3.5 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">Sınıf Sohbeti</button>
                 <button onclick="switchTab('smsWhatsappHub')" class="whitespace-nowrap px-3.5 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">İletişim Merkezi</button>
             </div>
@@ -182,23 +182,23 @@
         <!-- PDR ÖĞRETMEN NAVIGASYON -->
         <div id="teacherNavWrapper" class="hidden space-y-2">
             <div class="flex overflow-x-auto bg-white border border-slate-300 p-1.5 rounded-xl gap-1 shadow-sm">
-                <button onclick="selectMainCategory('teacher', 'takip')" id="cat-teacher-takip" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-bold bg-emerald-700 text-white flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5"></i> PDR & e-Okul Takip</button>
+                <button onclick="selectMainCategory('teacher', 'takip')" id="cat-teacher-takip" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-bold bg-emerald-700 text-white flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5"></i> PDR & e-Yotek Takip</button>
                 <button onclick="selectMainCategory('teacher', 'rehberlik')" id="cat-teacher-rehberlik" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-100 flex items-center gap-1.5"><i data-lucide="video" class="w-3.5 h-3.5"></i> Canlı Ders Planla</button>
             </div>
             <div id="subnav-teacher-takip" class="flex overflow-x-auto bg-slate-200 border border-slate-300 p-1 rounded-lg gap-1">
                 <button onclick="switchTab('pdrDashboard')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-semibold bg-white text-emerald-800 shadow-sm">👥 Öğrenci Listesi & Ekle</button>
-                <button onclick="switchTab('pdrAttendance')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">📋 Devamsızlık Fişi Girişi</button>
+                <button onclick="switchTab('pdrAttendance')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">📋 Devamsızlık Girişi</button>
             </div>
             <div id="subnav-teacher-rehberlik" class="hidden flex overflow-x-auto bg-slate-200 border border-slate-300 p-1 rounded-lg gap-1">
                 <button onclick="switchTab('teacherMeetings')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-semibold bg-white text-emerald-800 shadow-sm">📹 Canlı Ders Planla</button>
-                <button onclick="switchTab('smsWhatsappHub')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">SMS / Veli Bilgilendirme</button>
+                <button onclick="switchTab('smsWhatsappHub')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">Veli Bilgilendirme</button>
             </div>
         </div>
 
         <!-- İDARE NAVIGASYON -->
         <div id="idareNavWrapper" class="hidden space-y-2">
             <div class="flex overflow-x-auto bg-white border border-slate-300 p-1.5 rounded-xl gap-1 shadow-sm">
-                <button onclick="selectMainCategory('idare', 'yonetim')" id="cat-idare-yonetim" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-bold bg-indigo-700 text-white flex items-center gap-1.5"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Okul Yönetimi</button>
+                <button onclick="selectMainCategory('idare', 'yonetim')" id="cat-idare-yonetim" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-bold bg-indigo-700 text-white flex items-center gap-1.5"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> UZEM Yönetimi</button>
                 <button onclick="selectMainCategory('idare', 'takip')" id="cat-idare-takip" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-100 flex items-center gap-1.5"><i data-lucide="video" class="w-3.5 h-3.5"></i> Planlama & İletişim</button>
             </div>
             <div id="subnav-idare-yonetim" class="flex overflow-x-auto bg-slate-200 border border-slate-300 p-1 rounded-lg gap-1">
@@ -230,15 +230,52 @@
             </div>
             <div id="subnav-admin-icerik" class="hidden flex overflow-x-auto bg-slate-200 border border-slate-300 p-1 rounded-lg gap-1">
                 <button onclick="switchTab('teacherMeetings')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-semibold bg-white text-rose-800 shadow-sm">Canlı Ders Planla</button>
-                <button onclick="switchTab('smsWhatsappHub')" class="whitespace-nowrap px-3 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">İletişim Hub</button>
+                <button onclick="switchTab('smsWhatsappHub')" class="whitespace-nowrap px-3.5 py-1.5 rounded text-xs font-medium text-slate-700 hover:bg-white">İletişim Hub</button>
+            </div>
+        </div>
+
+        <!-- ================= e-Yotek / MyExamy KARNE MODÜLÜ ================= -->
+        <div id="eyotekKarneViewView" class="hidden space-y-4">
+            <div class="uzem-card rounded-xl p-6 max-w-3xl mx-auto space-y-4">
+                <div class="border-b pb-3 border-slate-200 flex justify-between items-center">
+                    <div>
+                        <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2.5 py-0.5 rounded uppercase">e-Yotek / MyExamy Sınav Karnesi</span>
+                        <h3 class="text-base font-bold text-slate-900 mt-1">Öğrenci Sınav ve Net Analiz Karnesi</h3>
+                    </div>
+                    <button onclick="alert('PDF Karne raporu indiriliyor... (Simülasyon)')" class="bg-uzem-600 hover:bg-uzem-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i> Karne İndir (PDF)
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-lg text-center">
+                        <span class="text-[10px] text-slate-500 font-bold block uppercase">TYT Türkçe</span>
+                        <span class="text-lg font-extrabold text-uzem-700">32.5 Net</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-lg text-center">
+                        <span class="text-[10px] text-slate-500 font-bold block uppercase">TYT Sosyal</span>
+                        <span class="text-lg font-extrabold text-uzem-700">15.0 Net</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-lg text-center">
+                        <span class="text-[10px] text-slate-500 font-bold block uppercase">TYT Matematik</span>
+                        <span class="text-lg font-extrabold text-uzem-700">27.5 Net</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-lg text-center">
+                        <span class="text-[10px] text-slate-500 font-bold block uppercase">TYT Fen</span>
+                        <span class="text-lg font-extrabold text-uzem-700">12.5 Net</span>
+                    </div>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 p-4 rounded-lg space-y-2">
+                    <h4 class="font-bold text-xs text-slate-800">MyExamy AI Sınav Yorumu ve Gelişim Tavsiyesi</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Harika bir ivme yakaladın! Matematik geometri alt başlıklarında son denemede küçük eksiklerin var. PDR öğretmeninin bıraktığı notlara ve eksik konu listene ağırlık vererek önümüzdeki hafta hedefini 95 netin üzerine çıkarabilirsin.</p>
+                </div>
             </div>
         </div>
 
         <!-- ================= ÖĞRENCİ DEVAMSIZLIK & DURUM GÖRÜNÜMÜ ================= -->
         <div id="studentAttendanceViewView" class="hidden space-y-4">
-            <div class="eba-card rounded-xl p-6 max-w-2xl mx-auto space-y-4">
+            <div class="uzem-card rounded-xl p-6 max-w-2xl mx-auto space-y-4">
                 <div class="border-b pb-3 border-slate-200">
-                    <span class="bg-ebablue-100 text-ebablue-700 text-[10px] font-bold px-2.5 py-0.5 rounded uppercase">e-Okul Bilgi Sistemi</span>
+                    <span class="bg-uzem-100 text-uzem-700 text-[10px] font-bold px-2.5 py-0.5 rounded uppercase">UZEM Öğrenci Sistemi</span>
                     <h3 class="text-base font-bold text-slate-900 mt-1">Devamsızlık ve Rehberlik Bilgilerim</h3>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
@@ -260,7 +297,7 @@
 
         <!-- ================= PDR ÖĞRENCİ EKLEME & LİSTESİ ================= -->
         <div id="pdrDashboardView" class="hidden space-y-4">
-            <div class="eba-card rounded-xl p-6 max-w-4xl mx-auto space-y-4">
+            <div class="uzem-card rounded-xl p-6 max-w-4xl mx-auto space-y-4">
                 <div class="flex justify-between items-center border-b pb-3 border-slate-200">
                     <div>
                         <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Rehberlik Servisi</span>
@@ -283,9 +320,9 @@
 
         <!-- ================= PDR DEVAMSIZLIK GİRİŞ FİŞİ ================= -->
         <div id="pdrAttendanceView" class="hidden space-y-4">
-            <div class="eba-card rounded-xl p-6 max-w-4xl mx-auto space-y-4">
+            <div class="uzem-card rounded-xl p-6 max-w-4xl mx-auto space-y-4">
                 <div class="border-b pb-3 border-slate-200">
-                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">e-Okul Entegrasyon</span>
+                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">UZEM Takip Entegrasyon</span>
                     <h3 class="text-base font-bold text-slate-900 mt-1">Öğrenci Devamsızlık ve Gelişim Fişi</h3>
                 </div>
                 <div class="overflow-x-auto">
@@ -299,41 +336,21 @@
             </div>
         </div>
 
-        <!-- ================= ÖSYM (YKS) MERKEZİ ================= -->
-        <div id="osymPortalView" class="hidden space-y-4">
-            <div class="eba-card rounded-xl p-6 max-w-3xl mx-auto space-y-4">
-                <div class="border-b pb-3 border-slate-200 flex justify-between items-center">
-                    <div>
-                        <span class="bg-red-100 text-red-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase">ÖSYM Bilgi</span>
-                        <h3 class="text-base font-bold text-slate-900 mt-1">YKS Sınav Bilgi Merkezi</h3>
-                    </div>
-                    <a href="https://ais.osym.gov.tr" target="_blank" rel="noopener noreferrer" class="bg-red-600 hover:bg-red-700 text-white font-bold px-3.5 py-2 rounded-lg text-xs flex items-center gap-1 shadow-sm">
-                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> ÖSYM AİS Giriş
-                    </a>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-lg"><h4 class="font-bold text-xs">TYT Oturumu</h4><p class="text-[11px] text-slate-500">19 Haziran 2027</p></div>
-                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-lg"><h4 class="font-bold text-xs">AYT Oturumu</h4><p class="text-[11px] text-slate-500">20 Haziran 2027</p></div>
-                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-lg"><h4 class="font-bold text-xs">YDT Oturumu</h4><p class="text-[11px] text-slate-500">20 Haziran 2027 ÖÖ</p></div>
-                </div>
-            </div>
-        </div>
-
         <!-- ZOOM CANLI DERS PLANLA -->
         <div id="teacherMeetingsView" class="hidden space-y-4">
-            <div class="eba-card rounded-xl p-6 max-w-2xl mx-auto space-y-4">
+            <div class="uzem-card rounded-xl p-6 max-w-2xl mx-auto space-y-4">
                 <div class="border-b pb-3 border-slate-200">
-                    <span class="bg-ebablue-100 text-ebablue-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Canlı Ders</span>
-                    <h3 class="text-base font-bold text-slate-900 mt-1">EBA / Zoom Canlı Ders Planla</h3>
+                    <span class="bg-uzem-100 text-uzem-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Canlı Ders</span>
+                    <h3 class="text-base font-bold text-slate-900 mt-1">UZEM Canlı Ders Planla</h3>
                 </div>
                 <form onsubmit="handleCreateMeeting(event)" class="space-y-3">
                     <div><label class="block text-xs font-semibold mb-1">Ders Başlığı</label><input type="text" id="meetTitle" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs"></div>
                     <div><label class="block text-xs font-semibold mb-1">Tarih ve Saat</label><input type="datetime-local" id="meetDate" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs"></div>
                     <div>
-                        <div class="flex justify-between items-center mb-1"><label class="text-xs font-semibold">Zoom / EBA Linki</label><button type="button" onclick="generateZoomLink()" class="text-[11px] font-bold text-ebablue-600">Otomatik Oluştur</button></div>
+                        <div class="flex justify-between items-center mb-1"><label class="text-xs font-semibold">Canlı Ders Linki</label><button type="button" onclick="generateZoomLink()" class="text-[11px] font-bold text-uzem-600">Otomatik Oluştur</button></div>
                         <input type="url" id="meetLink" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs">
                     </div>
-                    <button type="submit" class="w-full bg-ebablue-600 hover:bg-ebablue-700 text-white py-2.5 rounded-lg text-xs font-semibold">Canlı Dersi Yayınla</button>
+                    <button type="submit" class="w-full bg-uzem-600 hover:bg-uzem-700 text-white py-2.5 rounded-lg text-xs font-semibold">Canlı Dersi Yayınla</button>
                 </form>
                 <div id="teacherMeetingsList" class="space-y-2 pt-3 border-t border-slate-200"></div>
             </div>
@@ -341,28 +358,28 @@
 
         <!-- ÖĞRENCİ CANLI DERS LİSTESİ -->
         <div id="studentMeetingsView" class="hidden space-y-4">
-            <div class="eba-card rounded-xl p-6 max-w-3xl mx-auto space-y-4">
-                <h3 class="text-base font-bold">EBA Canlı Derslerim</h3>
+            <div class="uzem-card rounded-xl p-6 max-w-3xl mx-auto space-y-4">
+                <h3 class="text-base font-bold">UZEM Canlı Derslerim</h3>
                 <div id="studentMeetingsList" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
             </div>
         </div>
 
         <!-- WHATSAPP & SMS HUB -->
         <div id="smsWhatsappHubView" class="hidden space-y-4">
-            <div class="eba-card rounded-xl p-6 max-w-xl mx-auto space-y-3">
+            <div class="uzem-card rounded-xl p-6 max-w-xl mx-auto space-y-3">
                 <h3 class="text-base font-bold">SMS / Veli Bilgilendirme</h3>
                 <input type="text" id="comPhone" placeholder="Telefon (90555...)" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs">
                 <textarea id="comMessage" rows="3" placeholder="Mesajınız..." class="w-full border border-slate-300 rounded-lg p-3 text-xs"></textarea>
                 <div class="grid grid-cols-2 gap-2">
                     <button onclick="sendViaWhatsApp()" class="bg-emerald-600 text-white py-2.5 rounded-lg text-xs font-bold">WhatsApp</button>
-                    <button onclick="sendViaSMS()" class="bg-ebablue-600 text-white py-2.5 rounded-lg text-xs font-bold">SMS Gönder</button>
+                    <button onclick="sendViaSMS()" class="bg-uzem-600 text-white py-2.5 rounded-lg text-xs font-bold">SMS Gönder</button>
                 </div>
             </div>
         </div>
 
         <!-- ADMİN KULLANICI YÖNETİMİ -->
         <div id="adminUserManagerView" class="hidden space-y-4">
-            <div class="eba-card rounded-xl p-6 max-w-4xl mx-auto space-y-4">
+            <div class="uzem-card rounded-xl p-6 max-w-4xl mx-auto space-y-4">
                 <div class="flex justify-between items-center border-b pb-3 border-slate-200">
                     <h3 class="text-base font-bold">Kullanıcı Yönetimi</h3>
                     <button onclick="toggleModal('addUserModal')" class="bg-rose-600 text-white px-3.5 py-2 rounded-lg text-xs font-bold shadow-sm">Kullanıcı Ekle</button>
@@ -372,28 +389,27 @@
         </div>
 
         <!-- DİĞER GÖRÜNÜMLER -->
-        <div id="muhasebePanelView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">Muhasebe</h3><span id="finTotalGelir" class="text-lg font-bold text-emerald-600">0 ₺</span></div></div>
-        <div id="eyotekPortalView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">e-Yotek Karne</h3></div></div>
-        <div id="idareOverviewView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">İdare Durumu</h3></div></div>
-        <div id="chatRoomsView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">Sınıf Sohbeti</h3></div></div>
-        <div id="denemeTrackerView" class="space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">Deneme Takip Paneli</h3></div></div>
-        <div id="calculatorView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">Puan Hesaplama</h3></div></div>
-        <div id="programView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">Haftalık Program</h3></div></div>
-        <div id="topicsView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">Eksik Konular</h3></div></div>
-        <div id="tarihOyunuView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">Tarih Oyunu</h3></div></div>
-        <div id="notesView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">Ders Notları</h3></div></div>
-        <div id="pomodoroView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">Pomodoro Sayaç</h3></div></div>
-        <div id="teacherClassStatsView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">Sınıf İstatistikleri</h3></div></div>
-        <div id="pdrConsultView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">Görüşme Notları</h3></div></div>
-        <div id="adminTeacherApprovalsView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">Öğretmen Onayları</h3><div id="adminPendingTeachersBody"></div></div></div>
-        <div id="adminGameEditorView" class="hidden space-y-4"><div class="eba-card rounded-xl p-6"><h3 class="text-base font-bold">Soru Editörü</h3></div></div>
+        <div id="muhasebePanelView" class="hidden space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Muhasebe</h3><span id="finTotalGelir" class="text-lg font-bold text-emerald-600">0 ₺</span></div></div>
+        <div id="idareOverviewView" class="hidden space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Kurum Özeti</h3></div></div>
+        <div id="chatRoomsView" class="hidden space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Sınıf Sohbeti</h3></div></div>
+        <div id="denemeTrackerView" class="space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Deneme Takip Paneli</h3></div></div>
+        <div id="calculatorView" class="hidden space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Puan Hesaplama</h3></div></div>
+        <div id="programView" class="hidden space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Haftalık Program</h3></div></div>
+        <div id="topicsView" class="hidden space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Eksik Konular</h3></div></div>
+        <div id="tarihOyunuView" class="hidden space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Tarih Oyunu</h3></div></div>
+        <div id="notesView" class="hidden space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Ders Notları</h3></div></div>
+        <div id="pomodoroView" class="hidden space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Pomodoro Sayaç</h3></div></div>
+        <div id="teacherClassStatsView" class="hidden space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Sınıf İstatistikleri</h3></div></div>
+        <div id="pdrConsultView" class="hidden space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Görüşme Notları</h3></div></div>
+        <div id="adminTeacherApprovalsView" class="hidden space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Öğretmen Onayları</h3><div id="adminPendingTeachersBody"></div></div></div>
+        <div id="adminGameEditorView" class="hidden space-y-4"><div class="uzem-card rounded-xl p-6"><h3 class="text-base font-bold">Soru Editörü</h3></div></div>
     </main>
 
     <!-- MODALLAR -->
     <div id="meetingAlarmModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-xl max-w-sm w-full p-6 text-center shadow-xl border-2 border-ebablue-500">
+        <div class="bg-white rounded-xl max-w-sm w-full p-6 text-center shadow-xl border-2 border-uzem-500">
             <h3 id="alarmMeetingTitle" class="text-base font-bold mb-2">Canlı Ders Başlıyor!</h3>
-            <a id="alarmMeetingLinkBtn" href="#" target="_blank" class="block bg-ebablue-600 text-white py-2.5 rounded-lg font-bold text-xs">Derse Katıl</a>
+            <a id="alarmMeetingLinkBtn" href="#" target="_blank" class="block bg-uzem-600 text-white py-2.5 rounded-lg font-bold text-xs">Derse Katıl</a>
             <button onclick="closeAlarmModal()" class="mt-2 text-xs text-slate-500 font-medium">Kapat</button>
         </div>
     </div>
@@ -466,7 +482,7 @@
         setInterval(updateYksCountdown, 1000);
 
         let systemUsers = JSON.parse(localStorage.getItem('zt_system_users')) || [
-            { id: 1, name: 'Sistem Yöneticisi', email: 'admin@ebaders.com', role: 'admin', status: 'approved' },
+            { id: 1, name: 'Sistem Yöneticisi', email: 'admin@uzemportal.com', role: 'admin', status: 'approved' },
             { id: 2, name: 'Mehmet Demir', email: 'mehmet@ogrenci.com', role: 'ogrenci', status: 'approved', sinif: '12-A', devamsizlikOzurlu: 1, devamsizlikOzursuz: 0, rehberlikNotu: 'Ders durumu oldukça iyi.' }
         ];
 
@@ -499,7 +515,7 @@
             else if (role === 'matematik' || role === 'edebiyat' || role === 'pdr') { teacherNavWrapper.classList.remove('hidden'); selectMainCategory('teacher', 'takip'); }
             else { studentNavWrapper.classList.remove('hidden'); selectMainCategory('student', 'olcme'); }
 
-            const authHTML = `<div class="flex items-center gap-2 bg-ebablue-700 px-3 py-1.5 rounded-lg text-xs"><span class="font-bold">${email}</span><button onclick="localStorage.removeItem('zt_local_session');location.reload();" class="text-rose-300 font-bold ml-1">Çıkış</button></div>`;
+            const authHTML = `<div class="flex items-center gap-2 bg-uzem-700 px-3 py-1.5 rounded-lg text-xs"><span class="font-bold">${email}</span><button onclick="localStorage.removeItem('zt_local_session');location.reload();" class="text-rose-300 font-bold ml-1">Çıkış</button></div>`;
             authArea.innerHTML = authHTML; mobileAuthArea.innerHTML = authHTML;
             lucide.createIcons();
         }
@@ -517,7 +533,7 @@
         }
 
         function switchTab(tab) {
-            ['osymPortalView', 'teacherMeetingsView', 'studentMeetingsView', 'smsWhatsappHubView', 'adminUserManagerView', 'muhasebePanelView', 'eyotekPortalView', 'idareOverviewView', 'chatRoomsView', 'denemeTrackerView', 'studentAttendanceViewView', 'calculatorView', 'programView', 'topicsView', 'tarihOyunuView', 'notesView', 'pomodoroView', 'pdrDashboardView', 'pdrAttendanceView', 'adminTeacherApprovalsView'].forEach(v => {
+            ['teacherMeetingsView', 'studentMeetingsView', 'smsWhatsappHubView', 'adminUserManagerView', 'muhasebePanelView', 'idareOverviewView', 'chatRoomsView', 'denemeTrackerView', 'eyotekKarneViewView', 'studentAttendanceViewView', 'calculatorView', 'programView', 'topicsView', 'tarihOyunuView', 'notesView', 'pomodoroView', 'pdrDashboardView', 'pdrAttendanceView', 'adminTeacherApprovalsView'].forEach(v => {
                 const el = document.getElementById(v); if (el) el.classList.add('hidden');
             });
             const target = document.getElementById(tab + 'View');
@@ -592,7 +608,7 @@
             const notu = document.getElementById(`not_${id}`).value;
             systemUsers = systemUsers.map(u => u.id === id ? { ...u, devamsizlikOzurlu: ozurlu, devamsizlikOzursuz: ozursuz, rehberlikNotu: notu } : u);
             localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
-            alert("Devamsızlık ve e-Okul bilgisi güncellendi!");
+            alert("Devamsızlık ve gelişim bilgisi güncellendi!");
         }
 
         function deleteStudent(id) {
@@ -601,7 +617,7 @@
             renderPdrStudents();
         }
 
-        function generateZoomLink() { meetLink.value = `https://zoom.us/j/${Math.floor(100000000 + Math.random() * 900000000)}`; }
+        function generateZoomLink() { meetLink.value = `https://uzem.zoom.us/j/${Math.floor(100000000 + Math.random() * 900000000)}`; }
         function sendViaWhatsApp() { window.open(`https://wa.me/${comPhone.value}?text=${encodeURIComponent(comMessage.value)}`, '_blank'); }
         function sendViaSMS() { window.location.href = `sms:${comPhone.value}?body=${encodeURIComponent(comMessage.value)}`; }
 
@@ -610,10 +626,10 @@
             e.preventDefault();
             meetingsList.push({ id: Date.now(), title: meetTitle.value, date: meetDate.value, link: meetLink.value });
             localStorage.setItem('zt_meetings_list', JSON.stringify(meetingsList));
-            e.target.reset(); renderMeetings(); alert("Canlı ders oluşturuldu!");
+            e.target.reset(); renderMeetings(); alert("UZEM canlı dersi oluşturuldu!");
         }
         function renderMeetings() {
-            const html = meetingsList.map(m => `<div class="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs"><b>${m.title}</b><br><a href="${m.link}" target="_blank" class="text-ebablue-600 underline font-semibold">Canlı Derse Katıl</a></div>`).join('');
+            const html = meetingsList.map(m => `<div class="bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-xs"><b>${m.title}</b><br><a href="${m.link}" target="_blank" class="text-uzem-600 underline font-semibold">Canlı Derse Katıl</a></div>`).join('');
             if (teacherMeetingsList) teacherMeetingsList.innerHTML = html;
             if (studentMeetingsList) studentMeetingsList.innerHTML = html;
         }
