@@ -56,7 +56,7 @@
         </div>
         <div class="text-center space-y-1">
             <h1 class="text-xl font-bold tracking-wider">ZAMAN TÜNELİ</h1>
-            <p class="text-xs text-slate-400">PDR Takip Modülü Yükleniyor...</p>
+            <p class="text-xs text-slate-400">Portal Yükleniyor...</p>
         </div>
         <div class="w-36 h-1 bg-slate-800 rounded-full overflow-hidden mt-4">
             <div id="splashBar" class="bg-ogm-500 h-full w-0 transition-all duration-700"></div>
@@ -181,6 +181,7 @@
             </div>
             <div id="subnav-student-olcme" class="flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
                 <button onclick="switchTab('denemeTracker')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-ogm-600 shadow-sm">Deneme & Grafik</button>
+                <button onclick="switchTab('studentAttendanceView')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900">📊 Devamsızlık Durumum</button>
                 <button onclick="switchTab('osymPortal')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900">🏛️ ÖSYM Merkezi</button>
             </div>
             <div id="subnav-student-planlama" class="hidden flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
@@ -246,6 +247,31 @@
             <div id="subnav-admin-icerik" class="hidden flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
                 <button onclick="switchTab('teacherMeetings')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-rose-600 shadow-sm">📹 Zoom Planla</button>
                 <button onclick="switchTab('smsWhatsappHub')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900">📱 SMS / WhatsApp</button>
+            </div>
+        </div>
+
+        <!-- ================= ÖĞRENCİ DEVAMSIZLIK & DURUM GÖRÜNÜMÜ ================= -->
+        <div id="studentAttendanceViewView" class="hidden space-y-6">
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-3xl mx-auto">
+                <div class="border-b pb-4">
+                    <span class="bg-blue-50 text-blue-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase">Öğrenci Bilgi Sistemi</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1">Devamsızlık ve Rehberlik Durumum</h3>
+                    <p class="text-xs text-slate-500">PDR servisi tarafından girilen güncel devamsızlık ve gelişim bilgileriniz aşağıdadır.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-slate-50 border p-4 rounded-xl space-y-1">
+                        <span class="text-xs text-slate-500 font-semibold">Özürlü Devamsızlık</span>
+                        <p id="stuViewOzurlu" class="text-2xl font-extrabold text-slate-800">0 Gün</p>
+                    </div>
+                    <div class="bg-slate-50 border p-4 rounded-xl space-y-1">
+                        <span class="text-xs text-slate-500 font-semibold">Özürsüz Devamsızlık</span>
+                        <p id="stuViewOzursuz" class="text-2xl font-extrabold text-rose-600">0 Gün</p>
+                    </div>
+                </div>
+                <div class="bg-slate-50 border p-4 rounded-xl space-y-1">
+                    <span class="text-xs text-slate-500 font-semibold">Rehberlik / Gelişim Notu</span>
+                    <p id="stuViewNote" class="text-xs text-slate-700 font-medium italic">Henüz not girilmemiş.</p>
+                </div>
             </div>
         </div>
 
@@ -478,7 +504,7 @@
 
         let systemUsers = JSON.parse(localStorage.getItem('zt_system_users')) || [
             { id: 1, name: 'Sistem Yöneticisi', email: 'admin@zamantuneli.com', role: 'admin', status: 'approved' },
-            { id: 2, name: 'Mehmet Demir', email: 'mehmet@ogrenci.com', role: 'ogrenci', status: 'approved', sinif: '12-A', devamsizlikOzurlu: 2, devamsizlikOzursuz: 1, rehberlikNotu: 'Düzenli çalışıyor.' }
+            { id: 2, name: 'Mehmet Demir', email: 'mehmet@ogrenci.com', role: 'ogrenci', status: 'approved', sinif: '12-A', devamsizlikOzurlu: 2, devamsizlikOzursuz: 1, rehberlikNotu: 'Düzenli çalışıyor, motivasyonu iyi.' }
         ];
 
         function handleRegister(e) {
@@ -529,7 +555,7 @@
         }
 
         function switchTab(tab) {
-            ['osymPortalView', 'teacherMeetingsView', 'studentMeetingsView', 'smsWhatsappHubView', 'adminUserManagerView', 'muhasebePanelView', 'eyotekPortalView', 'idareOverviewView', 'chatRoomsView', 'denemeTrackerView', 'calculatorView', 'programView', 'topicsView', 'tarihOyunuView', 'notesView', 'pomodoroView', 'pdrDashboardView', 'pdrAttendanceView', 'adminTeacherApprovalsView'].forEach(v => {
+            ['osymPortalView', 'teacherMeetingsView', 'studentMeetingsView', 'smsWhatsappHubView', 'adminUserManagerView', 'muhasebePanelView', 'eyotekPortalView', 'idareOverviewView', 'chatRoomsView', 'denemeTrackerView', 'studentAttendanceViewView', 'calculatorView', 'programView', 'topicsView', 'tarihOyunuView', 'notesView', 'pomodoroView', 'pdrDashboardView', 'pdrAttendanceView', 'adminTeacherApprovalsView'].forEach(v => {
                 const el = document.getElementById(v); if (el) el.classList.add('hidden');
             });
             const target = document.getElementById(tab + 'View');
@@ -537,7 +563,20 @@
             if (tab === 'adminUserManager') renderAdminUsers();
             if (tab === 'pdrDashboard') renderPdrStudents();
             if (tab === 'pdrAttendance') renderPdrAttendance();
+            if (tab === 'studentAttendanceView') renderStudentAttendanceView();
             lucide.createIcons();
+        }
+
+        // --- ÖĞRENCİ KENDİ DEVAMSIZLIK VE REHBERLİK BİLGİLERİNİ GÖRÜNTÜLEME ---
+        function renderStudentAttendanceView() {
+            const session = JSON.parse(localStorage.getItem('zt_local_session'));
+            if (!session) return;
+            const currentUser = systemUsers.find(u => u.email === session.email);
+            if (currentUser) {
+                document.getElementById('stuViewOzurlu').textContent = (currentUser.devamsizlikOzurlu || 0) + ' Gün';
+                document.getElementById('stuViewOzursuz').textContent = (currentUser.devamsizlikOzursuz || 0) + ' Gün';
+                document.getElementById('stuViewNote').textContent = currentUser.rehberlikNotu || 'Henüz bir rehberlik notu girilmemiş.';
+            }
         }
 
         // --- PDR ÖĞRENCİ EKLEME VE TAKİP SİSTEMİ ---
@@ -594,7 +633,7 @@
 
             systemUsers = systemUsers.map(u => u.id === id ? { ...u, devamsizlikOzurlu: ozurlu, devamsizlikOzursuz: ozursuz, rehberlikNotu: notu } : u);
             localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
-            alert("Öğrenci takip ve devamsızlık bilgileri güncellendi!");
+            alert("Öğrenci takip ve devamsızlık bilgileri güncellendi! Öğrenci kendi panelinden bu bilgileri görebilir.");
         }
 
         function deleteStudent(id) {
