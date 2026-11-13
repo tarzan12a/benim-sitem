@@ -37,7 +37,7 @@
         #splashScreen { transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
         #splashScreen.fade-out { opacity: 0; visibility: hidden; }
 
-        /* Dişli Çark Dönme Animasyonu (Görsel Temalı) */
+        /* Dişli Çark Dönme Animasyonu */
         @keyframes spin-slow {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
@@ -52,7 +52,7 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased relative">
 
-    <!-- ANİMASYONLU SİTE BAKIMDA / ÇALIŞMA VAR EKRANI -->
+    <!-- ANİMASYONLU SİTE BAKIMDA EKRANI (ÖNİZLEME BUTONU KALDIRILDI) -->
     <div id="maintenanceOverlay" class="fixed inset-0 z-[200] bg-slate-900/95 backdrop-blur-xl flex flex-col items-center justify-center text-white p-6 text-center space-y-6">
         <div class="relative flex items-center justify-center p-6">
             <!-- Arka Planda Dönen Büyük Çark -->
@@ -70,10 +70,6 @@
             <h1 class="text-2xl font-extrabold tracking-tight">Sitede Çalışma Var</h1>
             <p class="text-xs text-slate-400 leading-relaxed">Zaman Tüneli UZEM & e-Yotek altyapımızı sizler için daha hızlı, güvenli ve modern hale getiriyoruz. Kısa süre sonra yeniden yayındayız.</p>
         </div>
-
-        <button onclick="document.getElementById('maintenanceOverlay').classList.add('hidden')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 px-5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-lg">
-            Sisteme Geçici Olarak Göz At (Önizleme)
-        </button>
     </div>
 
     <!-- MODERN AÇILIŞ EKRANI -->
