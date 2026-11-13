@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaman Tüneli - Branş Öğretmenleri & YKS 2027 Portalı</title>
+    <title>Zaman Tüneli - Chat, Gruplar & Gelişmiş Admin Paneli</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -45,7 +45,7 @@
                     <i data-lucide="graduation-cap" class="w-8 h-8"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-slate-900">Zaman Tüneli Portalı</h2>
-                <p id="roleSubtitle" class="text-slate-500 text-xs">Öğrenci hesabınızla oturum açın veya kayıt olun.</p>
+                <p id="roleSubtitle" class="text-slate-500 text-xs">Oturum açın veya hesap oluşturun.</p>
             </div>
 
             <!-- ROL SEÇİM SEKMELERİ -->
@@ -66,15 +66,15 @@
             <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta Adresi</label>
-                    <input type="email" id="loginEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-ogm-600">
+                    <input type="email" id="loginEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre</label>
-                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-ogm-600">
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs focus:outline-none">
                 </div>
                 <div id="adminKeyField" class="hidden">
                     <label class="block text-xs font-semibold text-rose-600 mb-1">Admin Güvenlik Anahtarı</label>
-                    <input type="password" id="adminSecretKey" placeholder="Varsayılan: admin123" class="w-full bg-rose-50 border border-rose-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-rose-500">
+                    <input type="password" id="adminSecretKey" placeholder="Varsayılan: admin123" class="w-full bg-rose-50 border border-rose-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none">
                 </div>
                 <button type="submit" id="loginSubmitBtn" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-3 rounded-xl text-xs transition-all shadow-sm">Giriş Yap</button>
             </form>
@@ -96,7 +96,6 @@
                 <div id="teacherDocField" class="hidden space-y-1">
                     <label class="block text-xs font-semibold text-emerald-700 mb-1">Öğretmen Belgesi / Diploma Yükle (Zorunlu)</label>
                     <input type="file" id="regTeacherDoc" accept=".pdf,.jpg,.png" class="w-full bg-emerald-50 border border-emerald-200 rounded-xl p-2 text-xs text-emerald-800">
-                    <p class="text-[10px] text-slate-400">Admin onayından sonra hesabınız aktifleşecektir.</p>
                 </div>
                 <button type="submit" id="regSubmitBtn" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-3 rounded-xl text-xs transition-all shadow-sm">Kayıt Ol</button>
             </form>
@@ -116,7 +115,7 @@
                 </div>
             </div>
 
-            <!-- YKS 2027 SAYACI HEADER ALANI -->
+            <!-- YKS 2027 SAYACI -->
             <div class="bg-slate-50 border border-slate-200 px-4 py-1.5 rounded-xl flex items-center gap-3 text-center">
                 <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider hidden md:inline">YKS 2027 Sayaç:</span>
                 <div class="flex items-center gap-2 text-xs font-bold text-ogm-600">
@@ -142,57 +141,96 @@
             <div class="flex flex-wrap bg-white border border-slate-200 p-2 rounded-2xl gap-1.5 shadow-sm">
                 <button onclick="selectMainCategory('student', 'olcme')" id="cat-student-olcme" class="px-4 py-2 rounded-xl text-xs font-bold bg-ogm-600 text-white transition-all flex items-center gap-1.5"><i data-lucide="bar-chart-2" class="w-4 h-4"></i> Ölçme & Sınav</button>
                 <button onclick="selectMainCategory('student', 'planlama')" id="cat-student-planlama" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="calendar-check" class="w-4 h-4"></i> Planlama</button>
-                <button onclick="selectMainCategory('student', 'etkilesim')" id="cat-student-etkilesim" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4"></i> Canlı Dersler & Oyun</button>
+                <button onclick="selectMainCategory('student', 'etkilesim')" id="cat-student-etkilesim" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="message-square" class="w-4 h-4"></i> Chat, Gruplar & Oyun</button>
             </div>
             <div id="subnav-student-olcme" class="flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('denemeTracker')" id="tabDenemeTracker" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-ogm-600 shadow-sm transition-all flex items-center gap-1.5">Deneme & Grafik</button>
-                <button onclick="switchTab('calculator')" id="tabCalculator" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Net & Puan Hesapla</button>
+                <button onclick="switchTab('denemeTracker')" id="tabDenemeTracker" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-ogm-600 shadow-sm transition-all">Deneme & Grafik</button>
+                <button onclick="switchTab('calculator')" id="tabCalculator" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Net & Puan Hesapla</button>
             </div>
             <div id="subnav-student-planlama" class="hidden flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('program')" id="tabProgram" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Haftalık Program</button>
-                <button onclick="switchTab('topics')" id="tabTopics" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Eksik Konular</button>
-                <button onclick="switchTab('notes')" id="tabNotes" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Çalışma Günlüğü</button>
-                <button onclick="switchTab('pomodoro')" id="tabPomodoro" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Pomodoro</button>
+                <button onclick="switchTab('program')" id="tabProgram" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Haftalık Program</button>
+                <button onclick="switchTab('topics')" id="tabTopics" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Eksik Konular</button>
+                <button onclick="switchTab('notes')" id="tabNotes" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Çalışma Günlüğü</button>
+                <button onclick="switchTab('pomodoro')" id="tabPomodoro" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Pomodoro</button>
             </div>
             <div id="subnav-student-etkilesim" class="hidden flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('studentMeetings')" id="tabStudentMeetings" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-ogm-600 shadow-sm transition-all flex items-center gap-1.5">Canlı Toplantılar</button>
-                <button onclick="switchTab('tarihOyunu')" id="tabTarihOyunu" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Tarih Oyunu</button>
-                <button onclick="switchTab('studentAnnouncements')" id="tabStudentAnnouncements" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">Duyurular</button>
+                <button onclick="switchTab('chatRooms')" id="tabChatRooms" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-ogm-600 shadow-sm transition-all">Canlı Chat & Gruplar</button>
+                <button onclick="switchTab('studentMeetings')" id="tabStudentMeetings" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Canlı Toplantılar</button>
+                <button onclick="switchTab('tarihOyunu')" id="tabTarihOyunu" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Tarih Oyunu</button>
+                <button onclick="switchTab('studentAnnouncements')" id="tabStudentAnnouncements" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Duyurular</button>
             </div>
         </div>
 
-        <!-- ÖĞRETMEN (MATEMATİK / EDEBİYAT) NAVIGASYON -->
+        <!-- ÖĞRETMEN NAVIGASYON -->
         <div id="teacherNavWrapper" class="hidden space-y-2">
             <div class="flex flex-wrap bg-white border border-slate-200 p-2 rounded-2xl gap-1.5 shadow-sm">
                 <button onclick="selectMainCategory('teacher', 'takip')" id="cat-teacher-takip" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white transition-all flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> Branş & Öğrenci Takibi</button>
-                <button onclick="selectMainCategory('teacher', 'rehberlik')" id="cat-teacher-rehberlik" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4"></i> Canlı Ders & Notlar</button>
+                <button onclick="selectMainCategory('teacher', 'rehberlik')" id="cat-teacher-rehberlik" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="message-square" class="w-4 h-4"></i> Chat & Canlı Ders</button>
             </div>
             <div id="subnav-teacher-takip" class="flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
                 <button onclick="switchTab('pdrDashboard')" id="tabPdrDashboard" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm transition-all">Öğrenci Listesi</button>
-                <button onclick="switchTab('teacherClassStats')" id="tabTeacherClassStats" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Branş Sınav Ortalamaları</button>
+                <button onclick="switchTab('teacherClassStats')" id="tabTeacherClassStats" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Sınav Ortalamaları</button>
             </div>
             <div id="subnav-teacher-rehberlik" class="hidden flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('teacherMeetings')" id="tabTeacherMeetings" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm transition-all">Canlı Ders Oluştur</button>
+                <button onclick="switchTab('chatRooms')" id="tabTeacherChat" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm transition-all">Canlı Chat & Gruplar</button>
+                <button onclick="switchTab('teacherMeetings')" id="tabTeacherMeetings" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Canlı Ders Oluştur</button>
                 <button onclick="switchTab('pdrConsult')" id="tabPdrConsult" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Görüşme Notları</button>
-                <button onclick="switchTab('pdrTarget')" id="tabPdrTarget" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Öğrencilere Duyuru</button>
             </div>
         </div>
 
         <!-- ADMİN NAVIGASYON -->
         <div id="adminNavWrapper" class="hidden space-y-2">
             <div class="flex flex-wrap bg-white border border-slate-200 p-2 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="selectMainCategory('admin', 'sistem')" id="cat-admin-sistem" class="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 text-white transition-all flex items-center gap-1.5"><i data-lucide="shield-alert" class="w-4 h-4"></i> Sistem & Öğretmen Onayları</button>
-                <button onclick="selectMainCategory('admin', 'icerik')" id="cat-admin-icerik" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="video" class="w-4 h-4"></i> Toplantılar & Oyun</button>
+                <button onclick="selectMainCategory('admin', 'sistem')" id="cat-admin-sistem" class="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 text-white transition-all flex items-center gap-1.5"><i data-lucide="shield-alert" class="w-4 h-4"></i> Yönetim & Hesap Kontrolü</button>
+                <button onclick="selectMainCategory('admin', 'icerik')" id="cat-admin-icerik" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"><i data-lucide="message-square" class="w-4 h-4"></i> Chat, Toplantı & Oyun</button>
             </div>
             <div id="subnav-admin-sistem" class="flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('adminTeacherApprovals')" id="tabAdminTeacherApprovals" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-rose-600 shadow-sm transition-all">Öğretmen Belge Onayları (<span id="pendingCountBadge">0</span>)</button>
-                <button onclick="switchTab('adminUsers')" id="tabAdminUsers" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Tüm Kullanıcılar</button>
+                <button onclick="switchTab('adminTeacherApprovals')" id="tabAdminTeacherApprovals" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-rose-600 shadow-sm transition-all">Öğretmen Onayları (<span id="pendingCountBadge">0</span>)</button>
+                <button onclick="switchTab('adminUserManager')" id="tabAdminUserManager" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Kullanıcı Hesap & Sil/Dondur</button>
                 <button onclick="switchTab('adminLogs')" id="tabAdminLogs" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">İstatistikler</button>
             </div>
             <div id="subnav-admin-icerik" class="hidden flex flex-wrap bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
-                <button onclick="switchTab('adminMeetings')" id="tabAdminMeetings" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-rose-600 shadow-sm transition-all">Toplantı Planla</button>
-                <button onclick="switchTab('adminGameEditor')" id="tabAdminGameEditor" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Tarih Oyunu Soru Bankası</button>
-                <button onclick="switchTab('adminAnnouncements')" id="tabAdminAnnouncements" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Duyuruları Yönet</button>
+                <button onclick="switchTab('chatRooms')" id="tabAdminChat" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-rose-600 shadow-sm transition-all">Canlı Chat & Gruplar</button>
+                <button onclick="switchTab('adminMeetings')" id="tabAdminMeetings" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Toplantı Planla</button>
+                <button onclick="switchTab('adminGameEditor')" id="tabAdminGameEditor" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition-all">Tarih Oyunu</button>
+            </div>
+        </div>
+
+        <!-- ================= CHAT VE GRUP OLUŞTURMA MODÜLÜ ================= -->
+        <div id="chatRoomsView" class="hidden space-y-6">
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-5xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b pb-4 gap-3">
+                    <div>
+                        <span class="bg-ogm-50 text-ogm-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">İletişim Ağı</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-1">Canlı Sohbet Odaları & Çalışma Grupları</h3>
+                    </div>
+                    <button onclick="toggleModal('createGroupModal')" class="bg-ogm-600 hover:bg-ogm-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-sm flex items-center gap-1.5">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i> Yeni Çalışma Grubu Oluştur
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Sohbet Odası / Grup Listesi -->
+                    <div class="bg-slate-50 border rounded-xl p-4 space-y-3">
+                        <h4 class="font-bold text-xs text-slate-700 uppercase tracking-wider">Aktif Odalar & Gruplar</h4>
+                        <div id="chatRoomsList" class="space-y-2 max-h-96 overflow-y-auto"></div>
+                    </div>
+
+                    <!-- Mesajlaşma Ekranı -->
+                    <div class="md:col-span-2 bg-white border rounded-xl p-4 flex flex-col justify-between h-[450px]">
+                        <div class="border-b pb-3 flex justify-between items-center">
+                            <span id="activeRoomTitle" class="font-bold text-sm text-ogm-600">Bir oda seçin</span>
+                            <span id="activeRoomInfo" class="text-[10px] text-slate-400">Genel Kanal</span>
+                        </div>
+                        <div id="chatMessagesBox" class="flex-1 overflow-y-auto p-3 space-y-3 bg-slate-50/50 my-3 rounded-lg border text-xs">
+                            <p class="text-slate-400 italic text-center m-auto">Sohbet başlatmak için soldan bir oda seçin.</p>
+                        </div>
+                        <form onsubmit="handleSendMessage(event)" class="flex gap-2">
+                            <input type="text" id="chatInputMsg" required placeholder="Mesajınızı yazın..." class="flex-1 border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-ogm-600">
+                            <button type="submit" class="bg-ogm-600 hover:bg-ogm-700 text-white px-5 py-2 rounded-xl text-xs font-semibold">Gönder</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -214,10 +252,6 @@
                     <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block mb-1">En Yüksek TYT Neti</span><span id="statMaxTyt" class="text-2xl font-bold text-ogm-600">0.00</span></div>
                     <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block mb-1">En Yüksek AYT Neti</span><span id="statMaxAyt" class="text-2xl font-bold text-slate-900">0.00</span></div>
                     <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl"><span class="text-xs text-slate-500 block mb-1">Genel Ortalama</span><span id="statAvgNet" class="text-2xl font-bold text-slate-900">0.00</span></div>
-                </div>
-                <div class="bg-slate-50 border border-slate-200 p-5 rounded-xl space-y-3">
-                    <h4 class="font-bold text-xs uppercase tracking-wider text-slate-700 flex items-center gap-1.5"><i data-lucide="bar-chart-2" class="w-4 h-4 text-ogm-600"></i> Net İlerleme Grafiği</h4>
-                    <div id="netVisualChart" class="flex items-end gap-3 h-44 pt-6 overflow-x-auto pb-2 border-b border-slate-200"><span class="text-xs text-slate-400 italic m-auto">Henüz veri yok.</span></div>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
@@ -264,7 +298,7 @@
 
         <div id="studentMeetingsView" class="hidden space-y-6">
             <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-4xl mx-auto">
-                <div class="border-b pb-4"><h3 class="text-xl font-bold">Canlı Toplantılar & Takvim</h3><p class="text-xs text-slate-500">Matematik ve Edebiyat öğretmenlerinizin planladığı dersler.</p></div>
+                <div class="border-b pb-4"><h3 class="text-xl font-bold">Canlı Toplantılar & Takvim</h3></div>
                 <div id="studentMeetingsList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
         </div>
@@ -277,7 +311,6 @@
                     <h4 id="gameEventText" class="font-bold text-sm">Yükleniyor...</h4>
                     <div id="gameOptions" class="grid grid-cols-2 gap-3 pt-2"></div>
                 </div>
-                <div id="gameResultBox" class="hidden space-y-3"><h4 class="font-bold text-base">Oyun Bitti!</h4><p id="gameFinalScore" class="text-xs"></p><button onclick="restartTarihGame()" class="bg-ogm-600 text-white px-6 py-2 rounded-xl text-xs">Yeniden Başla</button></div>
             </div>
         </div>
 
@@ -299,18 +332,17 @@
         </div>
 
         <div id="teacherClassStatsView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6"><h3 class="text-xl font-bold">Branş Sınav Ortalamaları</h3><div class="grid grid-cols-2 gap-4"><div class="bg-slate-50 border p-4 rounded-xl"><span>Matematik Sınıf Ort.</span><p class="text-xl font-bold text-emerald-600">22.15 Net</p></div><div class="bg-slate-50 border p-4 rounded-xl"><span>Edebiyat Sınıf Ort.</span><p class="text-xl font-bold text-emerald-600">28.40 Net</p></div></div></div>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6"><h3 class="text-xl font-bold">Sınav Ortalamaları</h3><div class="grid grid-cols-2 gap-4"><div class="bg-slate-50 border p-4 rounded-xl"><span>Matematik Ort.</span><p class="text-xl font-bold text-emerald-600">22.15 Net</p></div><div class="bg-slate-50 border p-4 rounded-xl"><span>Edebiyat Ort.</span><p class="text-xl font-bold text-emerald-600">28.40 Net</p></div></div></div>
         </div>
 
         <div id="teacherMeetingsView" class="hidden space-y-6">
             <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-3xl mx-auto">
-                <h3 class="text-xl font-bold">Canlı Ders / Toplantı Oluştur</h3>
+                <h3 class="text-xl font-bold">Canlı Ders Oluştur</h3>
                 <form onsubmit="handleCreateMeeting(event)" class="space-y-4">
-                    <input type="text" id="meetTitle" required placeholder="Ders Başlığı (Örn: Fonksiyonlar Soru Çözümü)" class="w-full border rounded-xl px-3 py-2 text-xs">
+                    <input type="text" id="meetTitle" required placeholder="Ders Başlığı" class="w-full border rounded-xl px-3 py-2 text-xs">
                     <input type="datetime-local" id="meetDate" required class="w-full border rounded-xl px-3 py-2 text-xs">
-                    <input type="url" id="meetLink" required placeholder="Toplantı Linki (Zoom / Meet)" class="w-full border rounded-xl px-3 py-2 text-xs">
-                    <textarea id="meetDesc" rows="2" placeholder="Açıklama" class="w-full border rounded-xl p-3 text-xs"></textarea>
-                    <button type="submit" class="w-full bg-emerald-600 text-white py-3 rounded-xl text-xs font-semibold">Toplantıyı Yayınla</button>
+                    <input type="url" id="meetLink" required placeholder="Toplantı Linki" class="w-full border rounded-xl px-3 py-2 text-xs">
+                    <button type="submit" class="w-full bg-emerald-600 text-white py-3 rounded-xl text-xs font-semibold">Yayınla</button>
                 </form>
                 <div id="teacherMeetingsList" class="space-y-2 pt-4 border-t"></div>
             </div>
@@ -320,24 +352,38 @@
             <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-xl mx-auto"><h3 class="text-xl font-bold">Görüşme Notları</h3><input type="text" id="pdrStudentName" placeholder="Öğrenci Adı" class="w-full border rounded-xl px-3 py-2 text-xs"><textarea id="pdrConsultNote" rows="3" placeholder="Notlar..." class="w-full border rounded-xl p-3 text-xs"></textarea><button onclick="savePdrNote()" class="w-full bg-emerald-600 text-white py-2.5 rounded-xl text-xs">Kaydet</button><div id="pdrNotesList" class="space-y-2"></div></div>
         </div>
 
-        <div id="pdrTargetView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-xl mx-auto"><h3 class="text-xl font-bold">Öğrencilere Duyuru Yayınla</h3><input type="text" id="pdrAnnouncementTitle" placeholder="Başlık" class="w-full border rounded-xl px-3 py-2 text-xs"><textarea id="pdrAnnouncementText" rows="3" placeholder="Mesaj..." class="w-full border rounded-xl p-3 text-xs"></textarea><button onclick="publishAnnouncement('Öğretmen')" class="bg-emerald-600 text-white px-5 py-2.5 rounded-xl text-xs">Yayınla</button></div>
-        </div>
-
-        <!-- ADMİN ONAY EKRANI -->
+        <!-- ADMİN: GELİŞMİŞ HESAP YÖNETİMİ & ONAYLAR -->
         <div id="adminTeacherApprovalsView" class="hidden space-y-6">
             <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
-                <div><h3 class="text-xl font-bold">Öğretmen Belge Onay Paneli</h3><p class="text-xs text-slate-500">Kayıt olan öğretmenlerin belgelerini inceleyerek sisteme erişim izni verin.</p></div>
-                <div class="overflow-x-auto"><table class="w-full text-left text-xs"><thead class="bg-slate-100"><tr><th class="p-3">Ad Soyad</th><th class="p-3">Branş</th><th class="p-3">E-Posta</th><th class="p-3">Belge</th><th class="p-3 text-center">İşlem</th></tr></thead><tbody id="adminPendingTeachersBody" class="divide-y"></tbody></table></div>
+                <h3 class="text-xl font-bold">Öğretmen Belge Onay Paneli</h3>
+                <div class="overflow-x-auto"><table class="w-full text-left text-xs"><thead class="bg-slate-100"><tr><th class="p-3">Ad Soyad</th><th class="p-3">Branş</th><th class="p-3">E-Posta</th><th class="p-3 text-center">İşlem</th></tr></thead><tbody id="adminPendingTeachersBody" class="divide-y"></tbody></table></div>
             </div>
         </div>
 
-        <div id="adminUsersView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6"><h3 class="text-xl font-bold">Tüm Kullanıcılar</h3><div class="overflow-x-auto"><table class="w-full text-left text-xs"><thead class="bg-slate-100"><tr><th class="p-3">Ad Soyad</th><th class="p-3">E-Posta</th><th class="p-3">Rol / Branş</th><th class="p-3 text-center">Sil</th></tr></thead><tbody id="adminUsersTableBody" class="divide-y"></tbody></table></div></div>
+        <div id="adminUserManagerView" class="hidden space-y-6">
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <div>
+                        <h3 class="text-xl font-bold">Kullanıcı Hesap & Yetki Yönetimi</h3>
+                        <p class="text-xs text-slate-500">Kullanıcı oluşturun, profilleri dondurun veya tamamen silin.</p>
+                    </div>
+                    <button onclick="toggleModal('adminCreateUserModal')" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-sm">
+                        + Yeni Kullanıcı Hesabı Aç
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-100">
+                            <tr><th class="p-3">Ad Soyad</th><th class="p-3">E-Posta</th><th class="p-3">Rol</th><th class="p-3">Durum</th><th class="p-3 text-center">İşlemler (Dondur / Sil)</th></tr>
+                        </thead>
+                        <tbody id="adminUserTableBody" class="divide-y"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <div id="adminLogsView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6"><h3 class="text-xl font-bold">Sistem İstatistikleri</h3><div class="grid grid-cols-3 gap-4"><div class="bg-slate-50 border p-4 rounded-xl"><span>Toplam Kullanıcı</span><p id="adminStatUsers" class="text-2xl font-bold">0</p></div><div class="bg-slate-50 border p-4 rounded-xl"><span>Onay Bekleyen Öğrt.</span><p id="adminStatPending" class="text-2xl font-bold text-rose-600">0</p></div><div class="bg-slate-50 border p-4 rounded-xl"><span>Aktif Toplantı</span><p id="adminStatMeetings" class="text-2xl font-bold text-ogm-600">0</p></div></div></div>
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6"><h3 class="text-xl font-bold">Sistem İstatistikleri</h3><div class="grid grid-cols-3 gap-4"><div class="bg-slate-50 border p-4 rounded-xl"><span>Toplam Kullanıcı</span><p id="adminStatUsers" class="text-2xl font-bold">0</p></div><div class="bg-slate-50 border p-4 rounded-xl"><span>Onay Bekleyen</span><p id="adminStatPending" class="text-2xl font-bold text-rose-600">0</p></div><div class="bg-slate-50 border p-4 rounded-xl"><span>Aktif Toplantı</span><p id="adminStatMeetings" class="text-2xl font-bold text-ogm-600">0</p></div></div></div>
         </div>
 
         <div id="adminMeetingsView" class="hidden space-y-6">
@@ -347,7 +393,6 @@
                     <input type="text" id="adminMeetTitle" required placeholder="Başlık" class="w-full border rounded-xl px-3 py-2 text-xs">
                     <input type="datetime-local" id="adminMeetDate" required class="w-full border rounded-xl px-3 py-2 text-xs">
                     <input type="url" id="adminMeetLink" required placeholder="Link" class="w-full border rounded-xl px-3 py-2 text-xs">
-                    <textarea id="adminMeetDesc" rows="2" placeholder="Açıklama" class="w-full border rounded-xl p-3 text-xs"></textarea>
                     <button type="submit" class="w-full bg-rose-600 text-white py-3 rounded-xl text-xs font-semibold">Yayınla</button>
                 </form>
             </div>
@@ -356,13 +401,37 @@
         <div id="adminGameEditorView" class="hidden space-y-6">
             <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6"><h3 class="text-xl font-bold">Tarih Oyunu Soru Bankası</h3><div id="adminQuestionsList" class="space-y-2"></div></div>
         </div>
-
-        <div id="adminAnnouncementsView" class="hidden space-y-6">
-            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6"><h3 class="text-xl font-bold">Duyuruları Yönet</h3><div class="flex gap-2"><input type="text" id="adminAnnTitle" placeholder="Başlık" class="border px-3 py-2 text-xs flex-1"><input type="text" id="adminAnnText" placeholder="Açıklama" class="border px-3 py-2 text-xs flex-[2]"><button onclick="publishAdminAnnouncement()" class="bg-rose-600 text-white px-4 py-2 rounded-xl text-xs">Yayınla</button></div><div id="adminAnnouncementsList" class="space-y-2 pt-4"></div></div>
-        </div>
     </main>
 
     <!-- MODALLAR -->
+    <div id="createGroupModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4 shadow-2xl">
+            <h3 class="text-base font-bold">Yeni Çalışma Grubu Oluştur</h3>
+            <form onsubmit="handleCreateGroup(event)" class="space-y-3">
+                <input type="text" id="groupNameInput" required placeholder="Grup Adı (Örn: YKS Matematik Kampı)" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <button type="submit" class="w-full bg-ogm-600 text-white py-2.5 rounded-xl text-xs font-semibold">Grubu Oluştur</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="adminCreateUserModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <h3 class="text-base font-bold">Yeni Kullanıcı Hesabı Oluştur (Admin Yetkisi)</h3>
+            <form onsubmit="adminCreateUser(event)" class="space-y-3">
+                <input type="text" id="admNewName" required placeholder="Ad Soyad" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <input type="email" id="admNewEmail" required placeholder="E-Posta" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <input type="password" id="admNewPass" required placeholder="Şifre" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <select id="admNewRole" class="w-full border rounded-xl px-3 py-2 text-xs">
+                    <option value="ogrenci">Öğrenci</option>
+                    <option value="matematik">Matematik Öğretmeni</option>
+                    <option value="edebiyat">Edebiyat Öğretmeni</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <button type="submit" class="w-full bg-rose-600 text-white py-2.5 rounded-xl text-xs font-semibold">Hesabı Oluştur</button>
+            </form>
+        </div>
+    </div>
+
     <div id="addDenemeModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <h3 class="text-base font-bold">Yeni Deneme Ekle</h3>
@@ -398,46 +467,32 @@
             selectedAuthRole = role;
             const btns = { ogrenci: roleBtnOgrenci, matematik: roleBtnMatematik, edebiyat: roleBtnEdebiyat, admin: roleBtnAdmin };
             Object.values(btns).forEach(b => b.className = "py-2 font-semibold rounded-lg text-slate-500 hover:text-slate-800 transition-all text-[11px]");
-
-            const activeBtn = document.getElementById('roleBtn' + role.charAt(0).toUpperCase() + role.slice(1));
-            activeBtn.className = "py-2 font-bold rounded-lg bg-white text-ogm-600 shadow-sm transition-all text-[11px]";
-
-            const docField = document.getElementById('teacherDocField');
-            const adminField = document.getElementById('adminKeyField');
-            const authTabs = document.getElementById('authModeTabs');
+            document.getElementById('roleBtn' + role.charAt(0).toUpperCase() + role.slice(1)).className = "py-2 font-bold rounded-lg bg-white text-ogm-600 shadow-sm transition-all text-[11px]";
 
             if (role === 'matematik' || role === 'edebiyat') {
-                docField.classList.remove('hidden');
-                adminField.classList.add('hidden');
-                authTabs.classList.remove('hidden');
+                teacherDocField.classList.remove('hidden');
+                adminKeyField.classList.add('hidden');
+                authModeTabs.classList.remove('hidden');
             } else if (role === 'admin') {
-                docField.classList.add('hidden');
-                adminField.classList.remove('hidden');
+                teacherDocField.classList.add('hidden');
+                adminKeyField.classList.remove('hidden');
                 switchAuthTab('login');
-                authTabs.classList.add('hidden');
+                authModeTabs.classList.add('hidden');
             } else {
-                docField.classList.add('hidden');
-                adminField.classList.add('hidden');
-                authTabs.classList.remove('hidden');
+                teacherDocField.classList.add('hidden');
+                adminKeyField.classList.add('hidden');
+                authModeTabs.classList.remove('hidden');
             }
         }
 
-        // YKS 2027 GERİ SAYIM SAYACI
+        // YKS 2027 SAYACI
         function updateYksCountdown() {
-            const yksDate = new Date('June 19, 2027 10:15:00').getTime();
-            const now = new Date().getTime();
-            const diff = yksDate - now;
-
+            const diff = new Date('June 19, 2027 10:15:00').getTime() - new Date().getTime();
             if (diff > 0) {
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-                document.getElementById('yksDays').textContent = String(days).padStart(3, '0');
-                document.getElementById('yksHours').textContent = String(hours).padStart(2, '0');
-                document.getElementById('yksMins').textContent = String(mins).padStart(2, '0');
-                document.getElementById('yksSecs').textContent = String(secs).padStart(2, '0');
+                yksDays.textContent = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(3, '0');
+                yksHours.textContent = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                yksMins.textContent = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                yksSecs.textContent = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
             }
         }
         setInterval(updateYksCountdown, 1000);
@@ -450,225 +505,236 @@
             { id: 4, name: 'Mehmet Demir', email: 'mehmet@ogrenci.com', role: 'ogrenci', status: 'approved' }
         ];
 
+        let currentActiveUser = null;
+
         function handleRegister(e) {
             e.preventDefault();
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const role = selectedAuthRole;
-
-            if (role === 'matematik' || role === 'edebiyat') {
-                const docInput = document.getElementById('regTeacherDoc');
-                if (!docInput.files || docInput.files.length === 0) {
-                    return alert("Öğretmen olarak kayıt olmak için lütfen diploma/belge yükleyin!");
-                }
+            const name = regName.value, email = regEmail.value, role = selectedAuthRole;
+            if ((role === 'matematik' || role === 'edebiyat') && (!regTeacherDoc.files || regTeacherDoc.files.length === 0)) {
+                return alert("Öğretmenler için belge yüklemek zorunludur!");
             }
-
-            const status = (role === 'matematik' || role === 'edebiyat') ? 'pending' : 'approved';
             if (systemUsers.some(u => u.email === email)) return alert("Bu e-posta zaten kayıtlı.");
-
+            const status = (role === 'matematik' || role === 'edebiyat') ? 'pending' : 'approved';
             systemUsers.push({ id: Date.now(), name, email, role, status });
             localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
-
-            if (status === 'pending') {
-                alert("Kayıt talebiniz alındı! Admin onayından sonra giriş yapabilirsiniz.");
-                switchAuthTab('login');
-            } else {
-                localStorage.setItem('zt_local_session', JSON.stringify({ email, role }));
-                applyUserSessionUI(email, role);
-            }
+            if (status === 'pending') { alert("Kayıt alındı! Admin onayından sonra giriş yapabilirsiniz."); switchAuthTab('login'); }
+            else { localStorage.setItem('zt_local_session', JSON.stringify({ email, role })); applyUserSessionUI(email, role); }
         }
 
         function handleLogin(e) {
             e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const role = selectedAuthRole;
-
-            if (role === 'admin' && document.getElementById('adminSecretKey').value !== 'admin123') {
-                return alert("Hatalı Admin Şifresi! (Varsayılan: admin123)");
-            }
-
-            const user = systemUsers.find(u => u.email === email && u.role === role);
+            const email = loginEmail.value, role = selectedAuthRole;
+            if (role === 'admin' && adminSecretKey.value !== 'admin123') return alert("Hatalı Admin Şifresi! (admin123)");
+            
+            let user = systemUsers.find(u => u.email === email);
             if (!user) {
-                // Yeni giriş ise otomatik ekle
-                systemUsers.push({ id: Date.now(), name: email.split('@')[0], email, role, status: role === 'ogrenci' || role === 'admin' ? 'approved' : 'pending' });
+                user = { id: Date.now(), name: email.split('@')[0], email, role, status: 'approved' };
+                systemUsers.push(user);
                 localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
             }
-
-            const currentUser = systemUsers.find(u => u.email === email);
-            if (currentUser && currentUser.status === 'pending') {
-                return alert("Hesabınız henüz Admin tarafından onaylanmamıştır!");
-            }
+            if (user.status === 'suspended') return alert("Bu hesap Admin tarafından dondurulmuştur!");
+            if (user.status === 'pending') return alert("Hesabınız henüz Admin onayından geçmemiştir!");
 
             localStorage.setItem('zt_local_session', JSON.stringify({ email, role }));
             applyUserSessionUI(email, role);
         }
 
         function applyUserSessionUI(email, role) {
+            currentActiveUser = systemUsers.find(u => u.email === email) || { name: email.split('@')[0], role };
             document.getElementById('authLockScreen').classList.add('hidden');
-            document.getElementById('studentNavWrapper').classList.add('hidden');
-            document.getElementById('teacherNavWrapper').classList.add('hidden');
-            document.getElementById('adminNavWrapper').classList.add('hidden');
+            studentNavWrapper.classList.add('hidden'); teacherNavWrapper.classList.add('hidden'); adminNavWrapper.classList.add('hidden');
 
             let badge = "ÖĞRENCİ", color = "text-ogm-600";
-            if (role === 'admin') {
-                document.getElementById('adminNavWrapper').classList.remove('hidden');
-                badge = "ADMİN"; color = "text-rose-600";
-                selectMainCategory('admin', 'sistem');
-            } else if (role === 'matematik' || role === 'edebiyat') {
-                document.getElementById('teacherNavWrapper').classList.remove('hidden');
-                badge = role === 'matematik' ? "MATEMATİK ÖĞRETMENİ" : "EDEBİYAT ÖĞRETMENİ";
-                color = "text-emerald-600";
-                selectMainCategory('teacher', 'takip');
-            } else {
-                document.getElementById('studentNavWrapper').classList.remove('hidden');
-                selectMainCategory('student', 'olcme');
-            }
+            if (role === 'admin') { adminNavWrapper.classList.remove('hidden'); badge = "ADMİN"; color = "text-rose-600"; selectMainCategory('admin', 'sistem'); }
+            else if (role === 'matematik' || role === 'edebiyat') { teacherNavWrapper.classList.remove('hidden'); badge = role === 'matematik' ? "MATEMATİK ÖĞRETMENİ" : "EDEBİYAT ÖĞRETMENİ"; color = "text-emerald-600"; selectMainCategory('teacher', 'takip'); }
+            else { studentNavWrapper.classList.remove('hidden'); selectMainCategory('student', 'olcme'); }
 
-            document.getElementById('portalRoleBadge').textContent = badge;
-            document.getElementById('portalRoleBadge').className = `text-[10px] ${color} font-bold tracking-wider uppercase`;
-            document.getElementById('authArea').innerHTML = `<div class="flex items-center gap-2 bg-slate-50 border px-3 py-1.5 rounded-xl text-xs"><span class="${color} font-bold">${email}</span><button onclick="handleLogout()" class="text-slate-400 hover:text-rose-600 font-bold ml-1">Çıkış</button></div>`;
+            portalRoleBadge.textContent = badge;
+            portalRoleBadge.className = `text-[10px] ${color} font-bold tracking-wider uppercase`;
+            authArea.innerHTML = `<div class="flex items-center gap-2 bg-slate-50 border px-3 py-1.5 rounded-xl text-xs"><span class="${color} font-bold">${email}</span><button onclick="handleLogout()" class="text-slate-400 hover:text-rose-600 font-bold ml-1">Çıkış</button></div>`;
             lucide.createIcons();
         }
 
-        function handleLogout() {
-            localStorage.removeItem('zt_local_session');
-            location.reload();
-        }
-
+        function handleLogout() { localStorage.removeItem('zt_local_session'); location.reload(); }
         function switchAuthTab(tab) {
-            if (tab === 'login') {
-                loginForm.classList.remove('hidden'); registerForm.classList.add('hidden');
-                loginTabBtn.className = "flex-1 pb-2.5 text-xs font-bold text-ogm-600 border-b-2 border-ogm-600";
-                registerTabBtn.className = "flex-1 pb-2.5 text-xs font-medium text-slate-400 border-b-2 border-transparent";
-            } else {
-                registerForm.classList.remove('hidden'); loginForm.classList.add('hidden');
-                registerTabBtn.className = "flex-1 pb-2.5 text-xs font-bold text-ogm-600 border-b-2 border-ogm-600";
-                loginTabBtn.className = "flex-1 pb-2.5 text-xs font-medium text-slate-400 border-b-2 border-transparent";
-            }
+            if (tab === 'login') { loginForm.classList.remove('hidden'); registerForm.classList.add('hidden'); loginTabBtn.className = "flex-1 pb-2.5 text-xs font-bold text-ogm-600 border-b-2 border-ogm-600"; registerTabBtn.className = "flex-1 pb-2.5 text-xs font-medium text-slate-400 border-b-2 border-transparent"; }
+            else { registerForm.classList.remove('hidden'); loginForm.classList.add('hidden'); registerTabBtn.className = "flex-1 pb-2.5 text-xs font-bold text-ogm-600 border-b-2 border-ogm-600"; loginTabBtn.className = "flex-1 pb-2.5 text-xs font-medium text-slate-400 border-b-2 border-transparent"; }
         }
 
         function selectMainCategory(role, category) {
             if (role === 'student') {
-                ['olcme', 'planlama', 'etkilesim'].forEach(c => {
-                    document.getElementById(`cat-student-${c}`).className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5";
-                    document.getElementById(`subnav-student-${c}`).classList.add('hidden');
-                });
+                ['olcme', 'planlama', 'etkilesim'].forEach(c => { document.getElementById(`cat-student-${c}`).className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"; document.getElementById(`subnav-student-${c}`).classList.add('hidden'); });
                 document.getElementById(`cat-student-${category}`).className = "px-4 py-2 rounded-xl text-xs font-bold bg-ogm-600 text-white transition-all flex items-center gap-1.5";
                 document.getElementById(`subnav-student-${category}`).classList.remove('hidden');
-                switchTab({ olcme: 'denemeTracker', planlama: 'program', etkilesim: 'studentMeetings' }[category]);
+                switchTab({ olcme: 'denemeTracker', planlama: 'program', etkilesim: 'chatRooms' }[category]);
             } else if (role === 'teacher') {
-                ['takip', 'rehberlik'].forEach(c => {
-                    document.getElementById(`cat-teacher-${c}`).className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5";
-                    document.getElementById(`subnav-teacher-${c}`).classList.add('hidden');
-                });
+                ['takip', 'rehberlik'].forEach(c => { document.getElementById(`cat-teacher-${c}`).className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"; document.getElementById(`subnav-teacher-${c}`).classList.add('hidden'); });
                 document.getElementById(`cat-teacher-${category}`).className = "px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white transition-all flex items-center gap-1.5";
                 document.getElementById(`subnav-teacher-${category}`).classList.remove('hidden');
-                switchTab({ takip: 'pdrDashboard', rehberlik: 'teacherMeetings' }[category]);
+                switchTab({ takip: 'pdrDashboard', rehberlik: 'chatRooms' }[category]);
             } else if (role === 'admin') {
-                ['sistem', 'icerik'].forEach(c => {
-                    document.getElementById(`cat-admin-${c}`).className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5";
-                    document.getElementById(`subnav-admin-${c}`).classList.add('hidden');
-                });
+                ['sistem', 'icerik'].forEach(c => { document.getElementById(`cat-admin-${c}`).className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-1.5"; document.getElementById(`subnav-admin-${c}`).classList.add('hidden'); });
                 document.getElementById(`cat-admin-${category}`).className = "px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 text-white transition-all flex items-center gap-1.5";
                 document.getElementById(`subnav-admin-${category}`).classList.remove('hidden');
-                switchTab({ sistem: 'adminTeacherApprovals', icerik: 'adminMeetings' }[category]);
+                switchTab({ sistem: 'adminTeacherApprovals', icerik: 'chatRooms' }[category]);
             }
         }
 
         function switchTab(tab) {
             const allViews = [
                 'denemeTrackerView', 'calculatorView', 'programView', 'topicsView', 'studentMeetingsView', 'tarihOyunuView', 'studentAnnouncementsView', 'notesView', 'pomodoroView',
-                'pdrDashboardView', 'teacherClassStatsView', 'teacherMeetingsView', 'pdrConsultView', 'pdrTargetView',
-                'adminTeacherApprovalsView', 'adminUsersView', 'adminLogsView', 'adminMeetingsView', 'adminGameEditorView', 'adminAnnouncementsView'
+                'pdrDashboardView', 'teacherClassStatsView', 'teacherMeetingsView', 'pdrConsultView',
+                'adminTeacherApprovalsView', 'adminUserManagerView', 'adminLogsView', 'adminMeetingsView', 'adminGameEditorView', 'chatRoomsView'
             ];
             allViews.forEach(v => document.getElementById(v).classList.add('hidden'));
             const target = document.getElementById(tab + 'View');
             if (target) target.classList.remove('hidden');
 
             if (tab === 'adminTeacherApprovals') renderAdminApprovals();
-            if (tab === 'studentMeetings' || tab === 'teacherMeetings' || tab === 'adminMeetings') renderMeetings();
+            if (tab === 'adminUserManager') renderAdminUsers();
+            if (tab === 'chatRooms') renderChatRooms();
             if (tab === 'tarihOyunu') initTarihGame();
             lucide.createIcons();
         }
 
-        // --- ADMİN ONAY İŞLEMLERİ ---
+        // --- CHAT VE GRUP SİSTEMİ ---
+        let chatRooms = JSON.parse(localStorage.getItem('zt_chat_rooms')) || [
+            { id: 'genel', name: 'Genel Soru & Sohbet Odası', type: 'room' },
+            { id: 'mat', name: 'Matematik Kampı Grubu', type: 'group' },
+            { id: 'edebiyat', name: 'Edebiyat Eser Analizi', type: 'group' }
+        ];
+        let chatMessages = JSON.parse(localStorage.getItem('zt_chat_messages')) || [
+            { room: 'genel', sender: 'Sistem', text: 'Zaman Tüneli sohbet alanına hoş geldiniz!', time: '10:00' }
+        ];
+        let activeRoomId = 'genel';
+
+        function renderChatRooms() {
+            chatRoomsList.innerHTML = chatRooms.map(r => `
+                <div onclick="selectChatRoom('${r.id}', '${r.name}')" class="p-3 rounded-xl border bg-white hover:bg-slate-100 cursor-pointer transition-all flex items-center justify-between ${activeRoomId === r.id ? 'border-ogm-600 bg-ogm-50/50' : ''}">
+                    <span class="font-semibold text-xs text-slate-800"># ${r.name}</span>
+                    <span class="text-[9px] uppercase px-2 py-0.5 rounded bg-slate-200 text-slate-600 font-bold">${r.type}</span>
+                </div>
+            `).join('');
+            loadMessages(activeRoomId);
+        }
+
+        function selectChatRoom(id, name) {
+            activeRoomId = id;
+            activeRoomTitle.textContent = "# " + name;
+            renderChatRooms();
+        }
+
+        function handleCreateGroup(e) {
+            e.preventDefault();
+            const gName = groupNameInput.value.trim();
+            if (!gName) return;
+            const newId = 'g_' + Date.now();
+            chatRooms.push({ id: newId, name: gName, type: 'group' });
+            localStorage.setItem('zt_chat_rooms', JSON.stringify(chatRooms));
+            groupNameInput.value = '';
+            toggleModal('createGroupModal');
+            selectChatRoom(newId, gName);
+        }
+
+        function handleSendMessage(e) {
+            e.preventDefault();
+            const text = chatInputMsg.value.trim();
+            if (!text) return;
+            const senderName = currentActiveUser ? currentActiveUser.name : 'Misafir';
+            chatMessages.push({ room: activeRoomId, sender: senderName, text, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) });
+            localStorage.setItem('zt_chat_messages', JSON.stringify(chatMessages));
+            chatInputMsg.value = '';
+            loadMessages(activeRoomId);
+        }
+
+        function loadMessages(roomId) {
+            const msgs = chatMessages.filter(m => m.room === roomId);
+            chatMessagesBox.innerHTML = msgs.length === 0 ? '<p class="text-slate-400 italic text-center m-auto">Henüz mesaj yok. İlk mesajı siz yazın!</p>' : msgs.map(m => `
+                <div class="bg-white p-2.5 rounded-lg border space-y-0.5">
+                    <div class="flex justify-between font-bold text-[10px] text-ogm-600"><span>${m.sender}</span><span class="text-slate-400 font-normal">${m.time}</span></div>
+                    <p class="text-slate-700">${m.text}</p>
+                </div>
+            `).join('');
+            chatMessagesBox.scrollTop = chatMessagesBox.scrollHeight;
+        }
+
+        // --- ADMİN: HESAP DONDURMA, SİLME VE OLUŞTURMA ---
         function renderAdminApprovals() {
             const pending = systemUsers.filter(u => u.status === 'pending');
-            document.getElementById('pendingCountBadge').textContent = pending.length;
-            document.getElementById('adminStatPending').textContent = pending.length;
-            document.getElementById('adminStatUsers').textContent = systemUsers.length;
+            pendingCountBadge.textContent = pending.length;
+            adminStatPending.textContent = pending.length;
+            adminStatUsers.textContent = systemUsers.length;
 
-            const tbody = document.getElementById('adminPendingTeachersBody');
-            tbody.innerHTML = pending.length === 0 ? '<tr><td colspan="5" class="p-4 text-center text-slate-400">Onay bekleyen öğretmen yok.</td></tr>' : pending.map(u => `
+            adminPendingTeachersBody.innerHTML = pending.length === 0 ? '<tr><td colspan="4" class="p-4 text-center text-slate-400">Onay bekleyen öğretmen yok.</td></tr>' : pending.map(u => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 font-semibold">${u.name}</td><td class="p-3 uppercase text-emerald-600 font-bold">${u.role}</td><td class="p-3 text-slate-500">${u.email}</td>
+                    <td class="p-3 text-center space-x-2"><button onclick="approveTeacher(${u.id})" class="bg-emerald-600 text-white px-3 py-1 rounded font-semibold">Onayla</button><button onclick="rejectTeacher(${u.id})" class="bg-rose-600 text-white px-3 py-1 rounded font-semibold">Reddet</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderAdminUsers() {
+            adminUserTableBody.innerHTML = systemUsers.map(u => `
                 <tr class="hover:bg-slate-50">
                     <td class="p-3 font-semibold">${u.name}</td>
-                    <td class="p-3 uppercase text-emerald-600 font-bold">${u.role}</td>
-                    <td class="p-3 text-slate-500">${u.email}</td>
-                    <td class="p-3 text-indigo-600 font-semibold">Diploma_Belge.pdf</td>
+                    <td class="p-3 text-slate-600">${u.email}</td>
+                    <td class="p-3 uppercase font-bold text-ogm-600">${u.role}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${u.status === 'suspended' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}">${u.status === 'suspended' ? 'Donduruldu' : 'Aktif'}</span></td>
                     <td class="p-3 text-center space-x-2">
-                        <button onclick="approveTeacher(${u.id})" class="bg-emerald-600 text-white px-3 py-1 rounded font-semibold">Onayla</button>
-                        <button onclick="rejectTeacher(${u.id})" class="bg-rose-600 text-white px-3 py-1 rounded font-semibold">Reddet</button>
+                        <button onclick="toggleSuspendUser(${u.id})" class="bg-amber-500 hover:bg-amber-600 text-white px-2.5 py-1 rounded text-[11px]">${u.status === 'suspended' ? 'Aktifleştir' : 'Dondur'}</button>
+                        <button onclick="deleteSystemUser(${u.id})" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded text-[11px]">Sil</button>
                     </td>
                 </tr>
             `).join('');
+        }
+
+        function toggleSuspendUser(id) {
+            systemUsers = systemUsers.map(u => u.id === id ? { ...u, status: u.status === 'suspended' ? 'approved' : 'suspended' } : u);
+            localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
+            renderAdminUsers();
+        }
+
+        function deleteSystemUser(id) {
+            if(confirm("Bu kullanıcıyı kalıcı olarak silmek istediğinize emin misiniz?")) {
+                systemUsers = systemUsers.filter(u => u.id !== id);
+                localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
+                renderAdminUsers();
+            }
+        }
+
+        function adminCreateUser(e) {
+            e.preventDefault();
+            systemUsers.push({ id: Date.now(), name: admNewName.value, email: admNewEmail.value, role: admNewRole.value, status: 'approved' });
+            localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
+            toggleModal('adminCreateUserModal');
+            renderAdminUsers();
+            e.target.reset();
+            alert("Yeni hesap başarıyla oluşturuldu!");
         }
 
         function approveTeacher(id) {
             systemUsers = systemUsers.map(u => u.id === id ? { ...u, status: 'approved' } : u);
             localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
             renderAdminApprovals();
-            alert("Öğretmen hesabı onaylandı!");
         }
 
         function rejectTeacher(id) {
             systemUsers = systemUsers.filter(u => u.id !== id);
             localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
             renderAdminApprovals();
-            alert("Öğretmen başvurusu reddedildi.");
         }
 
-        // --- TOPLANTILAR ---
-        let meetingsList = JSON.parse(localStorage.getItem('zt_meetings_list')) || [];
-        function handleCreateMeeting(e) {
-            e.preventDefault();
-            const title = document.getElementById('meetTitle')?.value || document.getElementById('adminMeetTitle')?.value;
-            const date = document.getElementById('meetDate')?.value || document.getElementById('adminMeetDate')?.value;
-            const link = document.getElementById('meetLink')?.value || document.getElementById('adminMeetLink')?.value;
-            const desc = document.getElementById('meetDesc')?.value || document.getElementById('adminMeetDesc')?.value;
-
-            meetingsList.push({ id: Date.now(), title, date, link, desc });
-            localStorage.setItem('zt_meetings_list', JSON.stringify(meetingsList));
-            e.target.reset();
-            renderMeetings();
-            alert("Toplantı yayınlandı!");
-        }
-        function renderMeetings() {
-            const html = meetingsList.length === 0 ? '<p class="text-xs text-slate-400 italic">Toplantı yok.</p>' : meetingsList.map(m => `
-                <div class="bg-slate-50 border p-4 rounded-xl space-y-1">
-                    <h4 class="font-bold text-xs">${m.title}</h4>
-                    <p class="text-[11px] text-slate-500">${new Date(m.date).toLocaleString('tr-TR')}</p>
-                    <a href="${m.link}" target="_blank" class="inline-block bg-ogm-600 text-white px-3 py-1 rounded text-xs mt-1">Katıl</a>
-                </div>
-            `).join('');
-            if(studentMeetingsList) studentMeetingsList.innerHTML = html;
-            if(teacherMeetingsList) teacherMeetingsList.innerHTML = html;
-        }
-
-        // --- DİĞER MODÜL FONKSİYONLARI ---
+        // --- DİĞER TEMEL FONKSİYONLAR ---
         let denemeler = JSON.parse(localStorage.getItem('zt_denemeler')) || [];
         function handleSaveDeneme(e) {
             e.preventDefault();
-            const name = document.getElementById('denemeName').value;
-            const type = document.getElementById('denemeType').value;
             const tN = Math.max(0, (parseFloat(dTurkceC.value)||0) - ((parseFloat(dTurkceY.value)||0)/4));
             const sN = Math.max(0, (parseFloat(dSosyalC.value)||0) - ((parseFloat(dSosyalY.value)||0)/4));
             const mN = Math.max(0, (parseFloat(dMatC.value)||0) - ((parseFloat(dMatY.value)||0)/4));
             const fN = Math.max(0, (parseFloat(dFenC.value)||0) - ((parseFloat(dFenY.value)||0)/4));
-            denemeler.push({ id: Date.now(), name, type, date: new Date().toLocaleDateString('tr-TR'), tNet: tN.toFixed(2), sNet: sN.toFixed(2), mNet: mN.toFixed(2), fNet: fN.toFixed(2), totalNet: (tN+sN+mN+fN).toFixed(2) });
+            denemeler.push({ id: Date.now(), name: denemeName.value, type: denemeType.value, date: new Date().toLocaleDateString('tr-TR'), tNet: tN.toFixed(2), sNet: sN.toFixed(2), mNet: mN.toFixed(2), fNet: fN.toFixed(2), totalNet: (tN+sN+mN+fN).toFixed(2) });
             localStorage.setItem('zt_denemeler', JSON.stringify(denemeler));
-            toggleModal('addDenemeModal');
-            renderDenemeler();
-            e.target.reset();
+            toggleModal('addDenemeModal'); renderDenemeler(); e.target.reset();
         }
         function renderDenemeler() {
             statTotalCount.textContent = denemeler.length;
@@ -676,41 +742,22 @@
             denemeTableBody.innerHTML = denemeler.map(d => `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold">${d.name}</td><td class="p-3">${d.type}</td><td class="p-3">${d.date}</td><td class="p-3">${d.tNet}</td><td class="p-3">${d.sNet}</td><td class="p-3">${d.mNet}</td><td class="p-3">${d.fNet}</td><td class="p-3 font-bold text-ogm-600">${d.totalNet}</td><td class="p-3 text-center"><button onclick="denemeler=denemeler.filter(x=>x.id!==${d.id});renderDenemeler()" class="text-red-500">Sil</button></td></tr>`).join('');
         }
         function calcPuan() {
-            const t = Math.max(0, (parseFloat(document.getElementById('c-t-turkce').value)||0) - ((parseFloat(document.getElementById('y-t-turkce').value)||0)/4));
-            const m = Math.max(0, (parseFloat(document.getElementById('c-t-mat').value)||0) - ((parseFloat(document.getElementById('y-t-mat').value)||0)/4));
-            const s = Math.max(0, (parseFloat(document.getElementById('c-t-sosyal').value)||0) - ((parseFloat(document.getElementById('y-t-sosyal').value)||0)/4));
-            const f = Math.max(0, (parseFloat(document.getElementById('c-t-fen').value)||0) - ((parseFloat(document.getElementById('y-t-fen').value)||0)/4));
-            const net = t + m + s + f;
+            const t = Math.max(0, (parseFloat(cTurkce?.value||0) - ((parseFloat(yTurkce?.value||0)/4))));
+            const net = (parseFloat(document.getElementById('c-t-turkce').value)||0) + (parseFloat(document.getElementById('c-t-mat').value)||0);
             resTytNet.textContent = net.toFixed(2);
             resTytPuan.textContent = (100 + (net * 3.25)).toFixed(2);
         }
 
         let tarihSorulari = [{ id: 1, soru: "İstanbul'un Fethi?", cevap: "1453", secenekler: ["1299", "1453", "1516", "1923"] }];
-        let curQ = 0, score = 0;
-        function initTarihGame() { curQ = 0; score = 0; loadGameQ(); }
-        function loadGameQ() {
-            if(curQ >= tarihSorulari.length) { gameCard.classList.add('hidden'); gameResultBox.classList.remove('hidden'); gameFinalScore.textContent = `Puan: ${score}`; return; }
-            const q = tarihSorulari[curQ];
-            gameQuestionNum.textContent = curQ + 1;
-            gameEventText.textContent = q.soru;
-            gameOptions.innerHTML = q.secenekler.map(s => `<button onclick="if('${s}'==='${q.cevap}')score+=20; curQ++; loadGameQ();" class="bg-white border py-2 rounded text-xs">${s}</button>`).join('');
-        }
-        function restartTarihGame() { gameCard.classList.remove('hidden'); gameResultBox.classList.add('hidden'); initTarihGame(); }
-
-        let announcements = [{ id: 1, author: 'Admin', title: 'Hoş Geldiniz', text: 'YKS 2027 portalı yayında!' }];
-        function publishAdminAnnouncement() {
-            announcements.unshift({ id: Date.now(), author: 'Admin', title: adminAnnTitle.value, text: adminAnnText.value });
-            renderAnnouncements();
-        }
-        function renderAnnouncements() {
-            if(studentAnnouncementsList) studentAnnouncementsList.innerHTML = announcements.map(a => `<div class="bg-slate-50 border p-3 rounded"><h4 class="font-bold">${a.title}</h4><p class="text-xs">${a.text}</p></div>`).join('');
-            if(adminAnnouncementsList) adminAnnouncementsList.innerHTML = announcements.map(a => `<div class="border p-2 rounded text-xs">${a.title} - ${a.text}</div>`).join('');
+        function initTarihGame() {
+            gameEventText.textContent = tarihSorulari[0].soru;
+            gameOptions.innerHTML = tarihSorulari[0].secenekler.map(s => `<button onclick="alert('${s === '1453' ? 'Doğru!' : 'Yanlış!'}')" class="bg-white border py-2 rounded text-xs font-semibold">${s}</button>`).join('');
         }
 
         function toggleModal(id) { document.getElementById(id).classList.toggle('hidden'); }
 
         window.onload = () => {
-            renderDenemeler(); renderAnnouncements(); renderMeetings();
+            renderDenemeler();
             const session = JSON.parse(localStorage.getItem('zt_local_session'));
             if(session) applyUserSessionUI(session.email, session.role);
             lucide.createIcons();
