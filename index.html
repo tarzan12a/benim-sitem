@@ -7,6 +7,26 @@
   <link rel="icon" type="image/png" href="logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;600;800&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Firebase SDK Entegrasyonu -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA77Am5qS5mcZx43gLVEO50PzyHPDSwzM4",
+      authDomain: "zamant-af4d6.firebaseapp.com",
+      projectId: "zamant-af4d6",
+      storageBucket: "zamant-af4d6.firebasestorage.app",
+      messagingSenderId: "894284906360",
+      appId: "1:894284906360:web:d6afc72b912afe4896d28d",
+      measurementId: "G-ZXP82ZV3GJ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+
   <style>
     :root {
       --bg-color: #f8fafc;
@@ -623,7 +643,6 @@
     .swatch:hover { transform: scale(1.1); }
     .swatch.active { border-color: var(--text-main); transform: scale(1.12); }
 
-    /* Net Hesaplayıcı Tablosu */
     .calc-table input {
       width: 80px;
       padding: 6px 10px;
@@ -766,6 +785,47 @@
             <input type="text" id="reg-student-no" placeholder="Örn: 2054">
           </div>
 
+          <!-- Opsiyonel Okul Seçimi (Ankara, İstanbul, İzmir Fen ve Anadolu Liseleri) -->
+          <div class="form-group">
+            <label data-i18n="school_label">Okulunuz (Opsiyonel)</label>
+            <select id="reg-school">
+              <option value="">-- Okul Seçiniz (İsteğe Bağlı) --</option>
+              <optgroup label="Ankara Fen ve Anadolu Liseleri">
+                <option value="Ankara Fen Lisesi">Ankara Fen Lisesi</option>
+                <option value="Atatürk Anadolu Lisesi">Atatürk Anadolu Lisesi</option>
+                <option value="Bahçelievler Deneme Anadolu Lisesi">Bahçelievler Deneme Anadolu Lisesi</option>
+                <option value="Ankara Özel / Diğer Liseler">Ankara Özel / Diğer Liseler</option>
+                <option value="Gazi Anadolu Lisesi">Gazi Anadolu Lisesi</option>
+                <option value="Mehmet Emin Resulzade Anadolu Lisesi">Mehmet Emin Resulzade Anadolu Lisesi</option>
+                <option value="Sakarya Anadolu Lisesi">Sakarya Anadolu Lisesi</option>
+                <option value="Pursaklar Fen Lisesi">Pursaklar Fen Lisesi</option>
+                <option value="Yenimahalle Anadolu Lisesi">Yenimahalle Anadolu Lisesi</option>
+              </optgroup>
+              <optgroup label="İstanbul Fen ve Anadolu Liseleri">
+                <option value="Cağaloğlu Anadolu Lisesi">Cağaloğlu Anadolu Lisesi</option>
+                <option value="Galatasaray Lisesi">Galatasaray Lisesi</option>
+                <option value="İstanbul Atatürk Lisesi">İstanbul Atatürk Lisesi</option>
+                <option value="İstanbul Erkek Lisesi">İstanbul Erkek Lisesi</option>
+                <option value="Kabataş Erkek Lisesi">Kabataş Erkek Lisesi</option>
+                <option value="Kadıköy Anadolu Lisesi">Kadıköy Anadolu Lisesi</option>
+                <option value="Pertevniyal Lisesi">Pertevniyal Lisesi</option>
+                <option value="Vefa Lisesi">Vefa Lisesi</option>
+                <option value="Beşiktaş Sakıp Sabancı Anadolu Lisesi">Beşiktaş Sakıp Sabancı Anadolu Lisesi</option>
+                <option value="Hüseyin Avni Sözen Anadolu Lisesi">Hüseyin Avni Sözen Anadolu Lisesi</option>
+              </optgroup>
+              <optgroup label="İzmir Fen ve Anadolu Liseleri">
+                <option value="Bornova Anadolu Lisesi">Bornova Anadolu Lisesi</option>
+                <option value="İzmir Atatürk Lisesi">İzmir Atatürk Lisesi</option>
+                <option value="İzmir Fen Lisesi">İzmir Fen Lisesi</option>
+                <option value="İzmir Kız Lisesi">İzmir Kız Lisesi</option>
+                <option value="Atatürk Lisesi (İzmir)">Atatürk Lisesi (İzmir)</option>
+                <option value="Yusuf Tunç Anadolu Lisesi">Yusuf Tunç Anadolu Lisesi</option>
+                <option value="Karşıyaka Anadolu Lisesi">Karşıyaka Anadolu Lisesi</option>
+                <option value="Buca Mehmet Akif Ersoy Anadolu Lisesi">Buca Mehmet Akif Ersoy Anadolu Lisesi</option>
+              </optgroup>
+            </select>
+          </div>
+
           <div class="form-group">
             <label data-i18n="username_label">Kullanıcı Adı</label>
             <input type="text" id="reg-username" placeholder="Örn: zeynep2054">
@@ -799,7 +859,10 @@
           <div>
             <h3 id="welcome-user" style="font-size: 1.2rem; font-weight: 800;">Hoş Geldiniz</h3>
             <p id="user-bio-display" style="font-size: 0.85rem; color: var(--text-muted); margin: 2px 0 6px 0;">Hedefine odaklan!</p>
-            <span class="badge badge-primary" id="user-role-badge">Öğrenci</span>
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 4px;">
+              <span class="badge badge-primary" id="user-role-badge">Öğrenci</span>
+              <span class="badge badge-warning" id="user-school-badge" style="display: none;">Okul Belirtilmedi</span>
+            </div>
           </div>
         </div>
         <div style="text-align: right;">
@@ -864,17 +927,16 @@
         </button>
       </div>
 
-      <!-- 1. YENİ SEKME: DETAYLI YKS NET HESAPLAYICI -->
+      <!-- SEKME: NET HESAPLAYICI -->
       <div id="calculator-tab" class="card tab-content">
         <div class="card-title"><i data-lucide="calculator" color="var(--primary)"></i> <span data-i18n="calc_title">Detaylı YKS Net Hesaplayıcı</span></div>
-        <p class="card-subtitle" data-i18n="calc_sub">TYT ve AYT dersleri için doğru ve yanlış sayılarını girerek anlık netini ve toplam puanını hesapla.</p>
+        <p class="card-subtitle" data-i18n="calc_sub">TYT and AYT dersleri için doğru ve yanlış sayılarını girerek anlık netini ve toplam puanını hesapla.</p>
         
         <div style="display: flex; gap: 12px; margin-bottom: 20px;">
           <button class="btn-primary" id="calc-type-tyt" onclick="switchCalcType('TYT')">TYT Hesapla</button>
           <button class="btn-secondary" id="calc-type-ayt" onclick="switchCalcType('AYT')">AYT Hesapla</button>
         </div>
 
-        <!-- TYT Hesaplama Formu -->
         <div id="tyt-calc-section">
           <div class="table-responsive">
             <table class="calc-table">
@@ -916,7 +978,6 @@
           </div>
         </div>
 
-        <!-- AYT Hesaplama Formu -->
         <div id="ayt-calc-section" class="hidden">
           <div class="table-responsive">
             <table class="calc-table">
@@ -972,7 +1033,7 @@
         </div>
       </div>
 
-      <!-- 2. SEKME: DENEME TAKİP -->
+      <!-- SEKME: DENEME TAKİP -->
       <div id="exams-tab" class="card tab-content hidden">
         <div class="card-title"><i data-lucide="clipboard-list" color="var(--primary)"></i> <span data-i18n="exam_tracking">Deneme Sınavı Analizi</span></div>
         <p class="card-subtitle" data-i18n="exam_sub">Genel doğru/yanlış girerek ya da hesaplayıcıyı kullanarak ekle.</p>
@@ -1023,7 +1084,7 @@
         </div>
       </div>
 
-      <!-- 3. SEKME: DEVAMSIZLIK -->
+      <!-- SEKME: DEVAMSIZLIK -->
       <div id="attendance-tab" class="card tab-content hidden">
         <div class="card-title"><i data-lucide="calendar-check" color="#ef4444"></i> <span data-i18n="attendance_tracking">Devamsızlık Kayıtları</span></div>
         
@@ -1067,10 +1128,10 @@
         </div>
       </div>
 
-      <!-- 4. SEKME: PROFİL AYARLARI -->
+      <!-- SEKME: PROFİL AYARLARI -->
       <div id="profile-tab" class="card tab-content hidden">
         <div class="card-title"><i data-lucide="user-check" color="var(--primary)"></i> <span data-i18n="profile_settings_title">Profil Bilgileri & Fotoğraf</span></div>
-        <p class="card-subtitle" data-i18n="profile_settings_sub">Profil resmini yükle, hedef netini ve kişisel bilgilerini güncelle.</p>
+        <p class="card-subtitle" data-i18n="profile_settings_sub">Profil resmini yükle, okulunu ve hedef netini güncelle.</p>
 
         <div class="grid-form" style="margin-top: 16px;">
           <div class="form-group">
@@ -1081,6 +1142,47 @@
           <div class="form-group">
             <label data-i18n="full_name">Ad Soyad</label>
             <input type="text" id="prof-fullname" placeholder="Ad Soyad">
+          </div>
+
+          <!-- Opsiyonel Okul Seçimi (Profil Ayarları) -->
+          <div class="form-group">
+            <label data-i18n="school_label">Okulunuz (Opsiyonel)</label>
+            <select id="prof-school">
+              <option value="">-- Okul Seçiniz (İsteğe Bağlı) --</option>
+              <optgroup label="Ankara Fen ve Anadolu Liseleri">
+                <option value="Ankara Fen Lisesi">Ankara Fen Lisesi</option>
+                <option value="Atatürk Anadolu Lisesi">Atatürk Anadolu Lisesi</option>
+                <option value="Bahçelievler Deneme Anadolu Lisesi">Bahçelievler Deneme Anadolu Lisesi</option>
+                <option value="Ankara Özel / Diğer Liseler">Ankara Özel / Diğer Liseler</option>
+                <option value="Gazi Anadolu Lisesi">Gazi Anadolu Lisesi</option>
+                <option value="Mehmet Emin Resulzade Anadolu Lisesi">Mehmet Emin Resulzade Anadolu Lisesi</option>
+                <option value="Sakarya Anadolu Lisesi">Sakarya Anadolu Lisesi</option>
+                <option value="Pursaklar Fen Lisesi">Pursaklar Fen Lisesi</option>
+                <option value="Yenimahalle Anadolu Lisesi">Yenimahalle Anadolu Lisesi</option>
+              </optgroup>
+              <optgroup label="İstanbul Fen ve Anadolu Liseleri">
+                <option value="Cağaloğlu Anadolu Lisesi">Cağaloğlu Anadolu Lisesi</option>
+                <option value="Galatasaray Lisesi">Galatasaray Lisesi</option>
+                <option value="İstanbul Atatürk Lisesi">İstanbul Atatürk Lisesi</option>
+                <option value="İstanbul Erkek Lisesi">İstanbul Erkek Lisesi</option>
+                <option value="Kabataş Erkek Lisesi">Kabataş Erkek Lisesi</option>
+                <option value="Kadıköy Anadolu Lisesi">Kadıköy Anadolu Lisesi</option>
+                <option value="Pertevniyal Lisesi">Pertevniyal Lisesi</option>
+                <option value="Vefa Lisesi">Vefa Lisesi</option>
+                <option value="Beşiktaş Sakıp Sabancı Anadolu Lisesi">Beşiktaş Sakıp Sabancı Anadolu Lisesi</option>
+                <option value="Hüseyin Avni Sözen Anadolu Lisesi">Hüseyin Avni Sözen Anadolu Lisesi</option>
+              </optgroup>
+              <optgroup label="İzmir Fen ve Anadolu Liseleri">
+                <option value="Bornova Anadolu Lisesi">Bornova Anadolu Lisesi</option>
+                <option value="İzmir Atatürk Lisesi">İzmir Atatürk Lisesi</option>
+                <option value="İzmir Fen Lisesi">İzmir Fen Lisesi</option>
+                <option value="İzmir Kız Lisesi">İzmir Kız Lisesi</option>
+                <option value="Atatürk Lisesi (İzmir)">Atatürk Lisesi (İzmir)</option>
+                <option value="Yusuf Tunç Anadolu Lisesi">Yusuf Tunç Anadolu Lisesi</option>
+                <option value="Karşıyaka Anadolu Lisesi">Karşıyaka Anadolu Lisesi</option>
+                <option value="Buca Mehmet Akif Ersoy Anadolu Lisesi">Buca Mehmet Akif Ersoy Anadolu Lisesi</option>
+              </optgroup>
+            </select>
           </div>
 
           <div class="form-group">
@@ -1124,7 +1226,7 @@
         </div>
       </div>
 
-      <!-- 5. SEKME: GÖRÜNÜM ÖZELLEŞTİRME -->
+      <!-- SEKME: GÖRÜNÜM ÖZELLEŞTİRME -->
       <div id="customize-tab" class="card tab-content hidden">
         <div class="card-title"><i data-lucide="sparkles" color="var(--primary)"></i> <span data-i18n="customize_title">Arayüz & Görünüm Özelleştirme</span></div>
         <p class="card-subtitle" data-i18n="customize_sub">Sitenin renk paletini, yazı tipini ve tema modunu kendi zevkine göre tasarla.</p>
@@ -1187,7 +1289,7 @@
         time_progress_label: "YKS Hazırlık Süreci İlerleme Seviyesi", net_goal_progress: "Hedef Net İlerleme Seviyesi",
         auth_login_tab: "Giriş Yap", auth_register_tab: "Hesap Oluştur", login_title: "Hesabına Giriş Yap", login_sub: "Öğrenci veya PDR hesabınla devam et.",
         username_label: "Kullanıcı Adı", password: "Şifre", login_btn: "Giriş Yap", register_title: "Yeni Hesap Oluştur", register_sub: "Hemen kayıt ol ve YKS gelişimini takip et.",
-        role_select_label: "Hesap Türü", full_name: "Ad Soyad", student_no: "Öğrenci Numarası", pdr_code_label: "Kurum PDR Yetki Kodu (Demo: PDR2026)", register_btn: "Kaydı Tamamla",
+        role_select_label: "Hesap Türü", full_name: "Ad Soyad", student_no: "Öğrenci Numarası", school_label: "Okulunuz (Opsiyonel)", pdr_code_label: "Kurum PDR Yetki Kodu (Demo: PDR2026)", register_btn: "Kaydı Tamamla",
         stat_total_exams: "Toplam Deneme", stat_avg_net: "Ortalama Net", stat_total_att: "Devamsızlık Günü", 
         tab_calculator: "Net Hesaplayıcı", tab_exams: "Deneme Takip", tab_attendance: "Devamsızlık", tab_profile: "Profil Ayarları", tab_customize: "Özelleştirme",
         calc_title: "Detaylı YKS Net Hesaplayıcı", calc_sub: "TYT ve AYT dersleri için doğru ve yanlış sayılarını girerek anlık netini hesapla.",
@@ -1196,7 +1298,7 @@
         exam_student_name: "Öğrenci", exam_name: "Yayın / Deneme Adı", exam_type: "Oturum", correct_count: "Doğru", wrong_count: "Yanlış", add_exam_btn: "Kaydet",
         th_student: "Öğrenci", th_exam: "Deneme", th_type: "Oturum", th_cw: "D / Y", th_net: "Net", th_action: "İşlem", attendance_tracking: "Devamsızlık Kayıtları",
         att_date: "Tarih", att_status: "Durum", add_att_btn: "Kayıt Ekle", student_att_info: "Devamsızlık kayıtları yalnızca PDR birimi tarafından güncellenebilir.",
-        th_date: "Tarih", th_status: "Durum", profile_settings_title: "Profil Bilgileri & Fotoğraf", profile_settings_sub: "Profil resmini yükle, hedef netini ve kişisel bilgilerini güncelle.",
+        th_date: "Tarih", th_status: "Durum", profile_settings_title: "Profil Bilgileri & Fotoğraf", profile_settings_sub: "Profil resmini yükle, okulunu ve hedef netini güncelle.",
         upload_photo: "Profil Resmi Yükle", bio_label: "Motivasyon Sözü / Hakkımda", target_field: "YKS Puan Türü / Alan", target_uni: "Hedef Üniversite & Bölüm",
         target_net_label: "Hedef Ortalama Net", new_password_label: "Yeni Şifre (İsteğe Bağlı)", save_profile_btn: "Profili Kaydet", remove_photo_btn: "Fotoğrafı Kaldır",
         customize_title: "Arayüz & Görünüm Özelleştirme", customize_sub: "Renk paletini, yazı tipini ve tema modunu tasarla.", theme_setting: "Karanlık / Aydınlık Mod",
@@ -1207,7 +1309,7 @@
         time_progress_label: "YKS Preparation Timeline Progress", net_goal_progress: "Target Net Score Progress",
         auth_login_tab: "Sign In", auth_register_tab: "Create Account", login_title: "Sign In to Your Account", login_sub: "Continue with your Student or PDR account.",
         username_label: "Username", password: "Password", login_btn: "Sign In", register_title: "Create New Account", register_sub: "Register now and track your progress.",
-        role_select_label: "Account Type", full_name: "Full Name", student_no: "Student ID", pdr_code_label: "PDR Authorization Code (Demo: PDR2026)", register_btn: "Complete Registration",
+        role_select_label: "Account Type", full_name: "Full Name", student_no: "Student ID", school_label: "School (Optional)", pdr_code_label: "PDR Authorization Code (Demo: PDR2026)", register_btn: "Complete Registration",
         stat_total_exams: "Total Exams", stat_avg_net: "Average Net", stat_total_att: "Absence Days", 
         tab_calculator: "Net Calculator", tab_exams: "Mock Exams", tab_attendance: "Attendance", tab_profile: "Profile", tab_customize: "Customization",
         calc_title: "Detailed YKS Net Calculator", calc_sub: "Calculate your net score by entering correct and wrong answers for TYT and AYT.",
@@ -1216,7 +1318,7 @@
         exam_student_name: "Student", exam_name: "Publisher / Exam", exam_type: "Session", correct_count: "Correct", wrong_count: "Wrong", add_exam_btn: "Save",
         th_student: "Student", th_exam: "Exam", th_type: "Session", th_cw: "C / W", th_net: "Net", th_action: "Action", attendance_tracking: "Attendance Records",
         att_date: "Date", att_status: "Status", add_att_btn: "Add Record", student_att_info: "Attendance records are managed by PDR.",
-        th_date: "Date", th_status: "Status", profile_settings_title: "Profile Info & Photo", profile_settings_sub: "Upload profile picture, update target score and info.",
+        th_date: "Date", th_status: "Status", profile_settings_title: "Profile Info & Photo", profile_settings_sub: "Upload profile picture, update school and target score.",
         upload_photo: "Upload Profile Picture", bio_label: "Motivation Quote / Bio", target_field: "Target Exam Field", target_uni: "Target University & Major",
         target_net_label: "Target Average Net", new_password_label: "New Password (Optional)", save_profile_btn: "Save Profile", remove_photo_btn: "Remove Photo",
         customize_title: "UI & Appearance Customization", customize_sub: "Customize color palette, font, and theme mode.", theme_setting: "Dark / Light Mode",
@@ -1267,8 +1369,8 @@
     updateCountdown();
 
     let users = JSON.parse(localStorage.getItem('yksUsers')) || [
-      { username: "ahmet", password: "1234", fullName: "Ahmet Yılmaz", role: "student", no: "1042", bio: "2027 YKS Sayısal Hedef İlk 5000", targetNet: 95, avatar: "" },
-      { username: "pdr", password: "1234", fullName: "Rehber Öğretmen", role: "pdr", no: "", bio: "PDR & Eğitim Koçu", targetNet: 100, avatar: "" }
+      { username: "ahmet", password: "1234", fullName: "Ahmet Yılmaz", role: "student", no: "1042", school: "Ankara Fen Lisesi", bio: "2027 YKS Sayısal Hedef İlk 5000", targetNet: 95, avatar: "" },
+      { username: "pdr", password: "1234", fullName: "Rehber Öğretmen", role: "pdr", no: "", school: "", bio: "PDR & Eğitim Koçu", targetNet: 100, avatar: "" }
     ];
 
     let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
@@ -1305,6 +1407,7 @@
       const role = document.getElementById('reg-role').value;
       const fullName = document.getElementById('reg-fullname').value.trim();
       const studentNo = document.getElementById('reg-student-no').value.trim();
+      const school = document.getElementById('reg-school').value;
       const username = document.getElementById('reg-username').value.trim().toLowerCase();
       const password = document.getElementById('reg-password').value;
       const pdrCode = document.getElementById('reg-pdr-code').value.trim();
@@ -1318,7 +1421,7 @@
         return;
       }
       if (role === 'pdr' && pdrCode !== 'PDR2026') {
-        showAuthAlert("Hataly PDR Yetki Kodu! (Demo: PDR2026)", "error");
+        showAuthAlert("Hatalı PDR Yetki Kodu! (Demo: PDR2026)", "error");
         return;
       }
       if (users.some(u => u.username === username)) {
@@ -1326,7 +1429,7 @@
         return;
       }
 
-      const newUser = { username, password, fullName, role, no: role === 'student' ? (studentNo || '100') : '', bio: "Hedefime adım adım yaklaşıyorum!", targetNet: 100, avatar: "" };
+      const newUser = { username, password, fullName, role, no: role === 'student' ? (studentNo || '100') : '', school: school || '', bio: "Hedefime adım adım yaklaşıyorum!", targetNet: 100, avatar: "" };
       users.push(newUser);
       localStorage.setItem('yksUsers', JSON.stringify(users));
       switchAuthMode('login');
@@ -1377,6 +1480,15 @@
       document.getElementById('prof-fullname').value = currentUser.fullName;
       document.getElementById('prof-bio').value = currentUser.bio || "";
       document.getElementById('target-net-input').value = currentUser.targetNet || 100;
+      document.getElementById('prof-school').value = currentUser.school || "";
+
+      const schoolBadge = document.getElementById('user-school-badge');
+      if (currentUser.school) {
+        schoolBadge.textContent = "🏫 " + currentUser.school;
+        schoolBadge.style.display = "inline-flex";
+      } else {
+        schoolBadge.style.display = "none";
+      }
 
       const roleBadge = document.getElementById('user-role-badge');
       if (currentUser.role === 'pdr') {
@@ -1422,6 +1534,7 @@
     function saveProfileSettings() {
       currentUser.fullName = document.getElementById('prof-fullname').value.trim() || currentUser.fullName;
       currentUser.bio = document.getElementById('prof-bio').value.trim();
+      currentUser.school = document.getElementById('prof-school').value;
       currentUser.targetNet = parseFloat(document.getElementById('target-net-input').value) || 100;
       const newPass = document.getElementById('prof-new-pass').value;
       if (newPass && newPass.length >= 4) currentUser.password = newPass;
@@ -1449,7 +1562,7 @@
       btn.classList.add('active');
     }
 
-    // --- NET HESAPLAYICI MANTIĞI ---
+    // --- NET HESAPLAYICI ---
     let activeCalcCategory = 'TYT';
 
     function switchCalcType(type) {
