@@ -54,6 +54,60 @@
       padding-bottom: 60px;
     }
 
+    /* Giriş Animasyonu (Splash Screen) */
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .splash-content {
+      text-align: center;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .splash-logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    .splash-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(99, 102, 241, 0.2);
+      border-top-color: #6366f1;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 20px auto 0 auto;
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .splash-hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
     header {
       position: sticky;
       top: 0;
@@ -175,7 +229,6 @@
       border: 1px solid var(--border-color);
     }
 
-    /* YKS Sayaç Kartı */
     .countdown-hero {
       background: var(--primary-gradient);
       color: white;
@@ -244,7 +297,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* Auth (Giriş & Kayıt) Kartı */
     .auth-container {
       max-width: 480px;
       margin: 0 auto;
@@ -325,7 +377,6 @@
       border: 1px solid rgba(16, 185, 129, 0.25);
     }
 
-    /* Kullanıcı Bilgi & İstatistik Barı */
     .user-banner {
       display: flex;
       justify-content: space-between;
@@ -392,7 +443,6 @@
       font-weight: 800;
     }
 
-    /* Sekmeler */
     .tabs-wrapper {
       background: var(--card-bg);
       padding: 6px;
@@ -426,7 +476,6 @@
       display: none !important;
     }
 
-    /* Tablo */
     .table-responsive {
       overflow-x: auto;
       margin-top: 20px;
@@ -455,13 +504,8 @@
       font-weight: 500;
     }
 
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tr:hover td {
-      background: rgba(99, 102, 241, 0.03);
-    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(99, 102, 241, 0.03); }
 
     .badge {
       padding: 5px 10px;
@@ -486,16 +530,21 @@
     }
 
     @media (max-width: 600px) {
-      .countdown-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      header {
-        padding: 14px 16px;
-      }
+      .countdown-grid { grid-template-columns: repeat(2, 1fr); }
+      header { padding: 14px 16px; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Giriş Animasyonu (Splash Screen) -->
+  <div id="splash-screen">
+    <div class="splash-content">
+      <div class="splash-logo">Zaman Tüneli</div>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">YKS Takip Sistemi Yükleniyor...</p>
+      <div class="splash-spinner"></div>
+    </div>
+  </div>
 
   <!-- Üst Menü -->
   <header>
@@ -507,6 +556,24 @@
       <select id="language-selector" onchange="changeLanguage(this.value)">
         <option value="tr">🇹🇷 Türkçe</option>
         <option value="en">🇬🇧 English</option>
+        <option value="de">🇩🇪 Deutsch</option>
+        <option value="fr">🇫🇷 Français</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="it">🇮🇹 Italiano</option>
+        <option value="pt">🇵🇹 Português</option>
+        <option value="ru">🇷🇺 Русский</option>
+        <option value="ar">🇸🇦 العربية</option>
+        <option value="ja">🇯🇵 日本語</option>
+        <option value="ko">🇰🇷 한국어</option>
+        <option value="zh">🇨🇳 中文</option>
+        <option value="nl">🇳🇱 Nederlands</option>
+        <option value="pl">🇵🇱 Polski</option>
+        <option value="sv">🇸🇪 Svenska</option>
+        <option value="el">🇬🇷 Ελληνικά</option>
+        <option value="hi">🇮🇳 हिन्दी</option>
+        <option value="id">🇮🇩 Bahasa Indonesia</option>
+        <option value="vi">🇻🇳 Tiếng Việt</option>
+        <option value="az">🇦🇿 Azərbaycan</option>
       </select>
       <button id="logout-btn" class="btn-danger hidden" onclick="logout()">
         <i data-lucide="log-out" size="16"></i>
@@ -531,10 +598,9 @@
       </div>
     </div>
 
-    <!-- GİRİŞ & HESAP OLUŞTURMA EKRANI -->
+    <!-- GİRİŞ & KAYIT EKRANI -->
     <div id="auth-section" class="auth-container">
       <div class="card">
-        <!-- Giriş / Kayıt Sekme Geçişi -->
         <div class="auth-tabs">
           <button id="tab-btn-login" class="auth-tab-btn active" onclick="switchAuthMode('login')" data-i18n="auth_login_tab">Giriş Yap</button>
           <button id="tab-btn-register" class="auth-tab-btn" onclick="switchAuthMode('register')" data-i18n="auth_register_tab">Hesap Oluştur</button>
@@ -548,8 +614,8 @@
           <p class="card-subtitle" data-i18n="login_sub">Öğrenci veya PDR hesabınla devam et.</p>
 
           <div class="form-group">
-            <label data-i18n="username_label">Kullanıcı Adı veya E-posta</label>
-            <input type="text" id="login-username" placeholder="Örn: ahmet1042 veya pdr">
+            <label data-i18n="username_label">Kullanıcı Adı</label>
+            <input type="text" id="login-username" placeholder="Örn: ahmet veya pdr">
           </div>
           <div class="form-group">
             <label data-i18n="password">Şifre</label>
@@ -567,7 +633,7 @@
           </p>
         </div>
 
-        <!-- HESAP OLUŞTURMA FORMU -->
+        <!-- KAYIT FORMU -->
         <div id="register-form" class="hidden">
           <div class="card-title"><i data-lucide="user-plus" color="#10b981"></i> <span data-i18n="register_title">Yeni Hesap Oluştur</span></div>
           <p class="card-subtitle" data-i18n="register_sub">Hemen kayıt ol ve YKS gelişimini takip etmeye başla.</p>
@@ -617,7 +683,6 @@
     <!-- ANA PANEL -->
     <div id="dashboard-section" class="hidden">
       
-      <!-- Kullanıcı Bilgi Kartı -->
       <div class="card user-banner">
         <div class="user-profile">
           <div class="avatar" id="user-avatar">A</div>
@@ -632,7 +697,6 @@
         </div>
       </div>
 
-      <!-- Özet İstatistik Kartları -->
       <div class="stats-row">
         <div class="stat-card">
           <div class="stat-icon"><i data-lucide="file-check-2"></i></div>
@@ -657,7 +721,6 @@
         </div>
       </div>
 
-      <!-- Sekmeler -->
       <div class="tabs-wrapper">
         <button class="tab-btn active" onclick="switchTab('exams-tab', this)">
           <i data-lucide="bar-chart-3" size="16"></i> <span data-i18n="tab_exams">Deneme Takip</span>
@@ -670,7 +733,7 @@
         </button>
       </div>
 
-      <!-- 1. SEKME: DENEME TAKİP SİSTEMİ -->
+      <!-- DENEME TAKİP -->
       <div id="exams-tab" class="card tab-content">
         <div class="card-title"><i data-lucide="clipboard-list" color="#6366f1"></i> <span data-i18n="exam_tracking">Deneme Sınavı Analizi</span></div>
         <p class="card-subtitle" data-i18n="exam_sub">Doğru ve yanlış sayılarını gir, netin otomatik hesaplansın.</p>
@@ -721,7 +784,7 @@
         </div>
       </div>
 
-      <!-- 2. SEKME: DEVAMSIZLIK SİSTEMİ -->
+      <!-- DEVAMSIZLIK -->
       <div id="attendance-tab" class="card tab-content hidden">
         <div class="card-title"><i data-lucide="calendar-check" color="#ef4444"></i> <span data-i18n="attendance_tracking">Devamsızlık Kayıtları</span></div>
         
@@ -765,7 +828,7 @@
         </div>
       </div>
 
-      <!-- 3. SEKME: AYARLAR -->
+      <!-- AYARLAR -->
       <div id="settings-tab" class="card tab-content hidden">
         <div class="card-title"><i data-lucide="sliders" color="#6366f1"></i> <span data-i18n="settings_title">Tercihler & Hesap Ayarları</span></div>
         <p class="card-subtitle" data-i18n="settings_sub">Arayüz temasını ve YKS hedeflerini kişiselleştir.</p>
@@ -808,119 +871,247 @@
   <script>
     lucide.createIcons();
 
-    // --- 1. ÇOKLU DİL SÖZLÜĞÜ ---
+    // --- 20 DİL DESTEĞİ SÖZLÜĞÜ ---
     const translations = {
       tr: {
-        site_title: "Zaman Tüneli",
-        logout: "Çıkış",
-        yks_countdown: "YKS 2027 Maratonu",
-        days: "Gün",
-        hours: "Saat",
-        minutes: "Dakika",
-        seconds: "Saniye",
-        auth_login_tab: "Giriş Yap",
-        auth_register_tab: "Hesap Oluştur",
-        login_title: "Hesabına Giriş Yap",
-        login_sub: "Öğrenci veya PDR hesabınla devam et.",
-        username_label: "Kullanıcı Adı",
-        password: "Şifre",
-        login_btn: "Giriş Yap",
-        register_title: "Yeni Hesap Oluştur",
-        register_sub: "Hemen kayıt ol ve YKS gelişimini takip etmeye başla.",
-        role_select_label: "Hesap Türü",
-        full_name: "Ad Soyad",
-        student_no: "Öğrenci Numarası",
-        pdr_code_label: "Kurum PDR Yetki Kodu (Demo: PDR2026)",
-        register_btn: "Kaydı Tamamla",
-        stat_total_exams: "Toplam Deneme",
-        stat_avg_net: "Ortalama Net",
-        stat_total_att: "Devamsızlık Günü",
-        tab_exams: "Deneme Takip",
-        tab_attendance: "Devamsızlık",
-        tab_settings: "Ayarlar",
-        exam_tracking: "Deneme Sınavı Analizi",
-        exam_sub: "Doğru ve yanlış sayılarını gir, netin otomatik hesaplansın.",
-        exam_student_name: "Öğrenci",
-        exam_name: "Yayın / Deneme Adı",
-        exam_type: "Oturum",
-        correct_count: "Doğru",
-        wrong_count: "Yanlış",
-        add_exam_btn: "Kaydet",
-        th_student: "Öğrenci",
-        th_exam: "Deneme",
-        th_type: "Oturum",
-        th_cw: "D / Y",
-        th_net: "Net",
-        th_action: "İşlem",
-        attendance_tracking: "Devamsızlık Kayıtları",
-        att_date: "Tarih",
-        att_status: "Durum",
-        add_att_btn: "Kayıt Ekle",
-        student_att_info: "Devamsızlık kayıtları yalnızca PDR birimi tarafından güncellenebilir.",
-        th_date: "Tarih",
-        th_status: "Durum",
-        settings_title: "Tercihler & Hesap Ayarları",
-        settings_sub: "Arayüz temasını ve YKS hedeflerini kişiselleştir.",
-        theme_setting: "Görünüm Teması",
-        target_field: "YKS Puan Türü / Alan",
-        target_uni: "Hedef Üniversite & Bölüm",
-        reset_data: "Tüm Demo Verilerini Sıfırla"
+        site_title: "Zaman Tüneli", logout: "Çıkış", yks_countdown: "YKS 2027 Maratonu", days: "Gün", hours: "Saat", minutes: "Dakika", seconds: "Saniye",
+        auth_login_tab: "Giriş Yap", auth_register_tab: "Hesap Oluştur", login_title: "Hesabına Giriş Yap", login_sub: "Öğrenci veya PDR hesabınla devam et.",
+        username_label: "Kullanıcı Adı", password: "Şifre", login_btn: "Giriş Yap", register_title: "Yeni Hesap Oluştur", register_sub: "Hemen kayıt ol ve YKS gelişimini takip et.",
+        role_select_label: "Hesap Türü", full_name: "Ad Soyad", student_no: "Öğrenci Numarası", pdr_code_label: "Kurum PDR Yetki Kodu (Demo: PDR2026)", register_btn: "Kaydı Tamamla",
+        stat_total_exams: "Toplam Deneme", stat_avg_net: "Ortalama Net", stat_total_att: "Devamsızlık Günü", tab_exams: "Deneme Takip", tab_attendance: "Devamsızlık", tab_settings: "Ayarlar",
+        exam_tracking: "Deneme Sınavı Analizi", exam_sub: "Doğru ve yanlış sayılarını gir, netin hesaplansın.", exam_student_name: "Öğrenci", exam_name: "Yayın / Deneme Adı",
+        exam_type: "Oturum", correct_count: "Doğru", wrong_count: "Yanlış", add_exam_btn: "Kaydet", th_student: "Öğrenci", th_exam: "Deneme", th_type: "Oturum", th_cw: "D / Y", th_net: "Net", th_action: "İşlem",
+        attendance_tracking: "Devamsızlık Kayıtları", att_date: "Tarih", att_status: "Durum", add_att_btn: "Kayıt Ekle", student_att_info: "Devamsızlık kayıtları yalnızca PDR birimi tarafından güncellenebilir.",
+        th_date: "Tarih", th_status: "Durum", settings_title: "Tercihler & Hesap Ayarları", settings_sub: "Arayüz temasını ve YKS hedeflerini kişiselleştir.", theme_setting: "Görünüm Teması",
+        target_field: "YKS Puan Türü / Alan", target_uni: "Hedef Üniversite & Bölüm", reset_data: "Tüm Verileri Sıfırla"
       },
       en: {
-        site_title: "Time Tunnel",
-        logout: "Logout",
-        yks_countdown: "YKS 2027 Countdown",
-        days: "Days",
-        hours: "Hours",
-        minutes: "Minutes",
-        seconds: "Seconds",
-        auth_login_tab: "Sign In",
-        auth_register_tab: "Create Account",
-        login_title: "Sign In to Your Account",
-        login_sub: "Continue with your Student or PDR account.",
-        username_label: "Username",
-        password: "Password",
-        login_btn: "Sign In",
-        register_title: "Create New Account",
-        register_sub: "Register now and start tracking your YKS progress.",
-        role_select_label: "Account Type",
-        full_name: "Full Name",
-        student_no: "Student ID",
-        pdr_code_label: "PDR Authorization Code (Demo: PDR2026)",
-        register_btn: "Complete Registration",
-        stat_total_exams: "Total Exams",
-        stat_avg_net: "Average Net",
-        stat_total_att: "Absence Days",
-        tab_exams: "Mock Exams",
-        tab_attendance: "Attendance",
-        tab_settings: "Settings",
-        exam_tracking: "Mock Exam Analytics",
-        exam_sub: "Enter correct and wrong answers to calculate your net score.",
-        exam_student_name: "Student",
-        exam_name: "Publisher / Exam Name",
-        exam_type: "Session",
-        correct_count: "Correct",
-        wrong_count: "Wrong",
-        add_exam_btn: "Save",
-        th_student: "Student",
-        th_exam: "Exam",
-        th_type: "Session",
-        th_cw: "C / W",
-        th_net: "Net",
-        th_action: "Action",
-        attendance_tracking: "Attendance Records",
-        att_date: "Date",
-        att_status: "Status",
-        add_att_btn: "Add Record",
-        student_att_info: "Attendance records can only be updated by the PDR unit.",
-        th_date: "Date",
-        th_status: "Status",
-        settings_title: "Preferences & Account Settings",
-        settings_sub: "Customize your interface theme and YKS goals.",
-        theme_setting: "Appearance Theme",
-        target_field: "Target Exam Field",
-        target_uni: "Target University & Major",
-        reset_data: "Reset All Demo Data"
+        site_title: "Time Tunnel", logout: "Logout", yks_countdown: "YKS 2027 Countdown", days: "Days", hours: "Hours", minutes: "Minutes", seconds: "Seconds",
+        auth_login_tab: "Sign In", auth_register_tab: "Create Account", login_title: "Sign In to Your Account", login_sub: "Continue with your Student or PDR account.",
+        username_label: "Username", password: "Password", login_btn: "Sign In", register_title: "Create New Account", register_sub: "Register now and track your progress.",
+        role_select_label: "Account Type", full_name: "Full Name", student_no: "Student ID", pdr_code_label: "PDR Authorization Code (Demo: PDR2026)", register_btn: "Complete Registration",
+        stat_total_exams: "Total Exams", stat_avg_net: "Average Net", stat_total_att: "Absence Days", tab_exams: "Mock Exams", tab_attendance: "Attendance", tab_settings: "Settings",
+        exam_tracking: "Mock Exam Analytics", exam_sub: "Enter correct and wrong answers.", exam_student_name: "Student", exam_name: "Publisher / Exam",
+        exam_type: "Session", correct_count: "Correct", wrong_count: "Wrong", add_exam_btn: "Save", th_student: "Student", th_exam: "Exam", th_type: "Session", th_cw: "C / W", th_net: "Net", th_action: "Action",
+        attendance_tracking: "Attendance Records", att_date: "Date", att_status: "Status", add_att_btn: "Add Record", student_att_info: "Attendance records are managed by PDR.",
+        th_date: "Date", th_status: "Status", settings_title: "Preferences & Settings", settings_sub: "Customize your theme and goals.", theme_setting: "Appearance Theme",
+        target_field: "Target Exam Field", target_uni: "Target University & Major", reset_data: "Reset All Data"
+      },
+      de: {
+        site_title: "Zeittunnel", logout: "Abmelden", yks_countdown: "YKS 2027 Countdown", days: "Tage", hours: "Stunden", minutes: "Minuten", seconds: "Sekunden",
+        auth_login_tab: "Anmelden", auth_register_tab: "Konto erstellen", login_title: "Anmelden", login_sub: "Mit Studenten- oder PDR-Konto fortfahren.",
+        username_label: "Benutzername", password: "Passwort", login_btn: "Anmelden", register_title: "Neues Konto erstellen", register_sub: "Registrieren und Fortschritt verfolgen.",
+        role_select_label: "Kontotyp", full_name: "Vollständiger Name", student_no: "Schülernummer", pdr_code_label: "PDR-Code (Demo: PDR2026)", register_btn: "Registrierung abschließen",
+        stat_total_exams: "Prüfungen gesamt", stat_avg_net: "Durchschnitt", stat_total_att: "Fehltage", tab_exams: "Prüfungen", tab_attendance: "Anwesenheit", tab_settings: "Einstellungen",
+        exam_tracking: "Prüfungsanalyse", exam_sub: "Richtige und falsche Antworten eingeben.", exam_student_name: "Schüler", exam_name: "Prüfungsname",
+        exam_type: "Sitzung", correct_count: "Richtig", wrong_count: "Falsch", add_exam_btn: "Speichern", th_student: "Schüler", th_exam: "Prüfung", th_type: "Sitzung", th_cw: "R / F", th_net: "Netto", th_action: "Aktion",
+        attendance_tracking: "Anwesenheitslisten", att_date: "Datum", att_status: "Status", add_att_btn: "Hinzufügen", student_att_info: "Anwesenheit wird von PDR verwaltet.",
+        th_date: "Datum", th_status: "Status", settings_title: "Einstellungen", settings_sub: "Thema und Ziele anpassen.", theme_setting: "Design",
+        target_field: "Zielbereich", target_uni: "Zieluniversität", reset_data: "Alle Daten zurücksetzen"
+      },
+      fr: {
+        site_title: "Tunnel Temporel", logout: "Déconnexion", yks_countdown: "Compte à rebours YKS 2027", days: "Jours", hours: "Heures", minutes: "Minutes", seconds: "Secondes",
+        auth_login_tab: "Connexion", auth_register_tab: "Créer un compte", login_title: "Se connecter", login_sub: "Continuez avec votre compte.",
+        username_label: "Nom d'utilisateur", password: "Mot de passe", login_btn: "Connexion", register_title: "Créer un compte", register_sub: "Inscrivez-vous et suivez vos progrès.",
+        role_select_label: "Type de compte", full_name: "Nom complet", student_no: "ID étudiant", pdr_code_label: "Code PDR (Demo: PDR2026)", register_btn: "Terminer",
+        stat_total_exams: "Examens totaux", stat_avg_net: "Net moyen", stat_total_att: "Absences", tab_exams: "Examens", tab_attendance: "Présence", tab_settings: "Paramètres",
+        exam_tracking: "Analyse des examens", exam_sub: "Entrez les réponses.", exam_student_name: "Étudiant", exam_name: "Nom de l'examen",
+        exam_type: "Session", correct_count: "Correct", wrong_count: "Faux", add_exam_btn: "Enregistrer", th_student: "Étudiant", th_exam: "Examen", th_type: "Session", th_cw: "C / F", th_net: "Net", th_action: "Action",
+        attendance_tracking: "Dossiers de présence", att_date: "Date", att_status: "Statut", add_att_btn: "Ajouter", student_att_info: "Géré par PDR.",
+        th_date: "Date", th_status: "Statut", settings_title: "Paramètres", settings_sub: "Personnalisez vos objectifs.", theme_setting: "Thème",
+        target_field: "Domaine cible", target_uni: "Université cible", reset_data: "Réinitialiser"
+      },
+      es: {
+        site_title: "Túnel del Tiempo", logout: "Cerrar sesión", yks_countdown: "Cuenta regresiva YKS 2027", days: "Días", hours: "Horas", minutes: "Minutos", seconds: "Segundos",
+        auth_login_tab: "Iniciar sesión", auth_register_tab: "Crear cuenta", login_title: "Iniciar sesión", login_sub: "Continúa con tu cuenta.",
+        username_label: "Usuario", password: "Contraseña", login_btn: "Entrar", register_title: "Crear cuenta", register_sub: "Regístrate y haz seguimiento.",
+        role_select_label: "Tipo de cuenta", full_name: "Nombre completo", student_no: "ID de estudiante", pdr_code_label: "Código PDR (Demo: PDR2026)", register_btn: "Completar",
+        stat_total_exams: "Exámenes totales", stat_avg_net: "Neto promedio", stat_total_att: "Ausencias", tab_exams: "Exámenes", tab_attendance: "Asistencia", tab_settings: "Ajustes",
+        exam_tracking: "Análisis de exámenes", exam_sub: "Ingresa respuestas.", exam_student_name: "Estudiante", exam_name: "Examen",
+        exam_type: "Sesión", correct_count: "Correctas", wrong_count: "Incorrectas", add_exam_btn: "Guardar", th_student: "Estudiante", th_exam: "Examen", th_type: "Sesión", th_cw: "C / I", th_net: "Neto", th_action: "Acción",
+        attendance_tracking: "Registros de asistencia", att_date: "Fecha", att_status: "Estado", add_att_btn: "Añadir", student_att_info: "Gestionado por PDR.",
+        th_date: "Fecha", th_status: "Estado", settings_title: "Ajustes", settings_sub: "Personaliza tu tema.", theme_setting: "Tema",
+        target_field: "Campo objetivo", target_uni: "Universidad objetivo", reset_data: "Restablecer datos"
+      },
+      it: {
+        site_title: "Tunnel Temporale", logout: "Esci", yks_countdown: "Countdown YKS 2027", days: "Giorni", hours: "Ore", minutes: "Minuti", seconds: "Secondi",
+        auth_login_tab: "Accedi", auth_register_tab: "Registrati", login_title: "Accedi al tuo account", login_sub: "Continua con il tuo account.",
+        username_label: "Nome utente", password: "Password", login_btn: "Accedi", register_title: "Crea account", register_sub: "Registrati e traccia i progressi.",
+        role_select_label: "Tipo account", full_name: "Nome completo", student_no: "ID studente", pdr_code_label: "Codice PDR (Demo: PDR2026)", register_btn: "Completa",
+        stat_total_exams: "Esami totali", stat_avg_net: "Media netta", stat_total_att: "Assenze", tab_exams: "Esami", tab_attendance: "Presenze", tab_settings: "Impostazioni",
+        exam_tracking: "Analisi esami", exam_sub: "Inserisci risposte.", exam_student_name: "Studente", exam_name: "Esame",
+        exam_type: "Sessione", correct_count: "Corrette", wrong_count: "Errate", add_exam_btn: "Salva", th_student: "Studente", th_exam: "Esame", th_type: "Sessione", th_cw: "C / E", th_net: "Netto", th_action: "Azione",
+        attendance_tracking: "Registri presenze", att_date: "Data", att_status: "Stato", add_att_btn: "Aggiungi", student_att_info: "Gestito da PDR.",
+        th_date: "Data", th_status: "Stato", settings_title: "Impostazioni", settings_sub: "Personalizza.", theme_setting: "Tema",
+        target_field: "Campo obiettivo", target_uni: "Università obiettivo", reset_data: "Ripristina"
+      },
+      pt: {
+        site_title: "Túnel do Tempo", logout: "Sair", yks_countdown: "Contagem YKS 2027", days: "Dias", hours: "Horas", minutes: "Minutos", seconds: "Segundos",
+        auth_login_tab: "Entrar", auth_register_tab: "Criar Conta", login_title: "Entrar na Conta", login_sub: "Continue com sua conta.",
+        username_label: "Usuário", password: "Senha", login_btn: "Entrar", register_title: "Criar Nova Conta", register_sub: "Registre-se e acompanhe.",
+        role_select_label: "Tipo de Conta", full_name: "Nome Completo", student_no: "ID do Aluno", pdr_code_label: "Código PDR (Demo: PDR2026)", register_btn: "Concluir",
+        stat_total_exams: "Total de Provas", stat_avg_net: "Média Líquida", stat_total_att: "Faltas", tab_exams: "Provas", tab_attendance: "Frequência", tab_settings: "Configurações",
+        exam_tracking: "Análise de Provas", exam_sub: "Insira as respostas.", exam_student_name: "Aluno", exam_name: "Prova",
+        exam_type: "Sessão", correct_count: "Certas", wrong_count: "Erradas", add_exam_btn: "Salvar", th_student: "Aluno", th_exam: "Prova", th_type: "Sessão", th_cw: "C / E", th_net: "Líquido", th_action: "Ação",
+        attendance_tracking: "Registros de Frequência", att_date: "Data", att_status: "Status", add_att_btn: "Adicionar", student_att_info: "Gerenciado pelo PDR.",
+        th_date: "Data", th_status: "Status", settings_title: "Configurações", settings_sub: "Personalize.", theme_setting: "Tema",
+        target_field: "Área alvo", target_uni: "Universidade alvo", reset_data: "Redefinir Dados"
+      },
+      ru: {
+        site_title: "Машина Времени", logout: "Выйти", yks_countdown: "Обратный отсчет YKS 2027", days: "Дни", hours: "Часы", minutes: "Минуты", seconds: "Секунды",
+        auth_login_tab: "Войти", auth_register_tab: "Регистрация", login_title: "Вход в аккаунт", login_sub: "Продолжить с аккаунтом.",
+        username_label: "Имя пользователя", password: "Пароль", login_btn: "Войти", register_title: "Создать аккаунт", register_sub: "Зарегистрируйтесь и следите за прогрессом.",
+        role_select_label: "Тип аккаунта", full_name: "ФИО", student_no: "Номер ученика", pdr_code_label: "Код PDR (Demo: PDR2026)", register_btn: "Завершить",
+        stat_total_exams: "Всего тестов", stat_avg_net: "Ср. нетто", stat_total_att: "Пропуски", tab_exams: "Тесты", tab_attendance: "Посещаемость", tab_settings: "Настройки",
+        exam_tracking: "Анализ тестов", exam_sub: "Введите ответы.", exam_student_name: "Ученик", exam_name: "Название теста",
+        exam_type: "Сессия", correct_count: "Верно", wrong_count: "Неверно", add_exam_btn: "Сохранить", th_student: "Ученик", th_exam: "Тест", th_type: "Сессия", th_cw: "В / Н", th_net: "Нетто", th_action: "Действие",
+        attendance_tracking: "Посещаемость", att_date: "Дата", att_status: "Статус", add_att_btn: "Добавить", student_att_info: "Управляется PDR.",
+        th_date: "Дата", th_status: "Статус", settings_title: "Настройки", settings_sub: "Персонализация.", theme_setting: "Тема",
+        target_field: "Целевое поле", target_uni: "Целевой вуз", reset_data: "Сбросить данные"
+      },
+      ar: {
+        site_title: "نفق الزمن", logout: "خروج", yks_countdown: "العد التنازلي YKS 2027", days: "أيام", hours: "ساعات", minutes: "دقائق", seconds: "ثواني",
+        auth_login_tab: "تسجيل الدخول", auth_register_tab: "إنشاء حساب", login_title: "تسجيل الدخول", login_sub: "تابع بحسابك.",
+        username_label: "اسم المستخدم", password: "كلمة المرور", login_btn: "دخول", register_title: "حساب جديد", register_sub: "سجل الآن.",
+        role_select_label: "نوع الحساب", full_name: "الاسم الكامل", student_no: "رقم الطالب", pdr_code_label: "رمز PDR (Demo: PDR2026)", register_btn: "إتمام",
+        stat_total_exams: "الاختبارات", stat_avg_net: "متوسط النتائج", stat_total_att: "أيام الغياب", tab_exams: "الاختبارات", tab_attendance: "الغياب", tab_settings: "الإعدادات",
+        exam_tracking: "تحليل الاختبارات", exam_sub: "أدخل الإجابات.", exam_student_name: "الطالب", exam_name: "الاختبار",
+        exam_type: "النوع", correct_count: "صحيح", wrong_count: "خطأ", add_exam_btn: "حفظ", th_student: "الطالب", th_exam: "الاختبار", th_type: "النوع", th_cw: "ص / خ", th_net: "الصافي", th_action: "إجراء",
+        attendance_tracking: "سجل الغياب", att_date: "التاريخ", att_status: "الحالة", add_att_btn: "إضافة", student_att_info: "يدار بواسطة PDR.",
+        th_date: "التاريخ", th_status: "الحالة", settings_title: "الإعدادات", settings_sub: "التخصيص.", theme_setting: "المظهر",
+        target_field: "المجال المستهدف", target_uni: "الجامعة المستهدفة", reset_data: "إعادة ضبط"
+      },
+      ja: {
+        site_title: "タイムトンネル", logout: "ログアウト", yks_countdown: "YKS 2027 カウントダウン", days: "日", hours: "時間", minutes: "分", seconds: "秒",
+        auth_login_tab: "ログイン", auth_register_tab: "アカウント作成", login_title: "ログイン", login_sub: "アカウントで続行。",
+        username_label: "ユーザー名", password: "パスワード", login_btn: "ログイン", register_title: "新規登録", register_sub: "登録して進捗を追跡。",
+        role_select_label: "アカウント種別", full_name: "氏名", student_no: "学籍番号", pdr_code_label: "PDRコード (Demo: PDR2026)", register_btn: "完了",
+        stat_total_exams: "総模試数", stat_avg_net: "平均ネット", stat_total_att: "欠席日数", tab_exams: "模試管理", tab_attendance: "出欠", tab_settings: "設定",
+        exam_tracking: "模試分析", exam_sub: "正誤を入力.", exam_student_name: "生徒", exam_name: "模試名",
+        exam_type: "区分", correct_count: "正解", wrong_count: "不正解", add_exam_btn: "保存", th_student: "生徒", th_exam: "模試", th_type: "区分", th_cw: "正 / 誤", th_net: "ネット", th_action: "操作",
+        attendance_tracking: "出欠記録", att_date: "日付", att_status: "状態", add_att_btn: "追加", student_att_info: "PDR管理",
+        th_date: "日付", th_status: "状態", settings_title: "設定", settings_sub: "カスタマイズ.", theme_setting: "テーマ",
+        target_field: "志望分野", target_uni: "志望大学", reset_data: "データリセット"
+      },
+      ko: {
+        site_title: "타임 터널", logout: "로그아웃", yks_countdown: "YKS 2027 카운트다운", days: "일", hours: "시간", minutes: "분", seconds: "초",
+        auth_login_tab: "로그인", auth_register_tab: "회원가입", login_title: "로그인", login_sub: "계정으로 계속하기.",
+        username_label: "사용자 이름", password: "비밀번호", login_btn: "로그인", register_title: "계정 만들기", register_sub: "가입하고 성장을 추적하세요.",
+        role_select_label: "계정 유형", full_name: "이름", student_no: "학번", pdr_code_label: "PDR 코드 (Demo: PDR2026)", register_btn: "완료",
+        stat_total_exams: "총 모의고사", stat_avg_net: "평균 넷", stat_total_att: "결석일", tab_exams: "모의고사", tab_attendance: "출석", tab_settings: "설정",
+        exam_tracking: "모의고사 분석", exam_sub: "정오답 입력.", exam_student_name: "학생", exam_name: "시험명",
+        exam_type: "유형", correct_count: "정답", wrong_count: "오답", add_exam_btn: "저장", th_student: "학생", th_exam: "시험", th_type: "유형", th_cw: "정 / 오", th_net: "넷", th_action: "작업",
+        attendance_tracking: "출석 기록", att_date: "날짜", att_status: "상태", add_att_btn: "추가", student_att_info: "PDR 관리",
+        th_date: "날짜", th_status: "상태", settings_title: "설정", settings_sub: "개인화.", theme_setting: "테마",
+        target_field: "목표 계열", target_uni: "목표 대학", reset_data: "데이터 초기화"
+      },
+      zh: {
+        site_title: "时间隧道", logout: "退出", yks_countdown: "YKS 2027 倒计时", days: "天", hours: "小时", minutes: "分钟", seconds: "秒",
+        auth_login_tab: "登录", auth_register_tab: "注册账户", login_title: "登录账户", login_sub: "使用您的账户继续。",
+        username_label: "用户名", password: "密码", login_btn: "登录", register_title: "创建新账户", register_sub: "立即注册并追踪进度。",
+        role_select_label: "账户类型", full_name: "全名", student_no: "学号", pdr_code_label: "PDR 授权码 (Demo: PDR2026)", register_btn: "完成注册",
+        stat_total_exams: "总模考", stat_avg_net: "平均净分", stat_total_att: "缺勤天数", tab_exams: "模考追踪", tab_attendance: "考勤", tab_settings: "设置",
+        exam_tracking: "模考分析", exam_sub: "输入正误题数。", exam_student_name: "学生", exam_name: "考试名称",
+        exam_type: "类型", correct_count: "正确", wrong_count: "错误", add_exam_btn: "保存", th_student: "学生", th_exam: "考试", th_type: "类型", th_cw: "对 / 错", th_net: "净分", th_action: "操作",
+        attendance_tracking: "考勤记录", att_date: "日期", att_status: "状态", add_att_btn: "添加记录", student_att_info: "考勤由PDR管理。",
+        th_date: "日期", th_status: "状态", settings_title: "偏好设置", settings_sub: "自定义主题和目标。", theme_setting: "外观主题",
+        target_field: "目标科目方向", target_uni: "目标大学", reset_data: "重置所有数据"
+      },
+      nl: {
+        site_title: "Tijdtunnel", logout: "Uitloggen", yks_countdown: "YKS 2027 Aftellen", days: "Dagen", hours: "Uur", minutes: "Minuten", seconds: "Seconden",
+        auth_login_tab: "Inloggen", auth_register_tab: "Accountmaken", login_title: "Inloggen", login_sub: "Ga verder met je account.",
+        username_label: "Gebruikersnaam", password: "Wachtwoord", login_btn: "Inloggen", register_title: "Account aanmaken", register_sub: "Registreer nu.",
+        role_select_label: "Accounttype", full_name: "Volledige naam", student_no: "Studentennummer", pdr_code_label: "PDR Code (Demo: PDR2026)", register_btn: "Voltooien",
+        stat_total_exams: "Totaal examens", stat_avg_net: "Gemiddelde", stat_total_att: "Verzuim", tab_exams: "Examens", tab_attendance: "Aanwezigheid", tab_settings: "Instellingen",
+        exam_tracking: "Examenanalyse", exam_sub: "Voer gegevens in.", exam_student_name: "Student", exam_name: "Examennaam",
+        exam_type: "Sessie", correct_count: "Goed", wrong_count: "Fout", add_exam_btn: "Opslaan", th_student: "Student", th_exam: "Examen", th_type: "Sessie", th_cw: "G / F", th_net: "Netto", th_action: "Actie",
+        attendance_tracking: "Verzuimregistratie", att_date: "Datum", att_status: "Status", add_att_btn: "Toevoegen", student_att_info: "Beheerd door PDR.",
+        th_date: "Datum", th_status: "Status", settings_title: "Instellingen", settings_sub: "Pas aan.", theme_setting: "Thema",
+        target_field: "Doelgebied", target_uni: "Doeluniversiteit", reset_data: "Gegevens resetten"
+      },
+      pl: {
+        site_title: "Tunel Czasu", logout: "Wyloguj", yks_countdown: "Odliczanie YKS 2027", days: "Dni", hours: "Godziny", minutes: "Minuty", seconds: "Sekundy",
+        auth_login_tab: "Zaloguj", auth_register_tab: "Utwórz konto", login_title: "Zaloguj się", login_sub: "Kontynuuj z kontem.",
+        username_label: "Nazwa użytkownika", password: "Hasło", login_btn: "Zaloguj", register_title: "Utwórz konto", register_sub: "Zarejestruj się.",
+        role_select_label: "Typ konta", full_name: "Imię i nazwisko", student_no: "Nr studenta", pdr_code_label: "Kod PDR (Demo: PDR2026)", register_btn: "Zakończ",
+        stat_total_exams: "Razem egzaminów", stat_avg_net: "Średni wynik", stat_total_att: "Dni nieobecności", tab_exams: "Egzaminy", tab_attendance: "Frekwencja", tab_settings: "Ustawienia",
+        exam_tracking: "Analiza egzaminów", exam_sub: "Wprowadź poprawne i błędne.", exam_student_name: "Uczeń", exam_name: "Nazwa egzaminu",
+        exam_type: "Sesja", correct_count: "Dobrze", wrong_count: "Źle", add_exam_btn: "Zapisz", th_student: "Uczeń", th_exam: "Egzamin", th_type: "Sesja", th_cw: "D / Z", th_net: "Netto", th_action: "Akcja",
+        attendance_tracking: "Rejestr frekwencji", att_date: "Data", att_status: "Status", add_att_btn: "Dodaj", student_att_info: "Zarządzane przez PDR.",
+        th_date: "Data", th_status: "Status", settings_title: "Ustawienia", settings_sub: "Dostosuj.", theme_setting: "Motyw",
+        target_field: "Kierunek", target_uni: "Docelowy uniwersytet", reset_data: "Resetuj dane"
+      },
+      sv: {
+        site_title: "Tidstunneln", logout: "Logga ut", yks_countdown: "YKS 2027 Nedräkning", days: "Dagar", hours: "Timmar", minutes: "Minuter", seconds: "Sekunder",
+        auth_login_tab: "Logga in", auth_register_tab: "Skapa konto", login_title: "Logga in", login_sub: "Fortsätt med ditt konto.",
+        username_label: "Användarnamn", password: "Lösenord", login_btn: "Logga in", register_title: "Skapa konto", register_sub: "Registrera dig.",
+        role_select_label: "Kontotyp", full_name: "Fullständigt namn", student_no: "Student-ID", pdr_code_label: "PDR-kod (Demo: PDR2026)", register_btn: "Slutför",
+        stat_total_exams: "Totalt prov", stat_avg_net: "Snitt", stat_total_att: "Frånvarodagar", tab_exams: "Prov", tab_attendance: "Närvaro", tab_settings: "Inställningar",
+        exam_tracking: "Provanalys", exam_sub: "Ange rätt och fel.", exam_student_name: "Student", exam_name: "Provnamn",
+        exam_type: "Typ", correct_count: "Rätt", wrong_count: "Fel", add_exam_btn: "Spara", th_student: "Student", th_exam: "Prov", th_type: "Typ", th_cw: "R / F", th_net: "Netto", th_action: "Åtgärd",
+        attendance_tracking: "Närvarolista", att_date: "Datum", att_status: "Status", add_att_btn: "Lägg till", student_att_info: "Hanteras av PDR.",
+        th_date: "Datum", th_status: "Status", settings_title: "Inställningar", settings_sub: "Anpassa.", theme_setting: "Tema",
+        target_field: "Målfält", target_uni: "Måluniversitet", reset_data: "Återställ"
+      },
+      el: {
+        site_title: "Σήραγγα Χρόνου", logout: "Έξοδος", yks_countdown: "Αντίστροφη μέτρηση YKS 2027", days: "Ημέρες", hours: "Ώρες", minutes: "Λεπτά", seconds: "Δευτερόλεπτα",
+        auth_login_tab: "Σύνδεση", auth_register_tab: "Εγγραφή", login_title: "Σύνδεση στο λογαριασμό", login_sub: "Συνεχίστε με το λογαριασμό σας.",
+        username_label: "Όνομα χρήστη", password: "Κωδικός", login_btn: "Σύνδεση", register_title: "Δημιουργία λογαριασμού", register_sub: "Εγγραφείτε.",
+        role_select_label: "Tύπος", full_name: "Ονοματεπώνυμο", student_no: "Αριθμός μαθητή", pdr_code_label: "Κωδικός PDR (Demo: PDR2026)", register_btn: "Ολοκλήρωση",
+        stat_total_exams: "Σύνολο διαγωνισμάτων", stat_avg_net: "Μέσος όρος", stat_total_att: "Απουσίες", tab_exams: "Διαγωνίσματα", tab_attendance: "Απουσίες", tab_settings: "Ρυθμίσεις",
+        exam_tracking: "Ανάλυση", exam_sub: "Εισάγετε σωστά/λάθη.", exam_student_name: "Μαθητής", exam_name: "Όνομα",
+        exam_type: "Τύπος", correct_count: "Σωστά", wrong_count: "Λάθη", add_exam_btn: "Αποθήκευση", th_student: "Μαθητής", th_exam: "Διαγώνισμα", th_type: "Τύπος", th_cw: "Σ / Λ", th_net: "Καθαρά", th_action: "Ενέργεια",
+        attendance_tracking: "Καταγραφή απουσιών", att_date: "Ημερομηνία", att_status: "Κατάσταση", add_att_btn: "Προσθήκη", student_att_info: "Διαχείριση από PDR.",
+        th_date: "Ημερομηνία", th_status: "Κατάσταση", settings_title: "Ρυθμίσεις", settings_sub: "Προσαρμογή.", theme_setting: "Θέμα",
+        target_field: "Πεδίο", target_uni: "Στόχος πανεπιστημίου", reset_data: "Επαναφορά"
+      },
+      hi: {
+        site_title: "समय सुरंग", logout: "लॉगआउट", yks_countdown: "YKS 2027 उलटी गिनती", days: "दिन", hours: "घंटे", minutes: "मिनट", seconds: "सेकंड",
+        auth_login_tab: "साइन इन", auth_register_tab: "खाता बनाएं", login_title: "साइन इन करें", login_sub: "अपने खाते से जारी रखें।",
+        username_label: "उपयोगकर्ता नाम", password: "पासवर्ड", login_btn: "साइन इन", register_title: "नया खाता बनाएं", register_sub: "पंजीकरण करें।",
+        role_select_label: "खाता प्रकार", full_name: "पूरा नाम", student_no: "छात्र आईडी", pdr_code_label: "PDR कोड (Demo: PDR2026)", register_btn: "पूर्ण करें",
+        stat_total_exams: "कुल परीक्षा", stat_avg_net: "औसत नेट", stat_total_att: "अनुपस्थिति", tab_exams: "परीक्षा ट्रैक", tab_attendance: "उपस्थिति", tab_settings: "सेटिंग्स",
+        exam_tracking: "परीक्षा विश्लेषण", exam_sub: "सही और गलत दर्ज करें।", exam_student_name: "छात्र", exam_name: "परीक्षा नाम",
+        exam_type: "सत्र", correct_count: "सही", wrong_count: "गलत", add_exam_btn: "सहेजें", th_student: "छात्र", th_exam: "परीक्षा", th_type: "सत्र", th_cw: "स / ग", th_net: "नेट", th_action: "क्रिया",
+        attendance_tracking: "उपस्थिति रिकॉर्ड", att_date: "दिनांक", att_status: "स्थिति", add_att_btn: "जोड़ें", student_att_info: "PDR द्वारा प्रबंधित।",
+        th_date: "दिनांक", th_status: "स्थिति", settings_title: "सेटिंग्स", settings_sub: "कस्टमाइज़ करें।", theme_setting: "थीम",
+        target_field: "लक्ष्य क्षेत्र", target_uni: "लक्ष्य विश्वविद्यालय", reset_data: "रीसेट करें"
+      },
+      id: {
+        site_title: "Terowongan Waktu", logout: "Keluar", yks_countdown: "Hitung Mundur YKS 2027", days: "Hari", hours: "Jam", minutes: "Menit", seconds: "Detik",
+        auth_login_tab: "Masuk", auth_register_tab: "Buat Akun", login_title: "Masuk Akun", login_sub: "Lanjutkan dengan akun Anda.",
+        username_label: "Nama Pengguna", password: "Kata Sandi", login_btn: "Masuk", register_title: "Buat Akun Baru", register_sub: "Daftar sekarang.",
+        role_select_label: "Jenis Akun", full_name: "Nama Lengkap", student_no: "Nomor Siswa", pdr_code_label: "Kode PDR (Demo: PDR2026)", register_btn: "Selesaikan",
+        stat_total_exams: "Total Ujian", stat_avg_net: "Rata-rata Net", stat_total_att: "Hari Absen", tab_exams: "Ujian", tab_attendance: "Absensi", tab_settings: "Pengaturan",
+        exam_tracking: "Analisis Ujian", exam_sub: "Masukkan jawaban benar/salah.", exam_student_name: "Siswa", exam_name: "Nama Ujian",
+        exam_type: "Sesi", correct_count: "Benar", wrong_count: "Salah", add_exam_btn: "Simpan", th_student: "Siswa", th_exam: "Ujian", th_type: "Sesi", th_cw: "B / S", th_net: "Net", th_action: "Aksi",
+        attendance_tracking: "Catatan Absensi", att_date: "Tanggal", att_status: "Status", add_att_btn: "Tambah", student_att_info: "Dikelola oleh PDR.",
+        th_date: "Tanggal", th_status: "Status", settings_title: "Pengaturan", settings_sub: "Sesuaikan.", theme_setting: "Tema",
+        target_field: "Bidang Target", target_uni: "Universitas Target", reset_data: "Reset Data"
+      },
+      vi: {
+        site_title: "Đường Hầm Thời Gian", logout: "Đăng xuất", yks_countdown: "Đếm ngược YKS 2027", days: "Ngày", hours: "Giờ", minutes: "Phút", seconds: "Giây",
+        auth_login_tab: "Đăng nhập", auth_register_tab: "Tạo tài khoản", login_title: "Đăng nhập", login_sub: "Tiếp tục với tài khoản của bạn.",
+        username_label: "Tên người dùng", password: "Mật khẩu", login_btn: "Đăng nhập", register_title: "Tạo tài khoản mới", register_sub: "Đăng ký ngay.",
+        role_select_label: "Loại tài khoản", full_name: "Họ và tên", student_no: "Mã học sinh", pdr_code_label: "Mã PDR (Demo: PDR2026)", register_btn: "Hoàn tất",
+        stat_total_exams: "Tổng số bài thi", stat_avg_net: "Điểm ròng TB", stat_total_att: "Ngày vắng", tab_exams: "Thi thử", tab_attendance: "Điểm danh", tab_settings: "Cài đặt",
+        exam_tracking: "Phân tích bài thi", exam_sub: "Nhập đúng/sai.", exam_student_name: "Học sinh", exam_name: "Tên bài thi",
+        exam_type: "Phần", correct_count: "Đúng", wrong_count: "Sai", add_exam_btn: "Lưu", th_student: "Học sinh", th_exam: "Bài thi", th_type: "Phần", th_cw: "Đ / S", th_net: "Ròng", th_action: "Thao tác",
+        attendance_tracking: "Hồ sơ điểm danh", att_date: "Ngày", att_status: "Trạng thái", add_att_btn: "Thêm", student_att_info: "Quản lý bởi PDR.",
+        th_date: "Ngày", th_status: "Trạng thái", settings_title: "Cài đặt", settings_sub: "Tùy chỉnh.", theme_setting: "Giao diện",
+        target_field: "Khối thi", target_uni: "Đại học mục tiêu", reset_data: "Đặt lại dữ liệu"
+      },
+      az: {
+        site_title: "Zaman Tuneli", logout: "Çıxış", yks_countdown: "YKS 2027 Geri Sayım", days: "Gün", hours: "Saat", minutes: "Dəqiqə", seconds: "Saniyə",
+        auth_login_tab: "Daxil ol", auth_register_tab: "Hesab yarat", login_title: "Hesaba Daxil Ol", login_sub: "Tələbə və ya PDR hesabınızla davam edin.",
+        username_label: "İstifadəçi adı", password: "Şifrə", login_btn: "Daxil ol", register_title: "Yeni Hesab Yarat", register_sub: "Qeydiyyatdan keçin və izləyin.",
+        role_select_label: "Hesab Növü", full_name: "Ad Soyad", student_no: "Tələbə Nömrəsi", pdr_code_label: "PDR Kod (Demo: PDR2026)", register_btn: "Tamamla",
+        stat_total_exams: "Ümumi Sınaq", stat_avg_net: "Orta Net", stat_total_att: "Qayıb Günləri", tab_exams: "Sınaq İzləmə", tab_attendance: "Qayıb", tab_settings: "Ayarlar",
+        exam_tracking: "Sınaq Analizi", exam_sub: "Düz və səhv sayını daxil edin.", exam_student_name: "Tələbə", exam_name: "Sınaq Adı",
+        exam_type: "Növ", correct_count: "Düz", wrong_count: "Səhv", add_exam_btn: "Yadda saxla", th_student: "Tələbə", th_exam: "Sınaq", th_type: "Növ", th_cw: "D / S", th_net: "Net", th_action: "Əməliyyat",
+        attendance_tracking: "Qayıb İzləmə", att_date: "Tarix", att_status: "Status", add_att_btn: "Qeyd Əlavə Et", student_att_info: "Qayıblar PDR tərəfindən idarə olunur.",
+        th_date: "Tarix", th_status: "Status", settings_title: "Ayarlar", settings_sub: "Fərdiləşdirin.", theme_setting: "Görünüş",
+        target_field: "Hədəf İxtisas", target_uni: "Hədəf Universitet", reset_data: "Məlumatları Sıfırla"
       }
     };
 
@@ -934,9 +1125,16 @@
       });
     }
 
-    // --- 2. YKS GERİ SAYIM SAYACI ---
-    const targetDate = new Date("June 19, 2027 10:15:00").getTime();
+    // --- GİRİŞ ANİMASYONU (SPLASH SCREEN) ---
+    window.addEventListener('load', () => {
+      const splashScreen = document.getElementById('splash-screen');
+      setTimeout(() => {
+        splashScreen.classList.add('splash-hidden');
+      }, 1000);
+    });
 
+    // --- YKS GERİ SAYIM SAYACI ---
+    const targetDate = new Date("June 19, 2027 10:15:00").getTime();
     function updateCountdown() {
       const now = new Date().getTime();
       const distance = targetDate - now;
@@ -955,7 +1153,7 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // --- 3. KULLANICI VERİTABANI & KAYIT/GİRİŞ İŞLEMLERİ ---
+    // --- KULLANICI VERİTABANI & KAYIT/GİRİŞ ---
     let users = JSON.parse(localStorage.getItem('yksUsers')) || [
       { username: "ahmet", password: "1234", fullName: "Ahmet Yılmaz", role: "student", no: "1042" },
       { username: "pdr", password: "1234", fullName: "Rehber Öğretmen", role: "pdr", no: "" }
@@ -1015,7 +1213,7 @@
       }
 
       if (users.some(u => u.username === username)) {
-        showAuthAlert("Bu kullanıcı adı zaten alınmış. Lütfen farklı bir kullanıcı adı seçin.", "error");
+        showAuthAlert("Bu kullanıcı adı zaten alınmış.", "error");
         return;
       }
 
@@ -1024,20 +1222,19 @@
         password,
         fullName,
         role,
-        no: role === 'student' ? (studentNo || Math.floor(1000 + Math.random() * 9000)) : ''
+        no: role === 'student' ? (studentNo || '100') : ''
       };
 
       users.push(newUser);
       localStorage.setItem('yksUsers', JSON.stringify(users));
 
-      // Kayıt sonrası formu temizle ve giriş ekranına yönlendir
       document.getElementById('reg-fullname').value = '';
       document.getElementById('reg-username').value = '';
       document.getElementById('reg-password').value = '';
       
       switchAuthMode('login');
       document.getElementById('login-username').value = username;
-      showAuthAlert("Hesabınız başarıyla oluşturuldu! Şimdi giriş yapabilirsiniz.", "success");
+      showAuthAlert("Hesabınız başarıyla oluşturuldu! Giriş yapabilirsiniz.", "success");
     }
 
     function handleLogin() {
@@ -1050,19 +1247,12 @@
       }
 
       const foundUser = users.find(u => u.username === username && u.password === password);
-
       if (!foundUser) {
         showAuthAlert("Kullanıcı adı veya şifre hatalı!", "error");
         return;
       }
 
-      currentUser = {
-        username: foundUser.username,
-        name: foundUser.fullName,
-        role: foundUser.role,
-        no: foundUser.no
-      };
-
+      currentUser = { username: foundUser.username, name: foundUser.fullName, role: foundUser.role, no: foundUser.no };
       localStorage.setItem('currentUser', JSON.stringify(currentUser));
       document.getElementById('auth-alert').style.display = 'none';
       renderDashboard();
@@ -1087,9 +1277,8 @@
       document.getElementById('user-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
       
       const roleBadge = document.getElementById('user-role-badge');
-      
       if (currentUser.role === 'pdr') {
-        roleBadge.textContent = "PDR / Yönetici Yetkisi";
+        roleBadge.textContent = "PDR / Yönetici";
         roleBadge.className = "badge badge-warning";
         document.getElementById('pdr-attendance-form').classList.remove('hidden');
         document.getElementById('att-action-header').classList.remove('hidden');
@@ -1110,7 +1299,6 @@
       renderAttendance();
     }
 
-    // --- 4. SEKME GEÇİŞLERİ ---
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -1118,9 +1306,9 @@
       btn.classList.add('active');
     }
 
-    // --- 5. DENEME TAKİP ---
+    // --- DENEME TAKİP ---
     let exams = JSON.parse(localStorage.getItem('yksExams')) || [
-      { id: 1, student: "Ahmet Yılmaz", title: "Özdebir Türkiye Geneli TYT-1", category: "TYT", correct: 88, wrong: 12, net: "85.00" }
+      { id: 1, student: "Ahmet Yılmaz", title: "Özdebir TYT-1", category: "TYT", correct: 88, wrong: 12, net: "85.00" }
     ];
 
     function addExam() {
@@ -1152,11 +1340,9 @@
       const tbody = document.getElementById('exam-list');
       tbody.innerHTML = "";
 
-      const filteredExams = currentUser.role === 'pdr' 
-        ? exams 
-        : exams.filter(e => e.student.toLowerCase() === currentUser.name.toLowerCase());
-
+      const filteredExams = currentUser.role === 'pdr' ? exams : exams.filter(e => e.student.toLowerCase() === currentUser.name.toLowerCase());
       document.getElementById('stat-exam-count').textContent = filteredExams.length;
+      
       if (filteredExams.length > 0) {
         const totalNet = filteredExams.reduce((sum, item) => sum + parseFloat(item.net), 0);
         document.getElementById('stat-avg-net').textContent = (totalNet / filteredExams.length).toFixed(2);
@@ -1179,7 +1365,7 @@
       lucide.createIcons();
     }
 
-    // --- 6. DEVAMSIZLIK TAKİP ---
+    // --- DEVAMSIZLIK ---
     let attendances = JSON.parse(localStorage.getItem('yksAttendances')) || [
       { id: 1, student: "Ahmet Yılmaz", date: "2026-11-10", status: "Özürsüz" }
     ];
@@ -1210,17 +1396,12 @@
       const tbody = document.getElementById('attendance-list');
       tbody.innerHTML = "";
 
-      const filteredAtt = currentUser.role === 'pdr'
-        ? attendances
-        : attendances.filter(a => a.student.toLowerCase() === currentUser.name.toLowerCase());
-
+      const filteredAtt = currentUser.role === 'pdr' ? attendances : attendances.filter(a => a.student.toLowerCase() === currentUser.name.toLowerCase());
       document.getElementById('stat-att-count').textContent = filteredAtt.length;
 
       filteredAtt.forEach(att => {
         const tr = document.createElement('tr');
-        const deleteBtn = currentUser.role === 'pdr' 
-          ? `<td><button class="btn-danger" style="padding:6px 10px;" onclick="deleteAttendance(${att.id})"><i data-lucide="trash-2" size="14"></i></button></td>` 
-          : '';
+        const deleteBtn = currentUser.role === 'pdr' ? `<td><button class="btn-danger" style="padding:6px 10px;" onclick="deleteAttendance(${att.id})"><i data-lucide="trash-2" size="14"></i></button></td>` : '';
         
         tr.innerHTML = `
           <td><strong>${att.student}</strong></td>
@@ -1233,7 +1414,7 @@
       lucide.createIcons();
     }
 
-    // --- 7. AYARLAR ---
+    // --- AYARLAR ---
     function changeTheme(theme) {
       localStorage.setItem('appTheme', theme);
       document.body.classList.toggle('dark-theme', theme === 'dark');
@@ -1250,13 +1431,13 @@
     }
 
     function clearAllData() {
-      if (confirm("Tüm kullanıcı, deneme ve devamsızlık kayıtları sıfırlanacak. Emin misiniz?")) {
+      if (confirm("Tüm veriler sıfırlanacak. Emin misiniz?")) {
         localStorage.clear();
         location.reload();
       }
     }
 
-    // --- BAŞLANGIÇ AYARLARI ---
+    // --- BAŞLANGIÇ ---
     window.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('appLang') || 'tr';
       document.getElementById('language-selector').value = savedLang;
