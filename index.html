@@ -1,631 +1,787 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Zaman Tüneli - Modern UZEM & e-Yotek Portalı</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        uzem: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            dark: '#0f172a'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #1e293b; -webkit-tap-highlight-color: transparent; }
-        .modern-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -4px rgba(0, 0, 0, 0.03); border-radius: 1rem; }
-        button, a { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        button:hover, a:hover { transform: translateY(-1px); }
-        button:active, a:active { transform: translateY(0) scale(0.98); }
-        
-        #splashScreen { transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
-        #splashScreen.fade-out { opacity: 0; visibility: hidden; }
-        @keyframes pulse-logo {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.08); opacity: 0.85; }
-        }
-        .animate-logo-pulse { animation: pulse-logo 2s infinite ease-in-out; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zaman Tüneli - YKS & Öğrenci Takip Sistemi</title>
+  <style>
+    :root {
+      --bg-color: #f4f6f9;
+      --card-bg: #ffffff;
+      --text-color: #2c3e50;
+      --primary: #3498db;
+      --primary-hover: #2980b9;
+      --secondary: #2ecc71;
+      --danger: #e74c3c;
+      --border-color: #dcdde1;
+    }
+
+    body.dark-theme {
+      --bg-color: #18191a;
+      --card-bg: #242526;
+      --text-color: #e4e6eb;
+      --border-color: #3a3b3c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: all 0.3s ease;
+      padding-bottom: 50px;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    select, input, button {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    button.danger {
+      background-color: var(--danger);
+    }
+
+    button.secondary {
+      background-color: var(--secondary);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 25px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border: 1px solid var(--border-color);
+    }
+
+    /* YKS Sayaç */
+    .countdown-box {
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+      margin-top: 15px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .time-unit {
+      background: var(--primary);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      min-width: 100px;
+    }
+
+    .time-unit span {
+      display: block;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    /* Login Ekranı */
+    .login-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    /* Sekmeler (Navigasyon) */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+    }
+
+    .tab-btn.active {
+      background-color: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background-color: rgba(52, 152, 219, 0.1);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .badge {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      background: var(--secondary);
+      color: white;
+    }
+  </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between antialiased relative">
+<body>
 
-    <!-- GİRİŞ ANİMASYONU (SPLASH SCREEN) -->
-    <div id="splashScreen" class="fixed inset-0 z-[100] bg-slate-900 flex flex-col items-center justify-center text-white space-y-4">
-        <div class="bg-uzem-600 p-4 rounded-2xl shadow-2xl animate-logo-pulse">
-            <i data-lucide="graduation-cap" class="w-12 h-12 text-white"></i>
-        </div>
-        <div class="text-center space-y-1">
-            <h1 class="text-xl font-bold tracking-wider">ZAMAN TÜNELİ</h1>
-            <p class="text-xs text-slate-400">Modüller ve Oturum Bilgileri Yükleniyor...</p>
-        </div>
-        <div class="w-36 h-1 bg-slate-800 rounded-full overflow-hidden mt-4">
-            <div id="splashBar" class="bg-uzem-500 h-full w-0 transition-all duration-700"></div>
-        </div>
+  <!-- Üst Menü -->
+  <header>
+    <h1 data-i18n="site_title">Zaman Tüneli | YKS Takip Sistemi</h1>
+    <div class="header-controls">
+      <select id="language-selector" onchange="changeLanguage(this.value)">
+        <option value="tr">🇹🇷 Türkçe</option>
+        <option value="en">🇬🇧 English</option>
+      </select>
+      <button id="logout-btn" class="danger hidden" onclick="logout()" data-i18n="logout">Çıkış Yap</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- YKS Geri Sayım Sayacı (Her zaman görünür) -->
+    <div class="card">
+      <h2 data-i18n="yks_countdown">YKS 2027 Geri Sayım</h2>
+      <div class="countdown-box">
+        <div class="time-unit"><span id="days">00</span><small data-i18n="days">Gün</small></div>
+        <div class="time-unit"><span id="hours">00</span><small data-i18n="hours">Saat</small></div>
+        <div class="time-unit"><span id="minutes">00</span><small data-i18n="minutes">Dakika</small></div>
+        <div class="time-unit"><span id="seconds">00</span><small data-i18n="seconds">Saniye</small></div>
+      </div>
     </div>
 
-    <!-- GİRİŞ VE HESAP OLUŞTURMA EKRANI -->
-    <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto hidden">
-        <div class="modern-card max-w-md w-full p-8 space-y-6 my-auto shadow-2xl bg-white">
-            <div class="text-center space-y-2">
-                <div class="inline-flex bg-uzem-50 text-uzem-600 p-3.5 rounded-2xl mb-1 border border-uzem-100 shadow-inner">
-                    <i data-lucide="shield-check" class="w-8 h-8"></i>
-                </div>
-                <h2 id="authTitle" class="text-2xl font-extrabold text-slate-900 tracking-tight">Zaman Tüneli Giriş</h2>
-                <p id="authSubtitle" class="text-slate-500 text-xs">Rolünüzü seçerek oturum açın.</p>
-            </div>
-
-            <!-- Giriş / Kayıt Sekmeleri -->
-            <div class="flex p-1 bg-slate-100 rounded-xl">
-                <button type="button" onclick="switchAuthMode('login')" id="tabLogin" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white text-uzem-600 shadow-sm transition-all">Giriş Yap</button>
-                <button type="button" onclick="switchAuthMode('register')" id="tabRegister" class="flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-900 transition-all">Hesap Oluştur</button>
-            </div>
-
-            <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">Kullanıcı Rolü</label>
-                <select id="roleSelectDropdown" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-bold text-slate-800 focus:outline-none focus:border-uzem-500">
-                    <option value="ogrenci">Öğrenci</option>
-                    <option value="pdr">PDR / Rehber Öğretmen</option>
-                    <option value="admin">Sistem Yöneticisi (Admin)</option>
-                </select>
-            </div>
-
-            <!-- GİRİŞ FORMU -->
-            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta veya Kullanıcı Adı</label>
-                    <input type="text" id="loginEmail" required placeholder="ornek@uzemportal.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre</label>
-                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500">
-                </div>
-                <div class="flex justify-end">
-                    <button type="button" onclick="toggleModal('forgotPasswordModal')" class="text-[11px] text-uzem-600 font-bold hover:underline">Şifremi Unuttum?</button>
-                </div>
-                <button type="submit" class="w-full bg-uzem-600 hover:bg-uzem-700 text-white font-bold py-3.5 rounded-xl text-xs shadow-lg shadow-uzem-600/20">Oturum Aç</button>
-            </form>
-
-            <!-- HESAP OLUŞTURMA (KAYIT) FORMU -->
-            <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-3.5 hidden">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Ad Soyad</label>
-                    <input type="text" id="regName" required placeholder="Adınız Soyadınız" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Sınıfı (Öğrenci için)</label>
-                    <input type="text" id="regSinif" placeholder="12-A" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta Adresi</label>
-                    <input type="email" id="regEmail" required placeholder="ornek@uzemportal.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre Belirle</label>
-                    <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
-                </div>
-                <div class="flex items-start gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-                    <input type="checkbox" id="regKvkk" required class="w-4 h-4 text-uzem-600 rounded border-slate-300 mt-0.5">
-                    <label for="regKvkk" class="text-[11px] text-slate-600 leading-snug">6698 sayılı KVKK aydınlatma metnini okudum ve onaylıyorum.</label>
-                </div>
-                <button type="submit" class="w-full bg-uzem-600 hover:bg-uzem-700 text-white font-bold py-3 rounded-xl text-xs shadow-lg shadow-uzem-600/20">Kayıt Ol ve Hesap Aç</button>
-            </form>
+    <!-- GİRİŞ EKRANI -->
+    <div id="login-section" class="login-grid">
+      <!-- Öğrenci Girişi -->
+      <div class="card">
+        <h2 data-i18n="student_login">Öğrenci Girişi</h2>
+        <p style="margin-bottom: 15px; font-size: 0.9rem; opacity: 0.8;" data-i18n="student_demo">Demo: Adınızı yazıp giriş yapabilirsiniz.</p>
+        <div class="form-group">
+          <label data-i18n="student_name">Öğrenci Adı Soyadı</label>
+          <input type="text" id="student-name-input" placeholder="Örn: Ahmet Yılmaz">
         </div>
+        <div class="form-group">
+          <label data-i18n="student_no">Öğrenci Numarası</label>
+          <input type="text" id="student-no-input" placeholder="Örn: 1042">
+        </div>
+        <button onclick="login('student')" data-i18n="login_btn">Giriş Yap</button>
+      </div>
+
+      <!-- PDR Girişi -->
+      <div class="card">
+        <h2 data-i18n="pdr_login">PDR / Rehberlik Girişi</h2>
+        <p style="margin-bottom: 15px; font-size: 0.9rem; opacity: 0.8;" data-i18n="pdr_demo">Demo Şifre: <strong>1234</strong></p>
+        <div class="form-group">
+          <label data-i18n="pdr_user">Danışman Adı</label>
+          <input type="text" id="pdr-name-input" value="Rehber Öğretmen">
+        </div>
+        <div class="form-group">
+          <label data-i18n="password">Şifre</label>
+          <input type="password" id="pdr-pass-input" placeholder="1234">
+        </div>
+        <button class="secondary" onclick="login('pdr')" data-i18n="pdr_login_btn">PDR Paneli Girişi</button>
+      </div>
     </div>
 
-    <!-- HEADER -->
-    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/80 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
-                <div class="flex items-center gap-3">
-                    <div class="bg-gradient-to-tr from-uzem-600 to-uzem-500 text-white p-2.5 rounded-xl shadow-md flex items-center justify-center font-bold text-xs">
-                        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <h1 class="font-bold text-xs tracking-tight text-slate-900">Zaman Tüneli Portalı</h1>
-                        <p id="portalRoleBadge" class="text-[10px] text-uzem-600 font-semibold uppercase tracking-wider">Aktif Oturum</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- YKS 2027 SAYACI -->
-            <div class="bg-slate-50 border border-slate-200/80 px-4 py-1.5 rounded-xl flex items-center gap-3 text-center shadow-inner">
-                <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider hidden md:inline">YKS 2027 Sayacı:</span>
-                <div class="flex items-center gap-2 text-xs font-extrabold text-uzem-700">
-                    <div><span id="yksDays" class="text-sm font-black text-slate-800">000</span> <span class="text-[9px] text-slate-400">GÜN</span></div>
-                    <div>:</div>
-                    <div><span id="yksHours" class="text-sm font-black text-slate-800">00</span> <span class="text-[9px] text-slate-400">SAAT</span></div>
-                    <div>:</div>
-                    <div><span id="yksMins" class="text-sm font-black text-slate-800">00</span> <span class="text-[9px] text-slate-400">DK</span></div>
-                </div>
-            </div>
-
-            <div class="hidden sm:flex items-center gap-3" id="authArea"></div>
+    <!-- ANA PANEL (Giriş Yapılınca Açılır) -->
+    <div id="dashboard-section" class="hidden">
+      <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h3 id="welcome-user">Hoş Geldiniz</h3>
+          <span class="badge" id="user-role-badge">Öğrenci</span>
         </div>
-    </header>
+        <div id="exam-type-display" style="font-weight: bold;">Alan: SAY</div>
+      </div>
 
-    <!-- ANA İÇERİK CONTAINER -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full space-y-5 flex-1">
+      <!-- Sekme Butonları -->
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('exams-tab', this)" data-i18n="tab_exams">Deneme Takip</button>
+        <button class="tab-btn" onclick="switchTab('attendance-tab', this)" data-i18n="tab_attendance">Devamsızlık</button>
+        <button class="tab-btn" onclick="switchTab('settings-tab', this)" data-i18n="tab_settings">Ayarlar</button>
+      </div>
+
+      <!-- 1. SEKME: DENEME TAKİP SİSTEMİ -->
+      <div id="exams-tab" class="card tab-content">
+        <h2 data-i18n="exam_tracking">Deneme Takip Sistemi</h2>
         
-        <!-- ÖĞRENCİ MENÜSÜ -->
-        <div id="studentNavWrapper" class="hidden space-y-2.5">
-            <div class="flex overflow-x-auto bg-white border border-slate-200 p-1.5 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="switchTab('denemeTracker')" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-uzem-600 text-white flex items-center gap-2">📊 Deneme Takip Sistemi</button>
-                <button onclick="switchTab('studentAttendance')" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-2">📋 Devamsızlık Durumum</button>
-            </div>
+        <!-- Deneme Ekleme Formu -->
+        <div class="grid-2" style="margin-top: 15px;">
+          <div class="form-group">
+            <label data-i18n="exam_student_name">Öğrenci Adı</label>
+            <input type="text" id="exam-student" placeholder="Öğrenci Adı">
+          </div>
+          <div class="form-group">
+            <label data-i18n="exam_name">Deneme Adı / Yayın</label>
+            <input type="text" id="exam-title" placeholder="Örn: Özdebir TYT-1">
+          </div>
+          <div class="form-group">
+            <label data-i18n="exam_type">Sınav Türü</label>
+            <select id="exam-category">
+              <option value="TYT">TYT</option>
+              <option value="AYT">AYT</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-i18n="correct_count">Doğru Sayısı</label>
+            <input type="number" id="exam-correct" min="0" max="120" value="0">
+          </div>
+          <div class="form-group">
+            <label data-i18n="wrong_count">Yanlış Sayısı</label>
+            <input type="number" id="exam-wrong" min="0" max="120" value="0">
+          </div>
+        </div>
+        <button onclick="addExam()" data-i18n="add_exam_btn">Deneme Sonucu Ekle</button>
+
+        <!-- Deneme Listesi -->
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="th_student">Öğrenci</th>
+              <th data-i18n="th_exam">Deneme</th>
+              <th data-i18n="th_type">Tür</th>
+              <th data-i18n="th_cw">D / Y</th>
+              <th data-i18n="th_net">Net</th>
+              <th data-i18n="th_action">İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="exam-list"></tbody>
+        </table>
+      </div>
+
+      <!-- 2. SEKME: DEVAMSIZLIK SİSTEMİ -->
+      <div id="attendance-tab" class="card tab-content hidden">
+        <h2 data-i18n="attendance_tracking">Devamsızlık Takip Sistemi</h2>
+        
+        <!-- Sadece PDR yeni devamsızlık ekleyebilir -->
+        <div id="pdr-attendance-form" class="grid-2 hidden" style="margin-top: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color);">
+          <div class="form-group">
+            <label data-i18n="exam_student_name">Öğrenci Adı</label>
+            <input type="text" id="att-student" placeholder="Öğrenci Adı">
+          </div>
+          <div class="form-group">
+            <label data-i18n="att_date">Tarih</label>
+            <input type="date" id="att-date">
+          </div>
+          <div class="form-group">
+            <label data-i18n="att_status">Durum</label>
+            <select id="att-status">
+              <option value="Özürsüz">Özürsüz Devamsız</option>
+              <option value="Özürlü">Özürlü (Raporlu/İzinli)</option>
+            </select>
+          </div>
+          <div class="form-group" style="display: flex; align-items: flex-end;">
+            <button onclick="addAttendance()" data-i18n="add_att_btn">Devamsızlık İşle</button>
+          </div>
         </div>
 
-        <!-- PDR MENÜSÜ -->
-        <div id="teacherNavWrapper" class="hidden space-y-2.5">
-            <div class="flex overflow-x-auto bg-white border border-slate-200 p-1.5 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="switchTab('pdrDashboard')" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 text-white flex items-center gap-2">👥 Öğrenci Yönetimi (Ekle/Sil)</button>
-                <button onclick="switchTab('pdrAttendanceManager')" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-2">📋 Devamsızlık Takip Girişi</button>
-            </div>
+        <p id="student-att-note" style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;" data-i18n="student_att_info">
+          Not: Devamsızlık kayıtları PDR birimi tarafından işlenmektedir.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="th_student">Öğrenci</th>
+              <th data-i18n="th_date">Tarih</th>
+              <th data-i18n="th_status">Durum</th>
+              <th id="att-action-header" class="hidden" data-i18n="th_action">İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="attendance-list"></tbody>
+        </table>
+      </div>
+
+      <!-- 3. SEKME: AYARLAR -->
+      <div id="settings-tab" class="card tab-content hidden">
+        <h2 data-i18n="settings_title">Sistem ve Profil Ayarları</h2>
+        
+        <div class="grid-2" style="margin-top: 15px;">
+          <div class="form-group">
+            <label data-i18n="theme_setting">Görünüm Teması</label>
+            <select id="theme-select" onchange="changeTheme(this.value)">
+              <option value="light">Aydınlık Mod (Light)</option>
+              <option value="dark">Karanlık Mod (Dark)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="target_field">YKS Hedef Alan Türü</label>
+            <select id="field-select" onchange="changeField(this.value)">
+              <option value="SAY">Sayısal (SAY)</option>
+              <option value="EA">Eşit Ağırlık (EA)</option>
+              <option value="SÖZ">Sözel (SÖZ)</option>
+              <option value="DİL">Yabancı Dil (DİL)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="target_uni">Hedef Üniversite / Bölüm</label>
+            <input type="text" id="target-uni-input" placeholder="Örn: ODTÜ Bilgisayar Müh." onchange="saveTargetUni(this.value)">
+          </div>
         </div>
 
-        <!-- ADMIN MENÜSÜ -->
-        <div id="adminNavWrapper" class="hidden space-y-2.5">
-            <div class="flex overflow-x-auto bg-white border border-slate-200 p-1.5 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="switchTab('adminDashboard')" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-rose-600 text-white flex items-center gap-2">🛡️ Sistem Yöneticisi Paneli (Tüm Kullanıcılar)</button>
-            </div>
+        <div style="margin-top: 20px;">
+          <button class="danger" onclick="clearAllData()" data-i18n="reset_data">Tüm Demo Verilerini Sıfırla</button>
         </div>
+      </div>
 
-        <!-- 1. DENEME TAKİP SİSTEMİ -->
-        <div id="denemeTrackerView" class="hidden space-y-4">
-            <div class="modern-card p-6 sm:p-8 max-w-4xl mx-auto space-y-4">
-                <div class="flex justify-between items-center border-b pb-3">
-                    <h3 class="text-xl font-extrabold text-slate-900">Deneme Sınavları Net Takip Paneli</h3>
-                    <button onclick="toggleModal('addDenemeModal')" class="bg-uzem-600 text-white px-3 py-2 rounded-xl text-xs font-bold">+ Yeni Deneme Ekle</button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 text-slate-600">
-                            <tr>
-                                <th class="p-3">Deneme Adı</th>
-                                <th class="p-3">Türkçe Net</th>
-                                <th class="p-3">Matematik Net</th>
-                                <th class="p-3">Sosyal Net</th>
-                                <th class="p-3">Fen Net</th>
-                                <th class="p-3 font-bold text-uzem-700">Toplam Net</th>
-                            </tr>
-                        </thead>
-                        <tbody id="denemeTableBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. ÖĞRENCİ DEVAMSIZLIK GÖRÜNÜMÜ -->
-        <div id="studentAttendanceView" class="hidden space-y-4">
-            <div class="modern-card p-6 sm:p-8 max-w-xl mx-auto space-y-4 text-center">
-                <h3 class="text-xl font-extrabold text-slate-900">Devamsızlık Bilgilerim</h3>
-                <div class="grid grid-cols-2 gap-4 pt-2">
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                        <span class="text-xs text-slate-500 font-bold block uppercase">Özürlü Devamsızlık</span>
-                        <span id="lblOzurlu" class="text-2xl font-black text-uzem-600">0 Gün</span>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                        <span class="text-xs text-slate-500 font-bold block uppercase">Özürsüz Devamsızlık</span>
-                        <span id="lblOzursuz" class="text-2xl font-black text-rose-600">0 Gün</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. PDR ÖĞRENCİ YÖNETİMİ -->
-        <div id="pdrDashboardView" class="hidden space-y-4">
-            <div class="modern-card p-6 sm:p-8 max-w-5xl mx-auto space-y-4">
-                <div class="flex justify-between items-center border-b pb-3">
-                    <h3 class="text-xl font-extrabold text-slate-900">PDR Öğrenci Listesi ve Yönetimi</h3>
-                    <button onclick="toggleModal('addStudentModal')" class="bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold">+ Yeni Öğrenci Ekle</button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 text-slate-600">
-                            <tr>
-                                <th class="p-3">Ad Soyad</th>
-                                <th class="p-3">Sınıf</th>
-                                <th class="p-3">E-Posta</th>
-                                <th class="p-3">Şifre</th>
-                                <th class="p-3 text-center">İşlem</th>
-                            </tr>
-                        </thead>
-                        <tbody id="pdrStudentTableBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. PDR DEVAMSIZLIK GİRİŞ YÖNETİMİ -->
-        <div id="pdrAttendanceManagerView" class="hidden space-y-4">
-            <div class="modern-card p-6 sm:p-8 max-w-4xl mx-auto space-y-4">
-                <h3 class="text-xl font-extrabold text-slate-900">Öğrenci Devamsızlık Giriş Paneli</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 text-slate-600">
-                            <tr>
-                                <th class="p-3">Öğrenci</th>
-                                <th class="p-3">Özürlü (Gün)</th>
-                                <th class="p-3">Özürsüz (Gün)</th>
-                                <th class="p-3 text-center">İşlem</th>
-                            </tr>
-                        </thead>
-                        <tbody id="pdrAttendanceTableBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. ADMIN YÖNETİM PANELİ -->
-        <div id="adminDashboardView" class="hidden space-y-4">
-            <div class="modern-card p-6 sm:p-8 max-w-5xl mx-auto space-y-4">
-                <div class="border-b pb-3">
-                    <h3 class="text-xl font-extrabold text-slate-900">Sistem Yöneticisi Paneli (Tüm Hesaplar)</h3>
-                    <p class="text-xs text-slate-500">Sistemdeki bütün PDR ve öğrenci hesaplarını buradan denetleyebilirsiniz.</p>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 text-slate-600">
-                            <tr>
-                                <th class="p-3">Ad Soyad</th>
-                                <th class="p-3">Rol</th>
-                                <th class="p-3">E-Posta</th>
-                                <th class="p-3">Şifre</th>
-                                <th class="p-3 text-center">Kullanıcıyı Sil</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminTableBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- ŞİFREMİ UNUTTUM MODALI -->
-    <div id="forgotPasswordModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="modern-card max-w-sm w-full p-6 space-y-4 shadow-2xl bg-white">
-            <h3 class="text-base font-bold text-slate-900">Şifre Sıfırlama</h3>
-            <p class="text-xs text-slate-500">Kayıtlı e-posta adresinizi girin, geçici şifreniz oluşturulsun.</p>
-            <form onsubmit="handleForgotPassword(event)" class="space-y-3">
-                <input type="email" id="forgotEmail" required placeholder="E-posta adresiniz" class="w-full border rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
-                <button type="submit" class="w-full bg-uzem-600 text-white py-2.5 rounded-xl text-xs font-bold">Şifreyi Sıfırla</button>
-            </form>
-            <button onclick="toggleModal('forgotPasswordModal')" class="w-full text-center text-xs text-slate-400">Geri Dön</button>
-        </div>
     </div>
+  </div>
 
-    <!-- YENİ DENEME EKLEME MODALI -->
-    <div id="addDenemeModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="modern-card max-w-sm w-full p-6 space-y-4 shadow-2xl bg-white">
-            <h3 class="text-base font-bold text-slate-900">Yeni Deneme Sınavı Ekle</h3>
-            <form onsubmit="handleSaveDeneme(event)" class="space-y-3">
-                <input type="text" id="denemeAdi" required placeholder="Deneme Adı (Örn: TYT Kurumsal-1)" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="number" step="0.5" id="netTurkce" required placeholder="Türkçe Net" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="number" step="0.5" id="netMat" required placeholder="Matematik Net" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="number" step="0.5" id="netSosyal" required placeholder="Sosyal Net" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="number" step="0.5" id="netFen" required placeholder="Fen Net" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <button type="submit" class="w-full bg-uzem-600 text-white py-2.5 rounded-xl text-xs font-bold">Kaydet</button>
-            </form>
-            <button onclick="toggleModal('addDenemeModal')" class="w-full text-center text-xs text-slate-400">İptal</button>
-        </div>
-    </div>
+  <script>
+    // --- 1. ÇOKLU DİL SÖZLÜĞÜ ---
+    const translations = {
+      tr: {
+        site_title: "Zaman Tüneli | YKS Takip Sistemi",
+        logout: "Çıkış Yap",
+        yks_countdown: "YKS 2027 Geri Sayım",
+        days: "Gün",
+        hours: "Saat",
+        minutes: "Dakika",
+        seconds: "Saniye",
+        student_login: "Öğrenci Girişi",
+        student_demo: "Demo: Adınızı yazıp giriş yapabilirsiniz.",
+        student_name: "Öğrenci Adı Soyadı",
+        student_no: "Öğrenci Numarası",
+        login_btn: "Giriş Yap",
+        pdr_login: "PDR / Rehberlik Girişi",
+        pdr_demo: "Demo Şifre: 1234",
+        pdr_user: "Danışman Adı",
+        password: "Şifre",
+        pdr_login_btn: "PDR Paneli Girişi",
+        tab_exams: "Deneme Takip",
+        tab_attendance: "Devamsızlık",
+        tab_settings: "Ayarlar",
+        exam_tracking: "Deneme Takip Sistemi",
+        exam_student_name: "Öğrenci Adı",
+        exam_name: "Deneme Adı / Yayın",
+        exam_type: "Sınav Türü",
+        correct_count: "Doğru Sayısı",
+        wrong_count: "Yanlış Sayısı",
+        add_exam_btn: "Deneme Sonucu Ekle",
+        th_student: "Öğrenci",
+        th_exam: "Deneme",
+        th_type: "Tür",
+        th_cw: "D / Y",
+        th_net: "Net",
+        th_action: "İşlem",
+        attendance_tracking: "Devamsızlık Takip Sistemi",
+        att_date: "Tarih",
+        att_status: "Durum",
+        add_att_btn: "Devamsızlık İşle",
+        student_att_info: "Not: Devamsızlık kayıtları PDR birimi tarafından işlenmektedir.",
+        th_date: "Tarih",
+        th_status: "Durum",
+        settings_title: "Sistem ve Profil Ayarları",
+        theme_setting: "Görünüm Teması",
+        target_field: "YKS Hedef Alan Türü",
+        target_uni: "Hedef Üniversite / Bölüm",
+        reset_data: "Tüm Demo Verilerini Sıfırla"
+      },
+      en: {
+        site_title: "Time Tunnel | YKS Tracking System",
+        logout: "Logout",
+        yks_countdown: "YKS 2027 Countdown",
+        days: "Days",
+        hours: "Hours",
+        minutes: "Minutes",
+        seconds: "Seconds",
+        student_login: "Student Login",
+        student_demo: "Demo: Enter your name to sign in.",
+        student_name: "Student Full Name",
+        student_no: "Student ID",
+        login_btn: "Login",
+        pdr_login: "Guidance / PDR Login",
+        pdr_demo: "Demo Password: 1234",
+        pdr_user: "Counselor Name",
+        password: "Password",
+        pdr_login_btn: "PDR Dashboard Login",
+        tab_exams: "Mock Exams",
+        tab_attendance: "Attendance",
+        tab_settings: "Settings",
+        exam_tracking: "Mock Exam Tracking System",
+        exam_student_name: "Student Name",
+        exam_name: "Exam Name / Publisher",
+        exam_type: "Exam Type",
+        correct_count: "Correct",
+        wrong_count: "Wrong",
+        add_exam_btn: "Add Exam Result",
+        th_student: "Student",
+        th_exam: "Exam",
+        th_type: "Type",
+        th_cw: "C / W",
+        th_net: "Net Score",
+        th_action: "Action",
+        attendance_tracking: "Attendance Tracking System",
+        att_date: "Date",
+        att_status: "Status",
+        add_att_btn: "Record Absence",
+        student_att_info: "Note: Attendance records are managed by the PDR unit.",
+        th_date: "Date",
+        th_status: "Status",
+        settings_title: "System & Profile Settings",
+        theme_setting: "Appearance Theme",
+        target_field: "Target Exam Field",
+        target_uni: "Target University / Major",
+        reset_data: "Reset All Demo Data"
+      }
+    };
 
-    <!-- PDR ÖĞRENCİ EKLEME MODALI -->
-    <div id="addStudentModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="modern-card max-w-sm w-full p-6 space-y-4 shadow-2xl bg-white">
-            <h3 class="text-base font-bold text-slate-900">PDR Tarafından Yeni Öğrenci Ekle</h3>
-            <form onsubmit="handleSaveStudent(event)" class="space-y-3">
-                <input type="text" id="newStuName" required placeholder="Ad Soyad" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="text" id="newStuClass" required placeholder="Sınıfı (Örn: 12-A)" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="email" id="newStuEmail" required placeholder="E-posta Adresi" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="password" id="newStuPass" required placeholder="Şifre" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <button type="submit" class="w-full bg-emerald-600 text-white py-2.5 rounded-xl text-xs font-bold">Öğrenciyi Kaydet</button>
-            </form>
-            <button onclick="toggleModal('addStudentModal')" class="w-full text-center text-xs text-slate-400">İptal</button>
-        </div>
-    </div>
-
-    <!-- SCRIPT -->
-    <script>
-        // Sayfa Yüklenme Animasyonu (Splash Screen) Mantığı
-        window.addEventListener('DOMContentLoaded', () => {
-            const bar = document.getElementById('splashBar');
-            setTimeout(() => { bar.style.width = '100%'; }, 100);
-            setTimeout(() => {
-                const splash = document.getElementById('splashScreen');
-                if(splash) splash.classList.add('fade-out');
-                
-                // Oturum kontrolü
-                const session = JSON.parse(localStorage.getItem('zt_session'));
-                if (session) {
-                    applySession(session);
-                } else {
-                    document.getElementById('authLockScreen').classList.remove('hidden');
-                }
-                lucide.createIcons();
-            }, 800);
-        });
-
-        // YKS 2027 Geri Sayım Sayacı
-        function updateYksCountdown() {
-            const diff = new Date('June 19, 2027 10:15:00').getTime() - new Date().getTime();
-            const daysEl = document.getElementById('yksDays');
-            const hoursEl = document.getElementById('yksHours');
-            const minsEl = document.getElementById('yksMins');
-
-            if (diff > 0 && daysEl && hoursEl && minsEl) {
-                daysEl.textContent = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(3, '0');
-                hoursEl.textContent = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-                minsEl.textContent = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-            }
+    function changeLanguage(lang) {
+      localStorage.setItem('appLang', lang);
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
         }
-        setInterval(updateYksCountdown, 1000);
-        updateYksCountdown();
+      });
+    }
 
-        // Veri Depolama Başlangıç Verileri (Admin Hesabı Tanımlı)
-        let systemUsers = JSON.parse(localStorage.getItem('zt_users')) || [
-            { id: 999, name: 'Sistem Yöneticisi', email: 'admin@zamantuneli.com', role: 'admin', password: 'yonetici2027' },
-            { id: 1, name: 'Ahmet Yılmaz', email: 'ogrenci@uzemportal.com', role: 'ogrenci', sinif: '12-A', password: '123', ozurlu: 2, ozursuz: 1 },
-            { id: 2, name: 'Ayşe PDR', email: 'pdr@uzemportal.com', role: 'pdr', password: '123' }
-        ];
+    // --- 2. YKS GERİ SAYIM SAYACI ---
+    // Hedef Tarih: 19 Haziran 2027 10:15
+    const targetDate = new Date("June 19, 2027 10:15:00").getTime();
 
-        let denemeler = JSON.parse(localStorage.getItem('zt_denemeler')) || [
-            { id: 1, ad: 'Öncü TYT-1', turkce: 30, mat: 25, sosyal: 15, fen: 10 }
-        ];
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
 
-        function switchAuthMode(mode) {
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            const tabLogin = document.getElementById('tabLogin');
-            const tabRegister = document.getElementById('tabRegister');
-            const authTitle = document.getElementById('authTitle');
-            const authSubtitle = document.getElementById('authSubtitle');
+      if (distance < 0) return;
 
-            if (mode === 'login') {
-                loginForm.classList.remove('hidden');
-                registerForm.classList.add('hidden');
-                tabLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-uzem-600 shadow-sm transition-all";
-                tabRegister.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-900 transition-all";
-                authTitle.textContent = "Zaman Tüneli Giriş";
-                authSubtitle.textContent = "Rolünüzü seçerek oturum açın.";
-            } else {
-                registerForm.classList.remove('hidden');
-                loginForm.classList.add('hidden');
-                tabRegister.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-uzem-600 shadow-sm transition-all";
-                tabLogin.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-900 transition-all";
-                authTitle.textContent = "Hesap Oluştur";
-                authSubtitle.textContent = "Yeni bir öğrenci hesabı açın.";
-            }
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = hours < 10 ? "0" + hours : hours;
+      document.getElementById("minutes").textContent = minutes < 10 ? "0" + minutes : minutes;
+      document.getElementById("seconds").textContent = seconds < 10 ? "0" + seconds : seconds;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // --- 3. KULLANICI GİRİŞİ (ÖĞRENCİ & PDR) ---
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+
+    function login(role) {
+      if (role === 'student') {
+        const name = document.getElementById('student-name-input').value.trim();
+        const no = document.getElementById('student-no-input').value.trim();
+        if (!name) {
+          alert("Lütfen öğrenci adını giriniz.");
+          return;
         }
-
-        function handleRegister(e) {
-            e.preventDefault();
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const password = document.getElementById('regPassword').value;
-            const sinif = document.getElementById('regSinif').value || '12-A';
-            const selectedRole = document.getElementById('roleSelectDropdown').value;
-
-            if (selectedRole === 'admin') {
-                return alert("Admin hesabı dışarıdan kaydedilemez!");
-            }
-
-            if (systemUsers.some(u => u.email === email)) {
-                return alert("Bu e-posta adresiyle zaten bir kayıt bulunuyor!");
-            }
-
-            const newUser = {
-                id: Date.now(),
-                name,
-                email,
-                role: selectedRole,
-                sinif,
-                password,
-                ozurlu: 0,
-                ozursuz: 0
-            };
-
-            systemUsers.push(newUser);
-            localStorage.setItem('zt_users', JSON.stringify(systemUsers));
-            alert("Hesabınız başarıyla oluşturuldu! Şimdi giriş yapabilirsiniz.");
-            switchAuthMode('login');
-            e.target.reset();
+        currentUser = { role: 'student', name: name, no: no || '100' };
+      } else if (role === 'pdr') {
+        const name = document.getElementById('pdr-name-input').value.trim();
+        const pass = document.getElementById('pdr-pass-input').value;
+        if (pass !== '1234') {
+          alert("Hatalı PDR şifresi! (Demo şifre: 1234)");
+          return;
         }
+        currentUser = { role: 'pdr', name: name || 'PDR Uzmanı' };
+      }
 
-        function handleLogin(e) {
-            e.preventDefault();
-            const emailOrUser = document.getElementById('loginEmail').value;
-            const pass = document.getElementById('loginPassword').value;
-            const selectedRole = document.getElementById('roleSelectDropdown').value;
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      renderDashboard();
+    }
 
-            const user = systemUsers.find(u => u.email === emailOrUser && u.password === pass && u.role === selectedRole);
-            if (!user) return alert("Hatalı e-posta, şifre veya rol seçimi!");
+    function logout() {
+      localStorage.removeItem('currentUser');
+      currentUser = null;
+      document.getElementById('login-section').classList.remove('hidden');
+      document.getElementById('dashboard-section').classList.add('hidden');
+      document.getElementById('logout-btn').classList.add('hidden');
+    }
 
-            localStorage.setItem('zt_session', JSON.stringify(user));
-            applySession(user);
-        }
+    function renderDashboard() {
+      if (!currentUser) return;
 
-        function handleForgotPassword(e) {
-            e.preventDefault();
-            const email = document.getElementById('forgotEmail').value;
-            const user = systemUsers.find(u => u.email === email);
-            if (!user) return alert("Bu e-posta adresine ait bir kullanıcı bulunamadı!");
-            
-            alert(`Şifre sıfırlama simülasyonu:\nKullanıcı: ${user.name}\nMevcut Şifreniz: ${user.password}`);
-            toggleModal('forgotPasswordModal');
-            e.target.reset();
-        }
+      document.getElementById('login-section').classList.add('hidden');
+      document.getElementById('dashboard-section').classList.remove('hidden');
+      document.getElementById('logout-btn').classList.remove('hidden');
 
-        function applySession(user) {
-            document.getElementById('authLockScreen').classList.add('hidden');
-            document.getElementById('studentNavWrapper').classList.add('hidden');
-            document.getElementById('teacherNavWrapper').classList.add('hidden');
-            document.getElementById('adminNavWrapper').classList.add('hidden');
+      document.getElementById('welcome-user').textContent = currentUser.name;
+      const roleBadge = document.getElementById('user-role-badge');
+      
+      if (currentUser.role === 'pdr') {
+        roleBadge.textContent = "PDR / Yönetici";
+        roleBadge.style.background = "#e67e22";
+        document.getElementById('pdr-attendance-form').classList.remove('hidden');
+        document.getElementById('att-action-header').classList.remove('hidden');
+        document.getElementById('student-att-note').classList.add('hidden');
+        document.getElementById('exam-student').value = "";
+        document.getElementById('exam-student').readOnly = false;
+      } else {
+        roleBadge.textContent = "Öğrenci (No: " + currentUser.no + ")";
+        roleBadge.style.background = "#2ecc71";
+        document.getElementById('pdr-attendance-form').classList.add('hidden');
+        document.getElementById('att-action-header').classList.add('hidden');
+        document.getElementById('student-att-note').classList.remove('hidden');
+        document.getElementById('exam-student').value = currentUser.name;
+        document.getElementById('exam-student').readOnly = true;
+      }
 
-            const authArea = document.getElementById('authArea');
-            authArea.innerHTML = `<div class="flex items-center gap-2 bg-slate-100 border px-3 py-1.5 rounded-xl text-xs"><span class="font-bold">${user.name} (${user.role.toUpperCase()})</span><button onclick="localStorage.removeItem('zt_session');location.reload();" class="text-rose-600 font-bold ml-1">Çıkış</button></div>`;
+      renderExams();
+      renderAttendance();
+    }
 
-            if (user.role === 'admin') {
-                document.getElementById('adminNavWrapper').classList.remove('hidden');
-                switchTab('adminDashboard');
-            } else if (user.role === 'pdr') {
-                document.getElementById('teacherNavWrapper').classList.remove('hidden');
-                switchTab('pdrDashboard');
-            } else {
-                document.getElementById('studentNavWrapper').classList.remove('hidden');
-                switchTab('denemeTracker');
-                renderStudentAttendance(user);
-            }
-        }
+    // --- 4. SEKME GEÇİŞLERİ ---
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.remove('hidden');
+      btn.classList.add('active');
+    }
 
-        function switchTab(tab) {
-            ['denemeTrackerView', 'studentAttendanceView', 'pdrDashboardView', 'pdrAttendanceManagerView', 'adminDashboardView'].forEach(v => {
-                const el = document.getElementById(v);
-                if (el) el.classList.add('hidden');
-            });
-            const target = document.getElementById(tab + 'View');
-            if (target) target.classList.remove('hidden');
+    // --- 5. DENEME TAKİP SİSTEMİ ---
+    let exams = JSON.parse(localStorage.getItem('yksExams')) || [
+      { id: 1, student: "Ahmet Yılmaz", title: "Özdebir TYT-1", category: "TYT", correct: 84, wrong: 12, net: 81.0 }
+    ];
 
-            if (tab === 'denemeTracker') renderDenemeler();
-            if (tab === 'pdrDashboard') renderPdrStudents();
-            if (tab === 'pdrAttendanceManager') renderPdrAttendanceManager();
-            if (tab === 'adminDashboard') renderAdminUsers();
-            lucide.createIcons();
-        }
+    function addExam() {
+      const student = document.getElementById('exam-student').value.trim();
+      const title = document.getElementById('exam-title').value.trim();
+      const category = document.getElementById('exam-category').value;
+      const correct = parseFloat(document.getElementById('exam-correct').value) || 0;
+      const wrong = parseFloat(document.getElementById('exam-wrong').value) || 0;
 
-        // Deneme Takip Mantığı
-        function handleSaveDeneme(e) {
-            e.preventDefault();
-            denemeler.push({
-                id: Date.now(),
-                ad: document.getElementById('denemeAdi').value,
-                turkce: parseFloat(document.getElementById('netTurkce').value),
-                mat: parseFloat(document.getElementById('netMat').value),
-                sosyal: parseFloat(document.getElementById('netSosyal').value),
-                fen: parseFloat(document.getElementById('netFen').value)
-            });
-            localStorage.setItem('zt_denemeler', JSON.stringify(denemeler));
-            toggleModal('addDenemeModal');
-            renderDenemeler();
-            e.target.reset();
-        }
+      if (!student || !title) {
+        alert("Lütfen öğrenci adı ve deneme adını doldurun.");
+        return;
+      }
 
-        function renderDenemeler() {
-            const tbody = document.getElementById('denemeTableBody');
-            tbody.innerHTML = denemeler.length === 0 ? '<tr><td colspan="6" class="p-4 text-center text-slate-400">Henüz deneme eklenmedi.</td></tr>' : denemeler.map(d => {
-                const toplamNet = (d.turkce + d.mat + d.sosyal + d.fen).toFixed(2);
-                return `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold">${d.ad}</td><td class="p-3">${d.turkce}</td><td class="p-3">${d.mat}</td><td class="p-3">${d.sosyal}</td><td class="p-3">${d.fen}</td><td class="p-3 font-bold text-uzem-700">${toplamNet} Net</td></tr>`;
-            }).join('');
-        }
+      // 4 Yanlış 1 Doğruyu Götürür
+      const net = (correct - (wrong / 4)).toFixed(2);
 
-        // Devamsızlık Gösterge
-        function renderStudentAttendance(user) {
-            document.getElementById('lblOzurlu').textContent = (user.ozurlu || 0) + ' Gün';
-            document.getElementById('lblOzursuz').textContent = (user.ozursuz || 0) + ' Gün';
-        }
+      exams.push({
+        id: Date.now(),
+        student,
+        title,
+        category,
+        correct,
+        wrong,
+        net
+      });
 
-        // PDR Tarafından Öğrenci Ekleme
-        function handleSaveStudent(e) {
-            e.preventDefault();
-            systemUsers.push({
-                id: Date.now(),
-                name: document.getElementById('newStuName').value,
-                sinif: document.getElementById('newStuClass').value,
-                email: document.getElementById('newStuEmail').value,
-                password: document.getElementById('newStuPass').value,
-                role: 'ogrenci',
-                ozurlu: 0,
-                ozursuz: 0
-            });
-            localStorage.setItem('zt_users', JSON.stringify(systemUsers));
-            toggleModal('addStudentModal');
-            renderPdrStudents();
-            e.target.reset();
-            alert("Öğrenci başarıyla kaydedildi.");
-        }
+      localStorage.setItem('yksExams', JSON.stringify(exams));
+      document.getElementById('exam-title').value = "";
+      renderExams();
+    }
 
-        // Öğrenci Silme (PDR veya Admin)
-        function deleteUser(id) {
-            if (confirm("Bu kullanıcıyı sistemden silmek istediğinize emin misiniz?")) {
-                systemUsers = systemUsers.filter(u => u.id !== id);
-                localStorage.setItem('zt_users', JSON.stringify(systemUsers));
-                renderPdrStudents();
-                renderAdminUsers();
-            }
-        }
+    function deleteExam(id) {
+      exams = exams.filter(e => e.id !== id);
+      localStorage.setItem('yksExams', JSON.stringify(exams));
+      renderExams();
+    }
 
-        function renderPdrStudents() {
-            const tbody = document.getElementById('pdrStudentTableBody');
-            const students = systemUsers.filter(u => u.role === 'ogrenci');
-            tbody.innerHTML = students.length === 0 ? '<tr><td colspan="5" class="p-4 text-center text-slate-400">Kayıtlı öğrenci bulunmuyor.</td></tr>' : students.map(s => `
-                <tr class="hover:bg-slate-50">
-                    <td class="p-3 font-semibold">${s.name}</td>
-                    <td class="p-3">${s.sinif || '12-A'}</td>
-                    <td class="p-3">${s.email}</td>
-                    <td class="p-3 font-mono">${s.password}</td>
-                    <td class="p-3 text-center">
-                        <button onclick="deleteUser(${s.id})" class="bg-rose-50 text-rose-600 hover:bg-rose-100 px-3 py-1 rounded-lg text-xs font-bold transition-all">Sil</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
+    function renderExams() {
+      const tbody = document.getElementById('exam-list');
+      tbody.innerHTML = "";
 
-        function renderAdminUsers() {
-            const tbody = document.getElementById('adminTableBody');
-            tbody.innerHTML = systemUsers.map(u => `
-                <tr class="hover:bg-slate-50">
-                    <td class="p-3 font-semibold">${u.name}</td>
-                    <td class="p-3 uppercase font-bold text-xs text-uzem-600">${u.role}</td>
-                    <td class="p-3">${u.email}</td>
-                    <td class="p-3 font-mono">${u.password}</td>
-                    <td class="p-3 text-center">
-                        ${u.role !== 'admin' ? `<button onclick="deleteUser(${u.id})" class="bg-rose-50 text-rose-600 hover:bg-rose-100 px-3 py-1 rounded-lg text-xs font-bold transition-all">Sil</button>` : '<span class="text-slate-400 text-[10px]">Korunan Hesap</span>'}
-                    </td>
-                </tr>
-            `).join('');
-        }
+      const filteredExams = currentUser.role === 'pdr' 
+        ? exams 
+        : exams.filter(e => e.student.toLowerCase() === currentUser.name.toLowerCase());
 
-        function renderPdrAttendanceManager() {
-            const tbody = document.getElementById('pdrAttendanceTableBody');
-            const students = systemUsers.filter(u => u.role === 'ogrenci');
-            tbody.innerHTML = students.map(s => `
-                <tr class="hover:bg-slate-50">
-                    <td class="p-3 font-semibold">${s.name} (${s.sinif || '12-A'})</td>
-                    <td class="p-3"><input type="number" id="oz_${s.id}" value="${s.ozurlu || 0}" class="w-16 border rounded p-1 text-xs"></td>
-                    <td class="p-3"><input type="number" id="ozs_${s.id}" value="${s.ozursuz || 0}" class="w-16 border rounded p-1 text-xs"></td>
-                    <td class="p-3 text-center"><button onclick="updateAttendance(${s.id})" class="bg-emerald-600 text-white px-3 py-1 rounded text-xs font-bold">Güncelle</button></td>
-                </tr>
-            `).join('');
-        }
+      filteredExams.forEach(exam => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${exam.student}</td>
+          <td>${exam.title}</td>
+          <td><strong>${exam.category}</strong></td>
+          <td>${exam.correct}D / ${exam.wrong}Y</td>
+          <td><span class="badge">${exam.net} Net</span></td>
+          <td><button class="danger" style="padding:4px 8px;" onclick="deleteExam(${exam.id})">Sil</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
-        function updateAttendance(id) {
-            const oz = parseInt(document.getElementById(`oz_${id}`).value) || 0;
-            const ozs = parseInt(document.getElementById(`ozs_${id}`).value) || 0;
-            systemUsers = systemUsers.map(u => u.id === id ? { ...u, ozurlu: oz, ozursuz: ozs } : u);
-            localStorage.setItem('zt_users', JSON.stringify(systemUsers));
-            alert("Devamsızlık güncellendi.");
-        }
+    // --- 6. DEVAMSIZLIK TAKİP SİSTEMİ ---
+    let attendances = JSON.parse(localStorage.getItem('yksAttendances')) || [
+      { id: 1, student: "Ahmet Yılmaz", date: "2026-11-10", status: "Özürsüz" }
+    ];
 
-        function toggleModal(id) {
-            document.getElementById(id).classList.toggle('hidden');
-        }
-    </script>
+    function addAttendance() {
+      const student = document.getElementById('att-student').value.trim();
+      const date = document.getElementById('att-date').value;
+      const status = document.getElementById('att-status').value;
+
+      if (!student || !date) {
+        alert("Lütfen öğrenci adı ve tarih seçiniz.");
+        return;
+      }
+
+      attendances.push({
+        id: Date.now(),
+        student,
+        date,
+        status
+      });
+
+      localStorage.setItem('yksAttendances', JSON.stringify(attendances));
+      document.getElementById('att-student').value = "";
+      renderAttendance();
+    }
+
+    function deleteAttendance(id) {
+      attendances = attendances.filter(a => a.id !== id);
+      localStorage.setItem('yksAttendances', JSON.stringify(attendances));
+      renderAttendance();
+    }
+
+    function renderAttendance() {
+      const tbody = document.getElementById('attendance-list');
+      tbody.innerHTML = "";
+
+      const filteredAtt = currentUser.role === 'pdr'
+        ? attendances
+        : attendances.filter(a => a.student.toLowerCase() === currentUser.name.toLowerCase());
+
+      filteredAtt.forEach(att => {
+        const tr = document.createElement('tr');
+        const deleteBtn = currentUser.role === 'pdr' 
+          ? `<td><button class="danger" style="padding:4px 8px;" onclick="deleteAttendance(${att.id})">Sil</button></td>` 
+          : '';
+        
+        tr.innerHTML = `
+          <td>${att.student}</td>
+          <td>${att.date}</td>
+          <td><span class="badge" style="background:${att.status === 'Özürsüz' ? '#e74c3c' : '#f39c12'}">${att.status}</span></td>
+          ${deleteBtn}
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // --- 7. AYARLAR ---
+    function changeTheme(theme) {
+      localStorage.setItem('appTheme', theme);
+      if (theme === 'dark') {
+        document.body.classList.add('dark-theme');
+      } else {
+        document.body.classList.remove('dark-theme');
+      }
+    }
+
+    function changeField(field) {
+      localStorage.setItem('yksField', field);
+      document.getElementById('exam-type-display').textContent = "Alan: " + field;
+    }
+
+    function saveTargetUni(val) {
+      localStorage.setItem('targetUni', val);
+    }
+
+    function clearAllData() {
+      if (confirm("Tüm deneme ve devamsızlık kayıtları sıfırlanacak. Emin misiniz?")) {
+        localStorage.removeItem('yksExams');
+        localStorage.removeItem('yksAttendances');
+        location.reload();
+      }
+    }
+
+    // --- SAYFA YÜKLENDİĞİNDE AYARLARI GETİR ---
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('appLang') || 'tr';
+      document.getElementById('language-selector').value = savedLang;
+      changeLanguage(savedLang);
+
+      const savedTheme = localStorage.getItem('appTheme') || 'light';
+      document.getElementById('theme-select').value = savedTheme;
+      changeTheme(savedTheme);
+
+      const savedField = localStorage.getItem('yksField') || 'SAY';
+      document.getElementById('field-select').value = savedField;
+      changeField(savedField);
+
+      const savedUni = localStorage.getItem('targetUni') || '';
+      document.getElementById('target-uni-input').value = savedUni;
+
+      if (currentUser) {
+        renderDashboard();
+      }
+    });
+  </script>
 </body>
 </html>
