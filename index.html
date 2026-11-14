@@ -3,203 +3,495 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zaman Tüneli - YKS & Öğrenci Takip Sistemi</title>
+  <title>Zaman Tüneli | Modern YKS & Öğrenci Takip Platformu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     :root {
-      --bg-color: #f4f6f9;
-      --card-bg: #ffffff;
-      --text-color: #2c3e50;
-      --primary: #3498db;
-      --primary-hover: #2980b9;
-      --secondary: #2ecc71;
-      --danger: #e74c3c;
-      --border-color: #dcdde1;
+      --bg-color: #f8fafc;
+      --bg-gradient: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+                     radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.08) 0px, transparent 50%);
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      --secondary: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border-color: rgba(226, 232, 240, 0.8);
+      --input-bg: #ffffff;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
     }
 
     body.dark-theme {
-      --bg-color: #18191a;
-      --card-bg: #242526;
-      --text-color: #e4e6eb;
-      --border-color: #3a3b3c;
+      --bg-color: #0b0f19;
+      --bg-gradient: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                     radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.12) 0px, transparent 50%);
+      --card-bg: rgba(30, 41, 59, 0.75);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(51, 65, 85, 0.7);
+      --input-bg: #1e293b;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
     body {
       background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: all 0.3s ease;
-      padding-bottom: 50px;
+      background-image: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      padding-bottom: 60px;
     }
 
     header {
-      background-color: var(--primary);
-      color: white;
-      padding: 15px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
     }
 
-    header h1 {
-      font-size: 1.4rem;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.25rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-icon {
+      background: var(--primary-gradient);
+      color: white;
+      padding: 8px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
     }
 
     .header-controls {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       align-items: center;
     }
 
-    select, input, button {
-      padding: 8px 12px;
-      border-radius: 6px;
+    select, input {
+      padding: 10px 14px;
+      border-radius: 12px;
       border: 1px solid var(--border-color);
-      font-size: 0.95rem;
+      background-color: var(--input-bg);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    select:focus, input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
     }
 
     button {
-      background-color: var(--primary);
-      color: white;
+      padding: 10px 18px;
+      border-radius: 12px;
       border: none;
-      cursor: pointer;
+      font-size: 0.9rem;
       font-weight: 600;
-      transition: 0.2s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
     }
 
-    button:hover {
-      background-color: var(--primary-hover);
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
     }
 
-    button.danger {
-      background-color: var(--danger);
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
     }
 
-    button.secondary {
-      background-color: var(--secondary);
+    .btn-secondary {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-danger:hover {
+      background: var(--danger);
+      color: white;
     }
 
     .container {
-      max-width: 1100px;
-      margin: 25px auto;
+      max-width: 1140px;
+      margin: 30px auto;
       padding: 0 20px;
     }
 
     .card {
-      background-color: var(--card-bg);
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
       border: 1px solid var(--border-color);
     }
 
-    /* YKS Sayaç */
-    .countdown-box {
+    /* YKS Sayaç Kartı */
+    .countdown-hero {
+      background: var(--primary-gradient);
+      color: white;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .countdown-hero::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .countdown-header {
       display: flex;
-      justify-content: space-around;
-      text-align: center;
-      margin-top: 15px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
       flex-wrap: wrap;
       gap: 10px;
     }
 
-    .time-unit {
-      background: var(--primary);
-      color: white;
-      padding: 15px 25px;
-      border-radius: 8px;
-      min-width: 100px;
+    .countdown-header h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .time-unit span {
-      display: block;
-      font-size: 2rem;
-      font-weight: bold;
-    }
-
-    /* Login Ekranı */
-    .login-grid {
+    .countdown-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .time-box {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 16px;
+      padding: 18px 10px;
+      text-align: center;
+    }
+
+    .time-box span {
+      display: block;
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1px;
+    }
+
+    .time-box small {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Auth (Giriş & Kayıt) Kartı */
+    .auth-container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg-color);
+      padding: 6px;
+      border-radius: 14px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border-color);
+    }
+
+    .auth-tab-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .auth-tab-btn.active {
+      background: var(--card-bg);
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-subtitle {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-bottom: 20px;
     }
 
     .form-group {
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     .form-group label {
       display: block;
-      margin-bottom: 5px;
-      font-weight: 500;
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
     }
 
     .form-group input, .form-group select {
       width: 100%;
-      background: var(--bg-color);
-      color: var(--text-color);
     }
 
-    /* Sekmeler (Navigasyon) */
-    .tabs {
+    .alert-msg {
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .alert-error {
+      background: rgba(239, 68, 68, 0.12);
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+
+    .alert-success {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--secondary);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    /* Kullanıcı Bilgi & İstatistik Barı */
+    .user-banner {
       display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--primary-gradient);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .stat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--primary);
+    }
+
+    .stat-info small {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .stat-info h4 {
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+
+    /* Sekmeler */
+    .tabs-wrapper {
+      background: var(--card-bg);
+      padding: 6px;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      display: inline-flex;
+      gap: 6px;
+      margin-bottom: 24px;
       flex-wrap: wrap;
     }
 
     .tab-btn {
-      background-color: var(--card-bg);
-      color: var(--text-color);
-      border: 1px solid var(--border-color);
+      background: transparent;
+      color: var(--text-muted);
+      padding: 10px 18px;
+      border-radius: 12px;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(99, 102, 241, 0.05);
     }
 
     .tab-btn.active {
-      background-color: var(--primary);
+      background: var(--primary-gradient);
       color: white;
-      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
     }
 
     .hidden {
       display: none !important;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
+    /* Tablo */
+    .table-responsive {
+      overflow-x: auto;
+      margin-top: 20px;
     }
 
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid var(--border-color);
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
     }
 
     th {
-      background-color: rgba(52, 152, 219, 0.1);
+      text-align: left;
+      padding: 14px 16px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
     }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
+    td {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(99, 102, 241, 0.03);
     }
 
     .badge {
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      background: var(--secondary);
-      color: white;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-primary { background: rgba(99, 102, 241, 0.12); color: var(--primary); }
+    .badge-success { background: rgba(16, 185, 129, 0.12); color: var(--secondary); }
+    .badge-warning { background: rgba(245, 158, 11, 0.12); color: var(--warning); }
+    .badge-danger { background: rgba(239, 68, 68, 0.12); color: var(--danger); }
+
+    .grid-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      align-items: end;
+    }
+
+    @media (max-width: 600px) {
+      .countdown-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      header {
+        padding: 14px 16px;
+      }
     }
   </style>
 </head>
@@ -207,185 +499,288 @@
 
   <!-- Üst Menü -->
   <header>
-    <h1 data-i18n="site_title">Zaman Tüneli | YKS Takip Sistemi</h1>
+    <div class="brand">
+      <div class="brand-icon"><i data-lucide="hourglass" size="20"></i></div>
+      <span data-i18n="site_title">Zaman Tüneli</span>
+    </div>
     <div class="header-controls">
       <select id="language-selector" onchange="changeLanguage(this.value)">
         <option value="tr">🇹🇷 Türkçe</option>
         <option value="en">🇬🇧 English</option>
       </select>
-      <button id="logout-btn" class="danger hidden" onclick="logout()" data-i18n="logout">Çıkış Yap</button>
+      <button id="logout-btn" class="btn-danger hidden" onclick="logout()">
+        <i data-lucide="log-out" size="16"></i>
+        <span data-i18n="logout">Çıkış</span>
+      </button>
     </div>
   </header>
 
   <div class="container">
 
-    <!-- YKS Geri Sayım Sayacı (Her zaman görünür) -->
-    <div class="card">
-      <h2 data-i18n="yks_countdown">YKS 2027 Geri Sayım</h2>
-      <div class="countdown-box">
-        <div class="time-unit"><span id="days">00</span><small data-i18n="days">Gün</small></div>
-        <div class="time-unit"><span id="hours">00</span><small data-i18n="hours">Saat</small></div>
-        <div class="time-unit"><span id="minutes">00</span><small data-i18n="minutes">Dakika</small></div>
-        <div class="time-unit"><span id="seconds">00</span><small data-i18n="seconds">Saniye</small></div>
+    <!-- YKS Geri Sayım Sayacı -->
+    <div class="card countdown-hero">
+      <div class="countdown-header">
+        <h2><i data-lucide="flame" size="22"></i> <span data-i18n="yks_countdown">YKS 2027 Maratonu</span></h2>
+        <span style="background: rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">19 Haziran 2027</span>
+      </div>
+      <div class="countdown-grid">
+        <div class="time-box"><span id="days">00</span><small data-i18n="days">Gün</small></div>
+        <div class="time-box"><span id="hours">00</span><small data-i18n="hours">Saat</small></div>
+        <div class="time-box"><span id="minutes">00</span><small data-i18n="minutes">Dakika</small></div>
+        <div class="time-box"><span id="seconds">00</span><small data-i18n="seconds">Saniye</small></div>
       </div>
     </div>
 
-    <!-- GİRİŞ EKRANI -->
-    <div id="login-section" class="login-grid">
-      <!-- Öğrenci Girişi -->
+    <!-- GİRİŞ & HESAP OLUŞTURMA EKRANI -->
+    <div id="auth-section" class="auth-container">
       <div class="card">
-        <h2 data-i18n="student_login">Öğrenci Girişi</h2>
-        <p style="margin-bottom: 15px; font-size: 0.9rem; opacity: 0.8;" data-i18n="student_demo">Demo: Adınızı yazıp giriş yapabilirsiniz.</p>
-        <div class="form-group">
-          <label data-i18n="student_name">Öğrenci Adı Soyadı</label>
-          <input type="text" id="student-name-input" placeholder="Örn: Ahmet Yılmaz">
+        <!-- Giriş / Kayıt Sekme Geçişi -->
+        <div class="auth-tabs">
+          <button id="tab-btn-login" class="auth-tab-btn active" onclick="switchAuthMode('login')" data-i18n="auth_login_tab">Giriş Yap</button>
+          <button id="tab-btn-register" class="auth-tab-btn" onclick="switchAuthMode('register')" data-i18n="auth_register_tab">Hesap Oluştur</button>
         </div>
-        <div class="form-group">
-          <label data-i18n="student_no">Öğrenci Numarası</label>
-          <input type="text" id="student-no-input" placeholder="Örn: 1042">
-        </div>
-        <button onclick="login('student')" data-i18n="login_btn">Giriş Yap</button>
-      </div>
 
-      <!-- PDR Girişi -->
-      <div class="card">
-        <h2 data-i18n="pdr_login">PDR / Rehberlik Girişi</h2>
-        <p style="margin-bottom: 15px; font-size: 0.9rem; opacity: 0.8;" data-i18n="pdr_demo">Demo Şifre: <strong>1234</strong></p>
-        <div class="form-group">
-          <label data-i18n="pdr_user">Danışman Adı</label>
-          <input type="text" id="pdr-name-input" value="Rehber Öğretmen">
+        <div id="auth-alert" class="alert-msg"></div>
+
+        <!-- GİRİŞ FORMU -->
+        <div id="login-form">
+          <div class="card-title"><i data-lucide="log-in" color="#6366f1"></i> <span data-i18n="login_title">Hesabına Giriş Yap</span></div>
+          <p class="card-subtitle" data-i18n="login_sub">Öğrenci veya PDR hesabınla devam et.</p>
+
+          <div class="form-group">
+            <label data-i18n="username_label">Kullanıcı Adı veya E-posta</label>
+            <input type="text" id="login-username" placeholder="Örn: ahmet1042 veya pdr">
+          </div>
+          <div class="form-group">
+            <label data-i18n="password">Şifre</label>
+            <input type="password" id="login-password" placeholder="••••••">
+          </div>
+
+          <button class="btn-primary" style="width: 100%;" onclick="handleLogin()">
+            <i data-lucide="arrow-right-circle" size="18"></i>
+            <span data-i18n="login_btn">Giriş Yap</span>
+          </button>
+
+          <p style="margin-top: 16px; font-size: 0.8rem; color: var(--text-muted); text-align: center;" data-i18n="demo_hint">
+            Hazır Demo Hesaplar:<br>
+            <strong>Öğrenci:</strong> ahmet / 1234 &nbsp;|&nbsp; <strong>PDR:</strong> pdr / 1234
+          </p>
         </div>
-        <div class="form-group">
-          <label data-i18n="password">Şifre</label>
-          <input type="password" id="pdr-pass-input" placeholder="1234">
+
+        <!-- HESAP OLUŞTURMA FORMU -->
+        <div id="register-form" class="hidden">
+          <div class="card-title"><i data-lucide="user-plus" color="#10b981"></i> <span data-i18n="register_title">Yeni Hesap Oluştur</span></div>
+          <p class="card-subtitle" data-i18n="register_sub">Hemen kayıt ol ve YKS gelişimini takip etmeye başla.</p>
+
+          <div class="form-group">
+            <label data-i18n="role_select_label">Hesap Türü</label>
+            <select id="reg-role" onchange="toggleStudentNoField()">
+              <option value="student">🎓 Öğrenci Hesabı</option>
+              <option value="pdr">🛡️ PDR / Rehber Öğretmen Hesabı</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="full_name">Ad Soyad</label>
+            <input type="text" id="reg-fullname" placeholder="Örn: Zeynep Kaya">
+          </div>
+
+          <div class="form-group" id="reg-student-no-group">
+            <label data-i18n="student_no">Öğrenci Numarası</label>
+            <input type="text" id="reg-student-no" placeholder="Örn: 2054">
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="username_label">Kullanıcı Adı</label>
+            <input type="text" id="reg-username" placeholder="Örn: zeynep2054">
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="password">Şifre Belirle</label>
+            <input type="password" id="reg-password" placeholder="En az 4 karakter">
+          </div>
+
+          <div class="form-group" id="reg-pdr-code-group" style="display: none;">
+            <label data-i18n="pdr_code_label">Kurum PDR Yetki Kodu (Demo: PDR2026)</label>
+            <input type="text" id="reg-pdr-code" placeholder="PDR2026">
+          </div>
+
+          <button class="btn-secondary" style="width: 100%;" onclick="handleRegister()">
+            <i data-lucide="check-circle-2" size="18"></i>
+            <span data-i18n="register_btn">Kaydı Tamamla</span>
+          </button>
         </div>
-        <button class="secondary" onclick="login('pdr')" data-i18n="pdr_login_btn">PDR Paneli Girişi</button>
+
       </div>
     </div>
 
-    <!-- ANA PANEL (Giriş Yapılınca Açılır) -->
+    <!-- ANA PANEL -->
     <div id="dashboard-section" class="hidden">
-      <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <h3 id="welcome-user">Hoş Geldiniz</h3>
-          <span class="badge" id="user-role-badge">Öğrenci</span>
+      
+      <!-- Kullanıcı Bilgi Kartı -->
+      <div class="card user-banner">
+        <div class="user-profile">
+          <div class="avatar" id="user-avatar">A</div>
+          <div>
+            <h3 id="welcome-user" style="font-size: 1.15rem; font-weight: 700;">Hoş Geldiniz</h3>
+            <span class="badge badge-primary" id="user-role-badge" style="margin-top: 4px;">Öğrenci</span>
+          </div>
         </div>
-        <div id="exam-type-display" style="font-weight: bold;">Alan: SAY</div>
+        <div style="text-align: right;">
+          <div id="exam-type-display" style="font-weight: 700; color: var(--primary);">Alan: SAY</div>
+          <small id="target-uni-display" style="color: var(--text-muted);">Hedef belirlenmedi</small>
+        </div>
       </div>
 
-      <!-- Sekme Butonları -->
-      <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('exams-tab', this)" data-i18n="tab_exams">Deneme Takip</button>
-        <button class="tab-btn" onclick="switchTab('attendance-tab', this)" data-i18n="tab_attendance">Devamsızlık</button>
-        <button class="tab-btn" onclick="switchTab('settings-tab', this)" data-i18n="tab_settings">Ayarlar</button>
+      <!-- Özet İstatistik Kartları -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon"><i data-lucide="file-check-2"></i></div>
+          <div class="stat-info">
+            <small data-i18n="stat_total_exams">Toplam Deneme</small>
+            <h4 id="stat-exam-count">0</h4>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;"><i data-lucide="trending-up"></i></div>
+          <div class="stat-info">
+            <small data-i18n="stat_avg_net">Ortalama Net</small>
+            <h4 id="stat-avg-net">0.00</h4>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;"><i data-lucide="calendar-x"></i></div>
+          <div class="stat-info">
+            <small data-i18n="stat_total_att">Devamsızlık Günü</small>
+            <h4 id="stat-att-count">0</h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sekmeler -->
+      <div class="tabs-wrapper">
+        <button class="tab-btn active" onclick="switchTab('exams-tab', this)">
+          <i data-lucide="bar-chart-3" size="16"></i> <span data-i18n="tab_exams">Deneme Takip</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('attendance-tab', this)">
+          <i data-lucide="user-x" size="16"></i> <span data-i18n="tab_attendance">Devamsızlık</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('settings-tab', this)">
+          <i data-lucide="settings" size="16"></i> <span data-i18n="tab_settings">Ayarlar</span>
+        </button>
       </div>
 
       <!-- 1. SEKME: DENEME TAKİP SİSTEMİ -->
       <div id="exams-tab" class="card tab-content">
-        <h2 data-i18n="exam_tracking">Deneme Takip Sistemi</h2>
+        <div class="card-title"><i data-lucide="clipboard-list" color="#6366f1"></i> <span data-i18n="exam_tracking">Deneme Sınavı Analizi</span></div>
+        <p class="card-subtitle" data-i18n="exam_sub">Doğru ve yanlış sayılarını gir, netin otomatik hesaplansın.</p>
         
-        <!-- Deneme Ekleme Formu -->
-        <div class="grid-2" style="margin-top: 15px;">
-          <div class="form-group">
-            <label data-i18n="exam_student_name">Öğrenci Adı</label>
+        <div class="grid-form">
+          <div class="form-group" style="margin:0;">
+            <label data-i18n="exam_student_name">Öğrenci</label>
             <input type="text" id="exam-student" placeholder="Öğrenci Adı">
           </div>
-          <div class="form-group">
-            <label data-i18n="exam_name">Deneme Adı / Yayın</label>
-            <input type="text" id="exam-title" placeholder="Örn: Özdebir TYT-1">
+          <div class="form-group" style="margin:0;">
+            <label data-i18n="exam_name">Yayın / Deneme Adı</label>
+            <input type="text" id="exam-title" placeholder="Örn: 3D TYT-2">
           </div>
-          <div class="form-group">
-            <label data-i18n="exam_type">Sınav Türü</label>
+          <div class="form-group" style="margin:0;">
+            <label data-i18n="exam_type">Oturum</label>
             <select id="exam-category">
               <option value="TYT">TYT</option>
               <option value="AYT">AYT</option>
             </select>
           </div>
-          <div class="form-group">
-            <label data-i18n="correct_count">Doğru Sayısı</label>
+          <div class="form-group" style="margin:0;">
+            <label data-i18n="correct_count">Doğru</label>
             <input type="number" id="exam-correct" min="0" max="120" value="0">
           </div>
-          <div class="form-group">
-            <label data-i18n="wrong_count">Yanlış Sayısı</label>
+          <div class="form-group" style="margin:0;">
+            <label data-i18n="wrong_count">Yanlış</label>
             <input type="number" id="exam-wrong" min="0" max="120" value="0">
           </div>
+          <button class="btn-primary" onclick="addExam()">
+            <i data-lucide="plus" size="18"></i> <span data-i18n="add_exam_btn">Kaydet</span>
+          </button>
         </div>
-        <button onclick="addExam()" data-i18n="add_exam_btn">Deneme Sonucu Ekle</button>
 
-        <!-- Deneme Listesi -->
-        <table>
-          <thead>
-            <tr>
-              <th data-i18n="th_student">Öğrenci</th>
-              <th data-i18n="th_exam">Deneme</th>
-              <th data-i18n="th_type">Tür</th>
-              <th data-i18n="th_cw">D / Y</th>
-              <th data-i18n="th_net">Net</th>
-              <th data-i18n="th_action">İşlem</th>
-            </tr>
-          </thead>
-          <tbody id="exam-list"></tbody>
-        </table>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th data-i18n="th_student">Öğrenci</th>
+                <th data-i18n="th_exam">Deneme</th>
+                <th data-i18n="th_type">Oturum</th>
+                <th data-i18n="th_cw">D / Y</th>
+                <th data-i18n="th_net">Net</th>
+                <th data-i18n="th_action">İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="exam-list"></tbody>
+          </table>
+        </div>
       </div>
 
       <!-- 2. SEKME: DEVAMSIZLIK SİSTEMİ -->
       <div id="attendance-tab" class="card tab-content hidden">
-        <h2 data-i18n="attendance_tracking">Devamsızlık Takip Sistemi</h2>
+        <div class="card-title"><i data-lucide="calendar-check" color="#ef4444"></i> <span data-i18n="attendance_tracking">Devamsızlık Kayıtları</span></div>
         
-        <!-- Sadece PDR yeni devamsızlık ekleyebilir -->
-        <div id="pdr-attendance-form" class="grid-2 hidden" style="margin-top: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color);">
-          <div class="form-group">
+        <div id="pdr-attendance-form" class="grid-form hidden" style="margin-top: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color);">
+          <div class="form-group" style="margin:0;">
             <label data-i18n="exam_student_name">Öğrenci Adı</label>
             <input type="text" id="att-student" placeholder="Öğrenci Adı">
           </div>
-          <div class="form-group">
+          <div class="form-group" style="margin:0;">
             <label data-i18n="att_date">Tarih</label>
             <input type="date" id="att-date">
           </div>
-          <div class="form-group">
+          <div class="form-group" style="margin:0;">
             <label data-i18n="att_status">Durum</label>
             <select id="att-status">
               <option value="Özürsüz">Özürsüz Devamsız</option>
               <option value="Özürlü">Özürlü (Raporlu/İzinli)</option>
             </select>
           </div>
-          <div class="form-group" style="display: flex; align-items: flex-end;">
-            <button onclick="addAttendance()" data-i18n="add_att_btn">Devamsızlık İşle</button>
-          </div>
+          <button class="btn-primary" onclick="addAttendance()">
+            <i data-lucide="plus" size="18"></i> <span data-i18n="add_att_btn">Kayıt Ekle</span>
+          </button>
         </div>
 
-        <p id="student-att-note" style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;" data-i18n="student_att_info">
-          Not: Devamsızlık kayıtları PDR birimi tarafından işlenmektedir.
+        <p id="student-att-note" class="card-subtitle" style="margin-top: 8px;" data-i18n="student_att_info">
+          Devamsızlık kayıtları yalnızca PDR birimi tarafından güncellenebilir.
         </p>
 
-        <table>
-          <thead>
-            <tr>
-              <th data-i18n="th_student">Öğrenci</th>
-              <th data-i18n="th_date">Tarih</th>
-              <th data-i18n="th_status">Durum</th>
-              <th id="att-action-header" class="hidden" data-i18n="th_action">İşlem</th>
-            </tr>
-          </thead>
-          <tbody id="attendance-list"></tbody>
-        </table>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th data-i18n="th_student">Öğrenci</th>
+                <th data-i18n="th_date">Tarih</th>
+                <th data-i18n="th_status">Durum</th>
+                <th id="att-action-header" class="hidden" data-i18n="th_action">İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="attendance-list"></tbody>
+          </table>
+        </div>
       </div>
 
       <!-- 3. SEKME: AYARLAR -->
       <div id="settings-tab" class="card tab-content hidden">
-        <h2 data-i18n="settings_title">Sistem ve Profil Ayarları</h2>
+        <div class="card-title"><i data-lucide="sliders" color="#6366f1"></i> <span data-i18n="settings_title">Tercihler & Hesap Ayarları</span></div>
+        <p class="card-subtitle" data-i18n="settings_sub">Arayüz temasını ve YKS hedeflerini kişiselleştir.</p>
         
-        <div class="grid-2" style="margin-top: 15px;">
+        <div class="grid-form" style="margin-top: 16px;">
           <div class="form-group">
             <label data-i18n="theme_setting">Görünüm Teması</label>
             <select id="theme-select" onchange="changeTheme(this.value)">
-              <option value="light">Aydınlık Mod (Light)</option>
-              <option value="dark">Karanlık Mod (Dark)</option>
+              <option value="light">☀️ Aydınlık Mod (Light)</option>
+              <option value="dark">🌙 Karanlık Mod (Dark)</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label data-i18n="target_field">YKS Hedef Alan Türü</label>
+            <label data-i18n="target_field">YKS Puan Türü / Alan</label>
             <select id="field-select" onchange="changeField(this.value)">
               <option value="SAY">Sayısal (SAY)</option>
               <option value="EA">Eşit Ağırlık (EA)</option>
@@ -395,13 +790,15 @@
           </div>
 
           <div class="form-group">
-            <label data-i18n="target_uni">Hedef Üniversite / Bölüm</label>
-            <input type="text" id="target-uni-input" placeholder="Örn: ODTÜ Bilgisayar Müh." onchange="saveTargetUni(this.value)">
+            <label data-i18n="target_uni">Hedef Üniversite & Bölüm</label>
+            <input type="text" id="target-uni-input" placeholder="Örn: İTÜ Yapay Zeka Müh." oninput="saveTargetUni(this.value)">
           </div>
         </div>
 
-        <div style="margin-top: 20px;">
-          <button class="danger" onclick="clearAllData()" data-i18n="reset_data">Tüm Demo Verilerini Sıfırla</button>
+        <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+          <button class="btn-danger" onclick="clearAllData()">
+            <i data-lucide="trash-2" size="16"></i> <span data-i18n="reset_data">Tüm Demo Verilerini Sıfırla</span>
+          </button>
         </div>
       </div>
 
@@ -409,100 +806,120 @@
   </div>
 
   <script>
+    lucide.createIcons();
+
     // --- 1. ÇOKLU DİL SÖZLÜĞÜ ---
     const translations = {
       tr: {
-        site_title: "Zaman Tüneli | YKS Takip Sistemi",
-        logout: "Çıkış Yap",
-        yks_countdown: "YKS 2027 Geri Sayım",
+        site_title: "Zaman Tüneli",
+        logout: "Çıkış",
+        yks_countdown: "YKS 2027 Maratonu",
         days: "Gün",
         hours: "Saat",
         minutes: "Dakika",
         seconds: "Saniye",
-        student_login: "Öğrenci Girişi",
-        student_demo: "Demo: Adınızı yazıp giriş yapabilirsiniz.",
-        student_name: "Öğrenci Adı Soyadı",
-        student_no: "Öğrenci Numarası",
-        login_btn: "Giriş Yap",
-        pdr_login: "PDR / Rehberlik Girişi",
-        pdr_demo: "Demo Şifre: 1234",
-        pdr_user: "Danışman Adı",
+        auth_login_tab: "Giriş Yap",
+        auth_register_tab: "Hesap Oluştur",
+        login_title: "Hesabına Giriş Yap",
+        login_sub: "Öğrenci veya PDR hesabınla devam et.",
+        username_label: "Kullanıcı Adı",
         password: "Şifre",
-        pdr_login_btn: "PDR Paneli Girişi",
+        login_btn: "Giriş Yap",
+        register_title: "Yeni Hesap Oluştur",
+        register_sub: "Hemen kayıt ol ve YKS gelişimini takip etmeye başla.",
+        role_select_label: "Hesap Türü",
+        full_name: "Ad Soyad",
+        student_no: "Öğrenci Numarası",
+        pdr_code_label: "Kurum PDR Yetki Kodu (Demo: PDR2026)",
+        register_btn: "Kaydı Tamamla",
+        stat_total_exams: "Toplam Deneme",
+        stat_avg_net: "Ortalama Net",
+        stat_total_att: "Devamsızlık Günü",
         tab_exams: "Deneme Takip",
         tab_attendance: "Devamsızlık",
         tab_settings: "Ayarlar",
-        exam_tracking: "Deneme Takip Sistemi",
-        exam_student_name: "Öğrenci Adı",
-        exam_name: "Deneme Adı / Yayın",
-        exam_type: "Sınav Türü",
-        correct_count: "Doğru Sayısı",
-        wrong_count: "Yanlış Sayısı",
-        add_exam_btn: "Deneme Sonucu Ekle",
+        exam_tracking: "Deneme Sınavı Analizi",
+        exam_sub: "Doğru ve yanlış sayılarını gir, netin otomatik hesaplansın.",
+        exam_student_name: "Öğrenci",
+        exam_name: "Yayın / Deneme Adı",
+        exam_type: "Oturum",
+        correct_count: "Doğru",
+        wrong_count: "Yanlış",
+        add_exam_btn: "Kaydet",
         th_student: "Öğrenci",
         th_exam: "Deneme",
-        th_type: "Tür",
+        th_type: "Oturum",
         th_cw: "D / Y",
         th_net: "Net",
         th_action: "İşlem",
-        attendance_tracking: "Devamsızlık Takip Sistemi",
+        attendance_tracking: "Devamsızlık Kayıtları",
         att_date: "Tarih",
         att_status: "Durum",
-        add_att_btn: "Devamsızlık İşle",
-        student_att_info: "Not: Devamsızlık kayıtları PDR birimi tarafından işlenmektedir.",
+        add_att_btn: "Kayıt Ekle",
+        student_att_info: "Devamsızlık kayıtları yalnızca PDR birimi tarafından güncellenebilir.",
         th_date: "Tarih",
         th_status: "Durum",
-        settings_title: "Sistem ve Profil Ayarları",
+        settings_title: "Tercihler & Hesap Ayarları",
+        settings_sub: "Arayüz temasını ve YKS hedeflerini kişiselleştir.",
         theme_setting: "Görünüm Teması",
-        target_field: "YKS Hedef Alan Türü",
-        target_uni: "Hedef Üniversite / Bölüm",
+        target_field: "YKS Puan Türü / Alan",
+        target_uni: "Hedef Üniversite & Bölüm",
         reset_data: "Tüm Demo Verilerini Sıfırla"
       },
       en: {
-        site_title: "Time Tunnel | YKS Tracking System",
+        site_title: "Time Tunnel",
         logout: "Logout",
         yks_countdown: "YKS 2027 Countdown",
         days: "Days",
         hours: "Hours",
         minutes: "Minutes",
         seconds: "Seconds",
-        student_login: "Student Login",
-        student_demo: "Demo: Enter your name to sign in.",
-        student_name: "Student Full Name",
-        student_no: "Student ID",
-        login_btn: "Login",
-        pdr_login: "Guidance / PDR Login",
-        pdr_demo: "Demo Password: 1234",
-        pdr_user: "Counselor Name",
+        auth_login_tab: "Sign In",
+        auth_register_tab: "Create Account",
+        login_title: "Sign In to Your Account",
+        login_sub: "Continue with your Student or PDR account.",
+        username_label: "Username",
         password: "Password",
-        pdr_login_btn: "PDR Dashboard Login",
+        login_btn: "Sign In",
+        register_title: "Create New Account",
+        register_sub: "Register now and start tracking your YKS progress.",
+        role_select_label: "Account Type",
+        full_name: "Full Name",
+        student_no: "Student ID",
+        pdr_code_label: "PDR Authorization Code (Demo: PDR2026)",
+        register_btn: "Complete Registration",
+        stat_total_exams: "Total Exams",
+        stat_avg_net: "Average Net",
+        stat_total_att: "Absence Days",
         tab_exams: "Mock Exams",
         tab_attendance: "Attendance",
         tab_settings: "Settings",
-        exam_tracking: "Mock Exam Tracking System",
-        exam_student_name: "Student Name",
-        exam_name: "Exam Name / Publisher",
-        exam_type: "Exam Type",
+        exam_tracking: "Mock Exam Analytics",
+        exam_sub: "Enter correct and wrong answers to calculate your net score.",
+        exam_student_name: "Student",
+        exam_name: "Publisher / Exam Name",
+        exam_type: "Session",
         correct_count: "Correct",
         wrong_count: "Wrong",
-        add_exam_btn: "Add Exam Result",
+        add_exam_btn: "Save",
         th_student: "Student",
         th_exam: "Exam",
-        th_type: "Type",
+        th_type: "Session",
         th_cw: "C / W",
-        th_net: "Net Score",
+        th_net: "Net",
         th_action: "Action",
-        attendance_tracking: "Attendance Tracking System",
+        attendance_tracking: "Attendance Records",
         att_date: "Date",
         att_status: "Status",
-        add_att_btn: "Record Absence",
-        student_att_info: "Note: Attendance records are managed by the PDR unit.",
+        add_att_btn: "Add Record",
+        student_att_info: "Attendance records can only be updated by the PDR unit.",
         th_date: "Date",
         th_status: "Status",
-        settings_title: "System & Profile Settings",
+        settings_title: "Preferences & Account Settings",
+        settings_sub: "Customize your interface theme and YKS goals.",
         theme_setting: "Appearance Theme",
         target_field: "Target Exam Field",
-        target_uni: "Target University / Major",
+        target_uni: "Target University & Major",
         reset_data: "Reset All Demo Data"
       }
     };
@@ -518,13 +935,11 @@
     }
 
     // --- 2. YKS GERİ SAYIM SAYACI ---
-    // Hedef Tarih: 19 Haziran 2027 10:15
     const targetDate = new Date("June 19, 2027 10:15:00").getTime();
 
     function updateCountdown() {
       const now = new Date().getTime();
       const distance = targetDate - now;
-
       if (distance < 0) return;
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -540,36 +955,123 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // --- 3. KULLANICI GİRİŞİ (ÖĞRENCİ & PDR) ---
+    // --- 3. KULLANICI VERİTABANI & KAYIT/GİRİŞ İŞLEMLERİ ---
+    let users = JSON.parse(localStorage.getItem('yksUsers')) || [
+      { username: "ahmet", password: "1234", fullName: "Ahmet Yılmaz", role: "student", no: "1042" },
+      { username: "pdr", password: "1234", fullName: "Rehber Öğretmen", role: "pdr", no: "" }
+    ];
+
     let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
 
-    function login(role) {
-      if (role === 'student') {
-        const name = document.getElementById('student-name-input').value.trim();
-        const no = document.getElementById('student-no-input').value.trim();
-        if (!name) {
-          alert("Lütfen öğrenci adını giriniz.");
-          return;
-        }
-        currentUser = { role: 'student', name: name, no: no || '100' };
-      } else if (role === 'pdr') {
-        const name = document.getElementById('pdr-name-input').value.trim();
-        const pass = document.getElementById('pdr-pass-input').value;
-        if (pass !== '1234') {
-          alert("Hatalı PDR şifresi! (Demo şifre: 1234)");
-          return;
-        }
-        currentUser = { role: 'pdr', name: name || 'PDR Uzmanı' };
+    function showAuthAlert(msg, type) {
+      const alertBox = document.getElementById('auth-alert');
+      alertBox.textContent = msg;
+      alertBox.className = `alert-msg ${type === 'error' ? 'alert-error' : 'alert-success'}`;
+      alertBox.style.display = 'block';
+    }
+
+    function switchAuthMode(mode) {
+      document.getElementById('auth-alert').style.display = 'none';
+      if (mode === 'login') {
+        document.getElementById('login-form').classList.remove('hidden');
+        document.getElementById('register-form').classList.add('hidden');
+        document.getElementById('tab-btn-login').classList.add('active');
+        document.getElementById('tab-btn-register').classList.remove('active');
+      } else {
+        document.getElementById('login-form').classList.add('hidden');
+        document.getElementById('register-form').classList.remove('hidden');
+        document.getElementById('tab-btn-login').classList.remove('active');
+        document.getElementById('tab-btn-register').classList.add('active');
+      }
+    }
+
+    function toggleStudentNoField() {
+      const role = document.getElementById('reg-role').value;
+      document.getElementById('reg-student-no-group').style.display = role === 'student' ? 'block' : 'none';
+      document.getElementById('reg-pdr-code-group').style.display = role === 'pdr' ? 'block' : 'none';
+    }
+
+    function handleRegister() {
+      const role = document.getElementById('reg-role').value;
+      const fullName = document.getElementById('reg-fullname').value.trim();
+      const studentNo = document.getElementById('reg-student-no').value.trim();
+      const username = document.getElementById('reg-username').value.trim().toLowerCase();
+      const password = document.getElementById('reg-password').value;
+      const pdrCode = document.getElementById('reg-pdr-code').value.trim();
+
+      if (!fullName || !username || !password) {
+        showAuthAlert("Lütfen tüm zorunlu alanları doldurun.", "error");
+        return;
       }
 
+      if (password.length < 4) {
+        showAuthAlert("Şifreniz en az 4 karakter olmalıdır.", "error");
+        return;
+      }
+
+      if (role === 'pdr' && pdrCode !== 'PDR2026') {
+        showAuthAlert("Hatalı PDR Yetki Kodu! (Demo kod: PDR2026)", "error");
+        return;
+      }
+
+      if (users.some(u => u.username === username)) {
+        showAuthAlert("Bu kullanıcı adı zaten alınmış. Lütfen farklı bir kullanıcı adı seçin.", "error");
+        return;
+      }
+
+      const newUser = {
+        username,
+        password,
+        fullName,
+        role,
+        no: role === 'student' ? (studentNo || Math.floor(1000 + Math.random() * 9000)) : ''
+      };
+
+      users.push(newUser);
+      localStorage.setItem('yksUsers', JSON.stringify(users));
+
+      // Kayıt sonrası formu temizle ve giriş ekranına yönlendir
+      document.getElementById('reg-fullname').value = '';
+      document.getElementById('reg-username').value = '';
+      document.getElementById('reg-password').value = '';
+      
+      switchAuthMode('login');
+      document.getElementById('login-username').value = username;
+      showAuthAlert("Hesabınız başarıyla oluşturuldu! Şimdi giriş yapabilirsiniz.", "success");
+    }
+
+    function handleLogin() {
+      const username = document.getElementById('login-username').value.trim().toLowerCase();
+      const password = document.getElementById('login-password').value;
+
+      if (!username || !password) {
+        showAuthAlert("Lütfen kullanıcı adı ve şifrenizi girin.", "error");
+        return;
+      }
+
+      const foundUser = users.find(u => u.username === username && u.password === password);
+
+      if (!foundUser) {
+        showAuthAlert("Kullanıcı adı veya şifre hatalı!", "error");
+        return;
+      }
+
+      currentUser = {
+        username: foundUser.username,
+        name: foundUser.fullName,
+        role: foundUser.role,
+        no: foundUser.no
+      };
+
       localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      document.getElementById('auth-alert').style.display = 'none';
       renderDashboard();
     }
 
     function logout() {
       localStorage.removeItem('currentUser');
       currentUser = null;
-      document.getElementById('login-section').classList.remove('hidden');
+      document.getElementById('auth-section').classList.remove('hidden');
       document.getElementById('dashboard-section').classList.add('hidden');
       document.getElementById('logout-btn').classList.add('hidden');
     }
@@ -577,24 +1079,26 @@
     function renderDashboard() {
       if (!currentUser) return;
 
-      document.getElementById('login-section').classList.add('hidden');
+      document.getElementById('auth-section').classList.add('hidden');
       document.getElementById('dashboard-section').classList.remove('hidden');
       document.getElementById('logout-btn').classList.remove('hidden');
 
       document.getElementById('welcome-user').textContent = currentUser.name;
+      document.getElementById('user-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
+      
       const roleBadge = document.getElementById('user-role-badge');
       
       if (currentUser.role === 'pdr') {
-        roleBadge.textContent = "PDR / Yönetici";
-        roleBadge.style.background = "#e67e22";
+        roleBadge.textContent = "PDR / Yönetici Yetkisi";
+        roleBadge.className = "badge badge-warning";
         document.getElementById('pdr-attendance-form').classList.remove('hidden');
         document.getElementById('att-action-header').classList.remove('hidden');
         document.getElementById('student-att-note').classList.add('hidden');
         document.getElementById('exam-student').value = "";
         document.getElementById('exam-student').readOnly = false;
       } else {
-        roleBadge.textContent = "Öğrenci (No: " + currentUser.no + ")";
-        roleBadge.style.background = "#2ecc71";
+        roleBadge.textContent = "Öğrenci • No: " + currentUser.no;
+        roleBadge.className = "badge badge-primary";
         document.getElementById('pdr-attendance-form').classList.add('hidden');
         document.getElementById('att-action-header').classList.add('hidden');
         document.getElementById('student-att-note').classList.remove('hidden');
@@ -614,9 +1118,9 @@
       btn.classList.add('active');
     }
 
-    // --- 5. DENEME TAKİP SİSTEMİ ---
+    // --- 5. DENEME TAKİP ---
     let exams = JSON.parse(localStorage.getItem('yksExams')) || [
-      { id: 1, student: "Ahmet Yılmaz", title: "Özdebir TYT-1", category: "TYT", correct: 84, wrong: 12, net: 81.0 }
+      { id: 1, student: "Ahmet Yılmaz", title: "Özdebir Türkiye Geneli TYT-1", category: "TYT", correct: 88, wrong: 12, net: "85.00" }
     ];
 
     function addExam() {
@@ -631,19 +1135,8 @@
         return;
       }
 
-      // 4 Yanlış 1 Doğruyu Götürür
       const net = (correct - (wrong / 4)).toFixed(2);
-
-      exams.push({
-        id: Date.now(),
-        student,
-        title,
-        category,
-        correct,
-        wrong,
-        net
-      });
-
+      exams.unshift({ id: Date.now(), student, title, category, correct, wrong, net });
       localStorage.setItem('yksExams', JSON.stringify(exams));
       document.getElementById('exam-title').value = "";
       renderExams();
@@ -663,21 +1156,30 @@
         ? exams 
         : exams.filter(e => e.student.toLowerCase() === currentUser.name.toLowerCase());
 
+      document.getElementById('stat-exam-count').textContent = filteredExams.length;
+      if (filteredExams.length > 0) {
+        const totalNet = filteredExams.reduce((sum, item) => sum + parseFloat(item.net), 0);
+        document.getElementById('stat-avg-net').textContent = (totalNet / filteredExams.length).toFixed(2);
+      } else {
+        document.getElementById('stat-avg-net').textContent = "0.00";
+      }
+
       filteredExams.forEach(exam => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${exam.student}</td>
+          <td><strong>${exam.student}</strong></td>
           <td>${exam.title}</td>
-          <td><strong>${exam.category}</strong></td>
+          <td><span class="badge ${exam.category === 'TYT' ? 'badge-primary' : 'badge-warning'}">${exam.category}</span></td>
           <td>${exam.correct}D / ${exam.wrong}Y</td>
-          <td><span class="badge">${exam.net} Net</span></td>
-          <td><button class="danger" style="padding:4px 8px;" onclick="deleteExam(${exam.id})">Sil</button></td>
+          <td><span class="badge badge-success">${exam.net} Net</span></td>
+          <td><button class="btn-danger" style="padding:6px 10px;" onclick="deleteExam(${exam.id})"><i data-lucide="trash-2" size="14"></i></button></td>
         `;
         tbody.appendChild(tr);
       });
+      lucide.createIcons();
     }
 
-    // --- 6. DEVAMSIZLIK TAKİP SİSTEMİ ---
+    // --- 6. DEVAMSIZLIK TAKİP ---
     let attendances = JSON.parse(localStorage.getItem('yksAttendances')) || [
       { id: 1, student: "Ahmet Yılmaz", date: "2026-11-10", status: "Özürsüz" }
     ];
@@ -692,13 +1194,7 @@
         return;
       }
 
-      attendances.push({
-        id: Date.now(),
-        student,
-        date,
-        status
-      });
-
+      attendances.unshift({ id: Date.now(), student, date, status });
       localStorage.setItem('yksAttendances', JSON.stringify(attendances));
       document.getElementById('att-student').value = "";
       renderAttendance();
@@ -718,30 +1214,29 @@
         ? attendances
         : attendances.filter(a => a.student.toLowerCase() === currentUser.name.toLowerCase());
 
+      document.getElementById('stat-att-count').textContent = filteredAtt.length;
+
       filteredAtt.forEach(att => {
         const tr = document.createElement('tr');
         const deleteBtn = currentUser.role === 'pdr' 
-          ? `<td><button class="danger" style="padding:4px 8px;" onclick="deleteAttendance(${att.id})">Sil</button></td>` 
+          ? `<td><button class="btn-danger" style="padding:6px 10px;" onclick="deleteAttendance(${att.id})"><i data-lucide="trash-2" size="14"></i></button></td>` 
           : '';
         
         tr.innerHTML = `
-          <td>${att.student}</td>
+          <td><strong>${att.student}</strong></td>
           <td>${att.date}</td>
-          <td><span class="badge" style="background:${att.status === 'Özürsüz' ? '#e74c3c' : '#f39c12'}">${att.status}</span></td>
+          <td><span class="badge ${att.status === 'Özürsüz' ? 'badge-danger' : 'badge-warning'}">${att.status}</span></td>
           ${deleteBtn}
         `;
         tbody.appendChild(tr);
       });
+      lucide.createIcons();
     }
 
     // --- 7. AYARLAR ---
     function changeTheme(theme) {
       localStorage.setItem('appTheme', theme);
-      if (theme === 'dark') {
-        document.body.classList.add('dark-theme');
-      } else {
-        document.body.classList.remove('dark-theme');
-      }
+      document.body.classList.toggle('dark-theme', theme === 'dark');
     }
 
     function changeField(field) {
@@ -751,17 +1246,17 @@
 
     function saveTargetUni(val) {
       localStorage.setItem('targetUni', val);
+      document.getElementById('target-uni-display').textContent = val ? "Hedef: " + val : "Hedef belirlenmedi";
     }
 
     function clearAllData() {
-      if (confirm("Tüm deneme ve devamsızlık kayıtları sıfırlanacak. Emin misiniz?")) {
-        localStorage.removeItem('yksExams');
-        localStorage.removeItem('yksAttendances');
+      if (confirm("Tüm kullanıcı, deneme ve devamsızlık kayıtları sıfırlanacak. Emin misiniz?")) {
+        localStorage.clear();
         location.reload();
       }
     }
 
-    // --- SAYFA YÜKLENDİĞİNDE AYARLARI GETİR ---
+    // --- BAŞLANGIÇ AYARLARI ---
     window.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('appLang') || 'tr';
       document.getElementById('language-selector').value = savedLang;
@@ -777,6 +1272,7 @@
 
       const savedUni = localStorage.getItem('targetUni') || '';
       document.getElementById('target-uni-input').value = savedUni;
+      saveTargetUni(savedUni);
 
       if (currentUser) {
         renderDashboard();
