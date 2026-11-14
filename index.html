@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Zaman Tüneli - UZEM & e-Yotek Portalı (Bakımda)</title>
+    <title>Zaman Tüneli - Modern UZEM & e-Yotek Portalı</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -36,138 +36,93 @@
         button:active, a:active { transform: translateY(0) scale(0.98); }
         #splashScreen { transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
         #splashScreen.fade-out { opacity: 0; visibility: hidden; }
-
-        /* Dişli Çark Dönme Animasyonu */
-        @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        @keyframes spin-reverse {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
-        }
-        .animate-gear { animation: spin-slow 10s linear infinite; }
-        .animate-gear-reverse { animation: spin-reverse 8s linear infinite; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased relative">
 
-    <!-- ANİMASYONLU SİTE BAKIMDA EKRANI (ÖNİZLEME BUTONU KALDIRILDI) -->
-    <div id="maintenanceOverlay" class="fixed inset-0 z-[200] bg-slate-900/95 backdrop-blur-xl flex flex-col items-center justify-center text-white p-6 text-center space-y-6">
-        <div class="relative flex items-center justify-center p-6">
-            <!-- Arka Planda Dönen Büyük Çark -->
-            <div class="absolute text-uzem-500/30 animate-gear">
-                <i data-lucide="settings" class="w-28 h-28"></i>
-            </div>
-            <!-- Önde Ters Yöne Dönen Küçük Çark / Monitör Teması -->
-            <div class="relative bg-gradient-to-tr from-uzem-600 to-uzem-500 p-5 rounded-3xl shadow-2xl shadow-uzem-500/30 animate-gear-reverse">
-                <i data-lucide="monitor-cog" class="w-14 h-14 text-white"></i>
-            </div>
-        </div>
-        
-        <div class="space-y-2 max-w-md">
-            <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Planlı Sistem Güncellemesi</span>
-            <h1 class="text-2xl font-extrabold tracking-tight">Sitede Çalışma Var</h1>
-            <p class="text-xs text-slate-400 leading-relaxed">Zaman Tüneli UZEM & e-Yotek altyapımızı sizler için daha hızlı, güvenli ve modern hale getiriyoruz. Kısa süre sonra yeniden yayındayız.</p>
-        </div>
-    </div>
-
-    <!-- MODERN AÇILIŞ EKRANI -->
-    <div id="splashScreen" class="fixed inset-0 z-[100] bg-slate-900 flex flex-col items-center justify-center text-white space-y-4">
-        <div class="bg-gradient-to-tr from-uzem-600 to-uzem-500 p-4 rounded-2xl shadow-2xl shadow-uzem-500/20">
-            <i data-lucide="graduation-cap" class="w-10 h-10 text-white"></i>
-        </div>
-        <div class="text-center space-y-1">
-            <h1 class="text-lg font-bold tracking-tight">Zaman Tüneli UZEM</h1>
-            <p class="text-xs text-slate-400">Yeni nesil eğitim ve sınav platformu yükleniyor...</p>
-        </div>
-        <div class="w-32 h-1 bg-slate-800 rounded-full overflow-hidden mt-2">
-            <div id="splashBar" class="bg-uzem-500 h-full w-full transition-all duration-700"></div>
-        </div>
-    </div>
-
-    <!-- MODERN GİRİŞ / KAYIT EKRANI -->
-    <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto hidden">
-        <div class="modern-card max-w-md w-full p-8 space-y-6 my-auto shadow-2xl">
+    <!-- GİRİŞ VE HESAP OLUŞTURMA EKRANI -->
+    <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+        <div class="modern-card max-w-md w-full p-8 space-y-6 my-auto shadow-2xl bg-white">
             <div class="text-center space-y-2">
                 <div class="inline-flex bg-uzem-50 text-uzem-600 p-3.5 rounded-2xl mb-1 border border-uzem-100 shadow-inner">
                     <i data-lucide="shield-check" class="w-8 h-8"></i>
                 </div>
-                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">UZEM & e-Yotek</h2>
-                <p class="text-slate-500 text-xs">Lütfen rolünüzü seçerek güvenli oturum açın.</p>
+                <h2 id="authTitle" class="text-2xl font-extrabold text-slate-900 tracking-tight">Zaman Tüneli Giriş</h2>
+                <p id="authSubtitle" class="text-slate-500 text-xs">Rolünüzü seçerek oturum açın.</p>
+            </div>
+
+            <!-- Giriş / Kayıt Sekmeleri -->
+            <div class="flex p-1 bg-slate-100 rounded-xl">
+                <button type="button" onclick="switchAuthMode('login')" id="tabLogin" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white text-uzem-600 shadow-sm transition-all">Giriş Yap</button>
+                <button type="button" onclick="switchAuthMode('register')" id="tabRegister" class="flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-900 transition-all">Hesap Oluştur</button>
             </div>
 
             <div class="space-y-1.5">
                 <label class="block text-xs font-bold text-slate-700">Kullanıcı Rolü</label>
-                <select id="roleSelectDropdown" onchange="onRoleSelectChange(this.value)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-bold text-slate-800 focus:outline-none focus:border-uzem-500 focus:ring-2 focus:ring-uzem-500/10">
+                <select id="roleSelectDropdown" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-bold text-slate-800 focus:outline-none focus:border-uzem-500">
                     <option value="ogrenci">Öğrenci</option>
-                    <option value="matematik">Matematik Öğretmeni</option>
-                    <option value="edebiyat">Edebiyat Öğretmeni</option>
                     <option value="pdr">PDR / Rehber Öğretmen</option>
-                    <option value="mudur">Kurum Müdürü</option>
-                    <option value="muhasebe">Muhasebe</option>
-                    <option value="admin">Admin</option>
                 </select>
             </div>
 
-            <div id="authModeTabs" class="flex p-1 bg-slate-100 rounded-xl">
-                <button type="button" onclick="switchAuthTab('login')" id="loginTabBtn" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white text-uzem-600 shadow-sm transition-all">Giriş Yap</button>
-                <button type="button" onclick="switchAuthTab('register')" id="registerTabBtn" class="flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-900 transition-all">Kayıt Ol</button>
-            </div>
-
+            <!-- GİRİŞ FORMU -->
             <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta veya Kullanıcı Adı</label>
-                    <input type="text" id="loginEmail" required placeholder="ornek@uzemportal.com veya ogr_ahmet" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500 focus:ring-2 focus:ring-uzem-500/10">
+                    <input type="text" id="loginEmail" required placeholder="ornek@uzemportal.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre</label>
-                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500 focus:ring-2 focus:ring-uzem-500/10">
+                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500">
                 </div>
                 <button type="submit" class="w-full bg-uzem-600 hover:bg-uzem-700 text-white font-bold py-3.5 rounded-xl text-xs shadow-lg shadow-uzem-600/20">Oturum Aç</button>
             </form>
 
+            <!-- HESAP OLUŞTURMA (KAYIT) FORMU -->
             <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-3.5 hidden">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Ad Soyad</label>
-                    <input type="text" id="regName" required placeholder="Adınız Soyadınız" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500">
+                    <input type="text" id="regName" required placeholder="Adınız Soyadınız" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta</label>
-                    <input type="email" id="regEmail" required placeholder="ornek@uzemportal.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500">
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Sınıfı (Öğrenci için)</label>
+                    <input type="text" id="regSinif" placeholder="12-A" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre</label>
-                    <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500">
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta Adresi</label>
+                    <input type="email" id="regEmail" required placeholder="ornek@uzemportal.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
                 </div>
-                <div class="flex items-start gap-2.5 pt-1 bg-slate-50 p-3 rounded-xl border border-slate-200/60">
-                    <input type="checkbox" id="regKvkkCheck" required class="w-4 h-4 text-uzem-600 rounded border-slate-300 mt-0.5">
-                    <label for="regKvkkCheck" class="text-[11px] text-slate-600 leading-snug">6698 sayılı KVKK kapsamında kişisel verilerimin işlenmesine ilişkin aydınlatma metnini okudum ve onaylıyorum.</label>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre Belirle</label>
+                    <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
                 </div>
-                <button type="submit" class="w-full bg-uzem-600 hover:bg-uzem-700 text-white font-bold py-3.5 rounded-xl text-xs shadow-lg shadow-uzem-600/20">Hesap Oluştur</button>
+                <div class="flex items-start gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <input type="checkbox" id="regKvkk" required class="w-4 h-4 text-uzem-600 rounded border-slate-300 mt-0.5">
+                    <label for="regKvkk" class="text-[11px] text-slate-600 leading-snug">6698 sayılı KVKK aydınlatma metnini okudum ve onaylıyorum.</label>
+                </div>
+                <button type="submit" class="w-full bg-uzem-600 hover:bg-uzem-700 text-white font-bold py-3 rounded-xl text-xs shadow-lg shadow-uzem-600/20">Kayıt Ol ve Hesap Aç</button>
             </form>
         </div>
     </div>
 
-    <!-- MODERN HEADER -->
+    <!-- HEADER -->
     <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/80 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
                 <div class="flex items-center gap-3">
-                    <div class="bg-gradient-to-tr from-uzem-600 to-uzem-500 text-white p-2.5 rounded-xl shadow-md shadow-uzem-500/20 flex items-center justify-center font-bold text-xs">
+                    <div class="bg-gradient-to-tr from-uzem-600 to-uzem-500 text-white p-2.5 rounded-xl shadow-md flex items-center justify-center font-bold text-xs">
                         <i data-lucide="graduation-cap" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h1 class="font-bold text-xs tracking-tight text-slate-900">UZEM & e-Yotek</h1>
-                        <p id="portalRoleBadge" class="text-[10px] text-uzem-600 font-semibold uppercase tracking-wider">Güvenli Sınav Portalı</p>
+                        <h1 class="font-bold text-xs tracking-tight text-slate-900">Zaman Tüneli Portalı</h1>
+                        <p id="portalRoleBadge" class="text-[10px] text-uzem-600 font-semibold uppercase tracking-wider">Aktif Oturum</p>
                     </div>
                 </div>
-                <div id="mobileAuthArea" class="sm:hidden"></div>
             </div>
 
             <!-- YKS 2027 SAYACI -->
             <div class="bg-slate-50 border border-slate-200/80 px-4 py-1.5 rounded-xl flex items-center gap-3 text-center shadow-inner">
-                <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider hidden md:inline">YKS 2027:</span>
+                <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider hidden md:inline">YKS 2027 Sayacı:</span>
                 <div class="flex items-center gap-2 text-xs font-extrabold text-uzem-700">
                     <div><span id="yksDays" class="text-sm font-black text-slate-800">000</span> <span class="text-[9px] text-slate-400">GÜN</span></div>
                     <div>:</div>
@@ -184,43 +139,79 @@
     <!-- ANA İÇERİK CONTAINER -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full space-y-5 flex-1">
         
-        <!-- ÖĞRENCİ NAVIGASYON -->
-        <div id="studentNavWrapper" class="space-y-2.5">
+        <!-- ÖĞRENCİ MENÜSÜ -->
+        <div id="studentNavWrapper" class="hidden space-y-2.5">
             <div class="flex overflow-x-auto bg-white border border-slate-200 p-1.5 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="switchTab('denemeTracker')" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-uzem-600 text-white flex items-center gap-2 shadow-md shadow-uzem-600/20"><i data-lucide="bar-chart-3" class="w-4 h-4"></i> Deneme Takip</button>
-                <button onclick="switchTab('eyotekKarneView')" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-2"><i data-lucide="award" class="w-4 h-4"></i> e-Yotek Karne</button>
+                <button onclick="switchTab('denemeTracker')" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-uzem-600 text-white flex items-center gap-2">📊 Deneme Takip Sistemi</button>
+                <button onclick="switchTab('studentAttendance')" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-2">📋 Devamsızlık Durumum</button>
             </div>
         </div>
 
-        <!-- PDR ÖĞRETMEN NAVIGASYON -->
+        <!-- PDR MENÜSÜ -->
         <div id="teacherNavWrapper" class="hidden space-y-2.5">
             <div class="flex overflow-x-auto bg-white border border-slate-200 p-1.5 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="switchTab('pdrDashboard')" class="whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 text-white flex items-center gap-2 shadow-md shadow-emerald-600/20"><i data-lucide="users" class="w-4 h-4"></i> PDR Şifre & Öğrenci Yönetimi</button>
+                <button onclick="switchTab('pdrDashboard')" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 text-white flex items-center gap-2">👥 Öğrenci Yönetimi</button>
+                <button onclick="switchTab('pdrAttendanceManager')" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-2">📋 Devamsızlık Takip Girişi</button>
             </div>
         </div>
 
-        <!-- ================= PDR ÖĞRENCİ & ŞİFRE YÖNETİMİ ================= -->
-        <div id="pdrDashboardView" class="hidden space-y-4">
-            <div class="modern-card p-6 sm:p-8 max-w-5xl mx-auto space-y-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-5">
-                    <div>
-                        <span class="bg-emerald-50 text-emerald-700 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Rehberlik Servisi</span>
-                        <h3 class="text-xl font-extrabold text-slate-900 mt-1">Öğrenci Hesap & Şifre Yönetim Paneli</h3>
-                    </div>
-                    <button onclick="toggleModal('addPdrStudentModal')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-emerald-600/20">
-                        <i data-lucide="user-plus" class="w-4 h-4"></i> Otomatik Hesap Oluştur
-                    </button>
+        <!-- 1. DENEME TAKİP SİSTEMİ -->
+        <div id="denemeTrackerView" class="hidden space-y-4">
+            <div class="modern-card p-6 sm:p-8 max-w-4xl mx-auto space-y-4">
+                <div class="flex justify-between items-center border-b pb-3">
+                    <h3 class="text-xl font-extrabold text-slate-900">Deneme Sınavları Net Takip Paneli</h3>
+                    <button onclick="toggleModal('addDenemeModal')" class="bg-uzem-600 text-white px-3 py-2 rounded-xl text-xs font-bold">+ Yeni Deneme Ekle</button>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50/80 text-slate-600 rounded-lg">
+                        <thead class="bg-slate-50 text-slate-600">
                             <tr>
-                                <th class="p-3.5 font-bold rounded-l-xl">Ad Soyad</th>
-                                <th class="p-3.5 font-bold">Sınıf</th>
-                                <th class="p-3.5 font-bold">Kullanıcı Adı</th>
-                                <th class="p-3.5 font-bold">Geçici Şifre</th>
-                                <th class="p-3.5 font-bold">KVKK Onayı</th>
-                                <th class="p-3.5 font-bold text-center rounded-r-xl">İşlem</th>
+                                <th class="p-3">Deneme Adı</th>
+                                <th class="p-3">Türkçe Net</th>
+                                <th class="p-3">Matematik Net</th>
+                                <th class="p-3">Sosyal Net</th>
+                                <th class="p-3">Fen Net</th>
+                                <th class="p-3 font-bold text-uzem-700">Toplam Net</th>
+                            </tr>
+                        </thead>
+                        <tbody id="denemeTableBody" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. ÖĞRENCİ DEVAMSIZLIK GÖRÜNÜMÜ -->
+        <div id="studentAttendanceView" class="hidden space-y-4">
+            <div class="modern-card p-6 sm:p-8 max-w-xl mx-auto space-y-4 text-center">
+                <h3 class="text-xl font-extrabold text-slate-900">Devamsızlık Bilgilerim</h3>
+                <div class="grid grid-cols-2 gap-4 pt-2">
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <span class="text-xs text-slate-500 font-bold block uppercase">Özürlü Devamsızlık</span>
+                        <span id="lblOzurlu" class="text-2xl font-black text-uzem-600">0 Gün</span>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <span class="text-xs text-slate-500 font-bold block uppercase">Özürsüz Devamsızlık</span>
+                        <span id="lblOzursuz" class="text-2xl font-black text-rose-600">0 Gün</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. PDR ÖĞRENCİ YÖNETİMİ -->
+        <div id="pdrDashboardView" class="hidden space-y-4">
+            <div class="modern-card p-6 sm:p-8 max-w-5xl mx-auto space-y-4">
+                <div class="flex justify-between items-center border-b pb-3">
+                    <h3 class="text-xl font-extrabold text-slate-900">PDR Öğrenci Listesi</h3>
+                    <button onclick="toggleModal('addStudentModal')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold">+ Yeni Öğrenci Kaydet</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-50 text-slate-600">
+                            <tr>
+                                <th class="p-3">Ad Soyad</th>
+                                <th class="p-3">Sınıf</th>
+                                <th class="p-3">E-Posta</th>
+                                <th class="p-3">Şifre</th>
                             </tr>
                         </thead>
                         <tbody id="pdrStudentTableBody" class="divide-y divide-slate-100"></tbody>
@@ -229,104 +220,62 @@
             </div>
         </div>
 
-        <!-- ================= e-Yotek KARNE GÖRÜNÜMÜ ================= -->
-        <div id="eyotekKarneViewView" class="hidden space-y-4">
-            <div class="modern-card p-6 sm:p-8 max-w-4xl mx-auto space-y-6">
-                <div class="border-b border-slate-100 pb-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <div>
-                        <span class="bg-uzem-50 text-uzem-700 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">e-Yotek Sınav Karnesi</span>
-                        <h3 class="text-xl font-extrabold text-slate-900 mt-1">Öğrenci Sınav ve Net Analiz Karnesi</h3>
-                    </div>
-                    <button onclick="alert('PDF Karne raporu başarıyla indirildi.')" class="bg-uzem-600 hover:bg-uzem-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-md shadow-uzem-600/20">
-                        <i data-lucide="download" class="w-4 h-4"></i> Karne İndir (PDF)
-                    </button>
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                    <div class="bg-slate-50 border border-slate-200/80 p-4 rounded-2xl text-center space-y-1">
-                        <span class="text-[10px] text-slate-400 font-bold block uppercase">TYT Türkçe</span>
-                        <span class="text-2xl font-black text-uzem-700">32.5</span>
-                    </div>
-                    <div class="bg-slate-50 border border-slate-200/80 p-4 rounded-2xl text-center space-y-1">
-                        <span class="text-[10px] text-slate-400 font-bold block uppercase">TYT Sosyal</span>
-                        <span class="text-2xl font-black text-uzem-700">15.0</span>
-                    </div>
-                    <div class="bg-slate-50 border border-slate-200/80 p-4 rounded-2xl text-center space-y-1">
-                        <span class="text-[10px] text-slate-400 font-bold block uppercase">TYT Matematik</span>
-                        <span class="text-2xl font-black text-uzem-700">27.5</span>
-                    </div>
-                    <div class="bg-slate-50 border border-slate-200/80 p-4 rounded-2xl text-center space-y-1">
-                        <span class="text-[10px] text-slate-400 font-bold block uppercase">TYT Fen</span>
-                        <span class="text-2xl font-black text-uzem-700">12.5</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= DENEME TAKİP ================= -->
-        <div id="denemeTrackerView" class="space-y-4">
+        <!-- 4. PDR DEVAMSIZLIK GİRİŞ YÖNETİMİ -->
+        <div id="pdrAttendanceManagerView" class="hidden space-y-4">
             <div class="modern-card p-6 sm:p-8 max-w-4xl mx-auto space-y-4">
-                <h3 class="text-xl font-extrabold text-slate-900">Deneme Takip Paneli</h3>
-                <p class="text-xs text-slate-500">Deneme sınavı sonuçlarınızı ve grafiksel ilerlemenizi buradan güvenle takip edebilirsiniz.</p>
+                <h3 class="text-xl font-extrabold text-slate-900">Öğrenci Devamsızlık Giriş Paneli</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-50 text-slate-600">
+                            <tr>
+                                <th class="p-3">Öğrenci</th>
+                                <th class="p-3">Özürlü (Gün)</th>
+                                <th class="p-3">Özürsüz (Gün)</th>
+                                <th class="p-3 text-center">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pdrAttendanceTableBody" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
     </main>
 
-    <!-- PDR YENİ ÖĞRENCİ MODALI -->
-    <div id="addPdrStudentModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="modern-card max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl">
-            <div class="flex justify-between items-center">
-                <h3 class="text-base font-extrabold text-slate-900">Öğrenci Kayıt ve Otomatik Şifre</h3>
-                <button onclick="toggleModal('addPdrStudentModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
-            </div>
-            <form onsubmit="handlePdrAddStudent(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Öğrenci Adı Soyadı</label>
-                    <input type="text" id="pdrStuName" required placeholder="Ahmet Yılmaz" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Sınıfı</label>
-                    <input type="text" id="pdrStuClass" required placeholder="12-A" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta Adresi</label>
-                    <input type="email" id="pdrStuEmail" required placeholder="ogrenci@uzemportal.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500">
-                </div>
-                <div class="bg-emerald-50/60 border border-emerald-100 p-4 rounded-xl space-y-2">
-                    <div class="flex items-start gap-2.5">
-                        <input type="checkbox" id="kvkkConsentCheck" required class="w-4 h-4 text-emerald-600 rounded border-slate-300 mt-0.5">
-                        <label for="kvkkConsentCheck" class="text-[11px] text-emerald-900 font-semibold leading-snug">6698 Sayılı KVKK Aydınlatma Metni ve Veli Onayı Alınmıştır.</label>
-                    </div>
-                </div>
-                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-xl text-xs font-bold shadow-lg shadow-emerald-600/20">Hesap ve Şifre Üret</button>
+    <!-- YENİ DENEME EKLEME MODALI -->
+    <div id="addDenemeModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="modern-card max-w-sm w-full p-6 space-y-4 shadow-2xl bg-white">
+            <h3 class="text-base font-bold text-slate-900">Yeni Deneme Sınavı Ekle</h3>
+            <form onsubmit="handleSaveDeneme(event)" class="space-y-3">
+                <input type="text" id="denemeAdi" required placeholder="Deneme Adı (Örn: TYT Kurumsal-1)" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <input type="number" step="0.5" id="netTurkce" required placeholder="Türkçe Net" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <input type="number" step="0.5" id="netMat" required placeholder="Matematik Net" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <input type="number" step="0.5" id="netSosyal" required placeholder="Sosyal Net" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <input type="number" step="0.5" id="netFen" required placeholder="Fen Net" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <button type="submit" class="w-full bg-uzem-600 text-white py-2.5 rounded-xl text-xs font-bold">Kaydet</button>
             </form>
+            <button onclick="toggleModal('addDenemeModal')" class="w-full text-center text-xs text-slate-400">İptal</button>
+        </div>
+    </div>
+
+    <!-- PDR ÖĞRENCİ EKLEME MODALI -->
+    <div id="addStudentModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="modern-card max-w-sm w-full p-6 space-y-4 shadow-2xl bg-white">
+            <h3 class="text-base font-bold text-slate-900">Yeni Öğrenci Ekle</h3>
+            <form onsubmit="handleSaveStudent(event)" class="space-y-3">
+                <input type="text" id="newStuName" required placeholder="Ad Soyad" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <input type="text" id="newStuClass" required placeholder="Sınıfı (Örn: 12-A)" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <input type="email" id="newStuEmail" required placeholder="E-posta Adresi" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <input type="password" id="newStuPass" required placeholder="Şifre" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <button type="submit" class="w-full bg-emerald-600 text-white py-2.5 rounded-xl text-xs font-bold">Öğrenciyi Kaydet</button>
+            </form>
+            <button onclick="toggleModal('addStudentModal')" class="w-full text-center text-xs text-slate-400">İptal</button>
         </div>
     </div>
 
     <!-- SCRIPT -->
     <script>
-        let selectedAuthRole = 'ogrenci';
-
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                const splash = document.getElementById('splashScreen');
-                if (splash) splash.classList.add('fade-out');
-                
-                const session = JSON.parse(localStorage.getItem('zt_local_session'));
-                if (session) {
-                    applyUserSessionUI(session.email, session.role);
-                } else {
-                    const lockScreen = document.getElementById('authLockScreen');
-                    if (lockScreen) lockScreen.classList.remove('hidden');
-                }
-                lucide.createIcons();
-            }, 500);
-        });
-
-        function onRoleSelectChange(role) {
-            selectedAuthRole = role;
-        }
-
+        // YKS 2027 Geri Sayım Sayacı
         function updateYksCountdown() {
             const diff = new Date('June 19, 2027 10:15:00').getTime() - new Date().getTime();
             const daysEl = document.getElementById('yksDays');
@@ -340,162 +289,203 @@
             }
         }
         setInterval(updateYksCountdown, 1000);
+        updateYksCountdown();
 
-        let systemUsers = JSON.parse(localStorage.getItem('zt_system_users')) || [
-            { id: 1, name: 'Sistem Yöneticisi', email: 'admin@uzemportal.com', username: 'admin', password: '123', role: 'admin', kvkk: true },
-            { id: 2, name: 'Mehmet Demir', email: 'mehmet@ogrenci.com', username: 'ogrenci_mehmet', password: 'uzm789', role: 'ogrenci', sinif: '12-A', kvkk: true },
-            { id: 3, name: 'Ayşe PDR', email: 'pdr@uzemportal.com', username: 'pdr_ayse', password: 'pdr123', role: 'pdr', kvkk: true }
+        // Veri Depolama Başlangıç Verileri
+        let systemUsers = JSON.parse(localStorage.getItem('zt_users')) || [
+            { id: 1, name: 'Ahmet Yılmaz', email: 'ogrenci@uzemportal.com', role: 'ogrenci', sinif: '12-A', password: '123', ozurlu: 2, ozursuz: 1 },
+            { id: 2, name: 'Ayşe PDR', email: 'pdr@uzemportal.com', role: 'pdr', password: '123' }
         ];
+
+        let denemeler = JSON.parse(localStorage.getItem('zt_denemeler')) || [
+            { id: 1, ad: 'Öncü TYT-1', turkce: 30, mat: 25, sosyal: 15, fen: 10 }
+        ];
+
+        function switchAuthMode(mode) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const tabLogin = document.getElementById('tabLogin');
+            const tabRegister = document.getElementById('tabRegister');
+            const authTitle = document.getElementById('authTitle');
+            const authSubtitle = document.getElementById('authSubtitle');
+
+            if (mode === 'login') {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                tabLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-uzem-600 shadow-sm transition-all";
+                tabRegister.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-900 transition-all";
+                authTitle.textContent = "Zaman Tüneli Giriş";
+                authSubtitle.textContent = "Rolünüzü seçerek oturum açın.";
+            } else {
+                registerForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+                tabRegister.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-uzem-600 shadow-sm transition-all";
+                tabLogin.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-900 transition-all";
+                authTitle.textContent = "Hesap Oluştur";
+                authSubtitle.textContent = "Yeni bir öğrenci hesabı açın.";
+            }
+        }
 
         function handleRegister(e) {
             e.preventDefault();
-            const kvkkCheck = document.getElementById('regKvkkCheck');
-            if (kvkkCheck && !kvkkCheck.checked) return alert("KVKK onayını işaretlemelisiniz.");
-            
             const name = document.getElementById('regName').value;
             const email = document.getElementById('regEmail').value;
-            const role = selectedAuthRole;
-            
-            if (systemUsers.some(u => u.email === email)) return alert("Bu e-posta kayıtlı.");
-            
-            const username = email.split('@')[0];
             const password = document.getElementById('regPassword').value;
-            
-            systemUsers.push({ id: Date.now(), name, email, username, password, role, sinif: '12-B', kvkk: true });
-            localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
-            alert("Kayıt başarılı! Kullanıcı adınız: " + username);
-            switchAuthTab('login');
+            const sinif = document.getElementById('regSinif').value || '12-A';
+            const selectedRole = document.getElementById('roleSelectDropdown').value;
+
+            if (systemUsers.some(u => u.email === email)) {
+                return alert("Bu e-posta adresiyle zaten bir kayıt bulunuyor!");
+            }
+
+            const newUser = {
+                id: Date.now(),
+                name,
+                email,
+                role: selectedRole,
+                sinif,
+                password,
+                ozurlu: 0,
+                ozursuz: 0
+            };
+
+            systemUsers.push(newUser);
+            localStorage.setItem('zt_users', JSON.stringify(systemUsers));
+            alert("Hesabınız başarıyla oluşturuldu! Şimdi giriş yapabilirsiniz.");
+            switchAuthMode('login');
+            e.target.reset();
         }
 
         function handleLogin(e) {
             e.preventDefault();
-            const inputVal = document.getElementById('loginEmail').value;
+            const emailOrUser = document.getElementById('loginEmail').value;
             const pass = document.getElementById('loginPassword').value;
-            
-            let user = systemUsers.find(u => (u.email === inputVal || u.username === inputVal) && u.password === pass);
-            if (!user) {
-                user = systemUsers.find(u => u.email === inputVal || u.username === inputVal);
-            }
-            if (!user) return alert("Hatalı kullanıcı adı veya şifre!");
-            
-            localStorage.setItem('zt_local_session', JSON.stringify({ email: user.email, role: user.role }));
-            applyUserSessionUI(user.email, user.role);
+            const selectedRole = document.getElementById('roleSelectDropdown').value;
+
+            const user = systemUsers.find(u => u.email === emailOrUser && u.password === pass && u.role === selectedRole);
+            if (!user) return alert("Hatalı e-posta, şifre veya rol seçimi!");
+
+            localStorage.setItem('zt_session', JSON.stringify(user));
+            applySession(user);
         }
 
-        function applyUserSessionUI(email, role) {
-            const lockScreen = document.getElementById('authLockScreen');
-            const studentNav = document.getElementById('studentNavWrapper');
-            const teacherNav = document.getElementById('teacherNavWrapper');
-            
-            if (lockScreen) lockScreen.classList.add('hidden');
-            if (studentNav) studentNav.classList.add('hidden');
-            if (teacherNav) teacherNav.classList.add('hidden');
+        function applySession(user) {
+            document.getElementById('authLockScreen').classList.add('hidden');
+            document.getElementById('studentNavWrapper').classList.add('hidden');
+            document.getElementById('teacherNavWrapper').classList.add('hidden');
 
-            if (role === 'pdr') {
-                if (teacherNav) teacherNav.classList.remove('hidden');
+            const authArea = document.getElementById('authArea');
+            authArea.innerHTML = `<div class="flex items-center gap-2 bg-slate-100 border px-3 py-1.5 rounded-xl text-xs"><span class="font-bold">${user.name} (${user.role.toUpperCase()})</span><button onclick="localStorage.removeItem('zt_session');location.reload();" class="text-rose-600 font-bold ml-1">Çıkış</button></div>`;
+
+            if (user.role === 'pdr') {
+                document.getElementById('teacherNavWrapper').classList.remove('hidden');
                 switchTab('pdrDashboard');
             } else {
-                if (studentNav) studentNav.classList.remove('hidden');
+                document.getElementById('studentNavWrapper').classList.remove('hidden');
                 switchTab('denemeTracker');
-            }
-
-            const authHTML = `<div class="flex items-center gap-2.5 bg-slate-100 border border-slate-200 px-3.5 py-2 rounded-xl text-xs"><span class="font-bold text-slate-800">${email}</span><button onclick="localStorage.removeItem('zt_local_session');location.reload();" class="text-rose-600 font-bold ml-1 hover:underline">Çıkış</button></div>`;
-            
-            const authArea = document.getElementById('authArea');
-            const mobileAuthArea = document.getElementById('mobileAuthArea');
-            if (authArea) authArea.innerHTML = authHTML;
-            if (mobileAuthArea) mobileAuthArea.innerHTML = authHTML;
-            
-            lucide.createIcons();
-        }
-
-        function switchAuthTab(tab) {
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            const loginTabBtn = document.getElementById('loginTabBtn');
-            const registerTabBtn = document.getElementById('registerTabBtn');
-
-            if (tab === 'login') {
-                if (loginForm) loginForm.classList.remove('hidden');
-                if (registerForm) registerForm.classList.add('hidden');
-                if (loginTabBtn) { loginTabBtn.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-uzem-600 shadow-sm transition-all"; }
-                if (registerTabBtn) { registerTabBtn.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-900 transition-all"; }
-            } else {
-                if (registerForm) registerForm.classList.remove('hidden');
-                if (loginForm) loginForm.classList.add('hidden');
-                if (registerTabBtn) { registerTabBtn.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-uzem-600 shadow-sm transition-all"; }
-                if (loginTabBtn) { loginTabBtn.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-900 transition-all"; }
+                renderStudentAttendance(user);
             }
         }
 
         function switchTab(tab) {
-            ['pdrDashboardView', 'eyotekKarneViewView', 'denemeTrackerView'].forEach(v => {
+            ['denemeTrackerView', 'studentAttendanceView', 'pdrDashboardView', 'pdrAttendanceManagerView'].forEach(v => {
                 const el = document.getElementById(v);
                 if (el) el.classList.add('hidden');
             });
             const target = document.getElementById(tab + 'View');
             if (target) target.classList.remove('hidden');
+
+            if (tab === 'denemeTracker') renderDenemeler();
             if (tab === 'pdrDashboard') renderPdrStudents();
-            lucide.createIcons();
+            if (tab === 'pdrAttendanceManager') renderPdrAttendanceManager();
         }
 
-        function handlePdrAddStudent(e) {
+        // Deneme Takip Mantığı
+        function handleSaveDeneme(e) {
             e.preventDefault();
-            const kvkk = document.getElementById('kvkkConsentCheck');
-            if (kvkk && !kvkk.checked) return alert("KVKK onayını işaretlemelisiniz.");
-            
-            const name = document.getElementById('pdrStuName').value;
-            const email = document.getElementById('pdrStuEmail').value;
-            const sinif = document.getElementById('pdrStuClass').value;
-            
-            const cleanName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
-            const randomNum = Math.floor(1000 + Math.random() * 9000);
-            const username = `ogr_${cleanName}_${randomNum}`;
-            const password = Math.random().toString(36).slice(-6);
+            denemeler.push({
+                id: Date.now(),
+                ad: document.getElementById('denemeAdi').value,
+                turkce: parseFloat(document.getElementById('netTurkce').value),
+                mat: parseFloat(document.getElementById('netMat').value),
+                sosyal: parseFloat(document.getElementById('netSosyal').value),
+                fen: parseFloat(document.getElementById('netFen').value)
+            });
+            localStorage.setItem('zt_denemeler', JSON.stringify(denemeler));
+            toggleModal('addDenemeModal');
+            renderDenemeler();
+            e.target.reset();
+        }
 
+        function renderDenemeler() {
+            const tbody = document.getElementById('denemeTableBody');
+            tbody.innerHTML = denemeler.length === 0 ? '<tr><td colspan="6" class="p-4 text-center text-slate-400">Henüz deneme eklenmedi.</td></tr>' : denemeler.map(d => {
+                const toplamNet = (d.turkce + d.mat + d.sosyal + d.fen).toFixed(2);
+                return `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold">${d.ad}</td><td class="p-3">${d.turkce}</td><td class="p-3">${d.mat}</td><td class="p-3">${d.sosyal}</td><td class="p-3">${d.fen}</td><td class="p-3 font-bold text-uzem-700">${toplamNet} Net</td></tr>`;
+            }).join('');
+        }
+
+        // Devamsızlık Gösterge
+        function renderStudentAttendance(user) {
+            document.getElementById('lblOzurlu').textContent = (user.ozurlu || 0) + ' Gün';
+            document.getElementById('lblOzursuz').textContent = (user.ozursuz || 0) + ' Gün';
+        }
+
+        // PDR Öğrenci Ekleme
+        function handleSaveStudent(e) {
+            e.preventDefault();
             systemUsers.push({
                 id: Date.now(),
-                name,
-                email,
-                username,
-                password,
+                name: document.getElementById('newStuName').value,
+                sinif: document.getElementById('newStuClass').value,
+                email: document.getElementById('newStuEmail').value,
+                password: document.getElementById('newStuPass').value,
                 role: 'ogrenci',
-                sinif,
-                kvkk: true
+                ozurlu: 0,
+                ozursuz: 0
             });
-            localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
-            toggleModal('addPdrStudentModal');
+            localStorage.setItem('zt_users', JSON.stringify(systemUsers));
+            toggleModal('addStudentModal');
             renderPdrStudents();
             e.target.reset();
-            alert(`Öğrenci hesabı başarıyla oluşturuldu!\n\nKullanıcı Adı: ${username}\nGeçici Şifre: ${password}`);
+            alert("Öğrenci başarıyla kaydedildi.");
         }
 
         function renderPdrStudents() {
             const tbody = document.getElementById('pdrStudentTableBody');
-            if (!tbody) return;
             const students = systemUsers.filter(u => u.role === 'ogrenci');
-            tbody.innerHTML = students.length === 0 ? '<tr><td colspan="6" class="p-4 text-center text-slate-400">Kayıtlı öğrenci bulunmuyor.</td></tr>' : students.map(s => `
-                <tr class="hover:bg-slate-50/80 transition-colors">
-                    <td class="p-3.5 font-bold text-slate-800">${s.name}</td>
-                    <td class="p-3.5 font-semibold text-emerald-700">${s.sinif || '12-A'}</td>
-                    <td class="p-3.5 font-mono text-uzem-600 font-bold">${s.username || 'Atanmadı'}</td>
-                    <td class="p-3.5 font-mono text-slate-600 bg-slate-100/60 rounded px-2">${s.password || '******'}</td>
-                    <td class="p-3.5"><span class="bg-emerald-50 text-emerald-700 border border-emerald-200/60 text-[10px] font-extrabold px-2.5 py-1 rounded-full">KVKK Onaylı</span></td>
-                    <td class="p-3.5 text-center"><button onclick="deleteStudent(${s.id})" class="text-rose-600 hover:text-rose-700 font-bold p-1">Sil</button></td>
+            tbody.innerHTML = students.map(s => `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold">${s.name}</td><td class="p-3">${s.sinif}</td><td class="p-3">${s.email}</td><td class="p-3 font-mono">${s.password}</td></tr>`).join('');
+        }
+
+        function renderPdrAttendanceManager() {
+            const tbody = document.getElementById('pdrAttendanceTableBody');
+            const students = systemUsers.filter(u => u.role === 'ogrenci');
+            tbody.innerHTML = students.map(s => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 font-semibold">${s.name} (${s.sinif})</td>
+                    <td class="p-3"><input type="number" id="oz_${s.id}" value="${s.ozurlu || 0}" class="w-16 border rounded p-1 text-xs"></td>
+                    <td class="p-3"><input type="number" id="ozs_${s.id}" value="${s.ozursuz || 0}" class="w-16 border rounded p-1 text-xs"></td>
+                    <td class="p-3 text-center"><button onclick="updateAttendance(${s.id})" class="bg-emerald-600 text-white px-3 py-1 rounded text-xs font-bold">Güncelle</button></td>
                 </tr>
             `).join('');
         }
 
-        function deleteStudent(id) {
-            systemUsers = systemUsers.filter(u => u.id !== id);
-            localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
-            renderPdrStudents();
+        function updateAttendance(id) {
+            const oz = parseInt(document.getElementById(`oz_${id}`).value) || 0;
+            const ozs = parseInt(document.getElementById(`ozs_${id}`).value) || 0;
+            systemUsers = systemUsers.map(u => u.id === id ? { ...u, ozurlu: oz, ozursuz: ozs } : u);
+            localStorage.setItem('zt_users', JSON.stringify(systemUsers));
+            alert("Devamsızlık güncellendi.");
         }
 
         function toggleModal(id) {
-            const modal = document.getElementById(id);
-            if (modal) modal.classList.toggle('hidden');
+            document.getElementById(id).classList.toggle('hidden');
         }
+
+        window.onload = () => {
+            const session = JSON.parse(localStorage.getItem('zt_session'));
+            if (session) applySession(session);
+        };
     </script>
 </body>
 </html>
