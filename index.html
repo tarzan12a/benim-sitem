@@ -150,7 +150,7 @@
         <!-- PDR MENÜSÜ -->
         <div id="teacherNavWrapper" class="hidden space-y-2.5">
             <div class="flex overflow-x-auto bg-white border border-slate-200 p-1.5 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="switchTab('pdrDashboard')" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 text-white flex items-center gap-2">👥 Öğrenci Yönetimi</button>
+                <button onclick="switchTab('pdrDashboard')" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 text-white flex items-center gap-2">👥 Öğrenci Yönetimi (Ekle/Sil)</button>
                 <button onclick="switchTab('pdrAttendanceManager')" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-2">📋 Devamsızlık Takip Girişi</button>
             </div>
         </div>
@@ -197,12 +197,12 @@
             </div>
         </div>
 
-        <!-- 3. PDR ÖĞRENCİ YÖNETİMİ -->
+        <!-- 3. PDR ÖĞRENCİ YÖNETİMİ (EKLEME VE SİLME ÖZELLİKLİ) -->
         <div id="pdrDashboardView" class="hidden space-y-4">
             <div class="modern-card p-6 sm:p-8 max-w-5xl mx-auto space-y-4">
                 <div class="flex justify-between items-center border-b pb-3">
-                    <h3 class="text-xl font-extrabold text-slate-900">PDR Öğrenci Listesi</h3>
-                    <button onclick="toggleModal('addStudentModal')" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold">+ Yeni Öğrenci Kaydet</button>
+                    <h3 class="text-xl font-extrabold text-slate-900">PDR Öğrenci Listesi ve Yönetimi</h3>
+                    <button onclick="toggleModal('addStudentModal')" class="bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold">+ Yeni Öğrenci Ekle</button>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
@@ -212,6 +212,7 @@
                                 <th class="p-3">Sınıf</th>
                                 <th class="p-3">E-Posta</th>
                                 <th class="p-3">Şifre</th>
+                                <th class="p-3 text-center">İşlem</th>
                             </tr>
                         </thead>
                         <tbody id="pdrStudentTableBody" class="divide-y divide-slate-100"></tbody>
@@ -261,7 +262,7 @@
     <!-- PDR ÖĞRENCİ EKLEME MODALI -->
     <div id="addStudentModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="modern-card max-w-sm w-full p-6 space-y-4 shadow-2xl bg-white">
-            <h3 class="text-base font-bold text-slate-900">Yeni Öğrenci Ekle</h3>
+            <h3 class="text-base font-bold text-slate-900">PDR Tarafından Yeni Öğrenci Ekle</h3>
             <form onsubmit="handleSaveStudent(event)" class="space-y-3">
                 <input type="text" id="newStuName" required placeholder="Ad Soyad" class="w-full border rounded-xl px-3 py-2 text-xs">
                 <input type="text" id="newStuClass" required placeholder="Sınıfı (Örn: 12-A)" class="w-full border rounded-xl px-3 py-2 text-xs">
@@ -431,7 +432,7 @@
             document.getElementById('lblOzursuz').textContent = (user.ozursuz || 0) + ' Gün';
         }
 
-        // PDR Öğrenci Ekleme
+        // PDR Tarafından Öğrenci Ekleme
         function handleSaveStudent(e) {
             e.preventDefault();
             systemUsers.push({
@@ -451,10 +452,29 @@
             alert("Öğrenci başarıyla kaydedildi.");
         }
 
+        // PDR Tarafından Öğrenci Silme
+        function deleteStudent(id) {
+            if (confirm("Bu öğrenciyi sistemden silmek istediğinize emin misiniz?")) {
+                systemUsers = systemUsers.filter(u => u.id !== id);
+                localStorage.setItem('zt_users', JSON.stringify(systemUsers));
+                renderPdrStudents();
+            }
+        }
+
         function renderPdrStudents() {
             const tbody = document.getElementById('pdrStudentTableBody');
             const students = systemUsers.filter(u => u.role === 'ogrenci');
-            tbody.innerHTML = students.map(s => `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold">${s.name}</td><td class="p-3">${s.sinif}</td><td class="p-3">${s.email}</td><td class="p-3 font-mono">${s.password}</td></tr>`).join('');
+            tbody.innerHTML = students.length === 0 ? '<tr><td colspan="5" class="p-4 text-center text-slate-400">Kayıtlı öğrenci bulunmuyor.</td></tr>' : students.map(s => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 font-semibold">${s.name}</td>
+                    <td class="p-3">${s.sinif || '12-A'}</td>
+                    <td class="p-3">${s.email}</td>
+                    <td class="p-3 font-mono">${s.password}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="deleteStudent(${s.id})" class="bg-rose-50 text-rose-600 hover:bg-rose-100 px-3 py-1 rounded-lg text-xs font-bold transition-all">Sil</button>
+                    </td>
+                </tr>
+            `).join('');
         }
 
         function renderPdrAttendanceManager() {
@@ -462,7 +482,7 @@
             const students = systemUsers.filter(u => u.role === 'ogrenci');
             tbody.innerHTML = students.map(s => `
                 <tr class="hover:bg-slate-50">
-                    <td class="p-3 font-semibold">${s.name} (${s.sinif})</td>
+                    <td class="p-3 font-semibold">${s.name} (${s.sinif || '12-A'})</td>
                     <td class="p-3"><input type="number" id="oz_${s.id}" value="${s.ozurlu || 0}" class="w-16 border rounded p-1 text-xs"></td>
                     <td class="p-3"><input type="number" id="ozs_${s.id}" value="${s.ozursuz || 0}" class="w-16 border rounded p-1 text-xs"></td>
                     <td class="p-3 text-center"><button onclick="updateAttendance(${s.id})" class="bg-emerald-600 text-white px-3 py-1 rounded text-xs font-bold">Güncelle</button></td>
