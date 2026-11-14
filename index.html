@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zaman Tüneli | Modern YKS & Öğrenci Takip Platformu</title>
-  <!-- Tarayıcı Sekme İkonu (Favicon) -->
   <link rel="icon" type="image/png" href="logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;600;800&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -41,7 +40,6 @@
       --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
     }
 
-    /* Renk Paleti Özelleştirmeleri */
     body[data-accent="emerald"] {
       --primary: #10b981;
       --primary-hover: #059669;
@@ -80,7 +78,6 @@
       padding-bottom: 60px;
     }
 
-    /* Giriş Animasyonu (Splash Screen) */
     #splash-screen {
       position: fixed;
       top: 0;
@@ -259,7 +256,6 @@
       transition: border-radius 0.3s ease;
     }
 
-    /* YKS Sayaç Kartı */
     .countdown-hero {
       background: var(--primary-gradient);
       color: white;
@@ -314,7 +310,6 @@
       text-transform: uppercase;
     }
 
-    /* İlerleme Seviyesi (Progress Bar) */
     .progress-section {
       margin-top: 20px;
       background: rgba(255, 255, 255, 0.14);
@@ -345,7 +340,6 @@
       transition: width 0.6s ease;
     }
 
-    /* Auth (Giriş & Kayıt) Kartı */
     .auth-container {
       max-width: 480px;
       margin: 0 auto;
@@ -426,7 +420,6 @@
       border: 1px solid rgba(16, 185, 129, 0.25);
     }
 
-    /* Kullanıcı Bilgi & Avatar */
     .user-banner {
       display: flex;
       justify-content: space-between;
@@ -463,7 +456,6 @@
       object-fit: cover;
     }
 
-    /* Hedef İlerleme Kartı */
     .goal-progress-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -631,6 +623,13 @@
     .swatch:hover { transform: scale(1.1); }
     .swatch.active { border-color: var(--text-main); transform: scale(1.12); }
 
+    /* Net Hesaplayıcı Tablosu */
+    .calc-table input {
+      width: 80px;
+      padding: 6px 10px;
+      text-align: center;
+    }
+
     @media (max-width: 600px) {
       .countdown-grid { grid-template-columns: repeat(2, 1fr); }
       header { padding: 12px 16px; }
@@ -639,7 +638,7 @@
 </head>
 <body>
 
-  <!-- Giriş Animasyonu (Logo Entegreli) -->
+  <!-- Giriş Animasyonu -->
   <div id="splash-screen">
     <div class="splash-content">
       <img src="logo.png" alt="YKS Logo" class="splash-img" onerror="this.style.display='none'">
@@ -649,7 +648,7 @@
     </div>
   </div>
 
-  <!-- Üst Menü (Logo Entegreli) -->
+  <!-- Üst Menü -->
   <header>
     <div class="brand">
       <img src="logo.png" alt="YKS Logo" class="brand-logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%231a1d2b%22/><text x=%2250%22 y=%2262%22 font-size=%2234%22 font-weight=%22bold%22 text-anchor=%22middle%22 fill=%22%23e2b87d%22>YKS</text></svg>'">
@@ -687,7 +686,7 @@
 
   <div class="container">
 
-    <!-- YKS Geri Sayım Sayacı + Zaman İlerleme Seviyesi -->
+    <!-- YKS Geri Sayım & Zaman İlerleme -->
     <div class="card countdown-hero">
       <div class="countdown-header">
         <h2><i data-lucide="flame" size="22"></i> <span data-i18n="yks_countdown">YKS 2027 Maratonu</span></h2>
@@ -700,7 +699,6 @@
         <div class="time-box"><span id="seconds">00</span><small data-i18n="seconds">Saniye</small></div>
       </div>
 
-      <!-- YKS Zaman İlerleme Seviyesi -->
       <div class="progress-section">
         <div class="progress-label-row">
           <span data-i18n="time_progress_label">YKS Hazırlık Süreci İlerleme Seviyesi</span>
@@ -722,7 +720,6 @@
 
         <div id="auth-alert" class="alert-msg"></div>
 
-        <!-- GİRİŞ FORMU -->
         <div id="login-form">
           <div class="card-title"><i data-lucide="log-in" color="var(--primary)"></i> <span data-i18n="login_title">Hesabına Giriş Yap</span></div>
           <p class="card-subtitle" data-i18n="login_sub">Öğrenci veya PDR hesabınla devam et.</p>
@@ -747,7 +744,6 @@
           </p>
         </div>
 
-        <!-- KAYIT FORMU -->
         <div id="register-form" class="hidden">
           <div class="card-title"><i data-lucide="user-plus" color="#10b981"></i> <span data-i18n="register_title">Yeni Hesap Oluştur</span></div>
           <p class="card-subtitle" data-i18n="register_sub">Hemen kayıt ol ve YKS gelişimini takip et.</p>
@@ -797,7 +793,6 @@
     <!-- ANA PANEL -->
     <div id="dashboard-section" class="hidden">
       
-      <!-- Profil Kartı -->
       <div class="card user-banner">
         <div class="user-profile">
           <div class="avatar" id="user-avatar">A</div>
@@ -813,7 +808,6 @@
         </div>
       </div>
 
-      <!-- Hedef Net İlerleme Seviyesi Çubuğu -->
       <div class="goal-progress-card">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <div style="display: flex; align-items: center; gap: 8px; font-weight: 700;">
@@ -827,7 +821,6 @@
         </div>
       </div>
 
-      <!-- Özet İstatistik Kartları -->
       <div class="stats-row">
         <div class="stat-card">
           <div class="stat-icon"><i data-lucide="file-check-2"></i></div>
@@ -854,7 +847,10 @@
 
       <!-- Sekmeler -->
       <div class="tabs-wrapper">
-        <button class="tab-btn active" onclick="switchTab('exams-tab', this)">
+        <button class="tab-btn active" onclick="switchTab('calculator-tab', this)">
+          <i data-lucide="calculator" size="16"></i> <span data-i18n="tab_calculator">Net Hesaplayıcı</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('exams-tab', this)">
           <i data-lucide="bar-chart-3" size="16"></i> <span data-i18n="tab_exams">Deneme Takip</span>
         </button>
         <button class="tab-btn" onclick="switchTab('attendance-tab', this)">
@@ -868,10 +864,118 @@
         </button>
       </div>
 
-      <!-- 1. SEKME: DENEME TAKİP -->
-      <div id="exams-tab" class="card tab-content">
+      <!-- 1. YENİ SEKME: DETAYLI YKS NET HESAPLAYICI -->
+      <div id="calculator-tab" class="card tab-content">
+        <div class="card-title"><i data-lucide="calculator" color="var(--primary)"></i> <span data-i18n="calc_title">Detaylı YKS Net Hesaplayıcı</span></div>
+        <p class="card-subtitle" data-i18n="calc_sub">TYT ve AYT dersleri için doğru ve yanlış sayılarını girerek anlık netini ve toplam puanını hesapla.</p>
+        
+        <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+          <button class="btn-primary" id="calc-type-tyt" onclick="switchCalcType('TYT')">TYT Hesapla</button>
+          <button class="btn-secondary" id="calc-type-ayt" onclick="switchCalcType('AYT')">AYT Hesapla</button>
+        </div>
+
+        <!-- TYT Hesaplama Formu -->
+        <div id="tyt-calc-section">
+          <div class="table-responsive">
+            <table class="calc-table">
+              <thead>
+                <tr>
+                  <th data-i18n="th_lesson">Ders</th>
+                  <th data-i18n="correct_count">Doğru</th>
+                  <th data-i18n="wrong_count">Yanlış</th>
+                  <th data-i18n="th_net">Net</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Türkçe (40 Soru)</strong></td>
+                  <td><input type="number" id="t-dogru" min="0" max="40" value="0" oninput="calculateLiveNet()"></td>
+                  <td><input type="number" id="t-yanlis" min="0" max="40" value="0" oninput="calculateLiveNet()"></td>
+                  <td><strong id="t-net" style="color: var(--primary);">0.00</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Sosyal Bilgiler (20 Soru)</strong></td>
+                  <td><input type="number" id="s-dogru" min="0" max="20" value="0" oninput="calculateLiveNet()"></td>
+                  <td><input type="number" id="s-yanlis" min="0" max="20" value="0" oninput="calculateLiveNet()"></td>
+                  <td><strong id="s-net" style="color: var(--primary);">0.00</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Temel Matematik (40 Soru)</strong></td>
+                  <td><input type="number" id="m-dogru" min="0" max="40" value="0" oninput="calculateLiveNet()"></td>
+                  <td><input type="number" id="m-yanlis" min="0" max="40" value="0" oninput="calculateLiveNet()"></td>
+                  <td><strong id="m-net" style="color: var(--primary);">0.00</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Fen Bilimleri (20 Soru)</strong></td>
+                  <td><input type="number" id="f-dogru" min="0" max="20" value="0" oninput="calculateLiveNet()"></td>
+                  <td><input type="number" id="f-yanlis" min="0" max="20" value="0" oninput="calculateLiveNet()"></td>
+                  <td><strong id="f-net" style="color: var(--primary);">0.00</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- AYT Hesaplama Formu -->
+        <div id="ayt-calc-section" class="hidden">
+          <div class="table-responsive">
+            <table class="calc-table">
+              <thead>
+                <tr>
+                  <th data-i18n="th_lesson">Ders</th>
+                  <th data-i18n="correct_count">Doğru</th>
+                  <th data-i18n="wrong_count">Yanlış</th>
+                  <th data-i18n="th_net">Net</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Türk Dili ve Edebiyatı - Sosyal-1 (40 Soru)</strong></td>
+                  <td><input type="number" id="edb-dogru" min="0" max="40" value="0" oninput="calculateLiveNet()"></td>
+                  <td><input type="number" id="edb-yanlis" min="0" max="40" value="0" oninput="calculateLiveNet()"></td>
+                  <td><strong id="edb-net" style="color: var(--primary);">0.00</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Sosyal Bilgiler-2 (40 Soru)</strong></td>
+                  <td><input type="number" id="sos2-dogru" min="0" max="40" value="0" oninput="calculateLiveNet()"></td>
+                  <td><input type="number" id="sos2-yanlis" min="0" max="40" value="0" oninput="calculateLiveNet()"></td>
+                  <td><strong id="sos2-net" style="color: var(--primary);">0.00</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Matematik (40 Soru)</strong></td>
+                  <td><input type="number" id="mat2-dogru" min="0" max="40" value="0" oninput="calculateLiveNet()"></td>
+                  <td><input type="number" id="mat2-yanlis" min="0" max="40" value="0" oninput="calculateLiveNet()"></td>
+                  <td><strong id="mat2-net" style="color: var(--primary);">0.00</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Fen Bilimleri (40 Soru)</strong></td>
+                  <td><input type="number" id="fen2-dogru" min="0" max="40" value="0" oninput="calculateLiveNet()"></td>
+                  <td><input type="number" id="fen2-yanlis" min="0" max="40" value="0" oninput="calculateLiveNet()"></td>
+                  <td><strong id="fen2-net" style="color: var(--primary);">0.00</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; padding: 18px; background: rgba(99, 102, 241, 0.08); border-radius: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+          <div>
+            <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted);" data-i18n="total_calculated_net">Toplam Hesaplanan Net:</span>
+            <h2 id="total-calc-net" style="font-size: 1.8rem; font-weight: 800; color: var(--primary);">0.00</h2>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" id="calc-exam-title" placeholder="Deneme Adı (Örn: 3D TYT-3)" style="max-width: 200px;">
+            <button class="btn-primary" onclick="saveCalculatedExam()">
+              <i data-lucide="save" size="16"></i> <span data-i18n="save_calculated_exam">Deneme Listesine Kaydet</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. SEKME: DENEME TAKİP -->
+      <div id="exams-tab" class="card tab-content hidden">
         <div class="card-title"><i data-lucide="clipboard-list" color="var(--primary)"></i> <span data-i18n="exam_tracking">Deneme Sınavı Analizi</span></div>
-        <p class="card-subtitle" data-i18n="exam_sub">Doğru ve yanlış sayılarını gir, netin otomatik hesaplansın.</p>
+        <p class="card-subtitle" data-i18n="exam_sub">Genel doğru/yanlış girerek ya da hesaplayıcıyı kullanarak ekle.</p>
         
         <div class="grid-form">
           <div class="form-group" style="margin:0;">
@@ -919,7 +1023,7 @@
         </div>
       </div>
 
-      <!-- 2. SEKME: DEVAMSIZLIK -->
+      <!-- 3. SEKME: DEVAMSIZLIK -->
       <div id="attendance-tab" class="card tab-content hidden">
         <div class="card-title"><i data-lucide="calendar-check" color="#ef4444"></i> <span data-i18n="attendance_tracking">Devamsızlık Kayıtları</span></div>
         
@@ -963,7 +1067,7 @@
         </div>
       </div>
 
-      <!-- 3. SEKME: PROFİL AYARLARI & RESİM EKLEME -->
+      <!-- 4. SEKME: PROFİL AYARLARI -->
       <div id="profile-tab" class="card tab-content hidden">
         <div class="card-title"><i data-lucide="user-check" color="var(--primary)"></i> <span data-i18n="profile_settings_title">Profil Bilgileri & Fotoğraf</span></div>
         <p class="card-subtitle" data-i18n="profile_settings_sub">Profil resmini yükle, hedef netini ve kişisel bilgilerini güncelle.</p>
@@ -1020,7 +1124,7 @@
         </div>
       </div>
 
-      <!-- 4. SEKME: GÖRÜNÜM ÖZELLEŞTİRME -->
+      <!-- 5. SEKME: GÖRÜNÜM ÖZELLEŞTİRME -->
       <div id="customize-tab" class="card tab-content hidden">
         <div class="card-title"><i data-lucide="sparkles" color="var(--primary)"></i> <span data-i18n="customize_title">Arayüz & Görünüm Özelleştirme</span></div>
         <p class="card-subtitle" data-i18n="customize_sub">Sitenin renk paletini, yazı tipini ve tema modunu kendi zevkine göre tasarla.</p>
@@ -1077,7 +1181,6 @@
   <script>
     lucide.createIcons();
 
-    // --- 20 DİL DESTEĞİ SÖZLÜĞÜ ---
     const translations = {
       tr: {
         site_title: "Zaman Tüneli", logout: "Çıkış", yks_countdown: "YKS 2027 Maratonu", days: "Gün", hours: "Saat", minutes: "Dakika", seconds: "Saniye",
@@ -1085,8 +1188,11 @@
         auth_login_tab: "Giriş Yap", auth_register_tab: "Hesap Oluştur", login_title: "Hesabına Giriş Yap", login_sub: "Öğrenci veya PDR hesabınla devam et.",
         username_label: "Kullanıcı Adı", password: "Şifre", login_btn: "Giriş Yap", register_title: "Yeni Hesap Oluştur", register_sub: "Hemen kayıt ol ve YKS gelişimini takip et.",
         role_select_label: "Hesap Türü", full_name: "Ad Soyad", student_no: "Öğrenci Numarası", pdr_code_label: "Kurum PDR Yetki Kodu (Demo: PDR2026)", register_btn: "Kaydı Tamamla",
-        stat_total_exams: "Toplam Deneme", stat_avg_net: "Ortalama Net", stat_total_att: "Devamsızlık Günü", tab_exams: "Deneme Takip", tab_attendance: "Devamsızlık",
-        tab_profile: "Profil Ayarları", tab_customize: "Özelleştirme", exam_tracking: "Deneme Sınavı Analizi", exam_sub: "Doğru ve yanlış sayılarını gir, netin hesaplansın.",
+        stat_total_exams: "Toplam Deneme", stat_avg_net: "Ortalama Net", stat_total_att: "Devamsızlık Günü", 
+        tab_calculator: "Net Hesaplayıcı", tab_exams: "Deneme Takip", tab_attendance: "Devamsızlık", tab_profile: "Profil Ayarları", tab_customize: "Özelleştirme",
+        calc_title: "Detaylı YKS Net Hesaplayıcı", calc_sub: "TYT ve AYT dersleri için doğru ve yanlış sayılarını girerek anlık netini hesapla.",
+        th_lesson: "Ders", total_calculated_net: "Toplam Hesaplanan Net:", save_calculated_exam: "Deneme Listesine Kaydet",
+        exam_tracking: "Deneme Sınavı Analizi", exam_sub: "Doğru ve yanlış sayılarını gir, netin hesaplansın.",
         exam_student_name: "Öğrenci", exam_name: "Yayın / Deneme Adı", exam_type: "Oturum", correct_count: "Doğru", wrong_count: "Yanlış", add_exam_btn: "Kaydet",
         th_student: "Öğrenci", th_exam: "Deneme", th_type: "Oturum", th_cw: "D / Y", th_net: "Net", th_action: "İşlem", attendance_tracking: "Devamsızlık Kayıtları",
         att_date: "Tarih", att_status: "Durum", add_att_btn: "Kayıt Ekle", student_att_info: "Devamsızlık kayıtları yalnızca PDR birimi tarafından güncellenebilir.",
@@ -1102,8 +1208,11 @@
         auth_login_tab: "Sign In", auth_register_tab: "Create Account", login_title: "Sign In to Your Account", login_sub: "Continue with your Student or PDR account.",
         username_label: "Username", password: "Password", login_btn: "Sign In", register_title: "Create New Account", register_sub: "Register now and track your progress.",
         role_select_label: "Account Type", full_name: "Full Name", student_no: "Student ID", pdr_code_label: "PDR Authorization Code (Demo: PDR2026)", register_btn: "Complete Registration",
-        stat_total_exams: "Total Exams", stat_avg_net: "Average Net", stat_total_att: "Absence Days", tab_exams: "Mock Exams", tab_attendance: "Attendance",
-        tab_profile: "Profile Settings", tab_customize: "Customization", exam_tracking: "Mock Exam Analytics", exam_sub: "Enter correct and wrong answers.",
+        stat_total_exams: "Total Exams", stat_avg_net: "Average Net", stat_total_att: "Absence Days", 
+        tab_calculator: "Net Calculator", tab_exams: "Mock Exams", tab_attendance: "Attendance", tab_profile: "Profile", tab_customize: "Customization",
+        calc_title: "Detailed YKS Net Calculator", calc_sub: "Calculate your net score by entering correct and wrong answers for TYT and AYT.",
+        th_lesson: "Lesson", total_calculated_net: "Total Calculated Net:", save_calculated_exam: "Save to Exam List",
+        exam_tracking: "Mock Exam Analytics", exam_sub: "Enter correct and wrong answers.",
         exam_student_name: "Student", exam_name: "Publisher / Exam", exam_type: "Session", correct_count: "Correct", wrong_count: "Wrong", add_exam_btn: "Save",
         th_student: "Student", th_exam: "Exam", th_type: "Session", th_cw: "C / W", th_net: "Net", th_action: "Action", attendance_tracking: "Attendance Records",
         att_date: "Date", att_status: "Status", add_att_btn: "Add Record", student_att_info: "Attendance records are managed by PDR.",
@@ -1112,48 +1221,24 @@
         target_net_label: "Target Average Net", new_password_label: "New Password (Optional)", save_profile_btn: "Save Profile", remove_photo_btn: "Remove Photo",
         customize_title: "UI & Appearance Customization", customize_sub: "Customize color palette, font, and theme mode.", theme_setting: "Dark / Light Mode",
         font_setting: "Font Family", radius_setting: "Card Corner Radius", accent_color_label: "Primary Theme Color", reset_data: "Reset All Data"
-      },
-      de: { site_title: "Zeittunnel", logout: "Abmelden", yks_countdown: "YKS 2027 Countdown", days: "Tage", hours: "Stunden", minutes: "Minuten", seconds: "Sekunden", time_progress_label: "Fortschritt", net_goal_progress: "Netto-Zielfortschritt", tab_exams: "Prüfungen", tab_attendance: "Anwesenheit", tab_profile: "Profil", tab_customize: "Anpassen" },
-      fr: { site_title: "Tunnel Temporel", logout: "Déconnexion", yks_countdown: "Compte à rebours YKS 2027", days: "Jours", hours: "Heures", minutes: "Minutes", seconds: "Secondes", time_progress_label: "Progression", net_goal_progress: "Progression de l'objectif", tab_exams: "Examens", tab_attendance: "Présence", tab_profile: "Profil", tab_customize: "Personnaliser" },
-      es: { site_title: "Túnel del Tiempo", logout: "Cerrar sesión", yks_countdown: "Cuenta regresiva YKS 2027", days: "Días", hours: "Horas", minutes: "Minutos", seconds: "Segundos", time_progress_label: "Progreso", net_goal_progress: "Progreso de meta", tab_exams: "Exámenes", tab_attendance: "Asistencia", tab_profile: "Perfil", tab_customize: "Personalizar" },
-      it: { site_title: "Tunnel Temporale", logout: "Esci", yks_countdown: "Countdown YKS 2027", days: "Giorni", hours: "Ore", minutes: "Minuti", seconds: "Secondi", time_progress_label: "Progresso", net_goal_progress: "Progresso obiettivo", tab_exams: "Esami", tab_attendance: "Presenze", tab_profile: "Profilo", tab_customize: "Personalizza" },
-      pt: { site_title: "Túnel do Tempo", logout: "Sair", yks_countdown: "Contagem YKS 2027", days: "Dias", hours: "Horas", minutes: "Minutos", seconds: "Segundos", time_progress_label: "Progresso", net_goal_progress: "Progresso da meta", tab_exams: "Provas", tab_attendance: "Frequência", tab_profile: "Perfil", tab_customize: "Personalizar" },
-      ru: { site_title: "Машина Времени", logout: "Выйти", yks_countdown: "Обратный отсчет YKS 2027", days: "Дни", hours: "Часы", minutes: "Минуты", seconds: "Секунды", time_progress_label: "Прогресс", net_goal_progress: "Прогресс цели", tab_exams: "Тесты", tab_attendance: "Посещаемость", tab_profile: "Профиль", tab_customize: "Настройки" },
-      ar: { site_title: "نفق الزمن", logout: "خروج", yks_countdown: "العد التنازلي YKS 2027", days: "أيام", hours: "ساعات", minutes: "دقائق", seconds: "ثواني", time_progress_label: "مستوى التقدم", net_goal_progress: "تقدم الهدف", tab_exams: "الاختبارات", tab_attendance: "الغياب", tab_profile: "الملف الشخصي", tab_customize: "تخصيص" },
-      ja: { site_title: "タイムトンネル", logout: "ログアウト", yks_countdown: "YKS 2027 カウントダウン", days: "日", hours: "時間", minutes: "分", seconds: "秒", time_progress_label: "進捗状況", net_goal_progress: "目標達成度", tab_exams: "模試管理", tab_attendance: "出欠", tab_profile: "プロフィール", tab_customize: "カスタマイズ" },
-      ko: { site_title: "타임 터널", logout: "로그아웃", yks_countdown: "YKS 2027 카운트다운", days: "일", hours: "시간", minutes: "분", seconds: "초", time_progress_label: "진행률", net_goal_progress: "목표 진행률", tab_exams: "모의고사", tab_attendance: "출석", tab_profile: "프로필", tab_customize: "사용자 정의" },
-      zh: { site_title: "时间隧道", logout: "退出", yks_countdown: "YKS 2027 倒计时", days: "天", hours: "小时", minutes: "分钟", seconds: "秒", time_progress_label: "备考进度", net_goal_progress: "目标进度", tab_exams: "模考追踪", tab_attendance: "考勤", tab_profile: "个人资料", tab_customize: "自定义" },
-      nl: { site_title: "Tijdtunnel", logout: "Uitloggen", yks_countdown: "YKS 2027 Aftellen", days: "Dagen", hours: "Uur", minutes: "Minuten", seconds: "Seconden", time_progress_label: "Voortgang", net_goal_progress: "Doelvoortgang", tab_exams: "Examens", tab_attendance: "Aanwezigheid", tab_profile: "Profiel", tab_customize: "Aanpassen" },
-      pl: { site_title: "Tunel Czasu", logout: "Wyloguj", yks_countdown: "Odliczanie YKS 2027", days: "Dni", hours: "Godziny", minutes: "Minuty", seconds: "Sekundy", time_progress_label: "Postęp", net_goal_progress: "Postęp celu", tab_exams: "Egzaminy", tab_attendance: "Frekwencja", tab_profile: "Profil", tab_customize: "Dostosuj" },
-      sv: { site_title: "Tidstunneln", logout: "Logga ut", yks_countdown: "YKS 2027 Nedräkning", days: "Dagar", hours: "Timmar", minutes: "Minuter", seconds: "Sekunder", time_progress_label: "Framsteg", net_goal_progress: "Målframsteg", tab_exams: "Prov", tab_attendance: "Närvaro", tab_profile: "Profil", tab_customize: "Anpassa" },
-      el: { site_title: "Σήραγγα Χρόνου", logout: "Έξοδος", yks_countdown: "Αντίστροφη μέτρηση YKS 2027", days: "Ημέρες", hours: "Ώρες", minutes: "Λεπτά", seconds: "Δευτερόλεπτα", time_progress_label: "Πρόοδος", net_goal_progress: "Πρόοδος στόχου", tab_exams: "Διαγωνίσματα", tab_attendance: "Απουσίες", tab_profile: "Προφίλ", tab_customize: "Προσαρμογή" },
-      hi: { site_title: "समय सुरंग", logout: "लॉगआउट", yks_countdown: "YKS 2027 उलटी गिनती", days: "दिन", hours: "घंटे", minutes: "मिनट", seconds: "सेकंड", time_progress_label: "प्रगति स्तर", net_goal_progress: "लक्ष्य प्रगति", tab_exams: "परीक्षा", tab_attendance: "उपस्थिति", tab_profile: "प्रोफ़ाइल", tab_customize: "अनुकूलन" },
-      id: { site_title: "Terowongan Waktu", logout: "Keluar", yks_countdown: "Hitung Mundur YKS 2027", days: "Hari", hours: "Jam", minutes: "Menit", seconds: "Detik", time_progress_label: "Tingkat Kemajuan", net_goal_progress: "Kemajuan Target", tab_exams: "Ujian", tab_attendance: "Absensi", tab_profile: "Profil", tab_customize: "Kustomisasi" },
-      vi: { site_title: "Đường Hầm Thời Gian", logout: "Đăng xuất", yks_countdown: "Đếm ngược YKS 2027", days: "Ngày", hours: "Giờ", minutes: "Phút", seconds: "Giây", time_progress_label: "Tiến độ", net_goal_progress: "Tiến độ mục tiêu", tab_exams: "Thi thử", tab_attendance: "Điểm danh", tab_profile: "Hồ sơ", tab_customize: "Tùy chỉnh" },
-      az: { site_title: "Zaman Tuneli", logout: "Çıxış", yks_countdown: "YKS 2027 Geri Sayım", days: "Gün", hours: "Saat", minutes: "Dəqiqə", seconds: "Saniyə", time_progress_label: "İrəliləyiş Səviyyəsi", net_goal_progress: "Hədəf İrəliləyişi", tab_exams: "Sınaq İzləmə", tab_attendance: "Qayıb", tab_profile: "Profil Ayarları", tab_customize: "Fərdiləşdirmə" }
+      }
     };
 
     function changeLanguage(lang) {
       localStorage.setItem('appLang', lang);
+      const dict = translations[lang] || translations['en'];
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {
-          el.textContent = translations[lang][key];
-        } else if (translations['en'][key]) {
-          el.textContent = translations['en'][key];
-        }
+        if (dict[key]) el.textContent = dict[key];
       });
     }
 
-    // --- GİRİŞ ANİMASYONU ---
     window.addEventListener('load', () => {
-      const splashScreen = document.getElementById('splash-screen');
       setTimeout(() => {
-        splashScreen.classList.add('splash-hidden');
+        document.getElementById('splash-screen').classList.add('splash-hidden');
       }, 1000);
     });
 
-    // --- YKS GERİ SAYIM & ZAMAN İLERLEME SEVİYESİ ---
     const startDate = new Date("September 1, 2026 09:00:00").getTime();
     const targetDate = new Date("June 19, 2027 10:15:00").getTime();
 
@@ -1181,7 +1266,6 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // --- KULLANICI & PROFİL VERİLERİ ---
     let users = JSON.parse(localStorage.getItem('yksUsers')) || [
       { username: "ahmet", password: "1234", fullName: "Ahmet Yılmaz", role: "student", no: "1042", bio: "2027 YKS Sayısal Hedef İlk 5000", targetNet: 95, avatar: "" },
       { username: "pdr", password: "1234", fullName: "Rehber Öğretmen", role: "pdr", no: "", bio: "PDR & Eğitim Koçu", targetNet: 100, avatar: "" }
@@ -1234,7 +1318,7 @@
         return;
       }
       if (role === 'pdr' && pdrCode !== 'PDR2026') {
-        showAuthAlert("Hatalı PDR Yetki Kodu! (Demo kod: PDR2026)", "error");
+        showAuthAlert("Hataly PDR Yetki Kodu! (Demo: PDR2026)", "error");
         return;
       }
       if (users.some(u => u.username === username)) {
@@ -1242,24 +1326,9 @@
         return;
       }
 
-      const newUser = {
-        username,
-        password,
-        fullName,
-        role,
-        no: role === 'student' ? (studentNo || '100') : '',
-        bio: "Hedefime adım adım yaklaşıyorum!",
-        targetNet: 100,
-        avatar: ""
-      };
-
+      const newUser = { username, password, fullName, role, no: role === 'student' ? (studentNo || '100') : '', bio: "Hedefime adım adım yaklaşıyorum!", targetNet: 100, avatar: "" };
       users.push(newUser);
       localStorage.setItem('yksUsers', JSON.stringify(users));
-
-      document.getElementById('reg-fullname').value = '';
-      document.getElementById('reg-username').value = '';
-      document.getElementById('reg-password').value = '';
-      
       switchAuthMode('login');
       document.getElementById('login-username').value = username;
       showAuthAlert("Hesabınız başarıyla oluşturuldu! Giriş yapabilirsiniz.", "success");
@@ -1269,11 +1338,6 @@
       const username = document.getElementById('login-username').value.trim().toLowerCase();
       const password = document.getElementById('login-password').value;
 
-      if (!username || !password) {
-        showAuthAlert("Lütfen kullanıcı adı ve şifrenizi girin.", "error");
-        return;
-      }
-
       const foundUser = users.find(u => u.username === username && u.password === password);
       if (!foundUser) {
         showAuthAlert("Kullanıcı adı veya şifre hatalı!", "error");
@@ -1282,7 +1346,6 @@
 
       currentUser = { ...foundUser };
       localStorage.setItem('currentUser', JSON.stringify(currentUser));
-      document.getElementById('auth-alert').style.display = 'none';
       renderDashboard();
     }
 
@@ -1341,7 +1404,6 @@
     function handleProfileImageUpload(event) {
       const file = event.target.files[0];
       if (!file) return;
-
       const reader = new FileReader();
       reader.onload = function(e) {
         currentUser.avatar = e.target.result;
@@ -1358,24 +1420,17 @@
     }
 
     function saveProfileSettings() {
-      const newFullName = document.getElementById('prof-fullname').value.trim();
-      const newBio = document.getElementById('prof-bio').value.trim();
-      const newTargetNet = parseFloat(document.getElementById('target-net-input').value) || 100;
+      currentUser.fullName = document.getElementById('prof-fullname').value.trim() || currentUser.fullName;
+      currentUser.bio = document.getElementById('prof-bio').value.trim();
+      currentUser.targetNet = parseFloat(document.getElementById('target-net-input').value) || 100;
       const newPass = document.getElementById('prof-new-pass').value;
-      const targetUni = document.getElementById('target-uni-input').value.trim();
+      if (newPass && newPass.length >= 4) currentUser.password = newPass;
 
-      if (newFullName) currentUser.fullName = newFullName;
-      currentUser.bio = newBio;
-      currentUser.targetNet = newTargetNet;
-      if (newPass && newPass.length >= 4) {
-        currentUser.password = newPass;
-      }
-
-      saveTargetUni(targetUni);
+      saveTargetUni(document.getElementById('target-uni-input').value.trim());
       syncCurrentUserToStorage();
       document.getElementById('prof-new-pass').value = "";
       renderDashboard();
-      alert("Profil ayarlarınız başarıyla kaydedildi!");
+      alert("Profil ayarları başarıyla kaydedildi!");
     }
 
     function syncCurrentUserToStorage() {
@@ -1392,6 +1447,105 @@
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
       document.getElementById(tabId).classList.remove('hidden');
       btn.classList.add('active');
+    }
+
+    // --- NET HESAPLAYICI MANTIĞI ---
+    let activeCalcCategory = 'TYT';
+
+    function switchCalcType(type) {
+      activeCalcCategory = type;
+      if (type === 'TYT') {
+        document.getElementById('tyt-calc-section').classList.remove('hidden');
+        document.getElementById('ayt-calc-section').classList.add('hidden');
+        document.getElementById('calc-type-tyt').className = 'btn-primary';
+        document.getElementById('calc-type-ayt').className = 'btn-secondary';
+      } else {
+        document.getElementById('tyt-calc-section').classList.add('hidden');
+        document.getElementById('ayt-calc-section').classList.remove('hidden');
+        document.getElementById('calc-type-tyt').className = 'btn-secondary';
+        document.getElementById('calc-type-ayt').className = 'btn-primary';
+      }
+      calculateLiveNet();
+    }
+
+    function calculateLiveNet() {
+      let totalNet = 0;
+      if (activeCalcCategory === 'TYT') {
+        const tD = parseFloat(document.getElementById('t-dogru').value) || 0;
+        const tY = parseFloat(document.getElementById('t-yanlis').value) || 0;
+        const tNet = tD - (tY / 4);
+        document.getElementById('t-net').textContent = tNet.toFixed(2);
+
+        const sD = parseFloat(document.getElementById('s-dogru').value) || 0;
+        const sY = parseFloat(document.getElementById('s-yanlis').value) || 0;
+        const sNet = sD - (sY / 4);
+        document.getElementById('s-net').textContent = sNet.toFixed(2);
+
+        const mD = parseFloat(document.getElementById('m-dogru').value) || 0;
+        const mY = parseFloat(document.getElementById('m-yanlis').value) || 0;
+        const mNet = mD - (mY / 4);
+        document.getElementById('m-net').textContent = mNet.toFixed(2);
+
+        const fD = parseFloat(document.getElementById('f-dogru').value) || 0;
+        const fY = parseFloat(document.getElementById('f-yanlis').value) || 0;
+        const fNet = fD - (fY / 4);
+        document.getElementById('f-net').textContent = fNet.toFixed(2);
+
+        totalNet = tNet + sNet + mNet + fNet;
+      } else {
+        const edbD = parseFloat(document.getElementById('edb-dogru').value) || 0;
+        const edbY = parseFloat(document.getElementById('edb-yanlis').value) || 0;
+        const edbNet = edbD - (edbY / 4);
+        document.getElementById('edb-net').textContent = edbNet.toFixed(2);
+
+        const sos2D = parseFloat(document.getElementById('sos2-dogru').value) || 0;
+        const sos2Y = parseFloat(document.getElementById('sos2-yanlis').value) || 0;
+        const sos2Net = sos2D - (sos2Y / 4);
+        document.getElementById('sos2-net').textContent = sos2Net.toFixed(2);
+
+        const mat2D = parseFloat(document.getElementById('mat2-dogru').value) || 0;
+        const mat2Y = parseFloat(document.getElementById('mat2-yanlis').value) || 0;
+        const mat2Net = mat2D - (mat2Y / 4);
+        document.getElementById('mat2-net').textContent = mat2Net.toFixed(2);
+
+        const fen2D = parseFloat(document.getElementById('fen2-dogru').value) || 0;
+        const fen2Y = parseFloat(document.getElementById('fen2-yanlis').value) || 0;
+        const fen2Net = fen2D - (fen2Y / 4);
+        document.getElementById('fen2-net').textContent = fen2Net.toFixed(2);
+
+        totalNet = edbNet + sos2Net + mat2Net + fen2Net;
+      }
+
+      document.getElementById('total-calc-net').textContent = totalNet.toFixed(2);
+      return totalNet;
+    }
+
+    function saveCalculatedExam() {
+      const title = document.getElementById('calc-exam-title').value.trim() || (activeCalcCategory + ' Denemesi');
+      const totalNet = calculateLiveNet();
+      
+      let totalD = 0, totalY = 0;
+      if (activeCalcCategory === 'TYT') {
+        totalD = (parseFloat(document.getElementById('t-dogru').value)||0) + (parseFloat(document.getElementById('s-dogru').value)||0) + (parseFloat(document.getElementById('m-dogru').value)||0) + (parseFloat(document.getElementById('f-dogru').value)||0);
+        totalY = (parseFloat(document.getElementById('t-yanlis').value)||0) + (parseFloat(document.getElementById('s-yanlis').value)||0) + (parseFloat(document.getElementById('m-yanlis').value)||0) + (parseFloat(document.getElementById('f-yanlis').value)||0);
+      } else {
+        totalD = (parseFloat(document.getElementById('edb-dogru').value)||0) + (parseFloat(document.getElementById('sos2-dogru').value)||0) + (parseFloat(document.getElementById('mat2-dogru').value)||0) + (parseFloat(document.getElementById('fen2-dogru').value)||0);
+        totalY = (parseFloat(document.getElementById('edb-yanlis').value)||0) + (parseFloat(document.getElementById('sos2-yanlis').value)||0) + (parseFloat(document.getElementById('mat2-yanlis').value)||0) + (parseFloat(document.getElementById('fen2-yanlis').value)||0);
+      }
+
+      exams.unshift({
+        id: Date.now(),
+        student: currentUser.fullName,
+        title: title,
+        category: activeCalcCategory,
+        correct: totalD,
+        wrong: totalY,
+        net: totalNet.toFixed(2)
+      });
+      localStorage.setItem('yksExams', JSON.stringify(exams));
+      document.getElementById('calc-exam-title').value = "";
+      alert("Deneme başarıyla kaydedildi! 'Deneme Takip' sekmesinden inceleyebilirsin.");
+      renderExams();
     }
 
     // --- DENEME TAKİP ---
@@ -1474,10 +1628,8 @@
         alert("Lütfen öğrenci adı ve tarih seçiniz.");
         return;
       }
-
       attendances.unshift({ id: Date.now(), student, date, status });
       localStorage.setItem('yksAttendances', JSON.stringify(attendances));
-      document.getElementById('att-student').value = "";
       renderAttendance();
     }
 
@@ -1490,26 +1642,19 @@
     function renderAttendance() {
       const tbody = document.getElementById('attendance-list');
       tbody.innerHTML = "";
-
       const filteredAtt = currentUser.role === 'pdr' ? attendances : attendances.filter(a => a.student.toLowerCase() === currentUser.fullName.toLowerCase());
       document.getElementById('stat-att-count').textContent = filteredAtt.length;
 
       filteredAtt.forEach(att => {
         const tr = document.createElement('tr');
         const deleteBtn = currentUser.role === 'pdr' ? `<td><button class="btn-danger" style="padding:6px 10px;" onclick="deleteAttendance(${att.id})"><i data-lucide="trash-2" size="14"></i></button></td>` : '';
-        
-        tr.innerHTML = `
-          <td><strong>${att.student}</strong></td>
-          <td>${att.date}</td>
-          <td><span class="badge ${att.status === 'Özürsüz' ? 'badge-danger' : 'badge-warning'}">${att.status}</span></td>
-          ${deleteBtn}
-        `;
+        tr.innerHTML = `<td><strong>${att.student}</strong></td><td>${att.date}</td><td><span class="badge ${att.status === 'Özürsüz' ? 'badge-danger' : 'badge-warning'}">${att.status}</span></td>${deleteBtn}`;
         tbody.appendChild(tr);
       });
       lucide.createIcons();
     }
 
-    // --- ÖZELLEŞTİRME ---
+    // --- ÖZELLEŞTİRME & BAŞLANGIÇ ---
     function changeTheme(theme) {
       localStorage.setItem('appTheme', theme);
       document.body.classList.toggle('dark-theme', theme === 'dark');
@@ -1549,7 +1694,6 @@
       }
     }
 
-    // --- BAŞLANGIÇ ---
     window.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('appLang') || 'tr';
       document.getElementById('language-selector').value = savedLang;
@@ -1579,9 +1723,7 @@
       document.getElementById('target-uni-input').value = savedUni;
       saveTargetUni(savedUni);
 
-      if (currentUser) {
-        renderDashboard();
-      }
+      if (currentUser) renderDashboard();
     });
   </script>
 </body>
