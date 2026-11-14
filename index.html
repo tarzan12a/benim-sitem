@@ -927,6 +927,12 @@
         <button class="tab-btn" onclick="switchTab('attendance-tab', this)">
           <i data-lucide="user-x" size="16"></i> <span data-i18n="tab_attendance">Devamsızlık</span>
         </button>
+        <button class="tab-btn" onclick="switchTab('pdf-tab', this)">
+          <i data-lucide="file-text" size="16"></i> <span data-i18n="tab_pdf">PDF Görüntüleyici</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('video-tab', this)">
+          <i data-lucide="video" size="16"></i> <span data-i18n="tab_video">Tanıtım Videosu</span>
+        </button>
         <button class="tab-btn" onclick="switchTab('profile-tab', this)">
           <i data-lucide="user-cog" size="16"></i> <span data-i18n="tab_profile">Profil Ayarları</span>
         </button>
@@ -938,7 +944,7 @@
       <!-- SEKME: NET HESAPLAYICI -->
       <div id="calculator-tab" class="card tab-content">
         <div class="card-title"><i data-lucide="calculator" color="var(--primary)"></i> <span data-i18n="calc_title">Detaylı YKS Net Hesaplayıcı</span></div>
-        <p class="card-subtitle" data-i18n="calc_sub">TYT ve AYT dersleri için doğru ve yanlış sayılarını girerek anlık netini ve toplam puanını hesapla.</p>
+        <p class="card-subtitle" data-i18n="calc_sub">TYT and AYT dersleri için doğru ve yanlış sayılarını girerek anlık netini hesapla.</p>
         
         <div style="display: flex; gap: 12px; margin-bottom: 20px;">
           <button class="btn-primary" id="calc-type-tyt" onclick="switchCalcType('TYT')">TYT Hesapla</button>
@@ -1136,6 +1142,41 @@
         </div>
       </div>
 
+      <!-- SEKME: PDF GÖRÜNTÜLEYİCİ -->
+      <div id="pdf-tab" class="card tab-content hidden">
+        <div class="card-title"><i data-lucide="file-text" color="var(--primary)"></i> <span data-i18n="pdf_viewer_title">PDF Doküman Görüntüleyici</span></div>
+        <p class="card-subtitle" data-i18n="pdf_viewer_sub">Rehberlik kılavuzlarını, çalışma programlarını veya örnek PDF dosyalarını doğrudan buradan inceleyin.</p>
+        
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label data-i18n="pdf_select_label">Örnek Doküman Seçin veya Kendi PDF Bağlantınızı Girin:</label>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <select id="pdf-sample-select" onchange="loadSelectedPdf(this.value)" style="flex: 1; min-width: 200px;">
+              <option value="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf">Örnek PDF Dosyası (Dummy)</option>
+              <option value="https://www.w3.org/WAI/WCAG21/WorkingExamples/pdf/sample.pdf">WCAG 2.1 Örnek PDF</option>
+            </select>
+            <input type="text" id="custom-pdf-input" placeholder="Veya doğrudan PDF URL adresi girin..." style="flex: 2; min-width: 220px;">
+            <button class="btn-primary" onclick="loadCustomPdf()"><i data-lucide="eye" size="16"></i> Görüntüle</button>
+          </div>
+        </div>
+
+        <div style="width: 100%; height: 600px; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; background: #fff;">
+          <embed id="pdf-embed-viewer" src="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" type="application/pdf" width="100%" height="100%" />
+        </div>
+      </div>
+
+      <!-- SEKME: TANITIM VİDEOSU -->
+      <div id="video-tab" class="card tab-content hidden">
+        <div class="card-title"><i data-lucide="video" color="var(--primary)"></i> <span data-i18n="video_title">Zaman Tüneli Tanıtım Videosu</span></div>
+        <p class="card-subtitle" data-i18n="video_sub">Platformun özelliklerini keşfetmek için tanıtım videomuzu izleyin.</p>
+        
+        <div style="max-width: 800px; margin: 0 auto; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); box-shadow: var(--shadow); background: #000;">
+          <video controls width="100%" style="display: block; max-height: 500px;">
+            <source src="video_1.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+          </video>
+        </div>
+      </div>
+
       <!-- SEKME: PROFİL AYARLARI -->
       <div id="profile-tab" class="card tab-content hidden">
         <div class="card-title"><i data-lucide="user-check" color="var(--primary)"></i> <span data-i18n="profile_settings_title">Profil Bilgileri & Fotoğraf</span></div>
@@ -1299,14 +1340,16 @@
         username_label: "Kullanıcı Adı", password: "Şifre", login_btn: "Giriş Yap", register_title: "Yeni Hesap Oluştur", register_sub: "Hemen kayıt ol ve YKS gelişimini takip et.",
         role_select_label: "Hesap Türü", full_name: "Ad Soyad", student_no: "Öğrenci Numarası", school_label: "Okulunuz (Opsiyonel)", pdr_code_label: "Kurum PDR Yetki Kodu (Demo: PDR2026)", register_btn: "Kaydı Tamamla",
         stat_total_exams: "Toplam Deneme", stat_avg_net: "Ortalama Net", stat_total_att: "Devamsızlık Günü", 
-        tab_calculator: "Net Hesaplayıcı", tab_exams: "Deneme Takip", tab_attendance: "Devamsızlık", tab_profile: "Profil Ayarları", tab_customize: "Özelleştirme",
+        tab_calculator: "Net Hesaplayıcı", tab_exams: "Deneme Takip", tab_attendance: "Devamsızlık", tab_pdf: "PDF Görüntüleyici", tab_video: "Tanıtım Videosu", tab_profile: "Profil Ayarları", tab_customize: "Özelleştirme",
         calc_title: "Detaylı YKS Net Hesaplayıcı", calc_sub: "TYT ve AYT dersleri için doğru ve yanlış sayılarını girerek anlık netini hesapla.",
         th_lesson: "Ders", total_calculated_net: "Toplam Hesaplanan Net:", save_calculated_exam: "Deneme Listesine Kaydet",
         exam_tracking: "Deneme Sınavı Analizi", exam_sub: "Doğru ve yanlış sayılarını gir, netin hesaplansın.",
         exam_student_name: "Öğrenci", exam_name: "Yayın / Deneme Adı", exam_type: "Oturum", correct_count: "Doğru", wrong_count: "Yanlış", add_exam_btn: "Kaydet",
         th_student: "Öğrenci", th_exam: "Deneme", th_type: "Oturum", th_cw: "D / Y", th_net: "Net", th_action: "İşlem", attendance_tracking: "Devamsızlık Kayıtları",
         att_date: "Tarih", att_status: "Durum", add_att_btn: "Kayıt Ekle", student_att_info: "Devamsızlık kayıtları yalnızca PDR birimi tarafından güncellenebilir.",
-        th_date: "Tarih", th_status: "Durum", profile_settings_title: "Profil Bilgileri & Fotoğraf", profile_settings_sub: "Profil resmini yükle, okulunu ve hedef netini güncelle.",
+        th_date: "Tarih", th_status: "Durum", pdf_viewer_title: "PDF Doküman Görüntüleyici", pdf_viewer_sub: "Rehberlik kılavuzlarını veya çalışma programlarını doğrudan inceleyin.", pdf_select_label: "Örnek Doküman Seçin veya Kendi PDF Bağlantınızı Girin:",
+        video_title: "Zaman Tüneli Tanıtım Videosu", video_sub: "Platformun özelliklerini keşfetmek için tanıtım videomuzu izleyin.",
+        profile_settings_title: "Profil Bilgileri & Fotoğraf", profile_settings_sub: "Profil resmini yükle, okulunu ve hedef netini güncelle.",
         upload_photo: "Profil Resmi Yükle", bio_label: "Motivasyon Sözü / Hakkımda", target_field: "YKS Puan Türü / Alan", target_uni: "Hedef Üniversite & Bölüm",
         target_net_label: "Hedef Ortalama Net", new_password_label: "Yeni Şifre (İsteğe Bağlı)", save_profile_btn: "Profili Kaydet", remove_photo_btn: "Fotoğrafı Kaldır",
         customize_title: "Arayüz & Görünüm Özelleştirme", customize_sub: "Renk paletini, yazı tipini ve tema modunu tasarla.", theme_setting: "Karanlık / Aydınlık Mod",
@@ -1319,14 +1362,16 @@
         username_label: "Username", password: "Password", login_btn: "Sign In", register_title: "Create New Account", register_sub: "Register now and track your progress.",
         role_select_label: "Account Type", full_name: "Full Name", student_no: "Student ID", school_label: "School (Optional)", pdr_code_label: "PDR Authorization Code (Demo: PDR2026)", register_btn: "Complete Registration",
         stat_total_exams: "Total Exams", stat_avg_net: "Average Net", stat_total_att: "Absence Days", 
-        tab_calculator: "Net Calculator", tab_exams: "Mock Exams", tab_attendance: "Attendance", tab_profile: "Profile", tab_customize: "Customization",
+        tab_calculator: "Net Calculator", tab_exams: "Mock Exams", tab_attendance: "Attendance", tab_pdf: "PDF Viewer", tab_video: "Intro Video", tab_profile: "Profile", tab_customize: "Customization",
         calc_title: "Detailed YKS Net Calculator", calc_sub: "Calculate your net score by entering correct and wrong answers for TYT and AYT.",
         th_lesson: "Lesson", total_calculated_net: "Total Calculated Net:", save_calculated_exam: "Save to Exam List",
         exam_tracking: "Mock Exam Analytics", exam_sub: "Enter correct and wrong answers.",
         exam_student_name: "Student", exam_name: "Publisher / Exam", exam_type: "Session", correct_count: "Correct", wrong_count: "Wrong", add_exam_btn: "Save",
         th_student: "Student", th_exam: "Exam", th_type: "Session", th_cw: "C / W", th_net: "Net", th_action: "Action", attendance_tracking: "Attendance Records",
         att_date: "Date", att_status: "Status", add_att_btn: "Add Record", student_att_info: "Attendance records are managed by PDR.",
-        th_date: "Date", th_status: "Status", profile_settings_title: "Profile Info & Photo", profile_settings_sub: "Upload profile picture, update school and target score.",
+        th_date: "Date", th_status: "Status", pdf_viewer_title: "PDF Document Viewer", pdf_viewer_sub: "Review guidance documents or study schedules directly.", pdf_select_label: "Select Sample Document or Enter PDF URL:",
+        video_title: "Time Tunnel Intro Video", video_sub: "Watch our introduction video to discover platform features.",
+        profile_settings_title: "Profile Info & Photo", profile_settings_sub: "Upload profile picture, update school and target score.",
         upload_photo: "Upload Profile Picture", bio_label: "Motivation Quote / Bio", target_field: "Target Exam Field", target_uni: "Target University & Major",
         target_net_label: "Target Average Net", new_password_label: "New Password (Optional)", save_profile_btn: "Save Profile", remove_photo_btn: "Remove Photo",
         customize_title: "UI & Appearance Customization", customize_sub: "Customize color palette, font, and theme mode.", theme_setting: "Dark / Light Mode",
@@ -1568,6 +1613,21 @@
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
       document.getElementById(tabId).classList.remove('hidden');
       btn.classList.add('active');
+    }
+
+    // --- PDF GÖRÜNTÜLEYİCİ İŞLEMLERİ ---
+    function loadSelectedPdf(url) {
+      document.getElementById('custom-pdf-input').value = "";
+      document.getElementById('pdf-embed-viewer').src = url;
+    }
+
+    function loadCustomPdf() {
+      const customUrl = document.getElementById('custom-pdf-input').value.trim();
+      if (!customUrl) {
+        alert("Lütfen geçerli bir PDF bağlantısı girin.");
+        return;
+      }
+      document.getElementById('pdf-embed-viewer').src = customUrl;
     }
 
     // --- NET HESAPLAYICI ---
