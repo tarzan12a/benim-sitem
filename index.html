@@ -34,14 +34,35 @@
         button, a { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
         button:hover, a:hover { transform: translateY(-1px); }
         button:active, a:active { transform: translateY(0) scale(0.98); }
+        
+        /* GİRİŞ ANİMASYONU (SPLASH SCREEN) STİLLERİ */
         #splashScreen { transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
         #splashScreen.fade-out { opacity: 0; visibility: hidden; }
+        @keyframes pulse-logo {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.08); opacity: 0.85; }
+        }
+        .animate-logo-pulse { animation: pulse-logo 2s infinite ease-in-out; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased relative">
 
+    <!-- GİRİŞ ANİMASYONU (SPLASH SCREEN) -->
+    <div id="splashScreen" class="fixed inset-0 z-[100] bg-slate-900 flex flex-col items-center justify-center text-white space-y-4">
+        <div class="bg-uzem-600 p-4 rounded-2xl shadow-2xl animate-logo-pulse">
+            <i data-lucide="graduation-cap" class="w-12 h-12 text-white"></i>
+        </div>
+        <div class="text-center space-y-1">
+            <h1 class="text-xl font-bold tracking-wider">ZAMAN TÜNELİ</h1>
+            <p class="text-xs text-slate-400">Modüller ve Oturum Bilgileri Yükleniyor...</p>
+        </div>
+        <div class="w-36 h-1 bg-slate-800 rounded-full overflow-hidden mt-4">
+            <div id="splashBar" class="bg-uzem-500 h-full w-0 transition-all duration-700"></div>
+        </div>
+    </div>
+
     <!-- GİRİŞ VE HESAP OLUŞTURMA EKRANI -->
-    <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto hidden">
         <div class="modern-card max-w-md w-full p-8 space-y-6 my-auto shadow-2xl bg-white">
             <div class="text-center space-y-2">
                 <div class="inline-flex bg-uzem-50 text-uzem-600 p-3.5 rounded-2xl mb-1 border border-uzem-100 shadow-inner">
@@ -197,7 +218,7 @@
             </div>
         </div>
 
-        <!-- 3. PDR ÖĞRENCİ YÖNETİMİ (EKLEME VE SİLME ÖZELLİKLİ) -->
+        <!-- 3. PDR ÖĞRENCİ YÖNETİMİ -->
         <div id="pdrDashboardView" class="hidden space-y-4">
             <div class="modern-card p-6 sm:p-8 max-w-5xl mx-auto space-y-4">
                 <div class="flex justify-between items-center border-b pb-3">
@@ -276,6 +297,25 @@
 
     <!-- SCRIPT -->
     <script>
+        // Sayfa Yüklenme Animasyonu (Splash Screen) Mantığı
+        window.addEventListener('DOMContentLoaded', () => {
+            const bar = document.getElementById('splashBar');
+            setTimeout(() => { bar.style.width = '100%'; }, 100);
+            setTimeout(() => {
+                const splash = document.getElementById('splashScreen');
+                if(splash) splash.classList.add('fade-out');
+                
+                // Oturum kontrolü
+                const session = JSON.parse(localStorage.getItem('zt_session'));
+                if (session) {
+                    applySession(session);
+                } else {
+                    document.getElementById('authLockScreen').classList.remove('hidden');
+                }
+                lucide.createIcons();
+            }, 800);
+        });
+
         // YKS 2027 Geri Sayım Sayacı
         function updateYksCountdown() {
             const diff = new Date('June 19, 2027 10:15:00').getTime() - new Date().getTime();
@@ -399,6 +439,7 @@
             if (tab === 'denemeTracker') renderDenemeler();
             if (tab === 'pdrDashboard') renderPdrStudents();
             if (tab === 'pdrAttendanceManager') renderPdrAttendanceManager();
+            lucide.createIcons();
         }
 
         // Deneme Takip Mantığı
@@ -501,11 +542,6 @@
         function toggleModal(id) {
             document.getElementById(id).classList.toggle('hidden');
         }
-
-        window.onload = () => {
-            const session = JSON.parse(localStorage.getItem('zt_session'));
-            if (session) applySession(session);
-        };
     </script>
 </body>
 </html>
