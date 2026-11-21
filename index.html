@@ -319,12 +319,23 @@
     <div id="forgotPasswordModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="modern-card max-w-sm w-full p-6 space-y-4 shadow-2xl bg-white">
             <h3 class="text-base font-bold text-slate-900">Şifre Sıfırlama</h3>
-            <p class="text-xs text-slate-500">Kayıtlı e-posta adresinizi girin, şifreniz görüntülensin.</p>
-            <form onsubmit="handleForgotPassword(event)" class="space-y-3">
+            
+            <!-- Adım 1: E-posta Gönderme Formu -->
+            <form id="forgotStep1" onsubmit="handleStartForgotPassword(event)" class="space-y-3">
+                <p class="text-xs text-slate-500">Kayıtlı e-posta adresinizi girin, sıfırlama kodu gönderelim.</p>
                 <input type="email" id="forgotEmail" required placeholder="E-posta adresiniz" class="w-full border rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
-                <button type="submit" class="w-full bg-uzem-600 text-white py-2.5 rounded-xl text-xs font-bold">Şifreyi Göster</button>
+                <button type="submit" class="w-full bg-uzem-600 text-white py-2.5 rounded-xl text-xs font-bold">Kod Gönder</button>
             </form>
-            <button onclick="toggleModal('forgotPasswordModal')" class="w-full text-center text-xs text-slate-400">Geri Dön</button>
+
+            <!-- Adım 2: Kod ve Yeni Şifre Formu (Başlangıçta Gizli) -->
+            <form id="forgotStep2" onsubmit="handleConfirmForgotPassword(event)" class="space-y-3 hidden">
+                <p class="text-xs text-slate-500">E-postanıza gelen 6 haneli kodu ve yeni şifrenizi girin.</p>
+                <input type="text" id="resetCodeInput" maxlength="6" required placeholder="6 Haneli Kod" class="w-full text-center tracking-widest font-mono font-bold border rounded-xl px-3 py-2 text-xs">
+                <input type="password" id="newPasswordInput" required placeholder="Yeni Şifreniz" class="w-full border rounded-xl px-3 py-2 text-xs">
+                <button type="submit" class="w-full bg-emerald-600 text-white py-2.5 rounded-xl text-xs font-bold">Şifreyi Güncelle</button>
+            </form>
+
+            <button onclick="toggleModal('forgotPasswordModal')" class="w-full text-center text-xs text-slate-400 mt-2">İptal / Geri Dön</button>
         </div>
     </div>
 
@@ -362,6 +373,7 @@
     <!-- SCRIPT -->
     <script>
         let pendingUserData = null;
+        let resetTargetEmail = '';
 
         // Sayfa Yüklenme Animasyonu (Splash Screen) Mantığı
         window.addEventListener('DOMContentLoaded', () => {
@@ -534,12 +546,61 @@
             }
         }
 
-        function handleForgotPassword(e) {
+        // Şifre Sıfırlama - Adım 1: Kod Gönder
+        async function handleStartForgotPassword(e) {
             e.preventDefault();
             const email = document.getElementById('forgotEmail').value;
-            alert(`Şifre hatırlatma isteği alındı: ${email}. Lütfen sistem yöneticinizle iletişime geçin.`);
-            toggleModal('forgotPasswordModal');
-            e.target.reset();
+            resetTargetEmail = email;
+
+            try {
+                const response = await fetch('http://localhost:3000/api/forgot-password-start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(data.message);
+                    document.getElementById('forgotStep1').classList.add('hidden');
+                    document.getElementById('forgotStep2').classList.remove('hidden');
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Hata:', error);
+                alert('Sunucuya bağlanılamadı.');
+            }
+        }
+
+        // Şifre Sıfırlama - Adım 2: Yeni Şifreyi Kaydet
+        async function handleConfirmForgotPassword(e) {
+            e.preventDefault();
+            const code = document.getElementById('resetCodeInput').value;
+            const newPassword = document.getElementById('newPasswordInput').value;
+
+            try {
+                const response = await fetch('http://localhost:3000/api/reset-password-confirm', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: resetTargetEmail, code, newPassword })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(data.message);
+                    toggleModal('forgotPasswordModal');
+                    document.getElementById('forgotStep1').reset();
+                    document.getElementById('forgotStep2').reset();
+                    document.getElementById('forgotStep1').classList.remove('hidden');
+                    document.getElementById('forgotStep2').classList.add('hidden');
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Hata:', error);
+                alert('Sunucuyla iletişim kurulamadı.');
+            }
         }
 
         function applySession(user) {
