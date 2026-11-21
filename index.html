@@ -2,84 +2,31 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Zaman Tüneli - Modern UZEM & e-Yotek Portalı</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaman Tüneli - UZEM Portalı</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        uzem: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            dark: '#0f172a'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #1e293b; -webkit-tap-highlight-color: transparent; }
-        .modern-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -4px rgba(0, 0, 0, 0.03); border-radius: 1rem; }
-        button, a { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        button:hover, a:hover { transform: translateY(-1px); }
-        button:active, a:active { transform: translateY(0) scale(0.98); }
-        
-        #splashScreen { transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
-        #splashScreen.fade-out { opacity: 0; visibility: hidden; }
-        @keyframes pulse-logo {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.08); opacity: 0.85; }
-        }
-        .animate-logo-pulse { animation: pulse-logo 2s infinite ease-in-out; }
-    </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between antialiased relative">
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between font-sans text-slate-800">
 
-    <!-- GİRİŞ ANİMASYONU (SPLASH SCREEN) -->
-    <div id="splashScreen" class="fixed inset-0 z-[100] bg-slate-900 flex flex-col items-center justify-center text-white space-y-4">
-        <div class="bg-uzem-600 p-4 rounded-2xl shadow-2xl animate-logo-pulse">
-            <i data-lucide="graduation-cap" class="w-12 h-12 text-white"></i>
-        </div>
-        <div class="text-center space-y-1">
-            <h1 class="text-xl font-bold tracking-wider">ZAMAN TÜNELİ</h1>
-            <p class="text-xs text-slate-400">Bulut Sunucu Bağlantısı Yükleniyor...</p>
-        </div>
-        <div class="w-36 h-1 bg-slate-800 rounded-full overflow-hidden mt-4">
-            <div id="splashBar" class="bg-uzem-500 h-full w-0 transition-all duration-700"></div>
-        </div>
-    </div>
-
-    <!-- GİRİŞ VE E-POSTA ÜYELİK EKRANI -->
-    <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto hidden">
-        <div class="modern-card max-w-md w-full p-8 space-y-6 my-auto shadow-2xl bg-white">
-            <div class="text-center space-y-2">
-                <div class="inline-flex bg-uzem-50 text-uzem-600 p-3.5 rounded-2xl mb-1 border border-uzem-100 shadow-inner">
-                    <i data-lucide="mail-check" class="w-8 h-8"></i>
-                </div>
-                <h2 id="authTitle" class="text-2xl font-extrabold text-slate-900 tracking-tight">Zaman Tüneli Giriş</h2>
-                <p id="authSubtitle" class="text-slate-500 text-xs">E-posta adresinizle giriş yapın veya üye olun.</p>
+    <!-- GİRİŞ & KAYIT EKRANI -->
+    <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white max-w-md w-full p-8 rounded-2xl shadow-2xl space-y-6">
+            <div class="text-center space-y-1">
+                <h2 id="authTitle" class="text-2xl font-black text-slate-900">Zaman Tüneli Giriş</h2>
+                <p id="authSubtitle" class="text-xs text-slate-500">Bilgilerinizle giriş yapın veya üye olun.</p>
             </div>
 
-            <!-- Giriş / Kayıt Sekmeleri -->
+            <!-- Sekmeler -->
             <div class="flex p-1 bg-slate-100 rounded-xl">
-                <button type="button" onclick="switchAuthMode('login')" id="tabLogin" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white text-uzem-600 shadow-sm transition-all">Giriş Yap</button>
-                <button type="button" onclick="switchAuthMode('register')" id="tabRegister" class="flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-900 transition-all">E-Posta ile Üye Ol</button>
+                <button type="button" onclick="switchAuthMode('login')" id="tabLogin" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white text-sky-600 shadow-sm">Giriş Yap</button>
+                <button type="button" onclick="switchAuthMode('register')" id="tabRegister" class="flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500">Üye Ol</button>
             </div>
 
-            <div class="space-y-1.5">
-                <label class="block text-xs font-bold text-slate-700">Kullanıcı Rolü</label>
-                <select id="roleSelectDropdown" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-bold text-slate-800 focus:outline-none focus:border-uzem-500">
+            <div class="space-y-1">
+                <label class="block text-xs font-bold text-slate-700">Rol Seçimi</label>
+                <select id="roleSelectDropdown" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-bold">
                     <option value="ogrenci">Öğrenci</option>
                     <option value="pdr">PDR / Rehber Öğretmen</option>
                     <option value="admin">Sistem Yöneticisi (Admin)</option>
@@ -89,614 +36,163 @@
             <!-- GİRİŞ FORMU -->
             <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta Adresi</label>
-                    <input type="email" id="loginEmail" required placeholder="ornek@uzemportal.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500">
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta</label>
+                    <input type="email" id="loginEmail" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-sky-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre</label>
-                    <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-uzem-500">
+                    <input type="password" id="loginPassword" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-sky-500">
                 </div>
-                <div class="flex justify-end">
-                    <button type="button" onclick="toggleModal('forgotPasswordModal')" class="text-[11px] text-uzem-600 font-bold hover:underline">Şifremi Unuttum?</button>
-                </div>
-                <button type="submit" class="w-full bg-uzem-600 hover:bg-uzem-700 text-white font-bold py-3.5 rounded-xl text-xs shadow-lg shadow-uzem-600/20">Oturum Aç</button>
+                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3.5 rounded-xl text-xs shadow-lg">Oturum Aç</button>
             </form>
 
-            <!-- E-POSTA İLE ÜYELİK OLUŞTURMA FORMU -->
+            <!-- KAYIT FORMU -->
             <form id="registerForm" onsubmit="handleStartRegister(event)" class="space-y-3.5 hidden">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Ad Soyad</label>
-                    <input type="text" id="regName" required placeholder="Adınız Soyadınız" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
+                    <input type="text" id="regName" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Sınıfı (Öğrenci için)</label>
-                    <input type="text" id="regSinif" placeholder="12-A" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Sınıf</label>
+                    <input type="text" id="regSinif" placeholder="12-A" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta Adresi (Gerçek Kod Gönderilir)</label>
-                    <input type="email" id="regEmail" required placeholder="ornek@gmail.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta (Doğrulama Kodu Gidecek)</label>
+                    <input type="email" id="regEmail" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre Belirle</label>
-                    <input type="password" id="regPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre</label>
+                    <input type="password" id="regPassword" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs">
                 </div>
-                <div class="flex items-start gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-                    <input type="checkbox" id="regKvkk" required class="w-4 h-4 text-uzem-600 rounded border-slate-300 mt-0.5">
-                    <label for="regKvkk" class="text-[11px] text-slate-600 leading-snug">6698 sayılı KVKK aydınlatma metnini okudum ve onaylıyorum.</label>
-                </div>
-                <button type="submit" class="w-full bg-uzem-600 hover:bg-uzem-700 text-white font-bold py-3 rounded-xl text-xs shadow-lg shadow-uzem-600/20">Doğrulama Kodu Gönder & Üye Ol</button>
+                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 rounded-xl text-xs shadow-lg">Kod Gönder & Kaydol</button>
             </form>
         </div>
     </div>
 
-    <!-- E-POSTA DOĞRULAMA KODU MODALI -->
+    <!-- E-POSTA DOĞRULAMA MODALI -->
     <div id="emailVerifyModal" class="fixed inset-0 z-[60] bg-slate-900/75 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="modern-card max-w-sm w-full p-6 space-y-4 shadow-2xl bg-white text-center">
-            <div class="inline-flex bg-emerald-50 text-emerald-600 p-3 rounded-2xl mx-auto">
-                <i data-lucide="shield-check" class="w-7 h-7"></i>
-            </div>
+        <div class="bg-white max-w-sm w-full p-6 rounded-2xl shadow-2xl text-center space-y-4">
             <h3 class="text-lg font-extrabold text-slate-900">E-Posta Doğrulama</h3>
-            <p class="text-xs text-slate-500"><span id="verifyTargetEmail" class="font-bold text-slate-800"></span> adresine gönderilen 6 haneli onay kodunu giriniz.</p>
-            
+            <p class="text-xs text-slate-500"><span id="verifyTargetEmail" class="font-bold"></span> adresine gönderilen 6 haneli kodu giriniz.</p>
             <form onsubmit="handleVerifyCode(event)" class="space-y-3">
-                <input type="text" id="verifyCodeInput" maxlength="6" required placeholder="000000" class="w-full text-center tracking-widest font-mono text-lg font-bold border border-slate-300 rounded-xl px-4 py-2.5 focus:outline-none focus:border-uzem-600">
-                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl text-xs font-bold shadow-md">Hesabı Doğrula ve Tamamla</button>
+                <input type="text" id="verifyCodeInput" maxlength="6" required placeholder="000000" class="w-full text-center tracking-widest font-mono text-lg font-bold border rounded-xl px-4 py-2.5">
+                <button type="submit" class="w-full bg-emerald-600 text-white py-3 rounded-xl text-xs font-bold">Doğrula ve Tamamla</button>
             </form>
-            <button onclick="toggleModal('emailVerifyModal')" class="text-xs text-slate-400 hover:text-slate-600">İptal</button>
         </div>
     </div>
 
-    <!-- HEADER -->
-    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/80 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
-                <div class="flex items-center gap-3">
-                    <div class="bg-gradient-to-tr from-uzem-600 to-uzem-500 text-white p-2.5 rounded-xl shadow-md flex items-center justify-center font-bold text-xs">
-                        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <h1 class="font-bold text-xs tracking-tight text-slate-900">Zaman Tüneli Portalı</h1>
-                        <p id="portalRoleBadge" class="text-[10px] text-uzem-600 font-semibold uppercase tracking-wider">Aktif Oturum</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- YKS 2027 SAYACI -->
-            <div class="bg-slate-50 border border-slate-200/80 px-4 py-1.5 rounded-xl flex items-center gap-3 text-center shadow-inner">
-                <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider hidden md:inline">YKS 2027 Sayacı:</span>
-                <div class="flex items-center gap-2 text-xs font-extrabold text-uzem-700">
-                    <div><span id="yksDays" class="text-sm font-black text-slate-800">000</span> <span class="text-[9px] text-slate-400">GÜN</span></div>
-                    <div>:</div>
-                    <div><span id="yksHours" class="text-sm font-black text-slate-800">00</span> <span class="text-[9px] text-slate-400">SAAT</span></div>
-                    <div>:</div>
-                    <div><span id="yksMins" class="text-sm font-black text-slate-800">00</span> <span class="text-[9px] text-slate-400">DK</span></div>
-                </div>
-            </div>
-
-            <div class="hidden sm:flex items-center gap-3" id="authArea"></div>
-        </div>
+    <!-- ANA SAYFA İÇERİĞİ -->
+    <header class="bg-white border-b border-slate-200 p-4 flex justify-between items-center max-w-7xl mx-auto w-full">
+        <h1 class="font-extrabold text-sm text-sky-700">Zaman Tüneli Portalı</h1>
+        <div id="authArea"></div>
     </header>
 
-    <!-- ANA İÇERİK CONTAINER -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full space-y-5 flex-1">
-        
-        <!-- ÖĞRENCİ MENÜSÜ -->
-        <div id="studentNavWrapper" class="hidden space-y-2.5">
-            <div class="flex overflow-x-auto bg-white border border-slate-200 p-1.5 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="switchTab('denemeTracker')" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-uzem-600 text-white flex items-center gap-2">📊 Deneme Takip Sistemi</button>
-                <button onclick="switchTab('studentAttendance')" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-2">📋 Devamsızlık Durumum</button>
-            </div>
+    <main class="max-w-7xl mx-auto p-6 flex-1 w-full">
+        <div class="bg-white p-6 rounded-2xl border shadow-sm text-center">
+            <h2 class="text-xl font-bold text-slate-800">Sistem Aktif</h2>
+            <p class="text-xs text-slate-500 mt-1">Render sunucu bağlantısı başarılı bir şekilde kuruldu.</p>
         </div>
-
-        <!-- PDR MENÜSÜ -->
-        <div id="teacherNavWrapper" class="hidden space-y-2.5">
-            <div class="flex overflow-x-auto bg-white border border-slate-200 p-1.5 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="switchTab('pdrDashboard')" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 text-white flex items-center gap-2">👥 Öğrenci Yönetimi (Ekle/Sil)</button>
-                <button onclick="switchTab('pdrAttendanceManager')" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-2">📋 Devamsızlık Takip Girişi</button>
-            </div>
-        </div>
-
-        <!-- ADMIN MENÜSÜ -->
-        <div id="adminNavWrapper" class="hidden space-y-2.5">
-            <div class="flex overflow-x-auto bg-white border border-slate-200 p-1.5 rounded-2xl gap-1.5 shadow-sm">
-                <button onclick="switchTab('adminDashboard')" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-rose-600 text-white flex items-center gap-2">🛡️ Sistem Yöneticisi Paneli (Tüm Kullanıcılar)</button>
-            </div>
-        </div>
-
-        <!-- 1. DENEME TAKİP SİSTEMİ -->
-        <div id="denemeTrackerView" class="hidden space-y-4">
-            <div class="modern-card p-6 sm:p-8 max-w-4xl mx-auto space-y-4">
-                <div class="flex justify-between items-center border-b pb-3">
-                    <h3 class="text-xl font-extrabold text-slate-900">Deneme Sınavları Net Takip Paneli</h3>
-                    <button onclick="toggleModal('addDenemeModal')" class="bg-uzem-600 text-white px-3 py-2 rounded-xl text-xs font-bold">+ Yeni Deneme Ekle</button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 text-slate-600">
-                            <tr>
-                                <th class="p-3">Deneme Adı</th>
-                                <th class="p-3">Türkçe Net</th>
-                                <th class="p-3">Matematik Net</th>
-                                <th class="p-3">Sosyal Net</th>
-                                <th class="p-3">Fen Net</th>
-                                <th class="p-3 font-bold text-uzem-700">Toplam Net</th>
-                            </tr>
-                        </thead>
-                        <tbody id="denemeTableBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. ÖĞRENCİ DEVAMSIZLIK GÖRÜNÜMÜ -->
-        <div id="studentAttendanceView" class="hidden space-y-4">
-            <div class="modern-card p-6 sm:p-8 max-w-xl mx-auto space-y-4 text-center">
-                <h3 class="text-xl font-extrabold text-slate-900">Devamsızlık Bilgilerim</h3>
-                <div class="grid grid-cols-2 gap-4 pt-2">
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                        <span class="text-xs text-slate-500 font-bold block uppercase">Özürlü Devamsızlık</span>
-                        <span id="lblOzurlu" class="text-2xl font-black text-uzem-600">0 Gün</span>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                        <span class="text-xs text-slate-500 font-bold block uppercase">Özürsüz Devamsızlık</span>
-                        <span id="lblOzursuz" class="text-2xl font-black text-rose-600">0 Gün</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. PDR ÖĞRENCİ YÖNETİMİ -->
-        <div id="pdrDashboardView" class="hidden space-y-4">
-            <div class="modern-card p-6 sm:p-8 max-w-5xl mx-auto space-y-4">
-                <div class="flex justify-between items-center border-b pb-3">
-                    <h3 class="text-xl font-extrabold text-slate-900">PDR Öğrenci Listesi ve Yönetimi</h3>
-                    <button onclick="toggleModal('addStudentModal')" class="bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold">+ Yeni Öğrenci Ekle</button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 text-slate-600">
-                            <tr>
-                                <th class="p-3">Ad Soyad</th>
-                                <th class="p-3">Sınıf</th>
-                                <th class="p-3">E-Posta</th>
-                                <th class="p-3">Şifre</th>
-                                <th class="p-3 text-center">İşlem</th>
-                            </tr>
-                        </thead>
-                        <tbody id="pdrStudentTableBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. PDR DEVAMSIZLIK GİRİŞ YÖNETİMİ -->
-        <div id="pdrAttendanceManagerView" class="hidden space-y-4">
-            <div class="modern-card p-6 sm:p-8 max-w-4xl mx-auto space-y-4">
-                <h3 class="text-xl font-extrabold text-slate-900">Öğrenci Devamsızlık Giriş Paneli</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 text-slate-600">
-                            <tr>
-                                <th class="p-3">Öğrenci</th>
-                                <th class="p-3">Özürlü (Gün)</th>
-                                <th class="p-3">Özürsüz (Gün)</th>
-                                <th class="p-3 text-center">İşlem</th>
-                            </tr>
-                        </thead>
-                        <tbody id="pdrAttendanceTableBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. ADMIN YÖNETİM PANELİ -->
-        <div id="adminDashboardView" class="hidden space-y-4">
-            <div class="modern-card p-6 sm:p-8 max-w-5xl mx-auto space-y-4">
-                <div class="border-b pb-3">
-                    <h3 class="text-xl font-extrabold text-slate-900">Sistem Yöneticisi Paneli (Tüm Hesaplar)</h3>
-                    <p class="text-xs text-slate-500">E-posta ile kayıt olan bütün PDR ve öğrenci hesaplarını buradan yönetebilirsiniz.</p>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 text-slate-600">
-                            <tr>
-                                <th class="p-3">Ad Soyad</th>
-                                <th class="p-3">Rol</th>
-                                <th class="p-3">E-Posta</th>
-                                <th class="p-3">Durum</th>
-                                <th class="p-3 text-center">Kullanıcıyı Sil</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminTableBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
     </main>
 
-    <!-- ŞİFREMİ UNUTTUM MODALI -->
-    <div id="forgotPasswordModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="modern-card max-w-sm w-full p-6 space-y-4 shadow-2xl bg-white">
-            <h3 class="text-base font-bold text-slate-900">Şifre Sıfırlama</h3>
-            
-            <!-- Adım 1: E-posta Gönderme Formu -->
-            <form id="forgotStep1" onsubmit="handleStartForgotPassword(event)" class="space-y-3">
-                <p class="text-xs text-slate-500">Kayıtlı e-posta adresinizi girin, sıfırlama kodu gönderelim.</p>
-                <input type="email" id="forgotEmail" required placeholder="E-posta adresiniz" class="w-full border rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-uzem-500">
-                <button type="submit" class="w-full bg-uzem-600 text-white py-2.5 rounded-xl text-xs font-bold">Kod Gönder</button>
-            </form>
-
-            <!-- Adım 2: Kod ve Yeni Şifre Formu (Başlangıçta Gizli) -->
-            <form id="forgotStep2" onsubmit="handleConfirmForgotPassword(event)" class="space-y-3 hidden">
-                <p class="text-xs text-slate-500">E-postanıza gelen 6 haneli kodu ve yeni şifrenizi girin.</p>
-                <input type="text" id="resetCodeInput" maxlength="6" required placeholder="6 Haneli Kod" class="w-full text-center tracking-widest font-mono font-bold border rounded-xl px-3 py-2 text-xs">
-                <input type="password" id="newPasswordInput" required placeholder="Yeni Şifreniz" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <button type="submit" class="w-full bg-emerald-600 text-white py-2.5 rounded-xl text-xs font-bold">Şifreyi Güncelle</button>
-            </form>
-
-            <button onclick="toggleModal('forgotPasswordModal')" class="w-full text-center text-xs text-slate-400 mt-2">İptal / Geri Dön</button>
-        </div>
-    </div>
-
-    <!-- YENİ DENEME EKLEME MODALI -->
-    <div id="addDenemeModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="modern-card max-w-sm w-full p-6 space-y-4 shadow-2xl bg-white">
-            <h3 class="text-base font-bold text-slate-900">Yeni Deneme Sınavı Ekle</h3>
-            <form onsubmit="handleSaveDeneme(event)" class="space-y-3">
-                <input type="text" id="denemeAdi" required placeholder="Deneme Adı (Örn: TYT Kurumsal-1)" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="number" step="0.5" id="netTurkce" required placeholder="Türkçe Net" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="number" step="0.5" id="netMat" required placeholder="Matematik Net" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="number" step="0.5" id="netSosyal" required placeholder="Sosyal Net" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="number" step="0.5" id="netFen" required placeholder="Fen Net" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <button type="submit" class="w-full bg-uzem-600 text-white py-2.5 rounded-xl text-xs font-bold">Kaydet</button>
-            </form>
-            <button onclick="toggleModal('addDenemeModal')" class="w-full text-center text-xs text-slate-400">İptal</button>
-        </div>
-    </div>
-
-    <!-- PDR ÖĞRENCİ EKLEME MODALI -->
-    <div id="addStudentModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="modern-card max-w-sm w-full p-6 space-y-4 shadow-2xl bg-white">
-            <h3 class="text-base font-bold text-slate-900">PDR Tarafından Yeni Öğrenci Ekle</h3>
-            <form onsubmit="handleSaveStudent(event)" class="space-y-3">
-                <input type="text" id="newStuName" required placeholder="Ad Soyad" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="text" id="newStuClass" required placeholder="Sınıfı (Örn: 12-A)" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="email" id="newStuEmail" required placeholder="E-posta Adresi" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <input type="password" id="newStuPass" required placeholder="Şifre" class="w-full border rounded-xl px-3 py-2 text-xs">
-                <button type="submit" class="w-full bg-emerald-600 text-white py-2.5 rounded-xl text-xs font-bold">Öğrenciyi Kaydet</button>
-            </form>
-            <button onclick="toggleModal('addStudentModal')" class="w-full text-center text-xs text-slate-400">İptal</button>
-        </div>
-    </div>
-
-    <!-- SCRIPT -->
+    <!-- JAVASCRIPT -->
     <script>
-        // Render Canlı Sunucu Adresi
         const API_BASE_URL = "https://zaman-tuneli-portal-a8dn.onrender.com";
-
         let pendingUserData = null;
-        let resetTargetEmail = '';
-
-        // Sayfa Yüklenme Animasyonu (Splash Screen) Mantığı
-        window.addEventListener('DOMContentLoaded', () => {
-            const bar = document.getElementById('splashBar');
-            setTimeout(() => { bar.style.width = '100%'; }, 100);
-            setTimeout(() => {
-                const splash = document.getElementById('splashScreen');
-                if(splash) splash.classList.add('fade-out');
-                
-                // Oturum kontrolü
-                const session = JSON.parse(localStorage.getItem('zt_session'));
-                if (session) {
-                    applySession(session);
-                } else {
-                    document.getElementById('authLockScreen').classList.remove('hidden');
-                }
-                lucide.createIcons();
-            }, 800);
-        });
-
-        // YKS 2027 Geri Sayım Sayacı
-        function updateYksCountdown() {
-            const diff = new Date('June 19, 2027 10:15:00').getTime() - new Date().getTime();
-            const daysEl = document.getElementById('yksDays');
-            const hoursEl = document.getElementById('yksHours');
-            const minsEl = document.getElementById('yksMins');
-
-            if (diff > 0 && daysEl && hoursEl && minsEl) {
-                daysEl.textContent = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(3, '0');
-                hoursEl.textContent = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-                minsEl.textContent = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-            }
-        }
-        setInterval(updateYksCountdown, 1000);
-        updateYksCountdown();
-
-        let denemeler = JSON.parse(localStorage.getItem('zt_denemeler')) || [
-            { id: 1, ad: 'Öncü TYT-1', turkce: 30, mat: 25, sosyal: 15, fen: 10 }
-        ];
 
         function switchAuthMode(mode) {
             const loginForm = document.getElementById('loginForm');
             const registerForm = document.getElementById('registerForm');
             const tabLogin = document.getElementById('tabLogin');
             const tabRegister = document.getElementById('tabRegister');
-            const authTitle = document.getElementById('authTitle');
-            const authSubtitle = document.getElementById('authSubtitle');
 
             if (mode === 'login') {
                 loginForm.classList.remove('hidden');
                 registerForm.classList.add('hidden');
-                tabLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-uzem-600 shadow-sm transition-all";
-                tabRegister.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-900 transition-all";
-                authTitle.textContent = "Zaman Tüneli Giriş";
-                authSubtitle.textContent = "E-posta adresinizle giriş yapın veya üye olun.";
+                tabLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-sky-600 shadow-sm";
+                tabRegister.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500";
             } else {
                 registerForm.classList.remove('hidden');
                 loginForm.classList.add('hidden');
-                tabRegister.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-uzem-600 shadow-sm transition-all";
-                tabLogin.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500 hover:text-slate-900 transition-all";
-                authTitle.textContent = "E-Posta ile Üye Ol";
-                authSubtitle.textContent = "Gerçek e-posta doğrulamasıyla yeni üyelik başlatın.";
+                tabRegister.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-sky-600 shadow-sm";
+                tabLogin.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500";
             }
         }
 
-        // 1. E-Posta Üyeliği Başlatma & Sunucuya İstek Atma
         async function handleStartRegister(e) {
             e.preventDefault();
             const name = document.getElementById('regName').value;
             const email = document.getElementById('regEmail').value;
             const password = document.getElementById('regPassword').value;
             const sinif = document.getElementById('regSinif').value || '12-A';
-            const selectedRole = document.getElementById('roleSelectDropdown').value;
+            const role = document.getElementById('roleSelectDropdown').value;
 
-            if (selectedRole === 'admin') {
-                return alert("Admin hesabı dışarıdan kaydedilemez!");
-            }
-
-            pendingUserData = { name, email, password, sinif, role: selectedRole };
+            pendingUserData = { name, email, password, sinif, role };
 
             try {
-                const response = await fetch(`${API_BASE_URL}/api/register-start`, {
+                const res = await fetch(`${API_BASE_URL}/api/register-start`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(pendingUserData)
                 });
-
-                const data = await response.json();
-
+                const data = await res.json();
                 if (data.success) {
                     document.getElementById('verifyTargetEmail').textContent = email;
-                    toggleModal('emailVerifyModal');
+                    document.getElementById('emailVerifyModal').classList.remove('hidden');
                     alert(data.message);
                 } else {
                     alert(data.message);
                 }
-            } catch (error) {
-                console.error('Bağlantı hatası:', error);
+            } catch (err) {
                 alert("Sunucuya bağlanılamadı!");
             }
         }
 
-        // 2. E-Posta Doğrulama Kodunu Sunucuda Onaylama
         async function handleVerifyCode(e) {
             e.preventDefault();
-            const enteredCode = document.getElementById('verifyCodeInput').value;
+            const code = document.getElementById('verifyCodeInput').value;
 
             try {
-                const response = await fetch(`${API_BASE_URL}/api/verify-code`, {
+                const res = await fetch(`${API_BASE_URL}/api/verify-code`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email: pendingUserData.email,
-                        code: enteredCode
-                    })
+                    body: JSON.stringify({ email: pendingUserData.email, code })
                 });
-
-                const data = await response.json();
-
+                const data = await res.json();
                 if (data.success) {
-                    toggleModal('emailVerifyModal');
-                    document.getElementById('registerForm').reset();
-                    document.getElementById('verifyCodeInput').value = '';
-                    pendingUserData = null;
-
-                    alert("E-posta adresiniz başarıyla doğrulandı ve üyeliğiniz tamamlandı! Şimdi giriş yapabilirsiniz.");
+                    document.getElementById('emailVerifyModal').classList.add('hidden');
+                    alert("Kayıt başarılı! Giriş yapabilirsiniz.");
                     switchAuthMode('login');
                 } else {
                     alert(data.message);
                 }
-            } catch (error) {
-                console.error('Doğrulama hatası:', error);
-                alert("Sunucu ile iletişim kurulamadı.");
+            } catch (err) {
+                alert("Bağlantı hatası.");
             }
         }
 
-        // 3. Giriş Yapma İstekleri (Sunucu Bağlantılı)
         async function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-            const selectedRole = document.getElementById('roleSelectDropdown').value;
-
-            // Admin için hızlı yerel giriş (varsayılan admin hesabı)
-            if (selectedRole === 'admin' && email === 'admin@zamantuneli.com' && password === 'yonetici2027') {
-                const adminUser = { id: 999, name: 'Sistem Yöneticisi', email, role: 'admin' };
-                localStorage.setItem('zt_session', JSON.stringify(adminUser));
-                applySession(adminUser);
-                return;
-            }
+            const role = document.getElementById('roleSelectDropdown').value;
 
             try {
-                const response = await fetch(`${API_BASE_URL}/api/login`, {
+                const res = await fetch(`${API_BASE_URL}/api/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password, role: selectedRole })
+                    body: JSON.stringify({ email, password, role })
                 });
-
-                const data = await response.json();
-
+                const data = await res.json();
                 if (data.success) {
                     localStorage.setItem('zt_session', JSON.stringify(data.user));
-                    applySession(data.user);
+                    document.getElementById('authLockScreen').classList.add('hidden');
+                    document.getElementById('authArea').innerHTML = `<span class="text-xs font-bold">${data.user.name}</span> <button onclick="localStorage.clear();location.reload();" class="text-rose-600 text-xs ml-2 font-bold">Çıkış</button>`;
                 } else {
                     alert(data.message);
                 }
-            } catch (error) {
-                console.error('Giriş hatası:', error);
-                alert("Sunucuya bağlanılamadı!");
+            } catch (err) {
+                alert("Giriş başarısız.");
             }
-        }
-
-        // Şifre Sıfırlama - Adım 1: Kod Gönder
-        async function handleStartForgotPassword(e) {
-            e.preventDefault();
-            const email = document.getElementById('forgotEmail').value;
-            resetTargetEmail = email;
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/forgot-password-start`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    alert(data.message);
-                    document.getElementById('forgotStep1').classList.add('hidden');
-                    document.getElementById('forgotStep2').classList.remove('hidden');
-                } else {
-                    alert(data.message);
-                }
-            } catch (error) {
-                console.error('Hata:', error);
-                alert('Sunucuya bağlanılamadı.');
-            }
-        }
-
-        // Şifre Sıfırlama - Adım 2: Yeni Şifreyi Kaydet
-        async function handleConfirmForgotPassword(e) {
-            e.preventDefault();
-            const code = document.getElementById('resetCodeInput').value;
-            const newPassword = document.getElementById('newPasswordInput').value;
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/reset-password-confirm`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: resetTargetEmail, code, newPassword })
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    alert(data.message);
-                    toggleModal('forgotPasswordModal');
-                    document.getElementById('forgotStep1').reset();
-                    document.getElementById('forgotStep2').reset();
-                    document.getElementById('forgotStep1').classList.remove('hidden');
-                    document.getElementById('forgotStep2').classList.add('hidden');
-                } else {
-                    alert(data.message);
-                }
-            } catch (error) {
-                console.error('Hata:', error);
-                alert('Sunucuyla iletişim kurulamadı.');
-            }
-        }
-
-        function applySession(user) {
-            document.getElementById('authLockScreen').classList.add('hidden');
-            document.getElementById('studentNavWrapper').classList.add('hidden');
-            document.getElementById('teacherNavWrapper').classList.add('hidden');
-            document.getElementById('adminNavWrapper').classList.add('hidden');
-
-            const authArea = document.getElementById('authArea');
-            authArea.innerHTML = `<div class="flex items-center gap-2 bg-slate-100 border px-3 py-1.5 rounded-xl text-xs"><span class="font-bold">${user.name} (${user.role.toUpperCase()})</span><button onclick="localStorage.removeItem('zt_session');location.reload();" class="text-rose-600 font-bold ml-1">Çıkış</button></div>`;
-
-            if (user.role === 'admin') {
-                document.getElementById('adminNavWrapper').classList.remove('hidden');
-                switchTab('adminDashboard');
-            } else if (user.role === 'pdr') {
-                document.getElementById('teacherNavWrapper').classList.remove('hidden');
-                switchTab('pdrDashboard');
-            } else {
-                document.getElementById('studentNavWrapper').classList.remove('hidden');
-                switchTab('denemeTracker');
-                renderStudentAttendance(user);
-            }
-        }
-
-        function switchTab(tab) {
-            ['denemeTrackerView', 'studentAttendanceView', 'pdrDashboardView', 'pdrAttendanceManagerView', 'adminDashboardView'].forEach(v => {
-                const el = document.getElementById(v);
-                if (el) el.classList.add('hidden');
-            });
-            const target = document.getElementById(tab + 'View');
-            if (target) target.classList.remove('hidden');
-
-            if (tab === 'denemeTracker') renderDenemeler();
-            if (tab === 'pdrDashboard') renderPdrStudents();
-            if (tab === 'pdrAttendanceManager') renderPdrAttendanceManager();
-            if (tab === 'adminDashboard') renderAdminUsers();
-            lucide.createIcons();
-        }
-
-        // Deneme Takip Mantığı
-        function handleSaveDeneme(e) {
-            e.preventDefault();
-            denemeler.push({
-                id: Date.now(),
-                ad: document.getElementById('denemeAdi').value,
-                turkce: parseFloat(document.getElementById('netTurkce').value),
-                mat: parseFloat(document.getElementById('netMat').value),
-                sosyal: parseFloat(document.getElementById('netSosyal').value),
-                fen: parseFloat(document.getElementById('netFen').value)
-            });
-            localStorage.setItem('zt_denemeler', JSON.stringify(denemeler));
-            toggleModal('addDenemeModal');
-            renderDenemeler();
-            e.target.reset();
-        }
-
-        function renderDenemeler() {
-            const tbody = document.getElementById('denemeTableBody');
-            tbody.innerHTML = denemeler.length === 0 ? '<tr><td colspan="6" class="p-4 text-center text-slate-400">Henüz deneme eklenmedi.</td></tr>' : denemeler.map(d => {
-                const toplamNet = (d.turkce + d.mat + d.sosyal + d.fen).toFixed(2);
-                return `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold">${d.ad}</td><td class="p-3">${d.turkce}</td><td class="p-3">${d.mat}</td><td class="p-3">${d.sosyal}</td><td class="p-3">${d.fen}</td><td class="p-3 font-bold text-uzem-700">${toplamNet} Net</td></tr>`;
-            }).join('');
-        }
-
-        function renderStudentAttendance(user) {
-            document.getElementById('lblOzurlu').textContent = (user.ozurlu || 0) + ' Gün';
-            document.getElementById('lblOzursuz').textContent = (user.ozursuz || 0) + ' Gün';
-        }
-
-        function handleSaveStudent(e) {
-            e.preventDefault();
-            alert("Öğrenci ekleme simülasyonu başarılı.");
-            toggleModal('addStudentModal');
-            e.target.reset();
-        }
-
-        function renderPdrStudents() {
-            const tbody = document.getElementById('pdrStudentTableBody');
-            tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-slate-400">Sunucu entegre öğrenci listesi aktif.</td></tr>';
-        }
-
-        function renderAdminUsers() {
-            const tbody = document.getElementById('adminTableBody');
-            tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-slate-400">Sistem yöneticisi tüm kullanıcı kayıtlarını görüntülüyor.</td></tr>';
-        }
-
-        function renderPdrAttendanceManager() {
-            const tbody = document.getElementById('pdrAttendanceTableBody');
-            tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-slate-400">Devamsızlık yönetimi aktif.</td></tr>';
-        }
-
-        function toggleModal(id) {
-            document.getElementById(id).classList.toggle('hidden');
         }
     </script>
 </body>
