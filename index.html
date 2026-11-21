@@ -110,17 +110,28 @@
                     <label class="block text-xs font-semibold text-rose-600 mb-1">Admin Güvenlik Anahtarı</label>
                     <input type="password" id="adminSecretKey" placeholder="Varsayılan: admin123" class="w-full bg-rose-50 border border-rose-200 rounded-xl px-4 py-3 text-xs focus:outline-none">
                 </div>
-                <button type="submit" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-3.5 rounded-xl text-xs shadow-sm">Giriş Yap</button>
+                <button type="submit" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-3.5 rounded-xl text-xs shadow-sm">Giriş Yap & Kod Gönder</button>
             </form>
 
-            <!-- ŞİFREMİ UNUTTUM FORMU (Resend E-Posta Entegrasyonlu) -->
+            <!-- GİRİŞ DOĞRULAMA KODU GİRİŞ EKRANI (Gizli) -->
+            <div id="loginVerifySection" class="space-y-4 hidden">
+                <div class="bg-blue-50 border border-blue-200 p-3 rounded-xl text-xs text-blue-800">
+                    Resend üzerinden e-postanıza 6 haneli güvenlik doğrulama kodu gönderildi. Lütfen aşağıya girin:
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">6 Haneli Doğrulama Kodu</label>
+                    <input type="text" id="loginVerifyCodeInput" placeholder="123456" maxlength="6" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-xs text-center font-mono text-lg tracking-widest focus:outline-none focus:border-ogm-600">
+                </div>
+                <button type="button" onclick="confirmLoginVerification()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 rounded-xl text-xs shadow-sm">Kodu Onayla & Giriş Yap</button>
+            </div>
+
+            <!-- ŞİFREMİ UNUTTUM / RESEND KOD GÖNDERME -->
             <form id="forgotForm" onsubmit="handleForgotPassword(event)" class="space-y-4 hidden">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Kayıtlı E-Posta Adresiniz</label>
                     <input type="email" id="forgotEmail" required placeholder="ornek@domain.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-ogm-600">
-                    <p class="text-[10px] text-slate-400 mt-1">Resend API üzerinden e-postanıza geçici doğrulama kodu gönderilecektir.</p>
                 </div>
-                <button type="submit" id="forgotSubmitBtn" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-3.5 rounded-xl text-xs shadow-sm">Doğrulama Kodu Gönder</button>
+                <button type="submit" id="forgotSubmitBtn" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-3.5 rounded-xl text-xs shadow-sm">Sıfırlama Kodu Gönder</button>
                 <div id="forgotStatus" class="text-center text-xs font-medium"></div>
             </form>
 
@@ -147,8 +158,20 @@
                     <label class="block text-xs font-semibold text-emerald-700 mb-1">Öğretmen Diploması (Zorunlu)</label>
                     <input type="file" id="regTeacherDoc" accept=".pdf,.jpg,.png" class="w-full bg-emerald-50 border border-emerald-200 rounded-xl p-2 text-xs text-emerald-800">
                 </div>
-                <button type="submit" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-3.5 rounded-xl text-xs shadow-sm">Kayıt Ol</button>
+                <button type="submit" id="regSubmitBtn" class="w-full bg-ogm-600 hover:bg-ogm-700 text-white font-semibold py-3.5 rounded-xl text-xs shadow-sm">Kayıt Ol & Kod Doğrula</button>
             </form>
+
+            <!-- KAYIT DOĞRULAMA KODU GİRİŞ EKRANI (Gizli) -->
+            <div id="registerVerifySection" class="space-y-4 hidden">
+                <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-xs text-emerald-800">
+                    Resend ile e-postanıza gönderilen 6 haneli aktivasyon kodunu girin:
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Doğrulama Kodu</label>
+                    <input type="text" id="regVerifyCodeInput" placeholder="123456" maxlength="6" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-xs text-center font-mono text-lg tracking-widest focus:outline-none">
+                </div>
+                <button type="button" onclick="confirmRegisterVerification()" class="w-full bg-ogm-600 text-white font-semibold py-3.5 rounded-xl text-xs shadow-sm">Hesabı Aktifleştir</button>
+            </div>
         </div>
     </div>
 
@@ -220,6 +243,7 @@
             <div id="subnav-teacher-takip" class="flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
                 <button onclick="switchTab('pdrDashboard')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm">👥 Öğrenci Listesi & Şifreler</button>
                 <button onclick="switchTab('pdrAttendance')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900">📋 Devamsızlık & Takip Fişi</button>
+                <button onclick="switchTab('pdrExamEntry')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900">📊 PDR Deneme Sınavı Girişi</button>
             </div>
             <div id="subnav-teacher-rehberlik" class="hidden flex overflow-x-auto bg-slate-100 border border-slate-200/80 p-1.5 rounded-xl gap-1">
                 <button onclick="switchTab('teacherMeetings')" class="whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white text-emerald-700 shadow-sm">📹 Zoom Planla</button>
@@ -321,6 +345,60 @@
             </div>
         </div>
 
+        <!-- ================= PDR ÖĞRENCİ DENEME SONUCU GİRİŞİ ================= -->
+        <div id="pdrExamEntryView" class="hidden space-y-6">
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-3xl mx-auto">
+                <div class="border-b pb-4">
+                    <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase">Ölçme Değerlendirme</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1">PDR Öğrenci Deneme Sınavı Not Girişi</h3>
+                    <p class="text-xs text-slate-500">Seçilen öğrenciye ait TYT/AYT netlerini ve puanlarını sisteme kaydedebilirsiniz.</p>
+                </div>
+                <form onsubmit="handlePdrExamSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Öğrenci Seçin</label>
+                        <select id="pdrExamStudentSelect" required class="w-full border rounded-xl px-4 py-2.5 text-xs bg-slate-50"></select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div><label class="block text-xs font-semibold mb-1">Deneme Adı</label><input type="text" id="examNameInput" required placeholder="Örn: Ödev Deneme 1" class="w-full border rounded-xl px-4 py-2.5 text-xs"></div>
+                        <div><label class="block text-xs font-semibold mb-1">TYT Neti</label><input type="number" step="0.25" id="examTytNet" required placeholder="85.50" class="w-full border rounded-xl px-4 py-2.5 text-xs"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div><label class="block text-xs font-semibold mb-1">AYT Neti</label><input type="number" step="0.25" id="examAytNet" required placeholder="55.00" class="w-full border rounded-xl px-4 py-2.5 text-xs"></div>
+                        <div><label class="block text-xs font-semibold mb-1">Puan / Sıralama</label><input type="text" id="examScore" required placeholder="380 Puan / 15000 Sıralama" class="w-full border rounded-xl px-4 py-2.5 text-xs"></div>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl text-xs font-bold">Öğrenciye Deneme Notu Ekle</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ================= ÖĞRENCİ DENEME TAKİP VE GRAFİK GÖRÜNÜMÜ ================= -->
+        <div id="denemeTrackerView" class="space-y-6">
+            <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-4xl mx-auto">
+                <div class="border-b pb-4 flex justify-between items-center">
+                    <div>
+                        <span class="bg-ogm-50 text-ogm-700 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase">Akademik Gelişim</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-1">Deneme Sınavlarım & Net Takibim</h3>
+                    </div>
+                    <div id="studentAttendanceBadge" class="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-xl text-xs font-bold">
+                        Devamsızlık: 0 Gün
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="p-3">Deneme Adı</th>
+                                <th class="p-3">TYT Net</th>
+                                <th class="p-3">AYT Net</th>
+                                <th class="p-3">Puan / Derece</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentExamTableBody" class="divide-y"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- ================= ÖSYM (YKS) MERKEZİ ================= -->
         <div id="osymPortalView" class="hidden space-y-6">
             <div class="ogm-card rounded-2xl p-6 sm:p-8 space-y-6 max-w-4xl mx-auto">
@@ -400,7 +478,6 @@
         <div id="eyotekPortalView" class="hidden space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">e-Yotek Karne</h3></div></div>
         <div id="idareOverviewView" class="hidden space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">İdare Paneli</h3></div></div>
         <div id="chatRoomsView" class="hidden space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">Chat Odaları</h3></div></div>
-        <div id="denemeTrackerView" class="space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">Deneme Takip</h3></div></div>
         <div id="calculatorView" class="hidden space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">Hesap Makinesi</h3></div></div>
         <div id="programView" class="hidden space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">Program</h3></div></div>
         <div id="topicsView" class="hidden space-y-6"><div class="ogm-card rounded-2xl p-6"><h3 class="text-xl font-bold">Eksik Konular</h3></div></div>
@@ -470,6 +547,10 @@
     <!-- SCRIPT -->
     <script>
         let selectedAuthRole = 'ogrenci';
+        let pendingLoginUser = null;
+        let generatedLoginCode = '';
+        let pendingRegisterData = null;
+        let generatedRegisterCode = '';
 
         window.addEventListener('DOMContentLoaded', () => {
             const bar = document.getElementById('splashBar');
@@ -506,30 +587,67 @@
 
         let systemUsers = JSON.parse(localStorage.getItem('zt_system_users')) || [
             { id: 1, name: 'Sistem Yöneticisi', email: 'admin@zamantuneli.com', username: 'admin', role: 'admin', status: 'approved', kvkk: true },
-            { id: 2, name: 'Mehmet Demir', email: 'mehmet@ogrenci.com', username: 'ogr_mehmet_1923', password: 'uzm789', role: 'ogrenci', status: 'approved', sinif: '12-A', devamsizlikOzurlu: 2, devamsizlikOzursuz: 1, rehberlikNotu: 'Düzenli çalışıyor.', kvkk: true }
+            { id: 2, name: 'Mehmet Demir', email: 'mehmet@ogrenci.com', username: 'ogr_mehmet_1923', password: 'uzm789', role: 'ogrenci', status: 'approved', sinif: '12-A', devamsizlikOzurlu: 2, devamsizlikOzursuz: 1, rehberlikNotu: 'Düzenli çalışıyor.', kvkk: true, exams: [{ name: '1. Deneme', tyt: 75.5, ayt: 45.0, score: '350 Puan' }] }
         ];
 
-        function handleRegister(e) {
+        // --- RESEND ÜZERİNDEN E-POSTA DOĞRULAMALI KAYIT ---
+        async function handleRegister(e) {
             e.preventDefault();
             const kvkkCheck = document.getElementById('regKvkkCheck');
             if (kvkkCheck && !kvkkCheck.checked) return alert("KVKK aydınlatma metnini onaylamalısınız.");
 
-            const name = regName.value, email = regEmail.value, role = selectedAuthRole;
-            if (systemUsers.some(u => u.email === email)) return alert("Bu e-posta kayıtlı.");
-            
+            const name = regName.value, email = regEmail.value, password = regPassword.value, role = selectedAuthRole;
+            if (systemUsers.some(u => u.email === email)) return alert("Bu e-posta adresi zaten kayıtlı.");
+
+            generatedRegisterCode = String(Math.floor(100000 + Math.random() * 900000));
+            pendingRegisterData = { name, email, password, role };
+
+            const regSubmitBtn = document.getElementById('regSubmitBtn');
+            regSubmitBtn.disabled = true;
+            regSubmitBtn.textContent = 'Resend Kod Gönderiliyor...';
+
+            try {
+                const response = await fetch('https://uzem-sunucu-zaman-tuneli-yeni.onrender.com/api/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, code: generatedRegisterCode })
+                });
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    alert("Kayıt doğrulama kodunuz e-postanıza (Resend) gönderildi!");
+                    document.getElementById('registerForm').classList.add('hidden');
+                    document.getElementById('registerVerifySection').classList.remove('hidden');
+                } else {
+                    alert("E-posta gönderilemedi: " + (data.error || 'Bilinmeyen hata'));
+                    regSubmitBtn.disabled = false;
+                    regSubmitBtn.textContent = 'Kayıt Ol & Kod Doğrula';
+                }
+            } catch (err) {
+                alert("Sunucuya bağlanırken hata oluştu. Lütfen tekrar deneyin.");
+                regSubmitBtn.disabled = false;
+                regSubmitBtn.textContent = 'Kayıt Ol & Kod Doğrula';
+            }
+        }
+
+        function confirmRegisterVerification() {
+            const entered = document.getElementById('regVerifyCodeInput').value.trim();
+            if (entered !== generatedRegisterCode) return alert("Hatalı doğrulama kodu!");
+
+            const { name, email, password, role } = pendingRegisterData;
             const username = email.split('@')[0];
-            const password = regPassword.value;
             const status = (role === 'matematik' || role === 'edebiyat') ? 'pending' : 'approved';
-            
-            systemUsers.push({ id: Date.now(), name, email, username, password, role, status, sinif: '12-B', devamsizlikOzurlu: 0, devamsizlikOzursuz: 0, rehberlikNotu: 'Yeni kayıt.', kvkk: true });
+
+            systemUsers.push({ id: Date.now(), name, email, username, password, role, status, sinif: '12-A', devamsizlikOzurlu: 0, devamsizlikOzursuz: 0, rehberlikNotu: 'Yeni kayıt.', kvkk: true, exams: [] });
             localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
-            alert("Kayıt başarılı! Kullanıcı adınız: " + username); 
+            alert("Hesabınız başarıyla doğrulandı ve oluşturuldu! Kullanıcı adınız: " + username);
+            document.getElementById('registerVerifySection').classList.add('hidden');
             switchAuthTab('login');
         }
 
-        function handleLogin(e) {
+        // --- RESEND ÜZERİNDEN E-POSTA DOĞRULAMALI GİRİŞ ---
+        async function handleLogin(e) {
             e.preventDefault();
-            const inputVal = loginEmail.value, pass = loginPassword.value, role = selectedAuthRole;
+            const inputVal = loginEmail.value.trim(), pass = loginPassword.value, role = selectedAuthRole;
             if (role === 'admin' && adminSecretKey.value !== 'admin123') return alert("Hatalı Admin Şifresi!");
             
             let user = systemUsers.find(u => (u.email === inputVal || u.username === inputVal) && (u.password === pass || role === 'admin'));
@@ -538,17 +656,43 @@
             }
             if (!user) return alert("Hatalı kullanıcı adı/e-posta veya şifre!");
 
-            localStorage.setItem('zt_local_session', JSON.stringify({ email: user.email, role: user.role }));
-            applyUserSessionUI(user.email, user.role);
+            pendingLoginUser = user;
+            generatedLoginCode = String(Math.floor(100000 + Math.random() * 900000));
+
+            try {
+                const response = await fetch('https://uzem-sunucu-zaman-tuneli-yeni.onrender.com/api/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: user.email, code: generatedLoginCode })
+                });
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    alert("Giriş için Resend doğrulama kodu e-postanıza gönderildi!");
+                    document.getElementById('loginForm').classList.add('hidden');
+                    document.getElementById('loginVerifySection').classList.remove('hidden');
+                } else {
+                    alert("E-posta kodu gönderilemedi: " + (data.error || 'Hata'));
+                }
+            } catch (err) {
+                alert("Sunucu bağlantı hatası oluştu.");
+            }
         }
 
-        // --- ŞİFREMİ UNUTTUM / RESEND API ENTEGRASYONU ---
+        function confirmLoginVerification() {
+            const entered = document.getElementById('loginVerifyCodeInput').value.trim();
+            if (entered !== generatedLoginCode) return alert("Hatalı doğrulama kodu!");
+
+            localStorage.setItem('zt_local_session', JSON.stringify({ email: pendingLoginUser.email, role: pendingLoginUser.role }));
+            applyUserSessionUI(pendingLoginUser.email, pendingLoginUser.role);
+        }
+
+        // --- ŞİFREMİ UNUTTUM / RESEND KOD GÖNDERME ---
         async function handleForgotPassword(e) {
             e.preventDefault();
             const email = document.getElementById('forgotEmail').value;
             const submitBtn = document.getElementById('forgotSubmitBtn');
             const statusDiv = document.getElementById('forgotStatus');
-            const rastgeleKod = Math.floor(100000 + Math.random() * 900000); // 6 haneli doğrulama kodu
+            const rastgeleKod = String(Math.floor(100000 + Math.random() * 900000));
 
             submitBtn.disabled = true;
             submitBtn.textContent = 'Gönderiliyor...';
@@ -556,28 +700,25 @@
             statusDiv.textContent = 'E-posta Resend API üzerinden gönderiliyor...';
 
             try {
-                // Render canlı sunucu endpoint adresiniz
                 const response = await fetch('https://uzem-sunucu-zaman-tuneli-yeni.onrender.com/api/send-email', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: email, code: rastgeleKod })
                 });
-
                 const data = await response.json();
-
                 if (response.ok && data.success) {
                     statusDiv.style.color = '#38a169';
                     statusDiv.textContent = '✨ Şifre sıfırlama doğrulama kodu e-postanıza gönderildi!';
                 } else {
                     statusDiv.style.color = '#e53e3e';
-                    statusDiv.textContent = '⚠️ Hata: ' + (data.error || 'E-posta gönderilemedi.');
+                    statusDiv.textContent = '⚠️ Hata: ' + (data.error || 'Gönderilemedi.');
                 }
             } catch (error) {
                 statusDiv.style.color = '#e53e3e';
                 statusDiv.textContent = '🌐 Sunucu bağlantı hatası oluştu.';
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Doğrulama Kodu Gönder';
+                submitBtn.textContent = 'Sıfırlama Kodu Gönder';
             }
         }
 
@@ -589,7 +730,11 @@
             else if (role === 'mudur' || role === 'mudur_yardimcisi') { idareNavWrapper.classList.remove('hidden'); selectMainCategory('idare', 'yonetim'); }
             else if (role === 'muhasebe') { muhasebeNavWrapper.classList.remove('hidden'); switchTab('muhasebePanel'); }
             else if (role === 'matematik' || role === 'edebiyat' || role === 'pdr') { teacherNavWrapper.classList.remove('hidden'); selectMainCategory('teacher', 'takip'); }
-            else { studentNavWrapper.classList.remove('hidden'); selectMainCategory('student', 'olcme'); }
+            else { 
+                studentNavWrapper.classList.remove('hidden'); 
+                selectMainCategory('student', 'olcme'); 
+                renderStudentExamsAndAttendance(email);
+            }
 
             const authHTML = `<div class="flex items-center gap-2 bg-slate-50 border px-3 py-1.5 rounded-xl text-xs"><span class="font-bold">${email}</span><button onclick="localStorage.removeItem('zt_local_session');location.reload();" class="text-rose-600 font-bold ml-1">Çıkış</button></div>`;
             authArea.innerHTML = authHTML; mobileAuthArea.innerHTML = authHTML;
@@ -605,10 +750,11 @@
             const registerTabBtn = document.getElementById('registerTabBtn');
             const forgotTabBtn = document.getElementById('forgotTabBtn');
 
-            // Hepsini gizle/sıfırla
             loginFormEl.classList.add('hidden');
             registerFormEl.classList.add('hidden');
             forgotFormEl.classList.add('hidden');
+            document.getElementById('loginVerifySection').classList.add('hidden');
+            document.getElementById('registerVerifySection').classList.add('hidden');
             
             loginTabBtn.className = "flex-1 pb-2.5 text-xs font-medium text-slate-400 border-b-2 border-transparent transition-colors";
             registerTabBtn.className = "flex-1 pb-2.5 text-xs font-medium text-slate-400 border-b-2 border-transparent transition-colors";
@@ -634,7 +780,7 @@
         }
 
         function switchTab(tab) {
-            ['osymPortalView', 'teacherMeetingsView', 'studentMeetingsView', 'smsWhatsappHubView', 'adminUserManagerView', 'muhasebePanelView', 'eyotekPortalView', 'idareOverviewView', 'chatRoomsView', 'denemeTrackerView', 'calculatorView', 'programView', 'topicsView', 'tarihOyunuView', 'notesView', 'pomodoroView', 'pdrDashboardView', 'pdrAttendanceView', 'adminTeacherApprovalsView'].forEach(v => {
+            ['osymPortalView', 'teacherMeetingsView', 'studentMeetingsView', 'smsWhatsappHubView', 'adminUserManagerView', 'muhasebePanelView', 'eyotekPortalView', 'idareOverviewView', 'chatRoomsView', 'denemeTrackerView', 'calculatorView', 'programView', 'topicsView', 'tarihOyunuView', 'notesView', 'pomodoroView', 'pdrDashboardView', 'pdrAttendanceView', 'pdrExamEntryView', 'adminTeacherApprovalsView'].forEach(v => {
                 const el = document.getElementById(v); if (el) el.classList.add('hidden');
             });
             const target = document.getElementById(tab + 'View');
@@ -642,6 +788,7 @@
             if (tab === 'adminUserManager') renderAdminUsers();
             if (tab === 'pdrDashboard') renderPdrStudents();
             if (tab === 'pdrAttendance') renderPdrAttendance();
+            if (tab === 'pdrExamEntry') populatePdrStudentDropdown();
             lucide.createIcons();
         }
 
@@ -672,7 +819,8 @@
                 devamsizlikOzursuz: 0,
                 rehberlikNotu: pdrStuNote.value,
                 kvkk: true,
-                status: 'approved'
+                status: 'approved',
+                exams: []
             });
             localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
             toggleModal('addPdrStudentModal');
@@ -722,6 +870,53 @@
             systemUsers = systemUsers.filter(u => u.id !== id);
             localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
             renderPdrStudents();
+        }
+
+        // --- PDR ÖĞRENCİ DENEME GİRİŞİ ---
+        function populatePdrStudentDropdown() {
+            const students = systemUsers.filter(u => u.role === 'ogrenci');
+            pdrExamStudentSelect.innerHTML = students.map(s => `<option value="${s.email}">${s.name} (${s.sinif || '12-A'})</option>`).join('');
+        }
+
+        function handlePdrExamSubmit(e) {
+            e.preventDefault();
+            const email = pdrExamStudentSelect.value;
+            const name = examNameInput.value;
+            const tyt = parseFloat(examTytNet.value) || 0;
+            const ayt = parseFloat(examAytNet.value) || 0;
+            const score = examScore.value;
+
+            systemUsers = systemUsers.map(u => {
+                if (u.email === email) {
+                    const exams = u.exams || [];
+                    exams.push({ name, tyt, ayt, score });
+                    return { ...u, exams };
+                }
+                return u;
+            });
+            localStorage.setItem('zt_system_users', JSON.stringify(systemUsers));
+            e.target.reset();
+            alert("Öğrenci deneme sınavı sonucu başarıyla eklendi!");
+        }
+
+        function renderStudentExamsAndAttendance(email) {
+            const user = systemUsers.find(u => u.email === email);
+            if (!user) return;
+
+            // Devamsızlık Badge
+            const toplamDevamsizlik = (user.devamsizlikOzurlu || 0) + (user.devamsizlikOzursuz || 0);
+            studentAttendanceBadge.textContent = `Toplam Devamsızlık: ${toplamDevamsizlik} Gün (Özürlü: ${user.devamsizlikOzurlu || 0}, Özürsüz: ${user.devamsizlikOzursuz || 0})`;
+
+            // Denemeler Tablosu
+            const exams = user.exams || [];
+            studentExamTableBody.innerHTML = exams.length === 0 ? '<tr><td colspan="4" class="p-4 text-center text-slate-400">Henüz girilmiş deneme sınavınız bulunmuyor.</td></tr>' : exams.map(ex => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 font-semibold">${ex.name}</td>
+                    <td class="p-3 text-ogm-600 font-bold">${ex.tyt} Net</td>
+                    <td class="p-3 text-emerald-600 font-bold">${ex.ayt} Net</td>
+                    <td class="p-3 font-semibold">${ex.score}</td>
+                </tr>
+            `).join('');
         }
 
         function generateZoomLink() { meetLink.value = `https://zoom.us/j/${Math.floor(100000000 + Math.random() * 900000000)}`; }
