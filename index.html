@@ -3,197 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaman Tüneli - UZEM Portalı</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Zaman Tüneli - E-Posta Doğrulama</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 380px;
+            box-sizing: border-box;
+        }
+        h2 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #sonuc {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+        }
+    </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col justify-between font-sans text-slate-800">
+<body>
 
-    <!-- GİRİŞ & KAYIT EKRANI -->
-    <div id="authLockScreen" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white max-w-md w-full p-8 rounded-2xl shadow-2xl space-y-6">
-            <div class="text-center space-y-1">
-                <h2 id="authTitle" class="text-2xl font-black text-slate-900">Zaman Tüneli Giriş</h2>
-                <p id="authSubtitle" class="text-xs text-slate-500">Bilgilerinizle giriş yapın veya üye olun.</p>
+    <div class="card">
+        <h2>Zaman Tüneli</h2>
+        <form id="emailForm">
+            <div class="form-group">
+                <label for="email">E-Posta Adresi</label>
+                <input type="email" id="email" required placeholder="ornek@email.com">
             </div>
-
-            <!-- Sekmeler -->
-            <div class="flex p-1 bg-slate-100 rounded-xl">
-                <button type="button" onclick="switchAuthMode('login')" id="tabLogin" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white text-sky-600 shadow-sm">Giriş Yap</button>
-                <button type="button" onclick="switchAuthMode('register')" id="tabRegister" class="flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500">Üye Ol</button>
-            </div>
-
-            <div class="space-y-1">
-                <label class="block text-xs font-bold text-slate-700">Rol Seçimi</label>
-                <select id="roleSelectDropdown" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-bold">
-                    <option value="ogrenci">Öğrenci</option>
-                    <option value="pdr">PDR / Rehber Öğretmen</option>
-                    <option value="admin">Sistem Yöneticisi (Admin)</option>
-                </select>
-            </div>
-
-            <!-- GİRİŞ FORMU -->
-            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta</label>
-                    <input type="email" id="loginEmail" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-sky-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre</label>
-                    <input type="password" id="loginPassword" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-sky-500">
-                </div>
-                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3.5 rounded-xl text-xs shadow-lg">Oturum Aç</button>
-            </form>
-
-            <!-- KAYIT FORMU -->
-            <form id="registerForm" onsubmit="handleStartRegister(event)" class="space-y-3.5 hidden">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Ad Soyad</label>
-                    <input type="text" id="regName" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Sınıf</label>
-                    <input type="text" id="regSinif" placeholder="12-A" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">E-Posta (Doğrulama Kodu Gidecek)</label>
-                    <input type="email" id="regEmail" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Şifre</label>
-                    <input type="password" id="regPassword" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs">
-                </div>
-                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 rounded-xl text-xs shadow-lg">Kod Gönder & Kaydol</button>
-            </form>
-        </div>
+            <button type="submit" id="submitBtn">Doğrulama Kodu Gönder</button>
+        </form>
+        <div id="sonuc"></div>
     </div>
 
-    <!-- E-POSTA DOĞRULAMA MODALI -->
-    <div id="emailVerifyModal" class="fixed inset-0 z-[60] bg-slate-900/75 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="bg-white max-w-sm w-full p-6 rounded-2xl shadow-2xl text-center space-y-4">
-            <h3 class="text-lg font-extrabold text-slate-900">E-Posta Doğrulama</h3>
-            <p class="text-xs text-slate-500"><span id="verifyTargetEmail" class="font-bold"></span> adresine gönderilen 6 haneli kodu giriniz.</p>
-            <form onsubmit="handleVerifyCode(event)" class="space-y-3">
-                <input type="text" id="verifyCodeInput" maxlength="6" required placeholder="000000" class="w-full text-center tracking-widest font-mono text-lg font-bold border rounded-xl px-4 py-2.5">
-                <button type="submit" class="w-full bg-emerald-600 text-white py-3 rounded-xl text-xs font-bold">Doğrula ve Tamamla</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- ANA SAYFA İÇERİĞİ -->
-    <header class="bg-white border-b border-slate-200 p-4 flex justify-between items-center max-w-7xl mx-auto w-full">
-        <h1 class="font-extrabold text-sm text-sky-700">Zaman Tüneli Portalı</h1>
-        <div id="authArea"></div>
-    </header>
-
-    <main class="max-w-7xl mx-auto p-6 flex-1 w-full">
-        <div class="bg-white p-6 rounded-2xl border shadow-sm text-center">
-            <h2 class="text-xl font-bold text-slate-800">Sistem Aktif</h2>
-            <p class="text-xs text-slate-500 mt-1">Render sunucu bağlantısı başarılı bir şekilde kuruldu.</p>
-        </div>
-    </main>
-
-    <!-- JAVASCRIPT -->
     <script>
-        const API_BASE_URL = "https://zaman-tuneli-portal-a8dn.onrender.com";
-        let pendingUserData = null;
+        const form = document.getElementById('emailForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const sonucDiv = document.getElementById('sonuc');
 
-        function switchAuthMode(mode) {
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            const tabLogin = document.getElementById('tabLogin');
-            const tabRegister = document.getElementById('tabRegister');
-
-            if (mode === 'login') {
-                loginForm.classList.remove('hidden');
-                registerForm.classList.add('hidden');
-                tabLogin.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-sky-600 shadow-sm";
-                tabRegister.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500";
-            } else {
-                registerForm.classList.remove('hidden');
-                loginForm.classList.add('hidden');
-                tabRegister.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-white text-sky-600 shadow-sm";
-                tabLogin.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-slate-500";
-            }
-        }
-
-        async function handleStartRegister(e) {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const password = document.getElementById('regPassword').value;
-            const sinif = document.getElementById('regSinif').value || '12-A';
-            const role = document.getElementById('roleSelectDropdown').value;
+            const email = document.getElementById('email').value;
+            const rastgeleKod = Math.floor(100000 + Math.random() * 900000); // 6 haneli rastgele kod
 
-            pendingUserData = { name, email, password, sinif, role };
+            // Butonu kilitle ve bilgi ver
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Gönderiliyor...';
+            sonucDiv.style.color = '#555';
+            sonucDiv.textContent = 'E-posta gönderim işlemi başlatıldı...';
 
             try {
-                const res = await fetch(`${API_BASE_URL}/api/register-start`, {
+                // Render üzerindeki canlı API adresiniz
+                const response = await fetch('https://uzem-sunucu-zaman-tuneli-yeni.onrender.com/api/send-email', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(pendingUserData)
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email, code: rastgeleKod })
                 });
-                const data = await res.json();
-                if (data.success) {
-                    document.getElementById('verifyTargetEmail').textContent = email;
-                    document.getElementById('emailVerifyModal').classList.remove('hidden');
-                    alert(data.message);
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    sonucDiv.style.color = '#28a745';
+                    sonucDiv.textContent = 'Doğrulama kodu başarıyla e-postanıza gönderildi!';
                 } else {
-                    alert(data.message);
+                    sonucDiv.style.color = '#dc3545';
+                    sonucDiv.textContent = 'Hata: ' + (data.error || 'İşlem başarısız oldu.');
                 }
-            } catch (err) {
-                alert("Sunucuya bağlanılamadı!");
+            } catch (error) {
+                sonucDiv.style.color = '#dc3545';
+                sonucDiv.textContent = 'Sunucuyla bağlantı kurulamadı. Lütfen tekrar deneyin.';
+            } finally {
+                // Butonu eski haline getir
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Doğrulama Kodu Gönder';
             }
-        }
-
-        async function handleVerifyCode(e) {
-            e.preventDefault();
-            const code = document.getElementById('verifyCodeInput').value;
-
-            try {
-                const res = await fetch(`${API_BASE_URL}/api/verify-code`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: pendingUserData.email, code })
-                });
-                const data = await res.json();
-                if (data.success) {
-                    document.getElementById('emailVerifyModal').classList.add('hidden');
-                    alert("Kayıt başarılı! Giriş yapabilirsiniz.");
-                    switchAuthMode('login');
-                } else {
-                    alert(data.message);
-                }
-            } catch (err) {
-                alert("Bağlantı hatası.");
-            }
-        }
-
-        async function handleLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            const role = document.getElementById('roleSelectDropdown').value;
-
-            try {
-                const res = await fetch(`${API_BASE_URL}/api/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password, role })
-                });
-                const data = await res.json();
-                if (data.success) {
-                    localStorage.setItem('zt_session', JSON.stringify(data.user));
-                    document.getElementById('authLockScreen').classList.add('hidden');
-                    document.getElementById('authArea').innerHTML = `<span class="text-xs font-bold">${data.user.name}</span> <button onclick="localStorage.clear();location.reload();" class="text-rose-600 text-xs ml-2 font-bold">Çıkış</button>`;
-                } else {
-                    alert(data.message);
-                }
-            } catch (err) {
-                alert("Giriş başarısız.");
-            }
-        }
+        });
     </script>
+
 </body>
 </html>
